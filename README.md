@@ -5,7 +5,7 @@
 ## How you can help
 
 * We need to control the domains somehow.
-* Find his blog articles and what not and add them to the repo. We need the raw content.
+* Find his blog articles and what not and add them to the repo. We need the raw content: [Archive.org](https://web.archive.org/web/20200212094016/https://www.theperlfisher.com/)
 * Go through the back issues of Perl 6 Weekly and find all the links to his blogs. Create an issue when you find a link.
 * Probably a lot of other stuff.
 
@@ -14,3 +14,10 @@
 At the moment, we need to collect the content. That could be a bit messy. Find a post, perhaps at [Archive.org](https://www.archive.org) and add it to this repo. Name the file for the date published (YYYYMMDD.html) and we can figure out the rest later.
 
 If you have an idea on how to do this, go for it. If you want to be a collaborator on the repo, just file an issue asking for it.
+
+Sites:
+
+* www.theperlfisher.com
+* www.perlfisher.blogspot.org
+* http://theperlfisher.blogspot.ro
+* http://blogs.perl.org/users/drforr/
