@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="profile" href="http://gmpg.org/xfn/11">
+    <link rel="pingback" href="http://173.230.155.209/xmlrpc.php">
+<title>A Regex amuse-bouche - The Perl Fisher</title>
+
+	<!-- Meta Tag Manager -->
+	<meta name="yandex-verification" content="36e3b3766d22b6c0" />
+	<!-- / Meta Tag Manager -->
+
+<!-- This site is optimized with the Yoast SEO plugin v11.8 - https://yoast.com/wordpress/plugins/seo/ -->
+<link rel="canonical" href="http://173.230.155.209/index.php/2019/07/24/a-regex-amuse-bouche/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="A Regex amuse-bouche - The Perl Fisher" />
+<meta property="og:description" content="Before continuing with the Template series, I thought I&#8217;d talk briefly about an interesting (well, at least to me) solution to a little problem. System and user libraries (the kind that end in .so or .a, not Perl libraries) have a section at the top that maps a function name (&#8216;load_user&#8217; or whatever) to an &hellip;" />
+<meta property="og:url" content="http://173.230.155.209/index.php/2019/07/24/a-regex-amuse-bouche/" />
+<meta property="og:site_name" content="The Perl Fisher" />
+<meta property="article:tag" content="Linking" />
+<meta property="article:tag" content="NativeCall" />
+<meta property="article:tag" content="Parsing" />
+<meta property="article:tag" content="Perl" />
+<meta property="article:tag" content="Perl 6" />
+<meta property="article:tag" content="Regex" />
+<meta property="article:tag" content="Regexp" />
+<meta property="article:tag" content="Regular Expressions" />
+<meta property="article:section" content="Uncategorized" />
+<meta property="article:published_time" content="2019-07-24T06:13:40+00:00" />
+<meta property="article:modified_time" content="2019-07-24T06:31:05+00:00" />
+<meta property="og:updated_time" content="2019-07-24T06:31:05+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:description" content="Before continuing with the Template series, I thought I&#8217;d talk briefly about an interesting (well, at least to me) solution to a little problem. System and user libraries (the kind that end in .so or .a, not Perl libraries) have a section at the top that maps a function name (&#8216;load_user&#8217; or whatever) to an [&hellip;]" />
+<meta name="twitter:title" content="A Regex amuse-bouche - The Perl Fisher" />
+<script type='application/ld+json' class='yoast-schema-graph yoast-schema-graph--main'>{"@context":"https://schema.org","@graph":[{"@type":["Person","Organization"],"@id":"http://173.230.155.209/#/schema/person/3b45374adcb609cefbb3241a80695a2e","name":"jgoff","image":{"@type":"ImageObject","@id":"http://173.230.155.209/#personlogo","url":"http://1.gravatar.com/avatar/7a8306387ada6c75b12865d707aa45bc?s=96&d=mm&r=g","caption":"jgoff"},"logo":{"@id":"http://173.230.155.209/#personlogo"},"sameAs":[]},{"@type":"WebSite","@id":"http://173.230.155.209/#website","url":"http://173.230.155.209/","name":"The Perl Fisher","publisher":{"@id":"http://173.230.155.209/#/schema/person/3b45374adcb609cefbb3241a80695a2e"},"potentialAction":{"@type":"SearchAction","target":"http://173.230.155.209/?s={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"WebPage","@id":"http://173.230.155.209/index.php/2019/07/24/a-regex-amuse-bouche/#webpage","url":"http://173.230.155.209/index.php/2019/07/24/a-regex-amuse-bouche/","inLanguage":"en-US","name":"A Regex amuse-bouche - The Perl Fisher","isPartOf":{"@id":"http://173.230.155.209/#website"},"datePublished":"2019-07-24T06:13:40+00:00","dateModified":"2019-07-24T06:31:05+00:00"},{"@type":"Article","@id":"http://173.230.155.209/index.php/2019/07/24/a-regex-amuse-bouche/#article","isPartOf":{"@id":"http://173.230.155.209/index.php/2019/07/24/a-regex-amuse-bouche/#webpage"},"author":{"@id":"http://173.230.155.209/#/schema/person/3b45374adcb609cefbb3241a80695a2e"},"headline":"A Regex amuse-bouche","datePublished":"2019-07-24T06:13:40+00:00","dateModified":"2019-07-24T06:31:05+00:00","commentCount":0,"mainEntityOfPage":{"@id":"http://173.230.155.209/index.php/2019/07/24/a-regex-amuse-bouche/#webpage"},"publisher":{"@id":"http://173.230.155.209/#/schema/person/3b45374adcb609cefbb3241a80695a2e"},"keywords":"Linking,NativeCall,Parsing,Perl,Perl 6,Regex,Regexp,Regular Expressions","articleSection":""}]}</script>
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//173.230.155.209' />
+<link rel='dns-prefetch' href='//use.fontawesome.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="The Perl Fisher &raquo; Feed" href="http://173.230.155.209/index.php/feed/" />
+<link rel="alternate" type="application/rss+xml" title="The Perl Fisher &raquo; Comments Feed" href="http://173.230.155.209/index.php/comments/feed/" />
+<link rel="alternate" type="text/calendar" title="The Perl Fisher &raquo; iCal Feed" href="http://173.230.155.209/index.php/events/?ical=1" />
+<link rel="alternate" type="application/rss+xml" title="The Perl Fisher &raquo; A Regex amuse-bouche Comments Feed" href="http://173.230.155.209/index.php/2019/07/24/a-regex-amuse-bouche/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/173.230.155.209\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.2.2"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css'  href='http://173.230.155.209/wp-includes/css/dist/block-library/style.min.css?ver=5.2.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-bootstrap-starter-bootstrap-css-css'  href='http://173.230.155.209/wp-content/themes/wp-bootstrap-starter/inc/assets/css/bootstrap.min.css?ver=5.2.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-bootstrap-pro-fontawesome-cdn-css'  href='https://use.fontawesome.com/releases/v5.8.2/css/all.css?ver=5.2.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-bootstrap-starter-style-css'  href='http://173.230.155.209/wp-content/themes/wp-bootstrap-starter/style.css?ver=5.2.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-bootstrap-starter-yeti-css'  href='http://173.230.155.209/wp-content/themes/wp-bootstrap-starter/inc/assets/css/presets/theme-option/yeti.css?ver=5.2.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-bootstrap-starter-montserrat-merriweather-font-css'  href='https://fonts.googleapis.com/css?family=Merriweather%3A300%2C400%2C400i%2C700%2C900%7CMontserrat%3A300%2C400%2C400i%2C500%2C700%2C800&#038;ver=5.2.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-bootstrap-starter-montserrat-merriweather-css'  href='http://173.230.155.209/wp-content/themes/wp-bootstrap-starter/inc/assets/css/presets/typography/montserrat-merriweather.css?ver=5.2.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://173.230.155.209/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp'></script>
+<script type='text/javascript' src='http://173.230.155.209/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var gadwpUAEventsData = {"options":{"event_tracking":0,"event_downloads":"zip|mp3*|mpe*g|pdf|docx*|pptx*|xlsx*|rar*","event_bouncerate":0,"aff_tracking":1,"event_affiliates":"\/out\/","hash_tracking":"1","root_domain":"","event_timeout":100,"event_precision":0,"event_formsubmit":0,"ga_pagescrolldepth_tracking":1,"ga_with_gtag":0}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://173.230.155.209/wp-content/plugins/google-analytics-dashboard-for-wp/front/js/tracking-analytics-events.js?ver=5.3.8'></script>
+<script type='text/javascript' src='http://173.230.155.209/wp-content/plugins/google-analytics-dashboard-for-wp/front/js/tracking-scrolldepth.js?ver=5.3.8'></script>
+<!--[if lt IE 9]>
+<script type='text/javascript' src='http://173.230.155.209/wp-content/themes/wp-bootstrap-starter/inc/assets/js/html5.js?ver=3.7.0'></script>
+<![endif]-->
+<link rel='https://api.w.org/' href='http://173.230.155.209/index.php/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://173.230.155.209/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://173.230.155.209/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.2.2" />
+<link rel='shortlink' href='http://173.230.155.209/?p=57' />
+<link rel="alternate" type="application/json+oembed" href="http://173.230.155.209/index.php/wp-json/oembed/1.0/embed?url=http%3A%2F%2F173.230.155.209%2Findex.php%2F2019%2F07%2F24%2Fa-regex-amuse-bouche%2F" />
+<!-- Analytics by WP-Statistics v12.6.7 - https://wp-statistics.com/ -->
+<meta name="tec-api-version" content="v1"><meta name="tec-api-origin" content="http://173.230.155.209"><link rel="https://theeventscalendar.com/" href="http://173.230.155.209/index.php/wp-json/tribe/events/v1/" /><link rel="pingback" href="http://173.230.155.209/xmlrpc.php">    <style type="text/css">
+        #page-sub-header { background: #fff; }
+    </style>
+    		<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+		
+<!-- BEGIN ExactMetrics v5.3.8 Universal Analytics - https://exactmetrics.com/ -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-144190704-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- END ExactMetrics Universal Analytics -->
+</head>
+
+<body class="post-template-default single single-post postid-57 single-format-standard tribe-no-js theme-preset-active">
+<div id="page" class="site">
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+    	<header id="masthead" class="site-header navbar-static-top navbar-dark bg-primary" role="banner">
+        <div class="container">
+            <nav class="navbar navbar-expand-xl p-0">
+                <div class="navbar-brand">
+                                            <a class="site-title" href="http://173.230.155.209/">The Perl Fisher</a>
+                    
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav" aria-controls="" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                
+            </nav>
+        </div>
+	</header><!-- #masthead -->
+    	<div id="content" class="site-content">
+		<div class="container">
+			<div class="row">
+                
+	<section id="primary" class="content-area col-sm-12 col-lg-8">
+		<main id="main" class="site-main" role="main">
+
+		
+<article id="post-57" class="post-57 post type-post status-publish format-standard hentry category-uncategorized tag-linking tag-nativecall tag-parsing tag-perl tag-perl-6 tag-regex tag-regexp tag-regular-expressions">
+	<div class="post-thumbnail">
+			</div>
+	<header class="entry-header">
+		<h1 class="entry-title">A Regex amuse-bouche</h1>		<div class="entry-meta">
+			<span class="posted-on">Posted on <a href="http://173.230.155.209/index.php/2019/07/24/a-regex-amuse-bouche/" rel="bookmark"><time class="entry-date published" datetime="2019-07-24T06:13:40+00:00">2019-07-24</time></a></span> | <span class="byline"> by <span class="author vcard"><a class="url fn n" href="http://173.230.155.209/index.php/author/jgoff/">jgoff</a></span></span>		</div><!-- .entry-meta -->
+			</header><!-- .entry-header -->
+	<div class="entry-content">
+		
+<p>Before continuing with the Template series, I thought I&#8217;d talk briefly about an interesting (well, at least to me) solution to a little problem. System and user libraries (the kind that end in .so or .a, not Perl libraries) have a section at the top that maps a function name (&#8216;load_user&#8217; or whatever) to an offset into the library, say, 0x193a.</p>
+
+
+
+<p>This arrangement worked fine for many years for C, Algol, FORTRAN and most other languages out there. But then along came languages that upset the apple cart, like C++ and Smalltalk, where a programmer could write two &#8216;load_user&#8217; functions, call &#8216;load_user(1234)&#8217; or &#8216;load_user(&#8220;Smith, John&#8221;)&#8217; and expect the linker to load the right version of &#8216;load_user.&#8217;</p>
+
+
+
+<p>The problem here is that the library, the linker and all of the other programs in the tool chain expect there to only be one function called &#8216;load_user&#8217; in any given library.</p>
+
+
+
+<p>Those of us that do Perl 5 and Perl 6 programming don&#8217;t have to worry about this, but if you ever want to link to a C++ library, you probably should know at least a bit about &#8220;name mangling.&#8221;</p>
+
+
+
+<p>For a while, utilities like &#8216;CFront&#8217; for the Macintosh (which the author actually filed bug reports on) were used to &#8220;rename&#8221; functions like &#8216;load_user(int)&#8217; and &#8216;load_user(char*)&#8217; to &#8216;i_load_user&#8217; and &#8216;cs_load_user&#8217; before being added to the library, and other tools to do the reverse.</p>
+
+
+
+<h2>Has Your Mother Sold Her Mangle?</h2>
+
+
+
+<p>Eventually things settled down, and this process of changing names to fit into the library was &#8220;baked in&#8221; to the tool chains. Not consistently, of course, couldn&#8217;t have that. But conventions arose and even today <a href="https://en.wikipedia.org/wiki/Name_mangling">Wikipedia</a> lists at least 12 different ways to &#8220;mangle&#8221; &#8216;void h(void)&#8217; into the existing library formats.</p>
+
+
+
+<p>We&#8217;ll just look at the first one, &#8216;_Z1hv&#8217;. The &#8216;_Z&#8217; can be safely ignored, its purpose there is mainly to tell the linker something &#8220;special&#8221; is going on. &#8216;1h&#8217; is the function name, and &#8216;v&#8217; is its first (and only) parameter. Suppose, then, that you were tasked with writing a tool that undid this name mangling.</p>
+
+
+
+<p>Your first cut at extracting something useful might look something like</p>
+
+
+
+<pre class="wp-block-code"><code>'_Z9load_useri' ~~ m{ ^ '_Z' \d+ (\w+) (.) $ };</code></pre>
+
+
+
+<p>Assuming <em>$mangle-me</em> has &#8216;_Z9load_useri&#8217; in it (The mangled version of &#8216;void load_user(int)&#8217;) the regex engine goes through a bunch of simple steps.</p>
+
+
+
+<ul><li>Read and ignore &#8216;_Z&#8217;</li><li>Read and ignore &#8216;9&#8217;</li><li>Capture &#8216;load_user&#8217; into $0</li><li>Capture &#8216;i&#8217; into $1</li><li>There is no fifth thing.</li></ul>
+
+
+
+<p>But the person that wrote this library is playing silly buggers with someone (obviously <strong>us</strong> in this case) and there&#8217;s also a &#8216;_Z9load_userss&#8217; which comes out of the other end of the mangle looking like &#8216;void load_user(char*, char*)&#8217;, loading a user with first and last names.</p>
+
+
+
+<p>Now we&#8217;re in a bit of a quandary. Run the same expression and see what happens:</p>
+
+
+
+<pre class="wp-block-code"><code>'_Z9load_userss' ~~ m{ ^ '_Z' \d+ (\w+) (.) $ };</code></pre>
+
+
+
+<p>Sure enough, <em>$1</em> is &#8216;s&#8217;, just as we wanted it, but what about <em>$0</em>? It&#8217;s now &#8216;load_users&#8217;, which&#8230; y&#8217;know, looks too legit to quit. But we must. And now we&#8217;re faced with the quandary. Do we make the first parameter an optional capture? &#8216;m{ &#8230; (.)? (.) $ }&#8217; like so?</p>
+
+
+
+<p>No, that would capture the &#8216;r&#8217; of &#8216;_Z9load_users&#8217;. There must be something else in the name that we&#8217;re overlooking, some clue&#8230; Aha! &#8216;load_user&#8217; has 9 characters, and look just before it, we&#8217;ve got the number 9! Surely that tells us the number of characters in the function name! (and thankfully it actually <strong>does</strong>.)</p>
+
+
+
+<h2>Regexes 201</h2>
+
+
+
+<p>Now, how can we use this to our advantage? First things first, let&#8217;s get rid of some dead weight. We don&#8217;t care (for the moment) about parameters, so let&#8217;s just match the name and number of characters. And because we&#8217;re getting all serious up in here, let&#8217;s create a quick test.</p>
+
+
+
+<pre class="wp-block-code"><code>use Test;
+'_Z9load_user' ~~ m{ ^ '_Z' (\d+) (\w+) };
+is $0, '9';
+is $1, 'load_user';</code></pre>
+
+
+
+<p>Run the test script, see if it passes, I&#8217;m sure you know the drill. Go ahead and copy that, I&#8217;ll wait. Okay, the tests pass, so it&#8217;s time to play. I usually am working in a library that&#8217;s in git, so I&#8217;m usually on the &#8220;edit, run tests, git reset, edit&#8230;&#8221; treadmill by this point.</p>
+
+
+
+<p>So&#8230; How do we make use of this number? Well, let&#8217;s pull up the <a href="https://docs.perl6.org/language/regexes">Regexes</a> page over at <a href="https://docs.perl6.org/">docs.perl.org</a> and look around. Back in Perl 5 there used to be this feature &#8216;m{ a{5} }x&#8217; that matched just 5 copies of whatever it was in front of, that might be a good place to start looking.</p>
+
+
+
+<p>That&#8217;s now morphed into &#8216;m{ a ** 5 }&#8217;. Great, so let&#8217;s replace 5 with <em>$0</em> and go for it.</p>
+
+
+
+<pre class="wp-block-code"><code>'_Z9load_user' ~~ m{ ^ '_Z' (\d+) (\w ** $0) };</code></pre>
+
+
+
+<p>&#8220;Quantifier quantifies nothing&#8230;&#8221; That&#8217;s weird. <em>$0</em> is right there, staring me in the face. Maybe I just got the syntax wrong somehow?</p>
+
+
+
+<pre class="wp-block-code"><code>'_Z9load_user' ~~ m{ ^ '_Z' (\d+) (\w ** 9) };</code></pre>
+
+
+
+<p>Nope, that works. What&#8217;s going on here? <em>$0</em> is defined&#8230; Wait, it&#8217;s a variable inside a regex, that <strong>used</strong> to require the &#8216;e&#8217; modifier, didn&#8217;t it? Or something like that&#8230; &lt;read the manpage, scratch head&#8230; nothing there&gt; Hm. Are we at  a dead end?</p>
+
+
+
+<h2>Kick it up a notch</h2>
+
+
+
+<p>No, we just need to remember about how string interpolation works. In Perl 6, &#8220;Hello, {$name}!&#8221; is a perfectly fine way to interpolate variables into your expression, and it works because no matter where it is, {} signals a code block. Let&#8217;s try that, surround <em>$0</em> with braces.</p>
+
+
+
+<pre class="wp-block-code"><code>'_Z9load_user' ~~ m{ ^ '_Z' (\d+) (\w ** {$0}) };</code></pre>
+
+
+
+<p>Weird. This time the test failed with &#8221; instead of &#8216;load_user&#8217;. Maybe <em>$0</em> really isn&#8217;t defined? Now that it&#8217;s just regular Perl code, let&#8217;s check.</p>
+
+
+
+<pre class="wp-block-code"><code>'_Z9load_user' ~~ m{ ^ '_Z' (\d+) (\w ** {warn "Got '$0'"; $0}) };</code></pre>
+
+
+
+<p>&#8220;Use of Nil in string context.&#8221; So it&#8217;s really empty. Now, we have to <strong>really</strong> do some reading. Looking at the section on <a href="https://docs.perl6.org/language/regexes#General_quantifier:_**_min..max">general quantifiers</a> says &#8220;only basic literal syntax for the right-hand side of the quantifier [what we want to play with] is supported,&#8221; so it looks like we&#8217;re at a dead end.</p>
+
+
+
+<p>But things like &#8216;{$0}&#8217; <strong>do</strong> work, so we <strong>can</strong> use variables. That means that my problem isn&#8217;t that the variable is being ignored, it&#8217;s just not being populated when I need it. Let&#8217;s look at the section on <a href="https://docs.perl6.org/language/regexes#Capture_numbers">Capture numbers</a> to see when they get populated.</p>
+
+
+
+<p>Aha, you need to &#8220;publish&#8221; the capture using &#8216;{}&#8217; right after it. Let&#8217;s see if that works&#8230;</p>
+
+
+
+<pre class="wp-block-code"><code>'_Z9load_user' ~~ m{ ^ '_Z' (\d+) {} (\w ** {warn "Got '$0'"; $0}) };</code></pre>
+
+
+
+<p>Nope, something else is going on. And the next block down tells us the final solution &#8211; &#8216;:my&#8217;. This lets us create a variable inside the scope of the regular expression and use it as well, so let&#8217;s do just that.</p>
+
+
+
+<pre class="wp-block-code"><code>'_Z9load_user' ~~ m{ ^ '_Z'
+                     :my $length;          # Put $length in the proper scope
+                     (\d+) {$length = +$0} # Capture the length
+                     (\w ** {$length})     # And extract that many chars.
+                   };</code></pre>
+
+
+
+<p>And reformat things just a wee bit so we&#8217;ve got some room to work with. Now the test actually runs, and reads only as many characters of the function name as needs be.</p>
+
+
+
+<h2>And just one more thing&#8230;</h2>
+
+
+
+<p>It&#8217;s not just function names that follow this pattern, it&#8217;s also namespaces, and any special types that the function might use as parameters, so let&#8217;s package this up into something more useful.</p>
+
+
+
+<pre class="wp-block-code"><code>my regexp pascalish-string {
+  :my $length;
+  (\d+) {$length = +$0}
+  (\w ** {$length})
+};
+'_Z9load_user' ~~ m{ ^ '_Z' &lt;pascalish-string> };
+is $/&lt;pascalish-string>[0], 9;
+is $/&lt;pascalish-string>[1], 'load_user';</code></pre>
+
+
+
+<p>Pascal implementations were done back when RAM was at more of a premium, and stored a string like &#8216;load_user&#8217; as &#8216;\x{09}load_user&#8217; so the compiler knew how many bytes were available immediately rather than having to guess. It was limiting, but this was on computers like the early Macs (we&#8217;re talking pre-OS X, for that matter pre-System 7, for those of you that remember that far back.)</p>
+
+
+
+<p>So we can use this <em>&lt;pascalish-string&gt;</em> regular expression anywhere we want to match one of our counted terms. Because we&#8217;re using &#8216;my&#8217; inside a regular expression nested inside another regular expression inside a burrito wrapped in an enigma, there are no scoping troubles.</p>
+
+
+
+<p>There are probably other ways of doing this, and I would love to see them. If you do come up with a better way to solve this, let me know in the comments and I&#8217;ll work your solution into an upcoming article.</p>
+
+
+
+<p>As usual, gentle reader, thank you for your time and attention, and if you have any comments, questions, clarifications or criticisms (constructive, please) let me know.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer">
+		<span class="cat-links">Posted in <a href="http://173.230.155.209/index.php/category/uncategorized/" rel="category tag">Uncategorized</a></span> | <span class="tags-links">Tagged <a href="http://173.230.155.209/index.php/tag/linking/" rel="tag">Linking</a>, <a href="http://173.230.155.209/index.php/tag/nativecall/" rel="tag">NativeCall</a>, <a href="http://173.230.155.209/index.php/tag/parsing/" rel="tag">Parsing</a>, <a href="http://173.230.155.209/index.php/tag/perl/" rel="tag">Perl</a>, <a href="http://173.230.155.209/index.php/tag/perl-6/" rel="tag">Perl 6</a>, <a href="http://173.230.155.209/index.php/tag/regex/" rel="tag">Regex</a>, <a href="http://173.230.155.209/index.php/tag/regexp/" rel="tag">Regexp</a>, <a href="http://173.230.155.209/index.php/tag/regular-expressions/" rel="tag">Regular Expressions</a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-## -->
+
+	<nav class="navigation post-navigation" role="navigation">
+		<h2 class="screen-reader-text">Post navigation</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="http://173.230.155.209/index.php/2019/07/18/templates-and-a-clean-start/" rel="prev">Templates and a Clean Start</a></div><div class="nav-next"><a href="http://173.230.155.209/index.php/2019/08/08/templates-ii-electric-boogaloo/" rel="next">Templates II: Electric Boogaloo</a></div></div>
+	</nav>
+<div id="comments" class="comments-area">
+
+    
+    	<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/index.php/2019/07/24/a-regex-amuse-bouche/#respond" style="display:none;">Cancel Reply</a></small></h3>			<form action="http://173.230.155.209/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate>
+				<p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p><textarea placeholder="Start typing..." id="comment" class="form-control" name="comment" cols="45" rows="8" aria-required="true"></textarea></p><p class="form-allowed-tags">You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes:</p><div class="alert alert-info">&lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;s&gt; &lt;strike&gt; &lt;strong&gt; </div><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" required='required' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes" required='required' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200" /></p>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes" /><label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label></p>
+<p class="form-submit"><input name="submit" type="submit" id="commentsubmit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='57' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p>			</form>
+			</div><!-- #respond -->
+	
+</div><!-- #comments -->
+
+		</main><!-- #main -->
+	</section><!-- #primary -->
+
+
+<aside id="secondary" class="widget-area col-sm-12 col-lg-4" role="complementary">
+	<section id="search-2" class="widget widget_search"><form role="search" method="get" class="search-form" action="http://173.230.155.209/">
+    <label>
+        <input type="search" class="search-field form-control" placeholder="Search &hellip;" value="" name="s" title="Search for:">
+    </label>
+    <input type="submit" class="search-submit btn btn-default" value="Search">
+</form>
+
+
+
+</section><section id="custom_html-3" class="widget_text widget widget_custom_html"><h3 class="widget-title">Legacy BlogSpot</h3><div class="textwidget custom-html-widget">Check out <a href="https://www.theperlfisher.blogspot.com">The Original Perl Fisher</a> for older content<br/>
+Content will be migrated here sporadically.</div></section>		<section id="recent-posts-2" class="widget widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+											<li>
+					<a href="http://173.230.155.209/index.php/2019/08/08/templates-ii-electric-boogaloo/">Templates II: Electric Boogaloo</a>
+									</li>
+											<li>
+					<a href="http://173.230.155.209/index.php/2019/07/24/a-regex-amuse-bouche/">A Regex amuse-bouche</a>
+									</li>
+											<li>
+					<a href="http://173.230.155.209/index.php/2019/07/18/templates-and-a-clean-start/">Templates and a Clean Start</a>
+									</li>
+											<li>
+					<a href="http://173.230.155.209/index.php/2019/06/21/logic-programming-in-perl-6/">Logic Programming in Perl 6</a>
+									</li>
+											<li>
+					<a href="http://173.230.155.209/index.php/2019/05/20/quantum-tunneling/">Quantum Tunneling</a>
+									</li>
+					</ul>
+		</section><section id="recent-comments-2" class="widget widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link">jgoff</span> on <a href="http://173.230.155.209/index.php/2019/06/21/logic-programming-in-perl-6/#comment-6">Logic Programming in Perl 6</a></li><li class="recentcomments"><span class="comment-author-link">Fernando</span> on <a href="http://173.230.155.209/index.php/2019/06/21/logic-programming-in-perl-6/#comment-5">Logic Programming in Perl 6</a></li><li class="recentcomments"><span class="comment-author-link">Fernando</span> on <a href="http://173.230.155.209/index.php/2019/06/21/logic-programming-in-perl-6/#comment-4">Logic Programming in Perl 6</a></li><li class="recentcomments"><span class="comment-author-link">jgoff</span> on <a href="http://173.230.155.209/index.php/2019/05/20/quantum-tunneling/#comment-3">Quantum Tunneling</a></li><li class="recentcomments"><span class="comment-author-link">raiph</span> on <a href="http://173.230.155.209/index.php/2019/05/20/quantum-tunneling/#comment-2">Quantum Tunneling</a></li></ul></section><section id="archives-2" class="widget widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+				<li><a href='http://173.230.155.209/index.php/2019/08/'>August 2019</a></li>
+	<li><a href='http://173.230.155.209/index.php/2019/07/'>July 2019</a></li>
+	<li><a href='http://173.230.155.209/index.php/2019/06/'>June 2019</a></li>
+	<li><a href='http://173.230.155.209/index.php/2019/05/'>May 2019</a></li>
+	<li><a href='http://173.230.155.209/index.php/2019/04/'>April 2019</a></li>
+		</ul>
+			</section><section id="categories-2" class="widget widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+				<li class="cat-item cat-item-8"><a href="http://173.230.155.209/index.php/category/perl-6-programming/">Perl 6 Programming</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://173.230.155.209/index.php/category/uncategorized/">Uncategorized</a>
+</li>
+		</ul>
+			</section><section id="meta-2" class="widget widget_meta"><h3 class="widget-title">Meta</h3>			<ul>
+						<li><a rel="nofollow" href="http://173.230.155.209/wp-login.php">Log in</a></li>
+			<li><a href="http://173.230.155.209/index.php/feed/">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://173.230.155.209/index.php/comments/feed/">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="https://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.org</a></li>			</ul>
+			</section></aside><!-- #secondary -->
+			</div><!-- .row -->
+		</div><!-- .container -->
+	</div><!-- #content -->
+    	<footer id="colophon" class="site-footer navbar-dark bg-primary" role="contentinfo">
+		<div class="container pt-3 pb-3">
+            <div class="site-info">
+                &copy; 2019 <a href="http://173.230.155.209">The Perl Fisher</a>                <span class="sep"> | </span>
+                <a class="credits" href="https://afterimagedesigns.com/wp-bootstrap-starter/" target="_blank" title="WordPress Technical Support" alt="Bootstrap WordPress Theme">Bootstrap WordPress Theme</a>
+
+            </div><!-- close .site-info -->
+		</div>
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+
+		<script>
+		( function ( body ) {
+			'use strict';
+			body.className = body.className.replace( /\btribe-no-js\b/, 'tribe-js' );
+		} )( document.body );
+		</script>
+		<script> /* <![CDATA[ */var tribe_l10n_datatables = {"aria":{"sort_ascending":": activate to sort column ascending","sort_descending":": activate to sort column descending"},"length_menu":"Show _MENU_ entries","empty_table":"No data available in table","info":"Showing _START_ to _END_ of _TOTAL_ entries","info_empty":"Showing 0 to 0 of 0 entries","info_filtered":"(filtered from _MAX_ total entries)","zero_records":"No matching records found","search":"Search:","all_selected_text":"All items on this page were selected. ","select_all_link":"Select all pages","clear_selection":"Clear Selection.","pagination":{"all":"All","next":"Next","previous":"Previous"},"select":{"rows":{"0":"","_":": Selected %d rows","1":": Selected 1 row"}},"datepicker":{"dayNames":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"dayNamesShort":["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],"dayNamesMin":["S","M","T","W","T","F","S"],"monthNames":["January","February","March","April","May","June","July","August","September","October","November","December"],"monthNamesShort":["January","February","March","April","May","June","July","August","September","October","November","December"],"monthNamesMin":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"nextText":"Next","prevText":"Prev","currentText":"Today","closeText":"Done","today":"Today","clear":"Clear"}};/* ]]> */ </script><script type='text/javascript' src='http://173.230.155.209/wp-content/themes/wp-bootstrap-starter/inc/assets/js/popper.min.js?ver=5.2.2'></script>
+<script type='text/javascript' src='http://173.230.155.209/wp-content/themes/wp-bootstrap-starter/inc/assets/js/bootstrap.min.js?ver=5.2.2'></script>
+<script type='text/javascript' src='http://173.230.155.209/wp-content/themes/wp-bootstrap-starter/inc/assets/js/theme-script.min.js?ver=5.2.2'></script>
+<script type='text/javascript' src='http://173.230.155.209/wp-content/themes/wp-bootstrap-starter/inc/assets/js/skip-link-focus-fix.min.js?ver=20151215'></script>
+<script type='text/javascript' src='http://173.230.155.209/wp-includes/js/comment-reply.min.js?ver=5.2.2'></script>
+<script type='text/javascript' src='http://173.230.155.209/wp-includes/js/wp-embed.min.js?ver=5.2.2'></script>
+</body>
+</html>

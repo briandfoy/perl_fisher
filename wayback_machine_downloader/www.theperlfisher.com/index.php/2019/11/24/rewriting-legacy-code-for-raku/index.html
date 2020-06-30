@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="profile" href="http://gmpg.org/xfn/11">
+<title>Rewriting Legacy Code for Raku - The Perl Fisher</title>
+
+	<!-- Meta Tag Manager -->
+	<meta name="yandex-verification" content="36e3b3766d22b6c0" />
+	<!-- / Meta Tag Manager -->
+
+<!-- This site is optimized with the Yoast SEO plugin v12.5.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
+<link rel="canonical" href="http://www.theperlfisher.com/index.php/2019/11/24/rewriting-legacy-code-for-raku/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Rewriting Legacy Code for Raku - The Perl Fisher" />
+<meta property="og:description" content="This time around we&#8217;re going to talk about how to rewrite legacy code in Raku. Even in 2019, a lot of the office world revolves around spreadsheets, whether they be Excel, LibreOffice or simple .csv files. Perl 5 has a plethora of modules to do this, a quick search for &#8216;Spreadsheet&#8217; on MetaCPAN should convince &hellip;" />
+<meta property="og:url" content="http://www.theperlfisher.com/index.php/2019/11/24/rewriting-legacy-code-for-raku/" />
+<meta property="og:site_name" content="The Perl Fisher" />
+<meta property="article:tag" content="Binary" />
+<meta property="article:tag" content="Encoding" />
+<meta property="article:tag" content="Legacy Code" />
+<meta property="article:tag" content="Raku" />
+<meta property="article:tag" content="Raku Programming" />
+<meta property="article:section" content="Raku Programming" />
+<meta property="article:published_time" content="2019-11-24T03:58:31+00:00" />
+<meta property="article:modified_time" content="2019-11-24T04:45:00+00:00" />
+<meta property="og:updated_time" content="2019-11-24T04:45:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:description" content="This time around we&#8217;re going to talk about how to rewrite legacy code in Raku. Even in 2019, a lot of the office world revolves around spreadsheets, whether they be Excel, LibreOffice or simple .csv files. Perl 5 has a plethora of modules to do this, a quick search for &#8216;Spreadsheet&#8217; on MetaCPAN should convince [&hellip;]" />
+<meta name="twitter:title" content="Rewriting Legacy Code for Raku - The Perl Fisher" />
+<script type='application/ld+json' class='yoast-schema-graph yoast-schema-graph--main'>{"@context":"https://schema.org","@graph":[{"@type":["Person","Organization"],"@id":"http://www.theperlfisher.com/#/schema/person/3b45374adcb609cefbb3241a80695a2e","name":"jgoff","image":{"@type":"ImageObject","@id":"http://www.theperlfisher.com/#personlogo","url":"http://1.gravatar.com/avatar/7a8306387ada6c75b12865d707aa45bc?s=96&d=mm&r=g","caption":"jgoff"},"logo":{"@id":"http://www.theperlfisher.com/#personlogo"},"sameAs":[]},{"@type":"WebSite","@id":"http://www.theperlfisher.com/#website","url":"http://www.theperlfisher.com/","name":"The Perl Fisher","publisher":{"@id":"http://www.theperlfisher.com/#/schema/person/3b45374adcb609cefbb3241a80695a2e"},"potentialAction":{"@type":"SearchAction","target":"http://www.theperlfisher.com/?s={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"WebPage","@id":"http://www.theperlfisher.com/index.php/2019/11/24/rewriting-legacy-code-for-raku/#webpage","url":"http://www.theperlfisher.com/index.php/2019/11/24/rewriting-legacy-code-for-raku/","inLanguage":"en-US","name":"Rewriting Legacy Code for Raku - The Perl Fisher","isPartOf":{"@id":"http://www.theperlfisher.com/#website"},"datePublished":"2019-11-24T03:58:31+00:00","dateModified":"2019-11-24T04:45:00+00:00"},{"@type":"Article","@id":"http://www.theperlfisher.com/index.php/2019/11/24/rewriting-legacy-code-for-raku/#article","isPartOf":{"@id":"http://www.theperlfisher.com/index.php/2019/11/24/rewriting-legacy-code-for-raku/#webpage"},"author":{"@id":"http://www.theperlfisher.com/#/schema/person/3b45374adcb609cefbb3241a80695a2e"},"headline":"Rewriting Legacy Code for Raku","datePublished":"2019-11-24T03:58:31+00:00","dateModified":"2019-11-24T04:45:00+00:00","commentCount":0,"mainEntityOfPage":{"@id":"http://www.theperlfisher.com/index.php/2019/11/24/rewriting-legacy-code-for-raku/#webpage"},"publisher":{"@id":"http://www.theperlfisher.com/#/schema/person/3b45374adcb609cefbb3241a80695a2e"},"keywords":"Binary,Encoding,Legacy Code,Raku,Raku Programming","articleSection":"Raku Programming"}]}</script>
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="The Perl Fisher &raquo; Feed" href="http://www.theperlfisher.com/index.php/feed/" />
+<link rel="alternate" type="application/rss+xml" title="The Perl Fisher &raquo; Comments Feed" href="http://www.theperlfisher.com/index.php/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="The Perl Fisher &raquo; Rewriting Legacy Code for Raku Comments Feed" href="http://www.theperlfisher.com/index.php/2019/11/24/rewriting-legacy-code-for-raku/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/www.theperlfisher.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.3"}};
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css'  href='http://www.theperlfisher.com/wp-includes/css/dist/block-library/style.min.css?ver=5.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-bootstrap-starter-bootstrap-css-css'  href='http://www.theperlfisher.com/wp-content/themes/wp-bootstrap-starter/inc/assets/css/bootstrap.min.css?ver=5.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-bootstrap-starter-fontawesome-cdn-css'  href='http://www.theperlfisher.com/wp-content/themes/wp-bootstrap-starter/inc/assets/css/fontawesome.min.css?ver=5.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-bootstrap-starter-style-css'  href='http://www.theperlfisher.com/wp-content/themes/wp-bootstrap-starter/style.css?ver=5.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-bootstrap-starter-yeti-css'  href='http://www.theperlfisher.com/wp-content/themes/wp-bootstrap-starter/inc/assets/css/presets/theme-option/yeti.css?ver=5.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-bootstrap-starter-montserrat-merriweather-font-css'  href='https://fonts.googleapis.com/css?family=Merriweather%3A300%2C400%2C400i%2C700%2C900%7CMontserrat%3A300%2C400%2C400i%2C500%2C700%2C800&#038;ver=5.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-bootstrap-starter-montserrat-merriweather-css'  href='http://www.theperlfisher.com/wp-content/themes/wp-bootstrap-starter/inc/assets/css/presets/typography/montserrat-merriweather.css?ver=5.3' type='text/css' media='all' />
+<script type='text/javascript' src='http://www.theperlfisher.com/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp'></script>
+<script type='text/javascript' src='http://www.theperlfisher.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var gadwpUAEventsData = {"options":{"event_tracking":0,"event_downloads":"zip|mp3*|mpe*g|pdf|docx*|pptx*|xlsx*|rar*","event_bouncerate":0,"aff_tracking":1,"event_affiliates":"\/out\/","hash_tracking":"1","root_domain":"theperlfisher.com","event_timeout":100,"event_precision":0,"event_formsubmit":0,"ga_pagescrolldepth_tracking":1,"ga_with_gtag":0}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.theperlfisher.com/wp-content/plugins/google-analytics-dashboard-for-wp/front/js/tracking-analytics-events.js?ver=5.3.9'></script>
+<script type='text/javascript' src='http://www.theperlfisher.com/wp-content/plugins/google-analytics-dashboard-for-wp/front/js/tracking-scrolldepth.js?ver=5.3.9'></script>
+<!--[if lt IE 9]>
+<script type='text/javascript' src='http://www.theperlfisher.com/wp-content/themes/wp-bootstrap-starter/inc/assets/js/html5.js?ver=3.7.0'></script>
+<![endif]-->
+<link rel='https://api.w.org/' href='http://www.theperlfisher.com/index.php/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.theperlfisher.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.theperlfisher.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.3" />
+<link rel='shortlink' href='http://www.theperlfisher.com/?p=85' />
+<link rel="alternate" type="application/json+oembed" href="http://www.theperlfisher.com/index.php/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.theperlfisher.com%2Findex.php%2F2019%2F11%2F24%2Frewriting-legacy-code-for-raku%2F" />
+<!-- Analytics by WP-Statistics v12.6.10 - https://wp-statistics.com/ -->
+<link rel="pingback" href="http://www.theperlfisher.com/xmlrpc.php">    <style type="text/css">
+        #page-sub-header { background: #fff; }
+    </style>
+    <style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+<!-- BEGIN ExactMetrics v5.3.9 Universal Analytics - https://exactmetrics.com/ -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-144190704-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- END ExactMetrics Universal Analytics -->
+</head>
+
+<body class="post-template-default single single-post postid-85 single-format-standard theme-preset-active">
+<div id="page" class="site">
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+    	<header id="masthead" class="site-header navbar-static-top navbar-dark bg-primary" role="banner">
+        <div class="container">
+            <nav class="navbar navbar-expand-xl p-0">
+                <div class="navbar-brand">
+                                            <a class="site-title" href="http://www.theperlfisher.com/">The Perl Fisher</a>
+                    
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav" aria-controls="" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                
+            </nav>
+        </div>
+	</header><!-- #masthead -->
+    	<div id="content" class="site-content">
+		<div class="container">
+			<div class="row">
+                
+	<section id="primary" class="content-area col-sm-12 col-lg-8">
+		<main id="main" class="site-main" role="main">
+
+		
+<article id="post-85" class="post-85 post type-post status-publish format-standard hentry category-raku-programming tag-binary tag-encoding tag-legacy-code tag-raku tag-raku-programming">
+	<div class="post-thumbnail">
+			</div>
+	<header class="entry-header">
+		<h1 class="entry-title">Rewriting Legacy Code for Raku</h1>		<div class="entry-meta">
+			<span class="posted-on">Posted on <a href="http://www.theperlfisher.com/index.php/2019/11/24/rewriting-legacy-code-for-raku/" rel="bookmark"><time class="entry-date published" datetime="2019-11-24T03:58:31+00:00">2019-11-24</time></a></span> | <span class="byline"> by <span class="author vcard"><a class="url fn n" href="http://www.theperlfisher.com/index.php/author/jgoff/">jgoff</a></span></span>		</div><!-- .entry-meta -->
+			</header><!-- .entry-header -->
+	<div class="entry-content">
+		
+<p>This time around we&#8217;re going to talk about how to rewrite legacy code in Raku. Even in 2019, a lot of the office world revolves around spreadsheets, whether they be Excel, <a href="http://libreoffice.org">LibreOffice</a> or simple .csv files. Perl 5 has a plethora of modules to do this, a quick search for &#8216;Spreadsheet&#8217; on <a href="https://metacpan.org/">MetaCPAN</a> should convince you of that.</p>
+
+
+
+<p>The Raku world doesn&#8217;t have quite as many modules as you&#8217;d expect, though. While it&#8217;s been around for a few years, &#8220;heavy lifting&#8221; modules like Spreadsheet stuff really haven&#8217;t come around yet. This involves packing and unpacking binary formats, and in Perl 5 this centered around the <em>pack</em> and <em>unpack</em> builtins, which are relative newcomers to Raku.</p>
+
+
+
+<p>But Raku has built-in binary buffers, which take care of most of the need for pack/unpack. The main reason I can see is the <a href="http://www.microsoft.com/interop/docs/supportingtechnologies.mspx">OLE</a> storage format. Basically it&#8217;s Microsoft&#8217;s way of packing a file system into a single data file. And at this point the proverbial yaks start to pile up, and reasonable people say &#8220;You know, Excel still accepts .csv files, I know how to build those.&#8221;</p>
+
+
+
+<p>Enter<a href="https://github.com/drforr/raku-OLE-Storage_Lite"> raku-OLE-Storage_Lite</a> &#8211; this is my translation-in-progress from Perl 5 to Raku. As of this writing it can read an entire OLE file (without data) and write a good portion of the sample file &#8211; I believe I&#8217;ve got maybe two methods left to debug.</p>
+
+
+
+<h2>Knee deep in yaks</h2>
+
+
+
+<p>CSV files are easy to write, but they come with their own set of troubles. When you import a .csv file into your Excel app (or LibreOffice, or whatever) you&#8217;re faced with a complex dialog asking you how to import your data, and the average user doesn&#8217;t want that every time, they just want to open their spreadsheet.</p>
+
+
+
+<p>So, it&#8217;s time to follow Liz&#8217;s lead and rewrite in Raku an existing module. First thing I did was go to <a href="https://metacpan.org/pod/Spreadsheet::ParseExcel">Spreadsheet::ParseExcel</a> and see how they did things. Within a few minutes I&#8217;d already encountered the first yak. After opening the file, it delegates it to <a href="https://metacpan.org/pod/OLE::Storage_Lite">OLE::Storage_Lite</a>, which is much like <a href="http://www.jamesbrown.com/">James Brown</a>, the &#8220;hardest-working man in show business&#8221;.</p>
+
+
+
+<p>It&#8217;s still on version 0.19 at the time of writing, but I assure you that&#8217;s only because the current maintainer hasn&#8217;t updated the version to reflect reality. It may be legacy Perl rough-and-tumble code, but it&#8217;s been around for a long time. It wears its battle scars proudly.</p>
+
+
+
+<p>It relies heavily on <em>pack</em> and <em>unpack</em>, which are still <strong>technically</strong> experimental in Raku. The OO and coding style betrays its pre-5.00 origins, and the tests are, well, very pragmatic. &#8220;Does it load? Great! Can it convert timestamps internally? Great! Ship it!&#8221;</p>
+
+
+
+<p>To its credit, there&#8217;s a sample directory where you can use <em>smpview.pl</em> to view the contents of the internal filesystem of any OLE file, and a sample writer to create a known-working OLE file. That&#8217;ll do as a starting point.</p>
+
+
+
+<h3>Buckling down</h3>
+
+
+
+<p>So, reading an Excel spreadsheet means reading an OLE file system. And when I say file system, I&#8217;m not kidding. Inside your typical .xlsx file, there&#8217;s a small header and a root object. The root object contains &#8220;pointers&#8221; (really file offsets) to a document object, and inside that are file objects, each with pointers to the different blocks.</p>
+
+
+
+<p>This is all intended to reflect the original disk layout, so it looks very much like an NTFS superblock and block layout. The documentation seems to have moved to <a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-oleds/fdc5e702-d09e-4344-a77f-eb079d41f23f">this</a> page detailing OLE 1.0 and 2.0 formats, I&#8217;m not at all certain what the current version has.</p>
+
+
+
+<p>How are Excel spreadsheets arranged in here? Worksheets are OLE directories, and inside each worksheet, tabs are individual files. How&#8217;s that for a bit of inspiration? Luckily the Root directory, Files and nested Directories are all separate objects, with at least a few common methods aggregated into a superclass.</p>
+
+
+
+<h2>Legacy Code</h2>
+
+
+
+<p>This is a long-winded way of saying the module in question is very much legacy code. And, as I want to bring it into the proverbial light, I&#8217;ve got to give some issues some thought.</p>
+
+
+
+<ol><li>No useful tests, so I&#8217;ll have to write those.</li><li>How much code do I want to sacrifice?</li><li>How much can I save?</li></ol>
+
+
+
+<p>Well, I can put off #2 and #3 while writing some tests. Whoa, wait a minute. I don&#8217;t have a test file to work with, just some scripts over in sample/. Mumble, mumble, more yaks. Read README, find that smpsv.pl will create one, run that.</p>
+
+
+
+<p>Great, I&#8217;ve got a sample test.xsl file. But given the amount of potential bit-rot it seems prudent to actually make sure that I&#8217;ve got a working Excel file before committing a few days (ha!) to getting a module working. Double-click it, launch into Excel&#8217;s cloud-serviced app, find that it&#8217;s one of those Win10 panes I&#8217;ve never figured out how to close, open task-killer, kill that.</p>
+
+
+
+<p>Launch <a href="https://www.libreoffice.org/">LibreOffice</a> which I happen to have lying around &#8211; my current project at work is parsing a spreadsheet in Perl 5, which is what inspired this whole workload.</p>
+
+
+
+<p>Yep, that parses; looks a bit odd because it&#8217;s coming up with a Japanese font, and some arbitrary English text, but it works. Also, looking at the code it generates all three object types &#8211; Root, File and Dir, so it&#8217;ll exercise the major code paths. Bonus.</p>
+
+
+
+<h2>Testing, testing</h2>
+
+
+
+<p>Now I&#8217;ve got the makings of a simple test file. The script builds objects individually, so I can run the individual calls, and check that the object&#8217;s internals look the way I want.</p>
+
+
+
+<pre class="wp-block-code"><code>my $oDt = OLE::Storage_Lite::PPS::Root->new(
+  [ ],
+  [ 0, 0, 16, 4, 10, 100 ], # 2000/11/4 16:00:00:0000
+  [ $oWk, $oDir ]
+);</code></pre>
+
+
+
+<p>In Raku, this converts to:</p>
+
+
+
+<pre class="wp-block-code"><code>my $oDt = OLE::Storage_Lite::PPS::Root.new(
+  (),
+  ( 0, 0, 16, 4, 10, 100 ), # 2000/11/4 16:00:00:0000
+  ( $oWk, $oDir )
+);</code></pre>
+
+
+
+<p>I&#8217;ve made one change already, to make things simpler for Raku users. In Perl, you have to pass lists as references unless you want to use the new function signatures. In Raku, you can just pass lists as you would ordinarily to your method call.</p>
+
+
+
+<p>Using native data types rather than passing references around may seem a bit odd at first to new Raku programmers, but the new variable classes are easier to enforce strong typing on later, when you get used to the language.</p>
+
+
+
+<h3>Going with the flow</h3>
+
+
+
+<p>Now we&#8217;ve got something we can test, namely making sure that we&#8217;ve got a valid OLE Root document. So, before we go ahead with the code, I&#8217;ll share a few little things. I know very little about this code, so I want to make sure that I <strong>intimately</strong> copy each detail of the object at this stage. Later on I might get fancy and replace things with their own object types, but for now, my goal is going to be 1:1 replication.</p>
+
+
+
+<p>I tend to like <a href="https://github.com/tmux/tmux/wiki">tmux</a> as a shell environment, haven&#8217;t really gotten along with UIs. So, keeping in mind that I wanted an absolute 1:1 copy of the original object, I ended up doing this:</p>
+
+
+
+<ol><li>Switch to new window, open my copy of &#8216;samples/smpsv.pl&#8217; in vim</li><li>Add &#8216;use YAML; die Dump( $oDt ) just below the line where it gets created</li><li>Switch to new window, run the sample script, copy the YAML output</li><li>Close the two new windows I created to keep clutter down</li><li>Paste the YAML code into the new Raku test.</li></ol>
+
+
+
+<pre class="wp-block-code"><code>my $oDt = OLE::Storage_Lite::PPS::Root.new(
+  (),
+  ( 0, 0, 16, 4, 10, 100 ), # 2000/11/4 16:00:00:0000
+  ( $oWk, $oDir )
+);
+--
+  Name: "R\0o\0o\0t\0 \0E\0n\0t\0r\0y\0"
+  No: ~
+  Time2nd:
+    - 0
+    - 0
+    - 16
+    - 4
+    - 10
+    - 100
+# and so on...</code></pre>
+
+
+
+<p>This should contain all I need to create an OLE file from this set of objects. I&#8217;m using this as a sneaky way of not reading the spec, at least not yet. As the old title goes: Algorithm + Data Structure = Program. Using YAML (or Data::Dumper) gives me the data structure, copying the Perl 5 code into Raku gives me the algorithm.</p>
+
+
+
+<p>I should almost be able to keep line-for-line fidelity, so when a patch is posted to the Perl 5 source I can import it into Raku without too much trouble. But once I&#8217;ve got a better test base and a few users in Raku I&#8217;ll probably rewrite this whole module in a more Raku-ready fashion. I can keep the old module around for reference.</p>
+
+
+
+<h2>Encoding worries</h2>
+
+
+
+<p>But we&#8217;ve also got a surprise lurking here. &#8220;R\0o\0ot\0 \0E\0n\0t\0r\0y\0&#8221; looks like binary garbage, but is actually UCS-2, I think. If it is, then the OLE file is limited to a subset of Unicode. I can put restrictions on it later if I have to, but ATM I actually don&#8217;t care.</p>
+
+
+
+<p>I&#8217;ve done enough time in the i18n salt mines that I know how to deal with this. Store the string in the best format possible (UTF-8 here) internally. When the time comes to write it to the network or disk, translate it to the final encoding.</p>
+
+
+
+<p>This way I can see what all the attributes are at a glance without changing encoding. I can also manipulate everything using regular Raku code until the last moment. If I have to, I can use Raku&#8217;s gradual typing to constrain the string. More importantly, I don&#8217;t have to do any of this <strong>now</strong>.</p>
+
+
+
+<h2>Got any change?</h2>
+
+
+
+<p>This means I&#8217;m going to change things just a little bit more. When data gets added to &#8216;Name&#8217; I&#8217;m going to assume it&#8217;s UTF-8. Since I&#8217;m not doing any I/O yet, I can make whatever assumptions I want. Keeping the internals simple keeps my life simple, at least.</p>
+
+
+
+<p>So I&#8217;ll write out a quick <em>is-deeply</em> test and get on with things:</p>
+
+
+
+<pre class="wp-block-code"><code>is-deeply $oDt, (
+  Name => 'Root Entry',
+  Time2nd => ( 0, 0, 16, 4, 10, 100 ),
+  # ...
+  Child => ( $oWk, $oDir )
+);</code></pre>
+
+
+
+<p>This looks pretty straightforward, and almost how you&#8217;d write the original test in Perl 5. It won&#8217;t <strong>run</strong> yet, but that&#8217;s something we&#8217;ll tackle in the next part in the series.</p>
+
+
+
+<p>I&#8217;m not done quite yet, because I&#8217;ve got a lot of these things to write, and not all of them may have the &#8216;Child&#8217; attribute. I could write a tiny method that skipped over the &#8216;Child&#8217; attribute along with anything else I wanted, but that felt clumsy. It looked like:</p>
+
+
+
+<pre class="wp-block-code"><code>ok sorta-deeply $oDt, (
+  Name => 'Root Window',
+  Time2nd => ( 0, 0, 16, 4, 10, 100 ),
+  # ...
+), ( 'Child' );</code></pre>
+
+
+
+<p>And notice that <em>sorta-deeply</em> is a function that does all the work, then passes a simple Bool back to the test. I&#8217;d end up writing all of the code that <em>is-deeply</em> does (except for the recursion), and get something back that&#8217;s less useful.</p>
+
+
+
+<p>Next time we&#8217;ll get into making these tests pass. I&#8217;m writing the next section right after this, but you won&#8217;t get to see it for another week or so, I&#8217;m afraid. If you have questions or comments about the first part of this series, please feel free to comment below.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer">
+		<span class="cat-links">Posted in <a href="http://www.theperlfisher.com/index.php/category/raku-programming/" rel="category tag">Raku Programming</a></span> | <span class="tags-links">Tagged <a href="http://www.theperlfisher.com/index.php/tag/binary/" rel="tag">Binary</a>, <a href="http://www.theperlfisher.com/index.php/tag/encoding/" rel="tag">Encoding</a>, <a href="http://www.theperlfisher.com/index.php/tag/legacy-code/" rel="tag">Legacy Code</a>, <a href="http://www.theperlfisher.com/index.php/tag/raku/" rel="tag">Raku</a>, <a href="http://www.theperlfisher.com/index.php/tag/raku-programming/" rel="tag">Raku Programming</a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-## -->
+
+	<nav class="navigation post-navigation" role="navigation" aria-label="Posts">
+		<h2 class="screen-reader-text">Post navigation</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="http://www.theperlfisher.com/index.php/2019/08/08/templates-ii-electric-boogaloo/" rel="prev">Templates II: Electric Boogaloo</a></div></div>
+	</nav>
+<div id="comments" class="comments-area">
+
+    
+    	<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/index.php/2019/11/24/rewriting-legacy-code-for-raku/#respond" style="display:none;">Cancel Reply</a></small></h3><form action="http://www.theperlfisher.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate><p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p><textarea placeholder="Start typing..." id="comment" class="form-control" name="comment" cols="45" rows="8" aria-required="true"></textarea></p><p class="form-allowed-tags">You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes:</p><div class="alert alert-info">&lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;s&gt; &lt;strike&gt; &lt;strong&gt; </div><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" required='required' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes" required='required' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200" /></p>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes" /> <label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label></p>
+<p class="form-submit"><input name="submit" type="submit" id="commentsubmit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='85' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p></form>	</div><!-- #respond -->
+	
+</div><!-- #comments -->
+
+		</main><!-- #main -->
+	</section><!-- #primary -->
+
+
+<aside id="secondary" class="widget-area col-sm-12 col-lg-4" role="complementary">
+	<section id="search-2" class="widget widget_search"><form role="search" method="get" class="search-form" action="http://www.theperlfisher.com/">
+    <label>
+        <input type="search" class="search-field form-control" placeholder="Search &hellip;" value="" name="s" title="Search for:">
+    </label>
+    <input type="submit" class="search-submit btn btn-default" value="Search">
+</form>
+
+
+
+</section><section id="custom_html-3" class="widget_text widget widget_custom_html"><h3 class="widget-title">Legacy BlogSpot</h3><div class="textwidget custom-html-widget">Check out <a href="https://www.theperlfisher.blogspot.com">The Original Perl Fisher</a> for older content<br/>
+Content will be migrated here sporadically.</div></section>		<section id="recent-posts-2" class="widget widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+											<li>
+					<a href="http://www.theperlfisher.com/index.php/2019/11/24/rewriting-legacy-code-for-raku/" aria-current="page">Rewriting Legacy Code for Raku</a>
+									</li>
+											<li>
+					<a href="http://www.theperlfisher.com/index.php/2019/08/08/templates-ii-electric-boogaloo/">Templates II: Electric Boogaloo</a>
+									</li>
+											<li>
+					<a href="http://www.theperlfisher.com/index.php/2019/07/24/a-regex-amuse-bouche/">A Regex amuse-bouche</a>
+									</li>
+											<li>
+					<a href="http://www.theperlfisher.com/index.php/2019/07/18/templates-and-a-clean-start/">Templates and a Clean Start</a>
+									</li>
+											<li>
+					<a href="http://www.theperlfisher.com/index.php/2019/06/21/logic-programming-in-perl-6/">Logic Programming in Raku</a>
+									</li>
+					</ul>
+		</section><section id="recent-comments-2" class="widget widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link">jgoff</span> on <a href="http://www.theperlfisher.com/index.php/2019/06/21/logic-programming-in-perl-6/#comment-6">Logic Programming in Raku</a></li><li class="recentcomments"><span class="comment-author-link">Fernando</span> on <a href="http://www.theperlfisher.com/index.php/2019/06/21/logic-programming-in-perl-6/#comment-5">Logic Programming in Raku</a></li><li class="recentcomments"><span class="comment-author-link">Fernando</span> on <a href="http://www.theperlfisher.com/index.php/2019/06/21/logic-programming-in-perl-6/#comment-4">Logic Programming in Raku</a></li><li class="recentcomments"><span class="comment-author-link">jgoff</span> on <a href="http://www.theperlfisher.com/index.php/2019/05/20/quantum-tunneling/#comment-3">Quantum Tunneling</a></li><li class="recentcomments"><span class="comment-author-link">raiph</span> on <a href="http://www.theperlfisher.com/index.php/2019/05/20/quantum-tunneling/#comment-2">Quantum Tunneling</a></li></ul></section><section id="archives-2" class="widget widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+				<li><a href='http://www.theperlfisher.com/index.php/2019/11/'>November 2019</a></li>
+	<li><a href='http://www.theperlfisher.com/index.php/2019/08/'>August 2019</a></li>
+	<li><a href='http://www.theperlfisher.com/index.php/2019/07/'>July 2019</a></li>
+	<li><a href='http://www.theperlfisher.com/index.php/2019/06/'>June 2019</a></li>
+	<li><a href='http://www.theperlfisher.com/index.php/2019/05/'>May 2019</a></li>
+	<li><a href='http://www.theperlfisher.com/index.php/2019/04/'>April 2019</a></li>
+		</ul>
+			</section><section id="categories-2" class="widget widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+				<li class="cat-item cat-item-21"><a href="http://www.theperlfisher.com/index.php/category/raku-programming/">Raku Programming</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://www.theperlfisher.com/index.php/category/uncategorized/">Uncategorized</a>
+</li>
+		</ul>
+			</section><section id="meta-2" class="widget widget_meta"><h3 class="widget-title">Meta</h3>			<ul>
+						<li><a rel="nofollow" href="http://www.theperlfisher.com/wp-login.php">Log in</a></li>
+			<li><a href="http://www.theperlfisher.com/index.php/feed/">Entries feed</a></li>
+			<li><a href="http://www.theperlfisher.com/index.php/comments/feed/">Comments feed</a></li>
+			<li><a href="https://wordpress.org/">WordPress.org</a></li>			</ul>
+			</section></aside><!-- #secondary -->
+			</div><!-- .row -->
+		</div><!-- .container -->
+	</div><!-- #content -->
+    	<footer id="colophon" class="site-footer navbar-dark bg-primary" role="contentinfo">
+		<div class="container pt-3 pb-3">
+            <div class="site-info">
+                &copy; 2019 <a href="http://www.theperlfisher.com">The Perl Fisher</a>                <span class="sep"> | </span>
+                <a class="credits" href="https://afterimagedesigns.com/wp-bootstrap-starter/" target="_blank" title="WordPress Technical Support" alt="Bootstrap WordPress Theme">Bootstrap WordPress Theme</a>
+
+            </div><!-- close .site-info -->
+		</div>
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+
+<script type='text/javascript' src='http://www.theperlfisher.com/wp-content/themes/wp-bootstrap-starter/inc/assets/js/popper.min.js?ver=5.3'></script>
+<script type='text/javascript' src='http://www.theperlfisher.com/wp-content/themes/wp-bootstrap-starter/inc/assets/js/bootstrap.min.js?ver=5.3'></script>
+<script type='text/javascript' src='http://www.theperlfisher.com/wp-content/themes/wp-bootstrap-starter/inc/assets/js/theme-script.min.js?ver=5.3'></script>
+<script type='text/javascript' src='http://www.theperlfisher.com/wp-content/themes/wp-bootstrap-starter/inc/assets/js/skip-link-focus-fix.min.js?ver=20151215'></script>
+<script type='text/javascript' src='http://www.theperlfisher.com/wp-includes/js/comment-reply.min.js?ver=5.3'></script>
+<script type='text/javascript' src='http://www.theperlfisher.com/wp-includes/js/wp-embed.min.js?ver=5.3'></script>
+</body>
+</html>
