@@ -1,0 +1,1133 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	xmlns:georss="http://www.georss.org/georss" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:media="http://search.yahoo.com/mrss/"
+	>
+
+<channel>
+	<title>Perl programming &#8211; The Perl Fisher</title>
+	<atom:link href="https://perlfisher.wordpress.com/category/perl-programming/feed/" rel="self" type="application/rss+xml" />
+	<link>https://perlfisher.wordpress.com</link>
+	<description></description>
+	<lastBuildDate>Tue, 30 Jun 2020 11:09:03 +0000</lastBuildDate>
+	<language>en</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>http://wordpress.com/</generator>
+<cloud domain='perlfisher.wordpress.com' port='80' path='/?rsscloud=notify' registerProcedure='' protocol='http-post' />
+<image>
+		<url>https://s0.wp.com/i/buttonw-com.png</url>
+		<title>Perl programming &#8211; The Perl Fisher</title>
+		<link>https://perlfisher.wordpress.com</link>
+	</image>
+	<atom:link rel="search" type="application/opensearchdescription+xml" href="https://perlfisher.wordpress.com/osd.xml" title="The Perl Fisher" />
+	<atom:link rel='hub' href='https://perlfisher.wordpress.com/?pushpress=hub'/>
+	<item>
+		<title>Rewriting Perl Code for Raku IV: A New Hope</title>
+		<link>https://perlfisher.wordpress.com/2019/12/08/rewriting-perl-code-for-raku-iv-a-new-hope/</link>
+					<comments>https://perlfisher.wordpress.com/2019/12/08/rewriting-perl-code-for-raku-iv-a-new-hope/#respond</comments>
+		
+		<dc:creator><![CDATA[Perl Fisher]]></dc:creator>
+		<pubDate>Sun, 08 Dec 2019 11:36:34 +0000</pubDate>
+				<category><![CDATA[Perl programming]]></category>
+		<category><![CDATA[Raku programming]]></category>
+		<guid isPermaLink="false">http://theperlfisher.wordpress.com/?p=39</guid>
+
+					<description><![CDATA[Back in&#160;Part III&#160;of our series on Raku programming, we talked about some of the basics of OO programming. This time we’ll talk about another aspect of OO programming. Perl objects can be made from any kind of reference, although the most common is a hash. I think Raku objects can do the same, but in<a class="more-link" href="https://perlfisher.wordpress.com/2019/12/08/rewriting-perl-code-for-raku-iv-a-new-hope/">Continue reading <span class="screen-reader-text">"Rewriting Perl Code for Raku IV: A New&#160;Hope"</span></a>]]></description>
+										<content:encoded><![CDATA[
+<p>Back in&nbsp;<a href="http://web.archive.org/web/20200212094016/http://www.theperlfisher.com/index.php/2019/11/24/rewriting-legacy-code-for-raku-ii-electric-boogaloo/">Part III</a>&nbsp;of our series on Raku programming, we talked about some of the basics of OO programming. This time we’ll talk about another aspect of OO programming. Perl objects can be made from any kind of reference, although the most common is a hash. I think Raku objects can do the same, but in this article we’ll just talk about hash-style Perl objects.</p>
+
+
+
+<p>Raku objects let you superclass and subclass them, instantiate them, run methods on them, and store data in them. In previous articles we’ve talked about all but storing data.&nbsp;It’s time to remedy that, and talk about attributes.</p>
+
+
+
+<h2>Instance attributes</h2>
+
+
+
+<p>We used&nbsp;<code>unit class OLE::Storage_Lite;</code>&nbsp;to declare our class, and&nbsp;<code>method save( $x, $y ) { ... }</code>&nbsp;to create methods. Or in our case rewrite existing functions into methods. Now, we focus our attention on some of the variables that should really be instance attributes, and why.</p>
+
+
+
+<p>Let’s get to know which variables behave like attributes, and which don’t. This&nbsp;<strong>will</strong>&nbsp;change how we write our Raku code, but hopefully for the better. We’ll start from the outside in, and look at the API. There are a few “test” scripts that use the module, and this fragment is pretty common.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+use OLE::Storage_Lite;
+my $oOl = OLE::Storage_Lite-&gt;new('test.xls');
+my $oPps = $oOl-&gt;getPpsTree(1);
+die( &quot;test.xls must be a OLE file&quot;) unless($oPps);
+</pre>
+
+
+<p>The author creates an object (<em>$oOl</em>) from an existing file, then fetches a tree of “Pps” objects, whatever they are. So, one&nbsp;<em>OLE::Storage_Lite</em>&nbsp;object equals one file. This gives me my first instance variable,&nbsp;the filename.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+sub new($$) {
+  my($sClass, $sFile) = @_;
+  my $oThis = {
+    _FILE =&gt; $sFile,
+  };
+  bless $oThis;
+  return $oThis;
+}
+</pre>
+
+
+<p>Above is how they wrote it in Perl, and below is how we’d write it (exactly as specified) in Raku:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+has $._FILE;
+
+multi method new( $sFile ) {
+  self.new( _FILE =&gt; $sFile );
+}
+</pre>
+
+
+<p>Later on, we can call&nbsp;<code>my $file = OLE:Storage_Lite.new( 'test.xls' );</code>&nbsp;just like we did in Perl. We wouldn’t even need the&nbsp;<em>new</em>&nbsp;method if we had users call&nbsp;<code>my $file = OLE::Storage_Lite.new( _FILE =&gt; 'text.xls' );</code>. This gives users the option of calling the API in the old Perl fashion or the new Raku fashion without additional work on our part.</p>
+
+
+
+<h2>Strict Raku-style</h2>
+
+
+
+<p>There’s a problem lurking here, though. The constructor Raku provides us lets us call&nbsp;<code>my $file = OLE::Storage_Lite.new();</code>&nbsp;without specifying a value for&nbsp;<em>$._FILE</em>. If you know Perl’s Moose module, though, the ‘has’ there just might look familiar.</p>
+
+
+
+<p>And for good reason. A lot of the ideas from Moose migrated into Raku during its design, and the attributes were one of those. Moose lets you do a lot of things with attributes, and so does Raku. One of those is you can add “adverbs” to them. Let’s do that now.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+has $._FILE is required;
+</pre>
+
+
+<p>Calling&nbsp;<code>OLE::Storage_Lite.new()</code>&nbsp;now fails, because you’re not passing in the&nbsp;<em>_FILE</em>&nbsp;argument. That solves one problem. Actually, it solves two, come to think of it. In the original Perl code, you could call&nbsp;<code>OLE:Storage_Lite-&gt;new()</code>&nbsp;too, and it wouldn’t complain. Now we’ve fixed that, with one new term.</p>
+
+
+
+<h2>Progressive Typing</h2>
+
+
+
+<p>No, we’re not talking about some new editor like&nbsp;<a href="http://web.archive.org/web/20200212094016/https://www.commaide.com/">Comma</a>&nbsp;(the link&nbsp;<strong>does</strong>&nbsp;work, despite the certificate problem.) Our code would run just fine, as-is. Users could call our&nbsp;<em>.new()</em>&nbsp;API, Raku would make sure the filename existed, and we could go on with translating.</p>
+
+
+
+<p>But there’s something more we can take advantage of here, and that is the fact that any Raku object (and anything we can instantiate is an object) is a type as well. We haven’t mentioned that because we really couldn’t use that information until now.</p>
+
+
+
+<p>The original Perl code is littered with clues to types, hidden in the variable names. When we wrote our own API call, the Perl code called the file name&nbsp;<em>$sNm.</em>&nbsp;The ‘s’ tells the Perl compiler nothing, but it tells us that&nbsp;<em>$sNm</em>&nbsp;is a String type. Perl may not have true types, but Raku does. Let’s fix our attribute with that in mind.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+has Str $._FILE is required;
+</pre>
+
+
+<p>We knew all along that&nbsp;<em>$._FILE</em>&nbsp;is a string of some sort, but telling Raku that lets it allocate space more efficiently. Making sure it’s a required attribute lets anyone that calls&nbsp;<em>new()</em>&nbsp;know if they forget an argument. We could go a little farther with this, but locking down attributes will help in the long run, when we start dealing with the&nbsp;<em>pack</em>&nbsp;and&nbsp;<em>unpack</em>&nbsp;built-ins.</p>
+
+
+
+<h2>Packing It All In</h2>
+
+
+
+<p>We’re now getting to the heart of the module. There’s a lot of mechanics above us, allocating objects and doing math and checking types, and not much below us. The class’ entire purpose is to read and write OLE-formatted files. We’ll talk more about the boilerplate, but here’s the real meat of the file.</p>
+
+
+
+<p>Let’s start with what should be simple, reading in data. Just like in Perl, we open a file and get back a “file handle” (assuming the file exists, of course.) By default, calling&nbsp;<code>my $fh = open $._FILE;</code>gives us a read-only file handle. The file handle itself has a bunch of attributes associated with it, but the important one right now is its encoding.</p>
+
+
+
+<p>Namely, the fact that it has none. An OLE file is essentially a miniature filesystem (probably based on FAT) packed onto disk, complete with a root directory, subdirectories and files. File have names encoded in UCS-2, but the rest is entirely dependent upon what the application requires.</p>
+
+
+
+<p>The upshot of which is that we can’t read the format with something simple like&nbsp;<code>my @lines = $fh.lines;</code>&nbsp;which would read line after line into the&nbsp;<em>@lines</em>&nbsp;array. Instead we’ll use calls like&nbsp;<em>read()</em>and&nbsp;<em>write()</em>&nbsp;that return byte-oriented buffers.</p>
+
+
+
+<h2>Buffering…</h2>
+
+
+
+<p>All OLE files start off with the header “xD0xCFx11xE0xA1xB1x1AxE1”, so we should probably start there. That’s important twice in the code, in fact. First, when we’re reading off disk, we can check it against what we’ve just read to make sure this file is OLE, and not, say, a JSON file. Later on, when we’re saving out an OLE file, we can write it as the header string.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+constant HEADER-ID = "xD0xCFx11xE0xA1xB1x1AxE1";
+</pre>
+
+
+<p>I’ll make it a constant as well, so when I revisit this code in a month I don’t have to go looking in specs for ‘0xd0 0xcf’ to remember what this is. Reading is straight-forward too. It needs just a byte count.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+my Buf $header = $fh.read( 8 );
+</pre>
+
+
+<p>Something important to notice here is the type, ‘Buf’. If our file was in Markdown, or JSON we could get away with just writing&nbsp;<code>my @lines = $fh.lines;</code>&nbsp;like I tried earlier. But these are raw bytes, hindered by no interpretation. Let’s see what happens when we compare these bytes to our&nbsp;<em>HEADER-ID</em>.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+t/01-internals.t ............ Cannot use a Buf as a string, but you called the Stringy method on it
+  in method _getHeaderInfo at /home/jgoff/GitHub/drforr/raku-OLE-Storage_Lite/lib/OLE/Storage_Lite.pm6 (OLE::Storage_Lite) line 169
+  in block &lt;unit&gt; at t/01-internals.t line 42
+</pre>
+
+
+<h2>Another brick in the wall</h2>
+
+
+
+<p><strong>Ka-blam</strong>. But… hold the phone here a minute, I just said&nbsp;<code>$header eq HEADER-ID</code>, I didn’t write anything like ‘Stringy’! There’s no ‘Stringy’ in the source… oh.&nbsp;<em>HEADER-ID</em>&nbsp;is a string, so Raku is being helpful. I’m trying to use string comparison (‘eq’) between something that’s not a Str (&nbsp;<em>$header</em>&nbsp;) and something that is (<em>HEADER-ID</em>).</p>
+
+
+
+<p>Pull up the&nbsp;<a href="http://web.archive.org/web/20200212094016/https://docs.raku.org/type/Stringy">Stringy</a>&nbsp;documentation, and look for the Type graph. Midway down you’ll see ‘Buf’ and ‘Str’, as of this writing Buf is on the left, and Str is popular so it’s in the middle.</p>
+
+
+
+<p>Trace the inheritance paths from Buf and Str upwards, and you’ll see they pass Buf -&gt; Blob -&gt; Stringy and Str -&gt; Stringy, and stop. What the error message therefore is saying is this, anthropomorphized:</p>
+
+
+
+<p>You wanted to convert&nbsp;<em>Buf</em>&nbsp;to&nbsp;<em>Str</em>, and didn’t care how you did it. So I looked. First, on the&nbsp;<em>Buf</em>&nbsp;type. No .Str method there, at least without arguments. No good. So I looked in its parent,&nbsp;<em>Blob</em>. Nothing doing there. Then I looked at&nbsp;<em>Stringy</em>, and couldn’t find anything else.</p>
+
+
+
+<p>There’s nothing above me, nothing below. So I’ll let you know I looked for a conversion method in a bunch of places, stopped at&nbsp;<em>Stringy</em>, and couldn’t go any farther. Sorry.</p>
+
+
+
+<p><em>Raku</em></p>
+
+
+
+<p>You’re probably wondering how to get out of this quandary. Reading the&nbsp;<a href="http://web.archive.org/web/20200212094016/https://docs.raku.org/type/Blob#method_Str">Blob</a>&nbsp;documentation closely, you might think that the&nbsp;<em>encode</em>&nbsp;method is the way out of our present jam. If you look closer, though, there’s a spanner in the works. “xD0” is the&nbsp;<strong>byte</strong>&nbsp;0xd0, so if you try to decode to ASCII, you run into the problem that ASCII only covers 0x00-07xf, everything outside of that is undefined.</p>
+
+
+
+<h2>Packing for vacation</h2>
+
+
+
+<p>If you’ve kept up with things, you might surmise by now that the key to our quandary lies in the&nbsp;<em>pack</em>&nbsp;and&nbsp;<em>unpack</em>&nbsp;builtins. Specifically&nbsp;<em>unpack()</em>, because we’re trying to “decode” a buffer into something suitable for Raku.</p>
+
+
+
+<p>Unless you’ve done things like network programming or security, the&nbsp;<em>pack</em>&nbsp;and&nbsp;<em>unpack</em>&nbsp;builtins are going to be unfamiliar territory. The closest analogue of&nbsp;<em>pack()</em>&nbsp;is the builtin&nbsp;<em>sprintf()</em>.</p>
+
+
+
+<p>Both of these builtins take a format string telling the compiler how to arrange its arguments. Both of them take a mixture of string and integer arguments afterwards. But while&nbsp;<em>sprintf()</em>&nbsp;takes the arguments and treats its output as a UTF-8 encoded string,&nbsp;<em>pack()</em>&nbsp;takes the same arguments and treats its output as a raw buffer of bytes.</p>
+
+
+
+<p>And now you can see one way out of our little predicament. If we could just find the right invocation,&nbsp;<em>pack()</em>&nbsp;would be able to take our string “xd0xcf…” and turn it into a Buf object. Then we could compare the buffer we got by reading 8 bytes to the buffer we expected.</p>
+
+
+
+<p>So instead of cluttering up the main code, let’s write a quick test.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+use experimental :pack;
+constant HEADER-ID = "xD0xCFx11xE0xA1xB1x1AxE1";
+
+use Test;
+my $fh = open "test.xls";
+my Buf $buf = $fh.read( 8 );
+
+is $buf, pack( "A8", HEADER-ID ); # Pack 8 ASCII characters
+</pre>
+
+
+<h2>Testing…testing…</h2>
+
+
+
+<p>Let’s take it from the top. We tell Raku to use the “experimental”&nbsp;<em>pack()</em>&nbsp;builtin, and declare the header we want to check against. Then we tell Raku we want to use the Test module, and open a new Microsoft Excel test file.</p>
+
+
+
+<p>Last, we read a chunk of 8 bytes from the file into a buffer, and check to see that the 8 bytes matches the header we expect to see. Now, how did we get that weird ‘A8’ string in there? I thought&nbsp;<em>pack()</em>&nbsp;looked more like&nbsp;<em>sprintf()</em>?</p>
+
+
+
+<p>Well, it does, to an extent. I/O routines like&nbsp;<em>sscanf()</em>&nbsp;and&nbsp;<em>sprintf()</em>&nbsp;can do all sorts of things to your strings and numbers on the way in and out, think for example what ‘%-2.10f’ means in a format specifier, for instance. You can follow along with the&nbsp;<a href="http://web.archive.org/web/20200212094016/https://docs.raku.org/routine/unpack">unpack()</a>&nbsp;documentation if you like.</p>
+
+
+
+<p><em>pack()</em>, by contrast, just takes 8, 16, or 32-bit chunks of your input, and places them into a buffer. The “A” in “A8” says that it wants to convert an ASCII-sized chunk of your input (“xd0” in our case) into a byte in the buffer, so our Buf now looks like ( 0xd0 ).</p>
+
+
+
+<p>I could just as well have said “AAAAAAAA” in order to translate all 8 characters of the buffer, but I think it’s a little tidier to use the ‘repeat’ option, and say “A8” in order to convert just 8 characters (yes, yes, I know, they’re&nbsp;<strong>glyphs</strong>, but let’s not confuse matters.)</p>
+
+
+
+<p>I could write “A*” just as well, but “A8” makes sure that 8 and only 8 (the number that thou shalt count to…) characters get converted. I doubt that the header in an OLE file will change, but it’s a nice bit of forward planning.</p>
+
+
+
+<hr class="wp-block-separator" />
+
+
+
+<p>For those of you that made it this far, thank you. As usual, gentle Reader, if you have any comments, criticisms (constructive, please) or questions, feel free to post them below.</p>
+
+
+
+<p>Next week I’ll delve deeper into the mysteries of&nbsp;<em>pack()</em>,&nbsp;<em>unpack()</em>&nbsp;and some of the tips and tricks I use to keep on my toes and make sure that I generate clean Microsoft-compatible output.</p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://perlfisher.wordpress.com/2019/12/08/rewriting-perl-code-for-raku-iv-a-new-hope/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		
+		<media:content url="https://1.gravatar.com/avatar/dcfbf9237da4c5ca3f8b972e1dddc8f1?s=96&#38;d=identicon&#38;r=G" medium="image">
+			<media:title type="html">theperlfisherdaaea6189e</media:title>
+		</media:content>
+	</item>
+		<item>
+		<title>Rewriting Perl Code for Raku III: The Sorceror</title>
+		<link>https://perlfisher.wordpress.com/2019/12/02/rewriting-perl-code-for-raku-iii-the-sorceror/</link>
+					<comments>https://perlfisher.wordpress.com/2019/12/02/rewriting-perl-code-for-raku-iii-the-sorceror/#respond</comments>
+		
+		<dc:creator><![CDATA[Perl Fisher]]></dc:creator>
+		<pubDate>Mon, 02 Dec 2019 12:05:55 +0000</pubDate>
+				<category><![CDATA[Perl programming]]></category>
+		<category><![CDATA[Raku programming]]></category>
+		<guid isPermaLink="false">http://perlfisher.wordpress.com/?p=60</guid>
+
+					<description><![CDATA[Last week, we started testing, learned how to create proper Raku classes, and the basics of functions. This time we’ll take a closer look at functions, arguments, and make some decisions about the API. And maybe while writing this I’ll argue myself out of a decision. It’s happened before. One good thing about writing&#160;about&#160;a module<a class="more-link" href="https://perlfisher.wordpress.com/2019/12/02/rewriting-perl-code-for-raku-iii-the-sorceror/">Continue reading <span class="screen-reader-text">"Rewriting Perl Code for Raku III: The&#160;Sorceror"</span></a>]]></description>
+										<content:encoded><![CDATA[
+<p><a href="http://web.archive.org/web/20200212094016/http://www.theperlfisher.com/index.php/2019/11/24/rewriting-legacy-code-for-raku-ii-electric-boogaloo/">Last week</a>, we started testing, learned how to create proper Raku classes, and the basics of functions. This time we’ll take a closer look at functions, arguments, and make some decisions about the API. And maybe while writing this I’ll argue myself out of a decision. It’s happened before.</p>
+
+
+
+<p>One good thing about writing&nbsp;<strong>about</strong>&nbsp;a module is that you can slip into a certain mindset. For instance, right now I’m thinking a few paragraphs ahead, wondering how to explain why I changed the API from Perl 5 references to regular Raku types.</p>
+
+
+
+<p>It’s at odds with some of the principles I laid down at the start, which states that I should have minimal changes in the API from Perl to Raku. In Perl 5, you would create the “filesystem root” object like so:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+my $root = OLE::Storage_Lite::PPS::Root-&gt;new(
+  [ 0, 0, 0, 25, 1, 100 ],
+  [ 0, 0, 0, 25, 1, 100 ],
+  [ $workbook, $page_1, $sheet_1 ]
+);
+</pre>
+
+
+<p>with a bunch of references to lists. By all rights, and the principles I set up earlier, the Raku equivalent should be almost exactly the same:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+my $root = OLE::Storage_Lite::PPS::Root.new(
+  [ 0, 0, 0, 25, 1, 100 ],
+  [ 0, 0, 0, 25, 1, 100 ],
+  [ $workbook, $page_1, $sheet_1 ]
+);
+</pre>
+
+
+<p>In fact, all I did was copy and change two characters, specifically the Perl ‘-&gt;’ to the Raku ‘.’ operator. Clean, and very simple. And I think what I’ll do is actually just change the code back to using the Perl reference, at least in the API. Dereferencing it will be just a few lines, and I’ll have to change it in the tests as well, but I think the pain will be worthwhile.</p>
+
+
+
+<p>This way I don’t have to field questions like “Why did you end up potentially breaking old code?” during talks. See, speaking at conferences about your code really <strong>can</strong> be a useful motivator!</p>
+
+
+
+<h2>I’d like a formal argument, please</h2>
+
+
+
+<p>So, I think I’ve settled on Perl-style formal references, at least for the current iteration. There are actually better ways to do this, but I’ll leave that for the proper Raku version. For right now, quick-n-dirty is the name of the game.</p>
+
+
+
+<p>Moving on, we see an important method in the original Perl code, saving an object to disk.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+sub save($$;$$) {
+  my($oThis, $sFile, $bNoAs, $rhInfo) = @_;
+  #0.Initial Setting for saving
+  $rhInfo = {} unless($rhInfo);
+  # ..
+}
+</pre>
+
+
+<p>As I’ve mentioned before, OLE::Storage_Lite has been around for a long, long time. And it’s obvious here. Function prototypes (<strong>not</strong>&nbsp;signatures, which are a different kettle of fish) and the use of ‘$oThis’ instead of the more conventional ‘$self’.</p>
+
+
+
+<h3>Being prototypical</h3>
+
+
+
+<p>Prototypes were originally meant as a way to save you from having to write checks in your code. Theoretically, if your function was called&nbsp;<code>sub save($$)</code>&nbsp;and you tried to call it with&nbsp;<code>save($fh)</code>&nbsp;you would get an error, because the ‘$$’ means the subroutine took two arguments, and you gave it just one.</p>
+
+
+
+<p>But it also predated objects (yes, Virginia, objects in Perl haven’t been around all&nbsp;<strong>that</strong>&nbsp;long.) and they could have unforeseen side effects. So they were a fad for a while, but quickly faded out of existence.</p>
+
+
+
+<p>These days they’re a reason for a more experienced Perl hacker to take the junior aside and explain quietly why we don’t use those anymore, and point them to some modern references, like&nbsp;<em><a href="http://web.archive.org/web/20200212094016/https://www.amazon.com/Modern-Perl-chromatic/dp/1680500880/ref=sr_1_1?keywords=Modern+Perl&amp;qid=1574975397&amp;s=books">Modern Perl</a></em>&nbsp;(not an affiliate link, yet.)</p>
+
+
+
+<p>Let’s at least partially convert that to Raku, like so:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+method save($sFile, $bNoAs, $rhInfo) {
+  #0.Initial Setting for saving
+  $rhInfo = {} unless($rhInfo);
+  # ..
+}
+</pre>
+
+
+<p>The ‘$oThis’ means that this is a method call, so instead of writing&nbsp;<code>sub save( $oThis, ... )</code>&nbsp;we can rewrite it to a method and gain ‘self’ instead of the arbitrary variable ‘$oThis’. Of course we do have to do a search-and-replace on ‘$oThis’ with ‘self’, but that’s relatively simple. More complex is what to do with the ‘;’ in the original prototype.</p>
+
+
+
+<h2>Having options</h2>
+
+
+
+<p>It’s worth pointing out that&nbsp;<a href="http://web.archive.org/web/20200212094016/https://metacpan.org/pod/OLE::Storage_Lite">OLE::Storage_Lite</a>&nbsp;is taken at least in part from another (larger) module,&nbsp;<a href="http://web.archive.org/web/20200212094016/https://metacpan.org/pod/OLE::Storage">OLE::Storage</a>. This means that the internal code is redundant in a few places. Raku would let us rewrite what we have as:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+method save($sFile, $bNoAs, $rhInfo = {}) {
+  #0.Initial Setting for saving
+  # ..
+}
+</pre>
+
+
+<p>making&nbsp;<em>$rhInfo</em>&nbsp;an optional variable with a default value. Now, this is a pretty common pattern for a recursive method, so I did a bit of digging. Namely I grep’ed for ‘save’ in the original (all-in-one)&nbsp;<em>Storage_Lite.pm</em>&nbsp;module, and found no recursive calls to it.</p>
+
+
+
+<h2>Debugging both sides now</h2>
+
+
+
+<p>This is also where the test suite I wrote earlier comes in handy, as it actually exercises the ‘save’ method. So I added a quick debugging message&nbsp;<code>warn "Saving $rhInfo";</code>&nbsp;to my local copy of the code, and ran the test suite. Seeing just one ‘Saving …’ message in my test output convinced me it wasn’t recursive. So now the code just looks like:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+method save($sFile, $bNoAs) {
+  #0.Initial Setting for saving
+  my %hInfo;
+  # ..
+}
+</pre>
+
+
+<p>Also, since&nbsp;<em>$rhInfo</em>&nbsp;is created in this method, there’s no reason to leave it as a reference. So the initial ‘r’ goes away, and we have left just ‘%hInfo’. It may get passed in to other methods, but Raku lets us pass hashes and arrays as ordinary variable types, so I’ll take advantage of that.</p>
+
+
+
+<p>To be fair, leaving it as a reference would have saved me a bit of typing, but I’d already kind of decided that at least internally I’d try to use Raku types and calling conventions, and that left me with the choice of how to pass variables around.</p>
+
+
+
+<h3>Having options</h3>
+
+
+
+<p>Finally, there’s the question of what to do with the semicolon. Remember at the start, the function prototype was ‘($$;$$)’ which meant&nbsp;<em>$oThis</em>&nbsp;and&nbsp;<em>$sFile</em>&nbsp;were before the semicolon, and&nbsp;<em>$bData</em>&nbsp;and&nbsp;<em>$rhInfo</em>&nbsp;were after. I can now reveal that ‘;’ in a Perl prototype means that whatever appears afterward is optional.</p>
+
+
+
+<p>True to Raku’s nature, I can account for this in at least two ways. One way would be to decide that&nbsp;<em>$bData</em>&nbsp;is always there and just has a default value, probably 0. That would look like&nbsp;<code>method save( $sFile, $bData = 0 )</code>. But the documentation puts&nbsp;<em>$bData</em>&nbsp;in square brackets, indicating that it’s optional.</p>
+
+
+
+<p>Raku has an alternate syntax to indicate if a variable is optional, which looks like&nbsp;<code>method save( $sFile, $bData? )</code>. I think this method is better than the alternative syntax because it states clearly that&nbsp;<em>$bData</em>&nbsp;is optional. Both methods work, I just happen to like the ‘?’ modifier.</p>
+
+
+
+<h2>Waiting for Huffman</h2>
+
+
+
+<p>Moving on, we have this wonderful line of code:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+$rhInfo-&gt;{_BIG_BLOCK_SIZE}  = 2**
+              (($rhInfo-&gt;{_BIG_BLOCK_SIZE})?
+                  _adjust2($rhInfo-&gt;{_BIG_BLOCK_SIZE})  : 9);
+</pre>
+
+
+<p>When I was translating this initially, I was in something of a drone mindset, not truly thinking about what I was doing. I’d copied the&nbsp;<em>$rhInfo</em>&nbsp;variable into the method signature and just kept on writing. I ended up with a statement that I eventually shortened quite a bit.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+$rhInfo.&lt;_BIG_BLOCK_SIZE&gt; = 2**
+  ( $rhInfo.&lt;_BIG_BLOCK_SIZE&gt; ??
+    _adjust2( $rhInfo.&lt;_BIG_BLOCK_SIZE&gt; ) !!
+                                        9 );
+</pre>
+
+
+<p>The ‘.’ after&nbsp;<em>$rhInfo</em>&nbsp;indicates we’re dealing with a reference, and the &lt;..&gt; notation is now how barewords look inside hashes. The old {_BIG_BLOCK_SIZE} is still there, but it’s pronounced {‘_BIG_BLOCK_SIZE’}. A lot of people use the {‘..’} in Perl already so it’s not a big change, and it actually simplifies the backend enormously.</p>
+
+
+
+<p>Also, at the start Larry and Damian pulled statistics on Perl code from CPAN and other repositories. They were looking for operator frequencies, among other things. Frequently used operators like&nbsp;<em>qw()</em>&nbsp;and&nbsp;<em>-&gt;</em>&nbsp;got even shorter in Raku.</p>
+
+
+
+<p>Others, like the ternary operator, weren’t so lucky. It got longer, and stretched to ‘?? .. !!’. So this is one place where the code will look a little funky. Maybe one day I’ll write a slang to fix it, but back to work.</p>
+
+
+
+<h2>Trimming the verge</h2>
+
+
+
+<p>Earlier I mentioned that this module was trimmed down from a much larger full OLE reader/writer. This was the first place that became evident. Since&nbsp;<em>$rhInfo</em>&nbsp;is now called&nbsp;<em>%hInfo</em>&nbsp;and initialized&nbsp;<strong>inside</strong>&nbsp;the method, this statement deserves to be looked at a little closer.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+my %hInfo;
+%hInfo&lt;_BIG_BLOCK_SIZE&gt; = 2**
+  ( %hInfo&lt;_BIG_BLOCK_SIZE&gt; ??
+    _adjust2( %hInfo&lt;_BIG_BLOCK_SIZE&gt; ) !!
+                                        9 );
+</pre>
+
+
+<p>After replacing&nbsp;<em>$rhInfo</em>&nbsp;with&nbsp;<em>%hInfo</em>&nbsp;this is what I got. But since&nbsp;<em>%hInfo</em>&nbsp;is defined just above, the test&nbsp;<code>%hInfo&lt;_BIG_BLOCK_SIZE&gt;</code><em>&nbsp;</em>will never be true, so this entire block can be reduced to:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+my %hInfo = _BIG_BLOCK_SIZE =&gt; 2**9;
+</pre>
+
+
+<p>While I’m here I’ll delete&nbsp;<em>_adjust2()</em>. No code pathway uses it, so out it goes. I’ll restore it if I have to, but right now I want the test scripts to pass, and that’s it. I’ve got the original source, and a map from Perl to Raku, and that’s all I need.</p>
+
+
+
+<h2>Culling yaks from the herd</h2>
+
+
+
+<p>Where there’s smoke there’s fire, so I stop what I’m doing and grep out every ‘sub X’ call in the source, putting it in a scratch monkey. Then I go through the source (which I have below the new Raku source, deleting lines as I go) and look for methods that aren’t used, like&nbsp;<em>adjust2()</em>. I delete each of these methods with&nbsp;<strong>extreme</strong>&nbsp;prejudice, because each line of code I don’t see is one I don’t have to translate.</p>
+
+
+
+<p>Checkpoint in git, and now it’s time for a lunch break. Afterwards, I’m getting into the&nbsp;<em>save()</em>method, and see what looks like a new yak to shave. Or a package to translate, to be precise.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+  if(ref($sFile) eq 'SCALAR') {
+    require IO::Scalar;
+    my $oIo = new IO::Scalar $sFile, O_WRONLY;
+    $rhInfo-&gt;{_FILEH_} = $oIo;
+    # ...
+}
+</pre>
+
+
+<p>In both Raku and Perl, you can create a single method called&nbsp;<code>new( $sFile )</code>&nbsp;that treats&nbsp;<em>$sFile</em>&nbsp;as either a filename (scalar), file content (scalar reference) or file handle (scalar object.) In Perl, if we wanted to handle filenames, file contents, or file handles differently, we’d have to switch like this, or have different method names.</p>
+
+
+
+<p>In Raku, we can handle this differently. In fact I can write the code to save() to a filename, and add save() to a filehandle later with no modifications needed. Above, I briefly touched on the fact that you can write more than one&nbsp;<em>new()</em>&nbsp;method, as long as the two method signatures were distinct.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+multi method save( Str $filename ) {...}
+multi method save( IO::Handle $fh ) {...}
+</pre>
+
+
+<p>Raku will let you write two methods called&nbsp;<em>save()</em>, as long as it can tell which one to call at runtime. So, I can call&nbsp;<code>$root.save( '/tmp/test.xlsx' );</code>&nbsp;or&nbsp;<code>$root.save( $out_filehandle );</code>&nbsp;and Raku will “dispatch” it to the right&nbsp;<em>save()</em>&nbsp;method automatically.</p>
+
+
+
+<p>We call it ‘multiple dispatch’ for just that reason, dispatching a function call to multiple versions of a method. And this means that I can write the first&nbsp;<em>save( Str $filename )</em>&nbsp;method without worrying about the other methods. I don’t have to add a new if-then branch to the existing code, or modify&nbsp;<em>save()</em>&nbsp;in any way.</p>
+
+
+
+<p>I can just write my&nbsp;<em>save()</em>&nbsp;method and ignore the other IO:: types. Also, if someone gets my code later and wants to add a&nbsp;<em>save()</em>&nbsp;method that saves to something I know nothing about, they can write their new&nbsp;<em>save()</em>&nbsp;method without interfering with mine.</p>
+
+
+
+<p>In this installment we’ve covered the basics of function and method calls, delved into the ternary operator, removed dead code and learned a little about multiple dispatch. Next time, we’ll open the binary filehandle we created above and delve into the mysteries of&nbsp;<em>pack()</em>&nbsp;and&nbsp;<em>unpack()</em>.</p>
+
+
+
+<p>I’ll also show you a new (yes, I couldn’t resist) grammar-based version of pack() that should cover the entire Perl gamut of packed types, with a bit of patience and a large enough test suite.</p>
+
+
+
+<p>As always, gentle Reader, thank you for your time and attention. If you have any (constructive, please) comments, criticisms or questions, please let me know in the comment section below.</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://perlfisher.wordpress.com/2019/12/02/rewriting-perl-code-for-raku-iii-the-sorceror/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		
+		<media:content url="https://1.gravatar.com/avatar/dcfbf9237da4c5ca3f8b972e1dddc8f1?s=96&#38;d=identicon&#38;r=G" medium="image">
+			<media:title type="html">theperlfisherdaaea6189e</media:title>
+		</media:content>
+	</item>
+		<item>
+		<title>Rewriting Perl Code for Raku II: Electric Boogaloo</title>
+		<link>https://perlfisher.wordpress.com/2019/11/24/rewriting-perl-code-for-raku-ii-electric-boogaloo/</link>
+					<comments>https://perlfisher.wordpress.com/2019/11/24/rewriting-perl-code-for-raku-ii-electric-boogaloo/#respond</comments>
+		
+		<dc:creator><![CDATA[Perl Fisher]]></dc:creator>
+		<pubDate>Sun, 24 Nov 2019 12:07:18 +0000</pubDate>
+				<category><![CDATA[Perl programming]]></category>
+		<category><![CDATA[Raku programming]]></category>
+		<guid isPermaLink="false">http://perlfisher.wordpress.com/?p=63</guid>
+
+					<description><![CDATA[Picking up from&#160;Part One, we’d just finished up rewriting a Perl script into the test suite for the Raku translation of&#160;OLE::Storage_Lite. Raku programming is made easier by having lots of tools, but Microsoft documents aren’t yet well-represented in the Raku ecosystem. Being able to read/write OLE allows us to create a whole range of Microsoft<a class="more-link" href="https://perlfisher.wordpress.com/2019/11/24/rewriting-perl-code-for-raku-ii-electric-boogaloo/">Continue reading <span class="screen-reader-text">"Rewriting Perl Code for Raku II: Electric&#160;Boogaloo"</span></a>]]></description>
+										<content:encoded><![CDATA[
+<p>Picking up from&nbsp;<a href="http://web.archive.org/web/20200212094016/http://www.theperlfisher.com/index.php/2019/11/24/rewriting-legacy-code-for-raku/">Part One</a>, we’d just finished up rewriting a Perl script into the test suite for the Raku translation of&nbsp;<a href="http://web.archive.org/web/20200212094016/https://metacpan.org/pod/OLE::Storage_Lite">OLE::Storage_Lite</a>. Raku programming is made easier by having lots of tools, but Microsoft documents aren’t yet well-represented in the Raku ecosystem.</p>
+
+
+
+<p>Being able to read/write OLE allows us to create a whole range of Microsoft documents (at least where they’re documented.) Because of its day-to-day use, we’re focusing on Excel here. Many businesses still rely on Excel for their day-to-day task management, time tracking and home-grown processes.</p>
+
+
+
+<p>I’ve been known to wax philosophical about this after a few Westmalle Tripels at various conferences. Now is the time for doing something about it. Here’s what our burgeoning test suite looked like, at least in part. The current code is in&nbsp;<a href="http://web.archive.org/web/20200212094016/https://github.com/drforr/raku-OLE-Storage_Lite">raku-OLE-Storage_Lite</a>&nbsp;over on github.com. I’ve gotten rid of most of the Perl 5 test skeleton, but the essence remains.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+use v6;
+use Test;
+use OLE::Storage_Lite;
+
+plan 1;
+
+my $oDt = OLE::Storage_Lite::PPS::Root.new(
+  (),
+  ( 0, 0, 16, 4, 10, 100 ), # 2000/11/4 16:00:00:0000
+  ( $oWk, $oDir )
+);
+subtest 'Root', {
+  isa-ok $oDt, 'OLE::Storage_Lite::PPS::Root';
+  is $oDt.Name, 'Root Entry';
+  is-deeply $oDt.Time2nd, [ 0, 0, 16, 4, 10, 100 ];
+  # ...
+};
+done-testing;
+</pre>
+
+
+<p>Originally there really weren’t any Perl 5 tests for this module. I’m sure the original author treated the entire module as a black box, and they were happy to be able to run&nbsp;<em>samples/smpsv.pl</em>, open the new test.xls in Excel, and when it actually read the file, treat that as ‘ok 1’, push it to CPAN and call it a day.</p>
+
+
+
+<h2>Testing, testing</h2>
+
+
+
+<p>That’s wonderful, and I may eventually adopt that methodology. For the moment, the lack of a test suite leaves me a bit unsatisfied. I suppose I could treat the entire module as a black box and fix the translated version line-by-line as I go through it. I’ll have to do that eventually (spoiler alert: That’s actually where I am – I’m writing these pieces a bit after the fact.)</p>
+
+
+
+<p>That leaves me with the question of what to test, and what the quickest way to get there is. The individual Directory, Root and File objects are exposed to the user, and are part of the public API. So it makes some sense to create an object, look at the internals, and do my best to match that in Raku.</p>
+
+
+
+<h2>I Think I’m A Clone Now</h2>
+
+
+
+<p>There’s always two [implementations] of me standing around… I don’t want to get sidetracked by reading the entire OLE spec. I might start to realize what a huge job this really is, and abandon ship. So, I’m going to limit myself to the following:</p>
+
+
+
+<p>Create a narrowly defined 1:1 clone of the exact source of OLE::Storage_Lite in Perl 5. The objects will act exactly like the Perl 5 version, as will the API. This way I don’t have to think about what the API should do, how it should look in Raku, how the objects get laid out, anything fancy. All I need to worry about is:</p>
+
+
+
+<ol><li>When I write&nbsp;<code>warn $oDt.raku</code>, does the output look the same as&nbsp;<code>use YAML; warn Dump($oDt);</code>&nbsp;in Perl 5?</li><li>When I write the final file to disk, does the Raku code output exactly the same file as the original Perl 5 version?</li></ol>
+
+
+
+<p>That’s it. It takes away a lot of possibilities, but it lets me focus on getting the job done, not how things should look. Being able to test how the individual objects look will tell me that the read API works and saves enough data to be able to reconstruct the object in memory.</p>
+
+
+
+<p>Conversely, being able to match the binary output tells me that the write API works, so I’ve effectively tested as much as the original module did. Plus I can automate some of the process, especially on the read side.</p>
+
+
+
+<h2>Lost in Translation</h2>
+
+
+
+<p>You can check out the current source at&nbsp;<a href="http://web.archive.org/web/20200212094016/https://github.com/drforr/raku-OLE-Storage_Lite">raku-OLE-Storage_Lite</a>, and follow along with some of the changes I’ve made. I also made sure to keep a working copy of the original&nbsp;<a href="http://web.archive.org/web/20200212094016/https://metacpan.org/pod/OLE::Storage_Lite">OLE::Storage_Lite</a>Perl 5 module around. My Raku tree right now is very close to Perl 5.</p>
+
+
+
+<p>I can insert a debug statement like&nbsp;<code>die "[$iBlockNo] [$sData]\n"</code>&nbsp;in the Perl 5 code, go to the equivalent line in Raku, and expect that when I run the two test suites, that they’ll die in exactly the same way.</p>
+
+
+
+<p>This way when they&nbsp;<strong>don’t</strong>, I can immediately narrow down the problem simply by moving the ‘die’ statements up in the code until they return the same values. The line immediately below the ‘die’ statement will be the culprit.</p>
+
+
+
+<h3>The Nitty Gritty Perl Band</h3>
+
+
+
+<p>I’ll mention one thing in passing – the original Perl 5 source code is in a single file containing all of the packages. That’s not Raku style, so I’ve unpacked it into lib/OLE/Storage_Lite/* following the usual style of one Perl 5 class – one file.</p>
+
+
+
+<p>So, time to get our hands dirty. The new Raku module won’t compile for quite a while, so we’d better put this into git. I’m also using&nbsp;<a href="http://web.archive.org/web/20200212094016/https://modules.raku.org/dist/App::Mi6:cpan:SKAJI">App::Mi6</a>&nbsp;to do my development and eventual push to CPAN, so all of that boilerplate is there too.</p>
+
+
+
+<p>So, cue the montage scene of the dedicated Raku hacker pounding away at the keyboard, with the occasional break for food and/or adult beverage. Looking over her shoulder, we see a familiar split-screen view, with Perl 5 code on top, and a new Raku file below.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+use OLE::Storage_Lite::PPS;
+package OLE::Storage_Lite::PPS::Root;
+use vars qw($VERSION @ISA);
+@ISA = qw(OLE::Storage_Lite::PPS);
+</pre>
+
+<pre class="brush: plain; title: ; notranslate">
+use OLE::Storage_Lite::PPS;
+unit class OLE::Storage_Lite::PPS::Root is OLE::Storage_Lite::PPS;
+</pre>
+
+
+<p>Raku has classes where Perl 5 has packages. The ‘unit’ declaration there says that the class declaration takes up the remainder of the file. This is sort of how Perl 5 does it, but gets rid of the ‘1;’ at the end of your package declaration.</p>
+
+
+
+<p>It’s also useful for another reason I’m not going to show. Namely that the Perl 5 code is directly below the Raku code, commented out. I’m flipping between vim windows to delete lines as I translate them by hand. So the ‘unit class’ declaration helps in case I accidentally un-comment Perl 5 code – I’ll get big honkin’ warnings when I run the test suite.</p>
+
+
+
+<h3>Moosey-ears!</h3>
+
+
+
+<p>(for those of you that remember the module’s release)</p>
+
+
+
+<p>Raku borrowed liberally from Perl 5’s Moose OO metamodel, to the point where using Raku will feel very similar. Just drop a few bits of syntactic sugar that Moose needed to work under Perl, and it’ll feel the same.</p>
+
+
+
+<p>In this case the ‘is’ does the same job as in Moose, to introduce a parent class. Raku doesn’t need the sugar that Moose sweetens your code with, so you can just say your class ‘is’ a subclass of any other class.</p>
+
+
+
+<p>Let’s keep rolling along here, with the next lines of the Perl 5 library:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+require Exporter;
+use strict;
+use IO::File;
+use IO::Handle;
+use Fcntl;
+use vars qw($VERSION @ISA);
+@ISA = qw(OLE::Storage_Lite::PPS Exporter);
+$VERSION = '0.19';
+sub _savePpsSetPnt($$$);
+sub _savePpsSetPnt2($$$);
+</pre>
+
+<pre class="brush: plain; title: ; notranslate">
+use OLE::Storage_Lite::PPS;
+unit class OLE::Storage_Lite::PPS::Root:ver&lt;0.19&gt; is OLE::Storage_Lite::PPS;
+</pre>
+
+
+<p>Moving along… Okay, ya caught me, ‘:ver&lt;0.19&gt;’ is something new that we should add. Versions are now integrated into classes, so you can check them and even instantiate based on version number.</p>
+
+
+
+<p>The module actually doesn’t export anything, so we don’t need Exporter at all. Raku enables ‘strict’ automatically, has IO modules in core, and doesn”t need Fcntl. The forward declarations aren’t needed for Raku, so all that’s left is the module’s version number, which gets added to the class name. You can add other attributes, too.</p>
+
+
+
+<h2>Making things functional</h2>
+
+
+
+<p>To keep things simple for me writing the code, and me having to read the code weeks, months or years later, I want as close to a 1:1 relation between Perl 5 and Raku as I can. Another place where this requires an accommodation (but not much of one) is just a few lines down, writing the creation method ‘new’.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+sub new ($;$$$) {
+    my($sClass, $raTime1st, $raTime2nd, $raChild) = @_;
+    OLE::Storage_Lite::PPS::_new(
+        $sClass,
+        undef,
+        # ...
+    );
+}
+</pre>
+
+
+<p>By this point you’ll probably see more of why I say this module is a hard worker. It’s been around a long time, and function prototypes like this are one easy way to tell. Let’s rewrite it in a more modern Perl 5 style before making the jump to Raku, with function signatures.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+sub new($sClass, $raTime1st, $raTime2nd, $raChild) {
+    OLE::Storage_Lite::PPS::_new(
+        $sClass,
+        undef,
+        # ...
+    )
+}
+
+</pre>
+
+
+<p>Just drop the old function prototype, and replace it with the variables we need to populate. Well, almost. If you know what a subroutine prototype is, you might think I’m pulling a fast one on you. And you’d be right. Look back at the original Perl 5 code, and you’ll see ‘($;$$$)’ is the prototype.</p>
+
+
+
+<p>The ‘;’ separates required variables from optional variables, and we haven’t accounted for that in our Perl 5 code. Since I’m not here to modernize Perl 5 code but convert it to Raku, I’m going to ignore that in Perl 5 and go straight to Raku.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+multi method new( @aTime1st?, @aTime2nd?, @aChild? ) {
+  self.bless(
+    Time1st =&gt; @aTime1st,
+    Time2nd =&gt; @aTime2nd,
+    Child =&gt; @aChild
+  );
+}
+</pre>
+
+
+<h2>Under Construction</h2>
+
+
+
+<p>And there we are. Now, there’s quite a bit to take in, so I’ll take things slow. The first thing you’ll notice is the keyword ‘multi’. In Perl 5, you get to hand-roll your own constructors, so you can make them any way you like. In this case, the author chose to write&nbsp;<code>new($raTime1st, $raTime2nd, $raChild)</code>, which is pretty common.</p>
+
+
+
+<p>Raku gives me a default ‘new’ method, so I only need to hand-roll constructors when I want. Since I want to keep as close as reasonable to the original API, I’ll write a constructor that takes 3 arguments too. In my case I chose to simplify things just a bit here.</p>
+
+
+
+<p>I’ve found over several years of writing Raku code that I rarely use references. In Perl 5 they were pretty much the&nbsp;<strong>only</strong>&nbsp;way to pass arrays or hashes into a function, because of its propensity to “flatten” arguments.</p>
+
+
+
+<p>In Raku, you can still use the Perl 5 style, but formal argument lists are the way to go in my opinion. If you need to pass both an array and a hash to a Raku function, go for it. I encourage that in my tutorial courses, and recommend it to help break students out of their Perl 5 mindset.</p>
+
+
+
+<p>This is not to say that there’s anything wrong with Perl 5’s argument list, in fact they’ve taken some ideas from Raku for formal argument lists, and I encourage that. Cross-pollination of ideas should be encouraged, it’s how both languages grow and add new features.</p>
+
+
+
+<p><a href="http://web.archive.org/web/20200212094016/http://www.theperlfisher.com/index.php/2019/11/24/rewriting-legacy-code-for-raku/">Last week</a>&nbsp;was about the overall module, this week we delved a bit into the OO workings. Next week we’ll talk about references, attributes, and maybe progressive typing.</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://perlfisher.wordpress.com/2019/11/24/rewriting-perl-code-for-raku-ii-electric-boogaloo/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		
+		<media:content url="https://1.gravatar.com/avatar/dcfbf9237da4c5ca3f8b972e1dddc8f1?s=96&#38;d=identicon&#38;r=G" medium="image">
+			<media:title type="html">theperlfisherdaaea6189e</media:title>
+		</media:content>
+	</item>
+		<item>
+		<title>Rewriting Perl Code for Raku</title>
+		<link>https://perlfisher.wordpress.com/2019/11/24/rewriting-perl-code-for-raku/</link>
+					<comments>https://perlfisher.wordpress.com/2019/11/24/rewriting-perl-code-for-raku/#respond</comments>
+		
+		<dc:creator><![CDATA[Perl Fisher]]></dc:creator>
+		<pubDate>Sun, 24 Nov 2019 12:00:00 +0000</pubDate>
+				<category><![CDATA[Perl programming]]></category>
+		<category><![CDATA[Raku programming]]></category>
+		<guid isPermaLink="false">http://perlfisher.wordpress.com/?p=66</guid>
+
+					<description><![CDATA[This time around we’re going to talk about how to rewrite Perl code in Raku. Even in 2019, a lot of the office world revolves around spreadsheets, whether they be Excel,&#160;LibreOffice&#160;or simple .csv files. Perl 5 has a plethora of modules to do this, a quick search for ‘Spreadsheet’ on&#160;MetaCPANshould convince you of that. The<a class="more-link" href="https://perlfisher.wordpress.com/2019/11/24/rewriting-perl-code-for-raku/">Continue reading <span class="screen-reader-text">"Rewriting Perl Code for&#160;Raku"</span></a>]]></description>
+										<content:encoded><![CDATA[
+<p>This time around we’re going to talk about how to rewrite Perl code in Raku. Even in 2019, a lot of the office world revolves around spreadsheets, whether they be Excel,&nbsp;<a href="http://web.archive.org/web/20200212094016/http://libreoffice.org/">LibreOffice</a>&nbsp;or simple .csv files. Perl 5 has a plethora of modules to do this, a quick search for ‘Spreadsheet’ on&nbsp;<a href="http://web.archive.org/web/20200212094016/https://metacpan.org/">MetaCPAN</a>should convince you of that.</p>
+
+
+
+<p>The Raku world doesn’t have quite as many modules as you’d expect, though. While it’s been around for a few years, “heavy lifting” modules like Spreadsheet stuff really haven’t come around yet. This involves packing and unpacking binary formats, and in Perl 5 this centered around the&nbsp;<em>pack</em>&nbsp;and&nbsp;<em>unpack</em>&nbsp;builtins, which are relative newcomers to Raku.</p>
+
+
+
+<p>But Raku has built-in binary buffers, which take care of most of the need for pack/unpack. The main reason I can see is the&nbsp;<a href="http://web.archive.org/web/20200212094016/http://www.microsoft.com/interop/docs/supportingtechnologies.mspx">OLE</a>&nbsp;storage format. Basically it’s Microsoft’s way of packing a file system into a single data file. And at this point the proverbial yaks start to pile up, and reasonable people say “You know, Excel still accepts .csv files, I know how to build those.”</p>
+
+
+
+<p>Enter<a href="http://web.archive.org/web/20200212094016/https://github.com/drforr/raku-OLE-Storage_Lite">&nbsp;raku-OLE-Storage_Lite</a>&nbsp;– this is my translation-in-progress from Perl 5 to Raku. As of this writing it can read an entire OLE file (without data) and write a good portion of the sample file – I believe I’ve got maybe two methods left to debug.</p>
+
+
+
+<h2>Knee deep in yaks</h2>
+
+
+
+<p>CSV files are easy to write, but they come with their own set of troubles. When you import a .csv file into your Excel app (or LibreOffice, or whatever) you’re faced with a complex dialog asking you how to import your data, and the average user doesn’t want that every time, they just want to open their spreadsheet.</p>
+
+
+
+<p>So, it’s time to follow Liz’s lead and rewrite in Raku an existing module. First thing I did was go to&nbsp;<a href="http://web.archive.org/web/20200212094016/https://metacpan.org/pod/Spreadsheet::ParseExcel">Spreadsheet::ParseExcel</a>&nbsp;and see how they did things. Within a few minutes I’d already encountered the first yak. After opening the file, it delegates it to&nbsp;<a href="http://web.archive.org/web/20200212094016/https://metacpan.org/pod/OLE::Storage_Lite">OLE::Storage_Lite</a>, which is much like&nbsp;<a href="http://web.archive.org/web/20200212094016/http://www.jamesbrown.com/">James Brown</a>, the “hardest-working man in show business”.</p>
+
+
+
+<p>It’s still on version 0.19 at the time of writing, but I assure you that’s only because the current maintainer hasn’t updated the version to reflect reality. It may be legacy Perl rough-and-tumble code, but it’s been around for a long time. It wears its battle scars proudly.</p>
+
+
+
+<p>It relies heavily on&nbsp;<em>pack</em>&nbsp;and&nbsp;<em>unpack</em>, which are still&nbsp;<strong>technically</strong>&nbsp;experimental in Raku. The OO and coding style betrays its pre-5.00 origins, and the tests are, well, very pragmatic. “Does it load? Great! Can it convert timestamps internally? Great! Ship it!”</p>
+
+
+
+<p>To its credit, there’s a sample directory where you can use&nbsp;<em>smpview.pl</em>&nbsp;to view the contents of the internal filesystem of any OLE file, and a sample writer to create a known-working OLE file. That’ll do as a starting point.</p>
+
+
+
+<h3>Buckling down</h3>
+
+
+
+<p>So, reading an Excel spreadsheet means reading an OLE file system. And when I say file system, I’m not kidding. Inside your typical .xlsx file, there’s a small header and a root object. The root object contains “pointers” (really file offsets) to a document object, and inside that are file objects, each with pointers to the different blocks.</p>
+
+
+
+<p>This is all intended to reflect the original disk layout, so it looks very much like an NTFS superblock and block layout. The documentation seems to have moved to&nbsp;<a href="http://web.archive.org/web/20200212094016/https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-oleds/fdc5e702-d09e-4344-a77f-eb079d41f23f">this</a>&nbsp;page detailing OLE 1.0 and 2.0 formats, I’m not at all certain what the current version has.</p>
+
+
+
+<p>How are Excel spreadsheets arranged in here? Worksheets are OLE directories, and inside each worksheet, tabs are individual files. How’s that for a bit of inspiration? Luckily the Root directory, Files and nested Directories are all separate objects, with at least a few common methods aggregated into a superclass.</p>
+
+
+
+<h2>Legacy Code</h2>
+
+
+
+<p>This is a long-winded way of saying the module in question is very much legacy code. And, as I want to bring it into the proverbial light, I’ve got to give some issues some thought.</p>
+
+
+
+<ol><li>No useful tests, so I’ll have to write those.</li><li>How much code do I want to sacrifice?</li><li>How much can I save?</li></ol>
+
+
+
+<p>Well, I can put off #2 and #3 while writing some tests. Whoa, wait a minute. I don’t have a test file to work with, just some scripts over in sample/. Mumble, mumble, more yaks. Read README, find that smpsv.pl will create one, run that.</p>
+
+
+
+<p>Great, I’ve got a sample test.xsl file. But given the amount of potential bit-rot it seems prudent to actually make sure that I’ve got a working Excel file before committing a few days (ha!) to getting a module working. Double-click it, launch into Excel’s cloud-serviced app, find that it’s one of those Win10 panes I’ve never figured out how to close, open task-killer, kill that.</p>
+
+
+
+<p>Launch&nbsp;<a href="http://web.archive.org/web/20200212094016/https://www.libreoffice.org/">LibreOffice</a>&nbsp;which I happen to have lying around – my current project at work is parsing a spreadsheet in Perl 5, which is what inspired this whole workload.</p>
+
+
+
+<p>Yep, that parses; looks a bit odd because it’s coming up with a Japanese font, and some arbitrary English text, but it works. Also, looking at the code it generates all three object types – Root, File and Dir, so it’ll exercise the major code paths. Bonus.</p>
+
+
+
+<h2>Testing, testing</h2>
+
+
+
+<p>Now I’ve got the makings of a simple test file. The script builds objects individually, so I can run the individual calls, and check that the object’s internals look the way I want.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+my $oDt = OLE::Storage_Lite::PPS::Root-&gt;new(
+  [ ],
+  [ 0, 0, 16, 4, 10, 100 ], # 2000/11/4 16:00:00:0000
+  [ $oWk, $oDir ]
+);
+</pre>
+
+
+<p>In Raku, this converts to:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+my $oDt = OLE::Storage_Lite::PPS::Root.new(
+  (),
+  ( 0, 0, 16, 4, 10, 100 ), # 2000/11/4 16:00:00:0000
+  ( $oWk, $oDir )
+);
+</pre>
+
+
+<p>I’ve made one change already, to make things simpler for Raku users. In Perl, you have to pass lists as references unless you want to use the new function signatures. In Raku, you can just pass lists as you would ordinarily to your method call.</p>
+
+
+
+<p>Using native data types rather than passing references around may seem a bit odd at first to new Raku programmers, but the new variable classes are easier to enforce strong typing on later, when you get used to the language.</p>
+
+
+
+<h3>Going with the flow</h3>
+
+
+
+<p>Now we’ve got something we can test, namely making sure that we’ve got a valid OLE Root document. So, before we go ahead with the code, I’ll share a few little things. I know very little about this code, so I want to make sure that I&nbsp;<strong>intimately</strong>&nbsp;copy each detail of the object at this stage. Later on I might get fancy and replace things with their own object types, but for now, my goal is going to be 1:1 replication.</p>
+
+
+
+<p>I tend to like&nbsp;<a href="http://web.archive.org/web/20200212094016/https://github.com/tmux/tmux/wiki">tmux</a>&nbsp;as a shell environment, haven’t really gotten along with UIs. So, keeping in mind that I wanted an absolute 1:1 copy of the original object, I ended up doing this:</p>
+
+
+
+<ol><li>Switch to new window, open my copy of ‘samples/smpsv.pl’ in vim</li><li>Add ‘use YAML; die Dump( $oDt ) just below the line where it gets created</li><li>Switch to new window, run the sample script, copy the YAML output</li><li>Close the two new windows I created to keep clutter down</li><li>Paste the YAML code into the new Raku test.</li></ol>
+
+
+<pre class="brush: plain; title: ; notranslate">
+my $oDt = OLE::Storage_Lite::PPS::Root.new(
+  (),
+  ( 0, 0, 16, 4, 10, 100 ), # 2000/11/4 16:00:00:0000
+  ( $oWk, $oDir )
+);
+--
+  Name: "R\0o\0o\0t\0 \0E\0n\0t\0r\0y\0"
+  No: ~
+  Time2nd:
+    - 0
+    - 0
+    - 16
+    - 4
+    - 10
+    - 100
+# and so on...
+</pre>
+
+
+<p>This should contain all I need to create an OLE file from this set of objects. I’m using this as a sneaky way of not reading the spec, at least not yet. As the old title goes: Algorithm + Data Structure = Program. Using YAML (or Data::Dumper) gives me the data structure, copying the Perl 5 code into Raku gives me the algorithm.</p>
+
+
+
+<p>I should almost be able to keep line-for-line fidelity, so when a patch is posted to the Perl 5 source I can import it into Raku without too much trouble. But once I’ve got a better test base and a few users in Raku I’ll probably rewrite this whole module in a more Raku-ready fashion. I can keep the old module around for reference.</p>
+
+
+
+<h2>Encoding worries</h2>
+
+
+
+<p>But we’ve also got a surprise lurking here. “R\0o\0ot\0 \0E\0n\0t\0r\0y\0” looks like binary garbage, but is actually UCS-2, I think. If it is, then the OLE file is limited to a subset of Unicode. I can put restrictions on it later if I have to, but ATM I actually don’t care.</p>
+
+
+
+<p>I’ve done enough time in the i18n salt mines that I know how to deal with this. Store the string in the best format possible (UTF-8 here) internally. When the time comes to write it to the network or disk, translate it to the final encoding.</p>
+
+
+
+<p>This way I can see what all the attributes are at a glance without changing encoding. I can also manipulate everything using regular Raku code until the last moment. If I have to, I can use Raku’s gradual typing to constrain the string. More importantly, I don’t have to do any of this&nbsp;<strong>now</strong>.</p>
+
+
+
+<h2>Got any change?</h2>
+
+
+
+<p>This means I’m going to change things just a little bit more. When data gets added to ‘Name’ I’m going to assume it’s UTF-8. Since I’m not doing any I/O yet, I can make whatever assumptions I want. Keeping the internals simple keeps my life simple, at least.</p>
+
+
+
+<p>So I’ll write out a quick&nbsp;<em>is-deeply</em>&nbsp;test and get on with things:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+is-deeply $oDt, (
+  Name =&gt; 'Root Entry',
+  Time2nd =&gt; ( 0, 0, 16, 4, 10, 100 ),
+  # ...
+  Child =&gt; ( $oWk, $oDir )
+);
+</pre>
+
+
+<p>This looks pretty straightforward, and almost how you’d write the original test in Perl 5. It won’t&nbsp;<strong>run</strong>&nbsp;yet, but that’s something we’ll tackle in the next part in the series.</p>
+
+
+
+<p>I’m not done quite yet, because I’ve got a lot of these things to write, and not all of them may have the ‘Child’ attribute. I could write a tiny method that skipped over the ‘Child’ attribute along with anything else I wanted, but that felt clumsy. It looked like:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+ok sorta-deeply $oDt, (
+  Name =&gt; 'Root Window',
+  Time2nd =&gt; ( 0, 0, 16, 4, 10, 100 ),
+  # ...
+), ( 'Child' );
+</pre>
+
+
+<p>And notice that&nbsp;<em>sorta-deeply</em>&nbsp;is a function that does all the work, then passes a simple Bool back to the test. I’d end up writing all of the code that&nbsp;<em>is-deeply</em>&nbsp;does (except for the recursion), and get something back that’s less useful.</p>
+
+
+
+<p>Next time we’ll get into making these tests pass. I’m writing the next section right after this, but you won’t get to see it for another week or so, I’m afraid. If you have questions or comments about the first part of this series, please feel free to comment below.</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://perlfisher.wordpress.com/2019/11/24/rewriting-perl-code-for-raku/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		
+		<media:content url="https://1.gravatar.com/avatar/dcfbf9237da4c5ca3f8b972e1dddc8f1?s=96&#38;d=identicon&#38;r=G" medium="image">
+			<media:title type="html">theperlfisherdaaea6189e</media:title>
+		</media:content>
+	</item>
+	</channel>
+</rss>

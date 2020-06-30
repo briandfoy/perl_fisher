@@ -1,0 +1,2647 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="profile" href="https://gmpg.org/xfn/11" />
+	<title>The Perl Fisher</title>
+<link rel='dns-prefetch' href='//s2.wp.com' />
+<link rel='dns-prefetch' href='//s1.wp.com' />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel="alternate" type="application/rss+xml" title="The Perl Fisher &raquo; Feed" href="https://perlfisher.wordpress.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="The Perl Fisher &raquo; Comments Feed" href="https://perlfisher.wordpress.com/comments/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s2.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.2"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s1.wp.com/_static/??-eJylktluwyAQRX+oeExSq/VD1W8BPKUkDEYMKPLfB5zGShellfo4y7m6s8ApCjOHjCEDFRF9sS4wnKKZSTA5j8uXqDPMD3CDaT/bDSSVjphdsEKrBLX1c+YbfOVsqaHGZGslITx3+64HXZyfmr45Cu90UmkBzovH/8vkd6S/yKwUwwFzVBVPqk3Cv7h4K94LdhkFTm4d/VIB+dj3gxzHAWJCcoU29L6gmT98yG7XJpoc5y0pfmZvrtl2UfMUVW4dVF0p9HUBId/DLmfXunplFlfH6+bWL3ilFzmMu6Efn+T+cAbpTNjH?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<style id='global-styles-inline-css'>
+:root {
+	--wp--preset--color--primary: #1279BE;
+	--wp--preset--color--secondary: #FFB302;
+	--wp--preset--color--foreground-dark: #101010;
+	--wp--preset--color--foreground: #303030;
+	--wp--preset--color--foreground-light: #757575;
+	--wp--preset--color--background-dark: #C5C5C5;
+	--wp--preset--color--background-light: #F8F8F8;
+	--wp--preset--color--background: #FFFFFF;
+	--wp--preset--font-size--small: 17.3914;
+	--wp--preset--font-size--normal: 23;
+	--wp--preset--font-size--large: 26.45;
+	--wp--preset--font-size--huge: 30.4174;
+	--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);
+	--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);
+	--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);
+	--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);
+	--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);
+	--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);
+	--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);
+	--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);
+	--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);
+	--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);
+	--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);
+	--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);
+}
+
+</style>
+<link rel='stylesheet' id='print-css-3-1' href='https://s1.wp.com/wp-content/themes/pub/varia/print.css?m=1571655471h&cssminify=yes' type='text/css' media='print' />
+<link rel='stylesheet' id='all-css-4-1' href='https://s1.wp.com/_static/??-eJx9jdEOwiAMRX9IrDOZmQ/Gb2GssipQAmXEvxfjy4yLb72559xCjcpwEAwCMqPHDLGMMOOCCbI8He5NzjvYxhadSAMF80FVjYb9j+CLiq5YChkqTRYlA5bW8oNQOV1B0EenpY1uf1wNWGTl2GghDl9B3Zym9E9NODq27bTQqFV8S1d/6frzoTv1x2G4vwBBPGeN?cssminify=yes' type='text/css' media='all' />
+<link crossorigin="anonymous" rel='stylesheet' id='hever-fonts-css'  href='https://fonts.googleapis.com/css?family=PT+Sans%3A400%2C400i%2C700%2C700i&#038;subset=latin%2Clatin-ext' media='all' />
+<link rel='stylesheet' id='all-css-6-1' href='https://s1.wp.com/_static/??/wp-content/themes/pub/hever/style.css,/wp-content/mu-plugins/actionbar/actionbar.css?m=1587159585j&cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-8-1' href='https://s0.wp.com/wp-content/themes/h4/global.css?m=1420737423h&cssminify=yes' type='text/css' media='all' />
+<script type='text/javascript' src='https://s1.wp.com/_static/??-eJx9zd0KwjAMBeAXsuuqFumF+Cxzy0pG09Ymdfj2Vvy5EBECuTjfSfSaFcYx1AlYL20uFcrttbqFN/ofUIS+DAIdYXzjMUWBKA+bEwsB8+DhR0rpjAFUZSgNRGlv5vTtcqgeI+u5hqAYBRRMKBi9eiba7PveGueszgUIK32qV4S1nTvR0Vi3tb07mN1yB22JV38='></script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s2.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://perlfisher.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress.com" />
+<link rel='shortlink' href='https://wp.me/c9qwx' />
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="The Perl Fisher" />
+<meta property="og:url" content="https://perlfisher.wordpress.com/" />
+<meta property="og:site_name" content="The Perl Fisher" />
+<meta property="og:image" content="https://s0.wp.com/i/blank.jpg" />
+<meta property="og:locale" content="en_US" />
+<meta property="fb:app_id" content="249643311490" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://s1.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="icon" type="image/x-icon" href="https://s1.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="apple-touch-icon" href="https://s2.wp.com/i/webclip.png" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://perlfisher.wordpress.com/osd.xml" title="The Perl Fisher" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+		<script type="text/javascript">
+		function __ATA_CC() {var v = document.cookie.match('(^|;) ?personalized-ads-consent=([^;]*)(;|$)');return v ? 1 : 0;}
+		var __ATA_PP = { pt: 0, ht: 0, tn: 'hever', amp: false, siteid: 8982, blogid: 179562945, consent: __ATA_CC(), flag: 2 };
+		</script>
+		<script type="text/javascript">
+		!function(t){var n={};function e(r){if(n[r])return n[r].exports;var o=n[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,e),o.l=!0,o.exports}e.m=t,e.c=n,e.d=function(t,n,r){e.o(t,n)||Object.defineProperty(t,n,{enumerable:!0,get:r})},e.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},e.t=function(t,n){if(1&n&&(t=e(t)),8&n)return t;if(4&n&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(e.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&n&&"string"!=typeof t)for(var o in t)e.d(r,o,function(n){return t[n]}.bind(null,o));return r},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,n){return Object.prototype.hasOwnProperty.call(t,n)},e.p="https://c0.pubmine.com/2.6.01584004761084/",e(e.s=184)}({0:function(t,n){t.exports=function(t,n,e){return n in t?Object.defineProperty(t,n,{value:e,enumerable:!0,configurable:!0,writable:!0}):t[n]=e,t}},1:function(t,n){t.exports=function(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}},10:function(t,n,e){"use strict";var r=e(50),o=e(17),i=e(23);t.exports=function(t,n,e){if(!r(t))return e;if(!o(n))return e;try{var u=n.split(".").reduce((function(t,n){return t[n]}),t);return i(u)?e:u}catch(t){return e}}},12:function(t,n){function e(n){return"function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?t.exports=e=function(t){return typeof t}:t.exports=e=function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},e(n)}t.exports=e},14:function(t,n,e){"use strict";t.exports=function(t){return"function"==typeof t}},15:function(t,n,e){"use strict";t.exports=function(){}},17:function(t,n,e){"use strict";t.exports=function(t){return"string"==typeof t}},184:function(t,n,e){"use strict";e.r(n);var r=e(0),o=e.n(r),i=e(12),u=e.n(i),c=e(32),f=e.n(c),s=e(15),a=e.n(s),p=e(37),l=e.n(p),d=e(52),v=e(53),m=e(28);function y(t,n){var e=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);n&&(r=r.filter((function(n){return Object.getOwnPropertyDescriptor(t,n).enumerable}))),e.push.apply(e,r)}return e}function b(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},n={};"object"===u()(window.__ATA_PP)&&null!==window.__ATA_PP&&(n=window.__ATA_PP);var e=function(t){for(var n=1;n<arguments.length;n++){var e=null!=arguments[n]?arguments[n]:{};n%2?y(Object(e),!0).forEach((function(n){o()(t,n,e[n])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(e)):y(Object(e)).forEach((function(n){Object.defineProperty(t,n,Object.getOwnPropertyDescriptor(e,n))}))}return t}({r:(new Date).getTime()},n,{},Object(d.a)(t),{ref:window.top!==window?document.referrer:window.location.href,us_privacy:Object(v.a)()}),r=l()("//s.pubmine.com/mhead.js",e);f()(r,a.a)}Object(m.b)()?Object(m.a)().then(b,b):b()},2:function(t,n){function e(t,n){for(var e=0;e<n.length;e++){var r=n[e];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}t.exports=function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}},21:function(t,n,e){"use strict";t.exports=function(t){return"string"==typeof t&&t.length>0}},23:function(t,n,e){"use strict";t.exports=function(t){return void 0===t}},24:function(t,n,e){"use strict";t.exports=function(t,n){return t.indexOf(n)>-1}},28:function(t,n,e){"use strict";e.d(n,"a",(function(){return p})),e.d(n,"b",(function(){return l}));var r=e(38),o=e.n(r),i=e(10),u=e.n(i),c=e(14),f=e.n(c),s=e(4);function a(t){var n=Date.now();return function(t){return new o.a((function(n,e){var r;window.setTimeout((function(){clearTimeout(r),e&&e("cmp ping timeout")}),t),function t(){window.__cmp?window.__cmp("ping",null,(function(o,i){i&&o.cmpLoaded?n():i?r=window.setTimeout(t,50):e&&e("cmp ping returned error with data: ".concat(JSON.stringify(o)))})):e&&e("CMP is not defined")}()}))}(t).then((function(){var e=Date.now()-n,r=t-e;return new o.a((function(t,n){window.__cmp?(window.__cmp("getConsentData",null,(function(e,r){r?t(e):n&&n("cmp getConsentData returned error with data: ".concat(JSON.stringify(e)))})),setTimeout((function(){n&&n("cmp getConsentData timeout")}),r)):n&&n("CMP is not defined")}))}))}function p(){return a(arguments.length>0&&void 0!==arguments[0]?arguments[0]:500).catch((function(t){return s.a.error(t),"boolean"==typeof(n=u()(window,"__ATA_PP.gdpr_applies"))?{gdprApplies:n}:{};var n}))}function l(){return f()(window.__cmp)}},29:function(t,n,e){"use strict";t.exports=function(t,n){for(var e=0,r=t.length;e<r;e++){var o=t[e];if(n(o,e))return o}return null}},30:function(t,n,e){"use strict";var r=e(29),o=e(24);t.exports=function(t,n){void 0===n&&(n=document.cookie);var e=n.split("; "),i=r(e,(function(n){return o(n,t+"=")}));return i?i.split("=")[1]:""}},32:function(t,n,e){"use strict";var r=e(15),o=e(14);t.exports=function(t,n,e){var i,u,c=document.createElement("script"),f=n instanceof HTMLElement&&n;if(i=o(n)?n:o(e)?e:r,c.src=t,c.onload=function(){i(void 0)},c.onerror=function(){i("error")},f)u=f;else{var s=document.getElementsByTagName("head");u=s&&0!==s.length?s[0]:document.documentElement}u.appendChild(c)}},37:function(t,n,e){"use strict";var r=e(24),o=e(89);t.exports=function(t,n){var e=o(n);return 0===e.length?t:t+(r(t,"?")?"&":"?")+e}},38:function(t,n,e){"use strict";var r,o=e(51),i=e(14);!function(t){t.REJECTED="rejected",t.RESOLVED="resolved",t.PENDING="pending"}(r||(r={}));var u=function(){function t(t,n){var e=this;this.status=r.PENDING,this.emitter=new o,this.onFulfilled=function(t){e.status===r.PENDING&&(e.status=r.RESOLVED,e.emitter.emit(r.RESOLVED,[t]))},this.onRejected=function(t){e.status===r.PENDING&&(e.status=r.REJECTED,e.emitter.emit(r.REJECTED,[t]))};var i=function(){return t(e.onFulfilled,e.onRejected)};n?i():setTimeout(i,0)}return t.resolve=function(n){return new t((function(t){t(n)}))},t.reject=function(n){return new t((function(t,e){e(n)}))},t.prototype.then=function(n,e){var o=this;return new t((function(u,c){o.emitter.on(r.RESOLVED,(function(e){if(i(n)){var r=n(e);r instanceof t?r.then(u,c):u(r)}else u(e)})),o.emitter.on(r.REJECTED,(function(n){if(i(e)){var r=e(n);r instanceof t?r.then(u,c):u(r)}else c(n)}))}),!0)},t.prototype.catch=function(n){var e=this;return new t((function(o){i(n)&&e.emitter.on(r.REJECTED,(function(e){var r=n(e);r instanceof t?r.then(o):o(r)})),e.emitter.on(r.RESOLVED,o)}),!0)},t}();t.exports=u},4:function(t,n,e){"use strict";var r=e(1),o=e.n(r),i=e(2),u=e.n(i),c=e(0),f=e.n(c),s=function(){function t(){o()(this,t)}return u()(t,null,[{key:"configure",value:function(n){t.config=n}},{key:"error",value:function(t){function n(n,e){return t.apply(this,arguments)}return n.toString=function(){return t.toString()},n}((function(t,n){this.config&&this.config.onError?this.config.onError(t,n):window.console&&console.log(t,n)}))}]),t}();f()(s,"config",void 0),n.a=s},50:function(t,n,e){"use strict";t.exports=function(t){var n=typeof t;return"object"===n&&null!=t||"function"===n}},51:function(t,n,e){"use strict";var r=function(){function t(){this.events={}}return t.prototype.on=function(t,n){if(this.events[t]){if(-1!==(e=this.events[t]).indexOf(n))throw new Error('This handler has already been subcribed for "'+t+'" event');e.push(n)}else{var e;(e=[]).push(n),this.events[t]=e}},t.prototype.off=function(t,n){var e=this.events[t],r=e.indexOf(n);-1!==r&&e.splice(r,1)},t.prototype.emit=function(t,n){void 0===n&&(n=[]);var e=this.events[t];e&&e.map((function(t){n?t.apply(void 0,n):t()}))},t}();t.exports=r},52:function(t,n,e){"use strict";e.d(n,"a",(function(){return i}));var r=e(17),o=e.n(r);function i(t){var n=t.gdprApplies,e=t.consentData;return{gdpr:"boolean"==typeof n?Number(n):void 0,gdpr_consent:o()(e)?e:void 0}}},53:function(t,n,e){"use strict";e.d(n,"a",(function(){return f}));var r=e(30),o=e.n(r),i=e(21),u=e.n(i),c="usprivacy";function f(){var t=o()(c);return u()(t)?t:null}},62:function(t,n,e){"use strict";t.exports=function(t){return null===t}},89:function(t,n,e){"use strict";var r=e(62),o=e(23);t.exports=function(t){var n=Object.keys(t),e=[];return n.forEach((function(n){var i=t[n];r(i)||o(i)||e.push(n+"="+encodeURIComponent(t[n]))})),e.join("&")}}});
+		</script><meta name="application-name" content="The Perl Fisher" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://perlfisher.wordpress.com/feed/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /></head>
+
+<body class="home blog wp-embed-responsive customizer-styles-applied hfeed image-filters-enabled hide-homepage-title admin-bar highlander-enabled highlander-light">
+
+	
+<div id="page" class="site">
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+	
+		<header id="masthead" class="site-header responsive-max-width">
+
+			
+
+			<h1 class="site-title"><a href="https://perlfisher.wordpress.com/" rel="home">The Perl Fisher</a></h1>
+	
+
+							<nav id="site-navigation" class="main-navigation" aria-label="Main Navigation">
+					<input type="checkbox" role="button" aria-haspopup="true" id="toggle" class="hide-visually">
+					<label for="toggle" id="toggle-menu" class="button">
+						Menu						<span class="dropdown-icon open">+</span>
+						<span class="dropdown-icon close">&times;</span>
+						<span class="hide-visually expanded-text">expanded</span>
+						<span class="hide-visually collapsed-text">collapsed</span>
+					</label>
+					<div class="menu-primary-container"><ul id="menu-primary" class="main-menu" aria-label="submenu"><li id="menu-item-40" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-40"><a href="https://perlfisher.wordpress.com/blog-3/">Home</a></li>
+<li id="menu-item-19" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-19"><a href="https://perlfisher.wordpress.com/blog/">Home</a></li>
+<li id="menu-item-41" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-41"><a href="https://perlfisher.wordpress.com/blog-2-2/">Blog</a></li>
+<li id="menu-item-20" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20"><a href="https://perlfisher.wordpress.com/blog-2/">Blog</a></li>
+<li id="menu-item-42" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-42"><a href="https://perlfisher.wordpress.com/about-2/">About</a></li>
+<li id="menu-item-21" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-21"><a href="https://perlfisher.wordpress.com/about/">About</a></li>
+<li id="menu-item-43" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-43"><a href="https://perlfisher.wordpress.com/contact-2/">Contact</a></li>
+<li id="menu-item-22" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-22"><a href="https://perlfisher.wordpress.com/contact/">Contact</a></li>
+</ul></div>				</nav><!-- #site-navigation -->
+			
+			
+		</header><!-- #masthead -->
+
+	
+	<div id="content" class="site-content">
+
+	<section id="primary" class="content-area">
+		<main id="main" class="site-main">
+
+		
+<article id="post-51" class="post-51 post type-post status-publish format-standard hentry category-uncategorized entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2019/12/15/rewriting-perl-code-for-raku-part-v/" rel="bookmark">Rewriting Perl code for Raku Part&nbsp;V</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p><a href="http://web.archive.org/web/20200212094016/http://www.theperlfisher.com/index.php/2019/12/08/rewriting-perl-code-for-raku-iv-a-new-hope/">Last week</a>&nbsp;we started to talk about the&nbsp;<em>pack()</em>&nbsp;and&nbsp;<em>unpack()</em>&nbsp;builtins for Raku and Perl. These aren’t terribly common built-ins to use, so I thought I’d take some time to go over these in detail and talk about how I use them and debug files that use them.</p>
+
+
+
+<p>As a gentle reminder,&nbsp;<a href="https://metacpan.org/pod/OLE::Storage_Lite">OLE::Storage_Lite</a>&nbsp;is a Perl module to read and write a subset of the Microsoft OLE storage format. As part of my effort at the start, I’ve got a “translation” of the original Perl code pounded out, without much thought to whether it’ll work, or really even compile. It looks like the Perl version, but with most of the {} changed to &lt;&gt; and -&gt; changed to ..</p>
+
+
+
+<p>What to test first… The reading side seems to be the easiest, because I can check object-by-object to see what the data&nbsp;<strong>should</strong>&nbsp;look like. Replicating that for Raku becomes essentially fixing the bugs I know I’ve introduced on the way.</p>
+
+
+
+<h2>Testing testing… is this on?</h2>
+
+
+
+<p>Before we dive into the Raku code, though, let’s just set up a quick test in Perl. There really wasn’t one to begin with, which is a testament to how well-used the module is. I’ve got a ‘test.xls’ file that I’ve already checked in LibreOffice to make sure it works, so I’ll add a test script that reads the file and checks the root object.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+use Test::More;
+use OLE::Storage_Lite;
+
+my $root = OLE::Storage_Lite-&gt;new( 'sample/test.xls' );
+use YAML; die Dump($root);
+isa_ok $root, 'OLE::Storage_Lite::PPS::Root';
+is $root-&gt;No, 0;
+is $root-&gt;PrevPps, 0xfffffffe;
+</pre>
+
+
+<p>You might be reading the code and wondering what the heck&nbsp;<em>die()</em>&nbsp;is doing in a test suite. It’s not because in my current copy it’s commented out, but it’s a quick and dirty way to get the data for the Raku version of the file, which looks almost the same.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+use Test;
+use OLE::Storage_Lite;
+
+my $root = OLE::Storage_Lite.new( 'sample/test.xls' );
+die $root.perl;
+isa_ok $root, 'OLE::Storage_Lite::PPS::Root';
+is $root.No, 0;
+is $root.PrevPps, 0xfffffffe;
+</pre>
+
+
+<p>Notice there’s hardly any difference overall, just a few minor syntax tweaks. And I don’t need to use YAML. But I’ve got a Q&amp;D way to run my code, and since my screen looks something like this:</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="56" data-permalink="https://perlfisher.wordpress.com/tmux-vim-screen-1-1/" data-orig-file="https://perlfisher.files.wordpress.com/2020/06/tmux-vim-screen-1-1.png" data-orig-size="1457,1002" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="tmux-vim-screen-1-1" data-image-description="" data-medium-file="https://perlfisher.files.wordpress.com/2020/06/tmux-vim-screen-1-1.png?w=300" data-large-file="https://perlfisher.files.wordpress.com/2020/06/tmux-vim-screen-1-1.png?w=750" src="https://perlfisher.files.wordpress.com/2020/06/tmux-vim-screen-1-1.png?w=1024" alt="" class="wp-image-56" srcset="https://perlfisher.files.wordpress.com/2020/06/tmux-vim-screen-1-1.png?w=1024 1024w, https://perlfisher.files.wordpress.com/2020/06/tmux-vim-screen-1-1.png?w=150 150w, https://perlfisher.files.wordpress.com/2020/06/tmux-vim-screen-1-1.png?w=300 300w, https://perlfisher.files.wordpress.com/2020/06/tmux-vim-screen-1-1.png?w=768 768w, https://perlfisher.files.wordpress.com/2020/06/tmux-vim-screen-1-1.png 1457w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>I’ve got most of what I need in my face. This is all a rather plain&nbsp;<a href="https://github.com/tmux/tmux/wiki">TMUX</a>&nbsp;setup, running multiple panes so I can see what’s going on. On the left is vim running in split-screen mode with the Perl and Raku test files open. The rest are shells in the Perl and Raku directories, and some commands to get byte dumps of the files.</p>
+
+
+
+<p>I’ve also in my shells set up the following aliases:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+alias 5 = "perl -Ilib"
+alias 5p = "prove -Ilib"
+alias 6 = "perl6 -Ilib"
+alias 6p = "prove -e'perl6 -Ilib'"
+</pre>
+
+
+<p>This way I can run both Perl and Raku test suites with just a few keystrokes, and not have to worry about details such as&nbsp;<em>-I</em>&nbsp;paths. You’re of course welcome to do things exactly the same, completely different, or even radically better than I am, in which case please let me know.</p>
+
+
+
+<p>You might notice the use of the language’s old name here. I haven’t changed over to the new binaries yet, but the techniques I’ll talk about here won’t change.</p>
+
+
+
+<h2>Keeping it Clean</h2>
+
+
+
+<p>We now have two scripts that should produce the same output, but probably won’t, for any number of reasons. I’ve got a whole article’s worth of things that I had to do to make the new module compile, let alone run. But that’s for a later issue.</p>
+
+
+
+<p>Let’s start out with this section, which might be familiar to longtime (ha!) readers.&nbsp;</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+  $rhInfo-&gt;{_FILEH_}-&gt;seek(0, 0);
+  $rhInfo-&gt;{_FILEH_}-&gt;read($sWk, 8);
+  return undef unless($sWk eq &quot;xD0xCFx11xE0xA1xB1x1AxE1&quot;);
+</pre>
+
+
+<p>This is in Perl, of course. In Raku I’ve chosen to write</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+  $file.seek( 0, SeekFromBeginning );
+  my Str $sWk = $file.read( 8 ).unpack('A8');
+  die "Header ID incorrect" if $sWk ne HEADER-ID;
+</pre>
+
+
+<p>It’s a bit ungraceful to&nbsp;<em>die()</em>&nbsp;inside a module, but this guarantees that execution stops way before it can cause a hard-to-debug problem down the road. The first change is that I’ve refactored&nbsp;<code>$rhInfo-&gt;{_FILEH_}</code>&nbsp;out into its own&nbsp;<em>$file</em>&nbsp;variable so I don’t have to repeat references to&nbsp;<em>$rhInfo</em>&nbsp;all over the place, like the original.</p>
+
+
+
+<p>Next is using the built-in&nbsp;<em>IO::Handle</em>&nbsp;constant ‘SeekFromBeginning’ instead of the rather anodyne 0 as in Perl. Probably the parent&nbsp;<em>OLE::Storage</em>&nbsp;module looked ahead in the file to determine something before reading in earnest. I’m keeping it here for no good reason other than it might be nice to separate ‘read’ functionality into a different method.</p>
+
+
+
+<h3>Diving in</h3>
+
+
+
+<p>The next line will cause some consternation, so I’ll unpack it slowly. The original author used Hungarian notation for their variable names, so the ‘s’ of&nbsp;<em>$sWk</em>&nbsp;means that it’s a string type. I’ve adopted this for the Raku code as well, actually enforcing the variable type without additional code.</p>
+
+
+
+<p>File handles have both a fancy&nbsp;<em>lines()</em>&nbsp;method that lets you read files line-by-line, and a raw&nbsp;<em>read()</em>method that lets you read raw bytes. If I stopped right here and just looked at the raw bytes, the code would actually fail, and I’ve talked about why in earlier parts. Suffice to say that&nbsp;<em>read()</em>returns a buffer of uninterpreted bytes, not a string that you have to decode later.</p>
+
+
+
+<p>Decoding here is the job of the&nbsp;<em>unpack()</em>&nbsp;statement. It acts just like its Perl counterpart, but is experimental. Lucky for me, it implements enough of the Perl builtin that I can use it to read the entire OLE file.&nbsp;</p>
+
+
+
+<p>Now, unlike other builtins (again, keeping in mind it’s experimental,) it’s only available as a method call. There is a version of&nbsp;<em>unpack()</em>&nbsp;that works on multiple arguments, but if you try to call it as a builtin, expect:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+===SORRY!=== Error while compiling -e
+Undeclared routine:
+    unpack used at line 1. Did you mean 'pack'?
+</pre>
+
+
+<p>This may be fixed in your version, feel free to try it and let me know if I should upgrade&nbsp;🙂&nbsp;In any case, the last bit you’re wondering about is the ‘A8’ business as its argument. I think this isn’t explained correctly in the documentation, so I’ll explain in my own way.</p>
+
+
+
+<p><em>read()</em>&nbsp;returns a raw string of bytes, without interpretation. If it sees hex 041, it doesn’t “know” if you meant the ASCII character ‘A’ or the number 41, so it doesn’t interpret the data, it just puts the data into the buffer. It relies on the the Buf(fer)’s&nbsp;<em>pack()</em>&nbsp;and&nbsp;<em>unpack()</em>&nbsp;methods to assign types to the data.</p>
+
+
+
+<p>So finally,&nbsp;<code>unpack( "A8" )</code>&nbsp;pulls out 8 “ASCII” characters and puts them into&nbsp;<em>$sWk</em>. Now I used scare-quotes there because ASCII is a 7-bit encoding, not 8 bits as many people seem to think. It only encodes from 0x00-0x7f, so anything over that isn’t legal ASCII.</p>
+
+
+
+<p>Which just means that the “A” of “A8” doesn’t truly correspond to ASCII, but it’s close enough. So, we call&nbsp;<em>unpack( “A8” )</em>&nbsp;on the buffer that&nbsp;<em>$file.read( 8 )</em>&nbsp;returns, and get back a string that we can finally check against our header.</p>
+
+
+
+<h2>Debugging</h2>
+
+
+
+<p>But what if the header isn’t what we expect? Your first instinct might be to say you must’ve screwed up and sent it the wrong file. Luckily it’s pretty easy to check that, just call&nbsp;<code>$file.slurp.print;</code>&nbsp;That’ll tell you the contents quickly. If it’s text you’ve probably got the wrong file – OLE files do contain text but it’s usually zip’ed or in UCS-2.</p>
+
+
+
+<p>Let’s assume though that it’s an actual binary file, and a real spreadsheet that Excel (or LibreOffice in my case) can read. Since the headers don’t match, it must be a different version of OLE that our code isn’t ready to handle.</p>
+
+
+
+<p>That means we need to know what the first 8 bytes of the file actually are. We’ve got a bunch of tools at our disposal, but what I want to introduce is&nbsp;<em>hexdump(1)</em>&nbsp;(don’t worry about the (1), force of habit.) Run this command on the file:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+hexdump -C sample-file.xls | head -1
+</pre>
+
+
+<p>This should generate something like this:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+00000000  d0 c9 11 a0 af b1 13 d1  00 00 00 00 00 00 00 00  |................|
+</pre>
+
+
+<p>(original bytes changed to protect the innocent file) The numbers on the left (‘00000000’) tell us how far we are into the file (in hex), the next two groups of 8 are the hex values of the individual bytes of the file, and the dots between ‘|..|’ are where any printable characters would appear, if there were any.</p>
+
+
+
+<p>So now we know what the first 8 bytes of this file look like, and we can add (without much muss or fuss) some checks to our original file, and come up with this:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+$file.seek( 0, SeekFromBeginning );
+my Str $sWk = $file.read( 8 ).unpack('A8');
+die "Unknown OLE header!" if $sWk eq "xd0xc9x11xa0xafxb1x13xd1";
+die "Header ID incorrect" if $sWk ne HEADER-ID;
+</pre>
+
+
+<p>This check isn’t in my source, so don’t go looking for it. As far as I know there aren’t any other OLE header strings than what I check for, but then I’m trying to get away without reading the spec. My blood pressure doesn’t need that.</p>
+
+
+
+<h2>Getting at the details</h2>
+
+
+
+<p>Of course, binary packed formats contain more stuff than just ASCII strings. OLE was originally written in the days of 16-bit CPUs, so it’s got other ways to pack in data. Let’s look at a fragment of the file format: (not from the spec, this is just my interpretation)</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+0000: 0xD0 0xCF 0x11 0xE0 0xA1 0xB1 0x1A 0xE1 # header
+0008: 0x00 0x09           # size of large block of data (in power-of-2)
+000a: 0x00 0x06           # size of small block of data
+000c: 0x00 0x00 0x00 0x03 # Number of BDB blocks
+0010: 0xff 0xff 0xff 0xfe # Starting block
+</pre>
+
+
+<p>So, this is the first 20 (0x0010+4) bytes of an OLE header block. You may have already caught on to the fact that there are at least 3 sizes of data here. The first 8 bytes on line 0000 is the header data we talked about ad nauseam.</p>
+
+
+
+<p>Next, the header says that a “large” block of data is 2**9 bytes long, and a “small” block of data is 2**6 bytes long, this time in pairs of bytes. Finally we’ve got the number of BDB blocks (whatever those are, probably Berkeley DB) and the starting block’s index number, all in 4-byte chunks.</p>
+
+
+
+<p>This means we need to read 2 2-byte chunks and 2 4-byte chunks into memory. This time though, we have to read them as numbers. Once again,&nbsp;<em>unpack()</em>&nbsp;comes to the rescue. Last time we used the ‘A’ character, this time we’ll do something just a little bit different.</p>
+
+
+
+<p>Let’s read the&nbsp;<a href="http://web.archive.org/web/20200212094016/https://docs.raku.org/routine/unpack">documentation</a>&nbsp;for&nbsp;<em>unpack()</em>&nbsp;to see what we can use. Halfway down the page we come to a table which gives us the letter abbreviations for each type of data we can read, and what it is in terms of where it is in memory.</p>
+
+
+
+<p>For now, replace the term ‘element’ with ‘byte’ while you’re reading the documentation. We need to read (0x00, 0x09) as a 2-byte integer, so let’s look for “two elements” on the right-hand side. “Extracts two elements and returns them as a single unsigned integer” seems to be what we need.</p>
+
+
+
+<p>So it looks like the letter we need to use is “S”, and since we only want to read one at a time, that’s all we need. But the original Perl source uses “v”, so that’s what I’ll use as well.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+  $iWk = _getInfoFromFile($rhInfo-&gt;{_FILEH_}, 0x1E, 2, &quot;v&quot;);
+  return undef unless(defined($iWk));
+  $rhInfo-&gt;{_BIG_BLOCK_SIZE} = 2 ** $iWk;
+</pre>
+
+
+<p>But as you can see, the Perl source creates a wrapper around the&nbsp;<em>pack()</em>&nbsp;method, much to my annoyance. I’d prefer to simply write this:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+$iWk = $file.read( 2 ).unpack( &quot;v&quot; );
+%hInfo&lt;_BIG_BLOCK_SIZE&gt; = 2**$iWk;
+</pre>
+
+
+<p>but to keep things looking as similar to the original Perl code as I can, my code looks like&nbsp;</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+  my Int $iWk = self._getInfoFromFile( $file, 0x1E, 2, &quot;v&quot; );
+  die &quot;Big block size missing&quot; unless defined( $iWk );
+  %hInfo&lt;_BIG_BLOCK_SIZE&gt; = 2 ** $iWk;
+</pre>
+
+
+<p>which is just one line longer, and that’s because of the safety check. Of course,&nbsp;<em>pack()</em>&nbsp;and&nbsp;<em>unpack()</em>can take more than one format character at time. In Perl, there’s yet another mini-language (like regex, and what used to be called the&nbsp;<em>format</em>&nbsp;statement) for these builtins, and that’s not quite done yet.</p>
+
+
+
+<p>But you can still take the entire header we’ve collected so far, and write it into a single&nbsp;<em>unpack()</em>statement like so:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my ( $header, $large-size, $small-size, $num-bdbs, $start-block ) =
+  $file.read( 20 ).unpack( "A8 vv VV" );
+</pre>
+
+
+<p>This format is of course much more compact and much easier to read. In all probability once I get done with the main module I’ll convert everything over to this style and the code will become much, much quieter. Binary protocols, especially those for moisture evaporators, tend to have lots of code that looks like:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my $rev = $file.read(2).unpack("v")
+if $rev == 0x01 {
+  $r2 = $file.read(2).unpack("v");
+} else {
+  $d2 = $file.read(4).unpack("V");
+}
+</pre>
+
+
+<p>where the next bytes you read depend upon the version of the protocol. Even though I’ve just been rattling off code based on the Perl version, I don’t know what the protocol may&nbsp;<strong>do</strong>&nbsp;at any given point. So it makes sense to read just one int or long ahead while developing.</p>
+
+
+
+<p>I could read a version number as “V” because they started out using “v1”, “v2” and so on up to “v42792643522”. But then 30 lines and 2 revs later they may have changed from “V” to “vcc” because they wanted to support “v2.1.0” style.</p>
+
+
+
+<p>And if that header were something like “A8 V CC* V vv” I have to go back and break up the format string and statement at the very least. If I go term-by-term I just have to find the version number and add an if-then statement just below.</p>
+
+
+
+<p>Now that you’ve got a fairly good grounding in&nbsp;<em>unpack()</em>, I think it’s time for break. Next time we’ll cover writing our file back out, the most fun part of the operation.</p>
+
+
+
+<hr class="wp-block-separator" />
+
+
+
+<p>Again, many thanks to those of you that have read this far. As usual, Gentle Reader, please feel free to leave constructive questions, comments, critiques and improvements in the comment section. I do require an email address for validation, but I don’t use it for any other purpose. Thank you again, and I’ll see you in part VI of this series.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2019/12/15/rewriting-perl-code-for-raku-part-v/" rel="bookmark"><time class="entry-date published" datetime="2019-12-15T12:19:50+01:00">December 15, 2019</time><time class="updated" datetime="2020-06-30T13:05:14+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/uncategorized/" rel="category tag">Uncategorized</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2019/12/15/rewriting-perl-code-for-raku-part-v/#respond">Leave a comment<span class="screen-reader-text"> on Rewriting Perl code for Raku Part&nbsp;V</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-53" class="post-53 post type-post status-publish format-standard hentry category-perl-programming category-raku-programming entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2019/12/08/rewriting-perl-code-for-raku-iv-a-new-hope/" rel="bookmark">Rewriting Perl Code for Raku IV: A New&nbsp;Hope</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p>Back in&nbsp;<a href="http://web.archive.org/web/20200212094016/http://www.theperlfisher.com/index.php/2019/11/24/rewriting-legacy-code-for-raku-ii-electric-boogaloo/">Part III</a>&nbsp;of our series on Raku programming, we talked about some of the basics of OO programming. This time we’ll talk about another aspect of OO programming. Perl objects can be made from any kind of reference, although the most common is a hash. I think Raku objects can do the same, but in this article we’ll just talk about hash-style Perl objects.</p>
+
+
+
+<p>Raku objects let you superclass and subclass them, instantiate them, run methods on them, and store data in them. In previous articles we’ve talked about all but storing data.&nbsp;It’s time to remedy that, and talk about attributes.</p>
+
+
+
+<h2>Instance attributes</h2>
+
+
+
+<p>We used&nbsp;<code>unit class OLE::Storage_Lite;</code>&nbsp;to declare our class, and&nbsp;<code>method save( $x, $y ) { ... }</code>&nbsp;to create methods. Or in our case rewrite existing functions into methods. Now, we focus our attention on some of the variables that should really be instance attributes, and why.</p>
+
+
+
+<p>Let’s get to know which variables behave like attributes, and which don’t. This&nbsp;<strong>will</strong>&nbsp;change how we write our Raku code, but hopefully for the better. We’ll start from the outside in, and look at the API. There are a few “test” scripts that use the module, and this fragment is pretty common.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+use OLE::Storage_Lite;
+my $oOl = OLE::Storage_Lite-&gt;new('test.xls');
+my $oPps = $oOl-&gt;getPpsTree(1);
+die( &quot;test.xls must be a OLE file&quot;) unless($oPps);
+</pre>
+
+
+<p>The author creates an object (<em>$oOl</em>) from an existing file, then fetches a tree of “Pps” objects, whatever they are. So, one&nbsp;<em>OLE::Storage_Lite</em>&nbsp;object equals one file. This gives me my first instance variable,&nbsp;the filename.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+sub new($$) {
+  my($sClass, $sFile) = @_;
+  my $oThis = {
+    _FILE =&gt; $sFile,
+  };
+  bless $oThis;
+  return $oThis;
+}
+</pre>
+
+
+<p>Above is how they wrote it in Perl, and below is how we’d write it (exactly as specified) in Raku:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+has $._FILE;
+
+multi method new( $sFile ) {
+  self.new( _FILE =&gt; $sFile );
+}
+</pre>
+
+
+<p>Later on, we can call&nbsp;<code>my $file = OLE:Storage_Lite.new( 'test.xls' );</code>&nbsp;just like we did in Perl. We wouldn’t even need the&nbsp;<em>new</em>&nbsp;method if we had users call&nbsp;<code>my $file = OLE::Storage_Lite.new( _FILE =&gt; 'text.xls' );</code>. This gives users the option of calling the API in the old Perl fashion or the new Raku fashion without additional work on our part.</p>
+
+
+
+<h2>Strict Raku-style</h2>
+
+
+
+<p>There’s a problem lurking here, though. The constructor Raku provides us lets us call&nbsp;<code>my $file = OLE::Storage_Lite.new();</code>&nbsp;without specifying a value for&nbsp;<em>$._FILE</em>. If you know Perl’s Moose module, though, the ‘has’ there just might look familiar.</p>
+
+
+
+<p>And for good reason. A lot of the ideas from Moose migrated into Raku during its design, and the attributes were one of those. Moose lets you do a lot of things with attributes, and so does Raku. One of those is you can add “adverbs” to them. Let’s do that now.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+has $._FILE is required;
+</pre>
+
+
+<p>Calling&nbsp;<code>OLE::Storage_Lite.new()</code>&nbsp;now fails, because you’re not passing in the&nbsp;<em>_FILE</em>&nbsp;argument. That solves one problem. Actually, it solves two, come to think of it. In the original Perl code, you could call&nbsp;<code>OLE:Storage_Lite-&gt;new()</code>&nbsp;too, and it wouldn’t complain. Now we’ve fixed that, with one new term.</p>
+
+
+
+<h2>Progressive Typing</h2>
+
+
+
+<p>No, we’re not talking about some new editor like&nbsp;<a href="http://web.archive.org/web/20200212094016/https://www.commaide.com/">Comma</a>&nbsp;(the link&nbsp;<strong>does</strong>&nbsp;work, despite the certificate problem.) Our code would run just fine, as-is. Users could call our&nbsp;<em>.new()</em>&nbsp;API, Raku would make sure the filename existed, and we could go on with translating.</p>
+
+
+
+<p>But there’s something more we can take advantage of here, and that is the fact that any Raku object (and anything we can instantiate is an object) is a type as well. We haven’t mentioned that because we really couldn’t use that information until now.</p>
+
+
+
+<p>The original Perl code is littered with clues to types, hidden in the variable names. When we wrote our own API call, the Perl code called the file name&nbsp;<em>$sNm.</em>&nbsp;The ‘s’ tells the Perl compiler nothing, but it tells us that&nbsp;<em>$sNm</em>&nbsp;is a String type. Perl may not have true types, but Raku does. Let’s fix our attribute with that in mind.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+has Str $._FILE is required;
+</pre>
+
+
+<p>We knew all along that&nbsp;<em>$._FILE</em>&nbsp;is a string of some sort, but telling Raku that lets it allocate space more efficiently. Making sure it’s a required attribute lets anyone that calls&nbsp;<em>new()</em>&nbsp;know if they forget an argument. We could go a little farther with this, but locking down attributes will help in the long run, when we start dealing with the&nbsp;<em>pack</em>&nbsp;and&nbsp;<em>unpack</em>&nbsp;built-ins.</p>
+
+
+
+<h2>Packing It All In</h2>
+
+
+
+<p>We’re now getting to the heart of the module. There’s a lot of mechanics above us, allocating objects and doing math and checking types, and not much below us. The class’ entire purpose is to read and write OLE-formatted files. We’ll talk more about the boilerplate, but here’s the real meat of the file.</p>
+
+
+
+<p>Let’s start with what should be simple, reading in data. Just like in Perl, we open a file and get back a “file handle” (assuming the file exists, of course.) By default, calling&nbsp;<code>my $fh = open $._FILE;</code>gives us a read-only file handle. The file handle itself has a bunch of attributes associated with it, but the important one right now is its encoding.</p>
+
+
+
+<p>Namely, the fact that it has none. An OLE file is essentially a miniature filesystem (probably based on FAT) packed onto disk, complete with a root directory, subdirectories and files. File have names encoded in UCS-2, but the rest is entirely dependent upon what the application requires.</p>
+
+
+
+<p>The upshot of which is that we can’t read the format with something simple like&nbsp;<code>my @lines = $fh.lines;</code>&nbsp;which would read line after line into the&nbsp;<em>@lines</em>&nbsp;array. Instead we’ll use calls like&nbsp;<em>read()</em>and&nbsp;<em>write()</em>&nbsp;that return byte-oriented buffers.</p>
+
+
+
+<h2>Buffering…</h2>
+
+
+
+<p>All OLE files start off with the header “xD0xCFx11xE0xA1xB1x1AxE1”, so we should probably start there. That’s important twice in the code, in fact. First, when we’re reading off disk, we can check it against what we’ve just read to make sure this file is OLE, and not, say, a JSON file. Later on, when we’re saving out an OLE file, we can write it as the header string.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+constant HEADER-ID = "xD0xCFx11xE0xA1xB1x1AxE1";
+</pre>
+
+
+<p>I’ll make it a constant as well, so when I revisit this code in a month I don’t have to go looking in specs for ‘0xd0 0xcf’ to remember what this is. Reading is straight-forward too. It needs just a byte count.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my Buf $header = $fh.read( 8 );
+</pre>
+
+
+<p>Something important to notice here is the type, ‘Buf’. If our file was in Markdown, or JSON we could get away with just writing&nbsp;<code>my @lines = $fh.lines;</code>&nbsp;like I tried earlier. But these are raw bytes, hindered by no interpretation. Let’s see what happens when we compare these bytes to our&nbsp;<em>HEADER-ID</em>.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+t/01-internals.t ............ Cannot use a Buf as a string, but you called the Stringy method on it
+  in method _getHeaderInfo at /home/jgoff/GitHub/drforr/raku-OLE-Storage_Lite/lib/OLE/Storage_Lite.pm6 (OLE::Storage_Lite) line 169
+  in block &lt;unit&gt; at t/01-internals.t line 42
+</pre>
+
+
+<h2>Another brick in the wall</h2>
+
+
+
+<p><strong>Ka-blam</strong>. But… hold the phone here a minute, I just said&nbsp;<code>$header eq HEADER-ID</code>, I didn’t write anything like ‘Stringy’! There’s no ‘Stringy’ in the source… oh.&nbsp;<em>HEADER-ID</em>&nbsp;is a string, so Raku is being helpful. I’m trying to use string comparison (‘eq’) between something that’s not a Str (&nbsp;<em>$header</em>&nbsp;) and something that is (<em>HEADER-ID</em>).</p>
+
+
+
+<p>Pull up the&nbsp;<a href="http://web.archive.org/web/20200212094016/https://docs.raku.org/type/Stringy">Stringy</a>&nbsp;documentation, and look for the Type graph. Midway down you’ll see ‘Buf’ and ‘Str’, as of this writing Buf is on the left, and Str is popular so it’s in the middle.</p>
+
+
+
+<p>Trace the inheritance paths from Buf and Str upwards, and you’ll see they pass Buf -&gt; Blob -&gt; Stringy and Str -&gt; Stringy, and stop. What the error message therefore is saying is this, anthropomorphized:</p>
+
+
+
+<p>You wanted to convert&nbsp;<em>Buf</em>&nbsp;to&nbsp;<em>Str</em>, and didn’t care how you did it. So I looked. First, on the&nbsp;<em>Buf</em>&nbsp;type. No .Str method there, at least without arguments. No good. So I looked in its parent,&nbsp;<em>Blob</em>. Nothing doing there. Then I looked at&nbsp;<em>Stringy</em>, and couldn’t find anything else.</p>
+
+
+
+<p>There’s nothing above me, nothing below. So I’ll let you know I looked for a conversion method in a bunch of places, stopped at&nbsp;<em>Stringy</em>, and couldn’t go any farther. Sorry.</p>
+
+
+
+<p><em>Raku</em></p>
+
+
+
+<p>You’re probably wondering how to get out of this quandary. Reading the&nbsp;<a href="http://web.archive.org/web/20200212094016/https://docs.raku.org/type/Blob#method_Str">Blob</a>&nbsp;documentation closely, you might think that the&nbsp;<em>encode</em>&nbsp;method is the way out of our present jam. If you look closer, though, there’s a spanner in the works. “xD0” is the&nbsp;<strong>byte</strong>&nbsp;0xd0, so if you try to decode to ASCII, you run into the problem that ASCII only covers 0x00-07xf, everything outside of that is undefined.</p>
+
+
+
+<h2>Packing for vacation</h2>
+
+
+
+<p>If you’ve kept up with things, you might surmise by now that the key to our quandary lies in the&nbsp;<em>pack</em>&nbsp;and&nbsp;<em>unpack</em>&nbsp;builtins. Specifically&nbsp;<em>unpack()</em>, because we’re trying to “decode” a buffer into something suitable for Raku.</p>
+
+
+
+<p>Unless you’ve done things like network programming or security, the&nbsp;<em>pack</em>&nbsp;and&nbsp;<em>unpack</em>&nbsp;builtins are going to be unfamiliar territory. The closest analogue of&nbsp;<em>pack()</em>&nbsp;is the builtin&nbsp;<em>sprintf()</em>.</p>
+
+
+
+<p>Both of these builtins take a format string telling the compiler how to arrange its arguments. Both of them take a mixture of string and integer arguments afterwards. But while&nbsp;<em>sprintf()</em>&nbsp;takes the arguments and treats its output as a UTF-8 encoded string,&nbsp;<em>pack()</em>&nbsp;takes the same arguments and treats its output as a raw buffer of bytes.</p>
+
+
+
+<p>And now you can see one way out of our little predicament. If we could just find the right invocation,&nbsp;<em>pack()</em>&nbsp;would be able to take our string “xd0xcf…” and turn it into a Buf object. Then we could compare the buffer we got by reading 8 bytes to the buffer we expected.</p>
+
+
+
+<p>So instead of cluttering up the main code, let’s write a quick test.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+use experimental :pack;
+constant HEADER-ID = "xD0xCFx11xE0xA1xB1x1AxE1";
+
+use Test;
+my $fh = open "test.xls";
+my Buf $buf = $fh.read( 8 );
+
+is $buf, pack( "A8", HEADER-ID ); # Pack 8 ASCII characters
+</pre>
+
+
+<h2>Testing…testing…</h2>
+
+
+
+<p>Let’s take it from the top. We tell Raku to use the “experimental”&nbsp;<em>pack()</em>&nbsp;builtin, and declare the header we want to check against. Then we tell Raku we want to use the Test module, and open a new Microsoft Excel test file.</p>
+
+
+
+<p>Last, we read a chunk of 8 bytes from the file into a buffer, and check to see that the 8 bytes matches the header we expect to see. Now, how did we get that weird ‘A8’ string in there? I thought&nbsp;<em>pack()</em>&nbsp;looked more like&nbsp;<em>sprintf()</em>?</p>
+
+
+
+<p>Well, it does, to an extent. I/O routines like&nbsp;<em>sscanf()</em>&nbsp;and&nbsp;<em>sprintf()</em>&nbsp;can do all sorts of things to your strings and numbers on the way in and out, think for example what ‘%-2.10f’ means in a format specifier, for instance. You can follow along with the&nbsp;<a href="http://web.archive.org/web/20200212094016/https://docs.raku.org/routine/unpack">unpack()</a>&nbsp;documentation if you like.</p>
+
+
+
+<p><em>pack()</em>, by contrast, just takes 8, 16, or 32-bit chunks of your input, and places them into a buffer. The “A” in “A8” says that it wants to convert an ASCII-sized chunk of your input (“xd0” in our case) into a byte in the buffer, so our Buf now looks like ( 0xd0 ).</p>
+
+
+
+<p>I could just as well have said “AAAAAAAA” in order to translate all 8 characters of the buffer, but I think it’s a little tidier to use the ‘repeat’ option, and say “A8” in order to convert just 8 characters (yes, yes, I know, they’re&nbsp;<strong>glyphs</strong>, but let’s not confuse matters.)</p>
+
+
+
+<p>I could write “A*” just as well, but “A8” makes sure that 8 and only 8 (the number that thou shalt count to…) characters get converted. I doubt that the header in an OLE file will change, but it’s a nice bit of forward planning.</p>
+
+
+
+<hr class="wp-block-separator" />
+
+
+
+<p>For those of you that made it this far, thank you. As usual, gentle Reader, if you have any comments, criticisms (constructive, please) or questions, feel free to post them below.</p>
+
+
+
+<p>Next week I’ll delve deeper into the mysteries of&nbsp;<em>pack()</em>,&nbsp;<em>unpack()</em>&nbsp;and some of the tips and tricks I use to keep on my toes and make sure that I generate clean Microsoft-compatible output.</p>
+
+
+
+<p></p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2019/12/08/rewriting-perl-code-for-raku-iv-a-new-hope/" rel="bookmark"><time class="entry-date published" datetime="2019-12-08T12:36:34+01:00">December 8, 2019</time><time class="updated" datetime="2020-06-30T13:04:01+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/perl-programming/" rel="category tag">Perl programming</a>, <a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2019/12/08/rewriting-perl-code-for-raku-iv-a-new-hope/#respond">Leave a comment<span class="screen-reader-text"> on Rewriting Perl Code for Raku IV: A New&nbsp;Hope</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-60" class="post-60 post type-post status-publish format-standard hentry category-perl-programming category-raku-programming entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2019/12/02/rewriting-perl-code-for-raku-iii-the-sorceror/" rel="bookmark">Rewriting Perl Code for Raku III: The&nbsp;Sorceror</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p><a href="http://web.archive.org/web/20200212094016/http://www.theperlfisher.com/index.php/2019/11/24/rewriting-legacy-code-for-raku-ii-electric-boogaloo/">Last week</a>, we started testing, learned how to create proper Raku classes, and the basics of functions. This time we’ll take a closer look at functions, arguments, and make some decisions about the API. And maybe while writing this I’ll argue myself out of a decision. It’s happened before.</p>
+
+
+
+<p>One good thing about writing&nbsp;<strong>about</strong>&nbsp;a module is that you can slip into a certain mindset. For instance, right now I’m thinking a few paragraphs ahead, wondering how to explain why I changed the API from Perl 5 references to regular Raku types.</p>
+
+
+
+<p>It’s at odds with some of the principles I laid down at the start, which states that I should have minimal changes in the API from Perl to Raku. In Perl 5, you would create the “filesystem root” object like so:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my $root = OLE::Storage_Lite::PPS::Root-&gt;new(
+  [ 0, 0, 0, 25, 1, 100 ],
+  [ 0, 0, 0, 25, 1, 100 ],
+  [ $workbook, $page_1, $sheet_1 ]
+);
+</pre>
+
+
+<p>with a bunch of references to lists. By all rights, and the principles I set up earlier, the Raku equivalent should be almost exactly the same:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my $root = OLE::Storage_Lite::PPS::Root.new(
+  [ 0, 0, 0, 25, 1, 100 ],
+  [ 0, 0, 0, 25, 1, 100 ],
+  [ $workbook, $page_1, $sheet_1 ]
+);
+</pre>
+
+
+<p>In fact, all I did was copy and change two characters, specifically the Perl ‘-&gt;’ to the Raku ‘.’ operator. Clean, and very simple. And I think what I’ll do is actually just change the code back to using the Perl reference, at least in the API. Dereferencing it will be just a few lines, and I’ll have to change it in the tests as well, but I think the pain will be worthwhile.</p>
+
+
+
+<p>This way I don’t have to field questions like “Why did you end up potentially breaking old code?” during talks. See, speaking at conferences about your code really <strong>can</strong> be a useful motivator!</p>
+
+
+
+<h2>I’d like a formal argument, please</h2>
+
+
+
+<p>So, I think I’ve settled on Perl-style formal references, at least for the current iteration. There are actually better ways to do this, but I’ll leave that for the proper Raku version. For right now, quick-n-dirty is the name of the game.</p>
+
+
+
+<p>Moving on, we see an important method in the original Perl code, saving an object to disk.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+sub save($$;$$) {
+  my($oThis, $sFile, $bNoAs, $rhInfo) = @_;
+  #0.Initial Setting for saving
+  $rhInfo = {} unless($rhInfo);
+  # ..
+}
+</pre>
+
+
+<p>As I’ve mentioned before, OLE::Storage_Lite has been around for a long, long time. And it’s obvious here. Function prototypes (<strong>not</strong>&nbsp;signatures, which are a different kettle of fish) and the use of ‘$oThis’ instead of the more conventional ‘$self’.</p>
+
+
+
+<h3>Being prototypical</h3>
+
+
+
+<p>Prototypes were originally meant as a way to save you from having to write checks in your code. Theoretically, if your function was called&nbsp;<code>sub save($$)</code>&nbsp;and you tried to call it with&nbsp;<code>save($fh)</code>&nbsp;you would get an error, because the ‘$$’ means the subroutine took two arguments, and you gave it just one.</p>
+
+
+
+<p>But it also predated objects (yes, Virginia, objects in Perl haven’t been around all&nbsp;<strong>that</strong>&nbsp;long.) and they could have unforeseen side effects. So they were a fad for a while, but quickly faded out of existence.</p>
+
+
+
+<p>These days they’re a reason for a more experienced Perl hacker to take the junior aside and explain quietly why we don’t use those anymore, and point them to some modern references, like&nbsp;<em><a href="http://web.archive.org/web/20200212094016/https://www.amazon.com/Modern-Perl-chromatic/dp/1680500880/ref=sr_1_1?keywords=Modern+Perl&amp;qid=1574975397&amp;s=books">Modern Perl</a></em>&nbsp;(not an affiliate link, yet.)</p>
+
+
+
+<p>Let’s at least partially convert that to Raku, like so:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+method save($sFile, $bNoAs, $rhInfo) {
+  #0.Initial Setting for saving
+  $rhInfo = {} unless($rhInfo);
+  # ..
+}
+</pre>
+
+
+<p>The ‘$oThis’ means that this is a method call, so instead of writing&nbsp;<code>sub save( $oThis, ... )</code>&nbsp;we can rewrite it to a method and gain ‘self’ instead of the arbitrary variable ‘$oThis’. Of course we do have to do a search-and-replace on ‘$oThis’ with ‘self’, but that’s relatively simple. More complex is what to do with the ‘;’ in the original prototype.</p>
+
+
+
+<h2>Having options</h2>
+
+
+
+<p>It’s worth pointing out that&nbsp;<a href="http://web.archive.org/web/20200212094016/https://metacpan.org/pod/OLE::Storage_Lite">OLE::Storage_Lite</a>&nbsp;is taken at least in part from another (larger) module,&nbsp;<a href="http://web.archive.org/web/20200212094016/https://metacpan.org/pod/OLE::Storage">OLE::Storage</a>. This means that the internal code is redundant in a few places. Raku would let us rewrite what we have as:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+method save($sFile, $bNoAs, $rhInfo = {}) {
+  #0.Initial Setting for saving
+  # ..
+}
+</pre>
+
+
+<p>making&nbsp;<em>$rhInfo</em>&nbsp;an optional variable with a default value. Now, this is a pretty common pattern for a recursive method, so I did a bit of digging. Namely I grep’ed for ‘save’ in the original (all-in-one)&nbsp;<em>Storage_Lite.pm</em>&nbsp;module, and found no recursive calls to it.</p>
+
+
+
+<h2>Debugging both sides now</h2>
+
+
+
+<p>This is also where the test suite I wrote earlier comes in handy, as it actually exercises the ‘save’ method. So I added a quick debugging message&nbsp;<code>warn "Saving $rhInfo";</code>&nbsp;to my local copy of the code, and ran the test suite. Seeing just one ‘Saving …’ message in my test output convinced me it wasn’t recursive. So now the code just looks like:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+method save($sFile, $bNoAs) {
+  #0.Initial Setting for saving
+  my %hInfo;
+  # ..
+}
+</pre>
+
+
+<p>Also, since&nbsp;<em>$rhInfo</em>&nbsp;is created in this method, there’s no reason to leave it as a reference. So the initial ‘r’ goes away, and we have left just ‘%hInfo’. It may get passed in to other methods, but Raku lets us pass hashes and arrays as ordinary variable types, so I’ll take advantage of that.</p>
+
+
+
+<p>To be fair, leaving it as a reference would have saved me a bit of typing, but I’d already kind of decided that at least internally I’d try to use Raku types and calling conventions, and that left me with the choice of how to pass variables around.</p>
+
+
+
+<h3>Having options</h3>
+
+
+
+<p>Finally, there’s the question of what to do with the semicolon. Remember at the start, the function prototype was ‘($$;$$)’ which meant&nbsp;<em>$oThis</em>&nbsp;and&nbsp;<em>$sFile</em>&nbsp;were before the semicolon, and&nbsp;<em>$bData</em>&nbsp;and&nbsp;<em>$rhInfo</em>&nbsp;were after. I can now reveal that ‘;’ in a Perl prototype means that whatever appears afterward is optional.</p>
+
+
+
+<p>True to Raku’s nature, I can account for this in at least two ways. One way would be to decide that&nbsp;<em>$bData</em>&nbsp;is always there and just has a default value, probably 0. That would look like&nbsp;<code>method save( $sFile, $bData = 0 )</code>. But the documentation puts&nbsp;<em>$bData</em>&nbsp;in square brackets, indicating that it’s optional.</p>
+
+
+
+<p>Raku has an alternate syntax to indicate if a variable is optional, which looks like&nbsp;<code>method save( $sFile, $bData? )</code>. I think this method is better than the alternative syntax because it states clearly that&nbsp;<em>$bData</em>&nbsp;is optional. Both methods work, I just happen to like the ‘?’ modifier.</p>
+
+
+
+<h2>Waiting for Huffman</h2>
+
+
+
+<p>Moving on, we have this wonderful line of code:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+$rhInfo-&gt;{_BIG_BLOCK_SIZE}  = 2**
+              (($rhInfo-&gt;{_BIG_BLOCK_SIZE})?
+                  _adjust2($rhInfo-&gt;{_BIG_BLOCK_SIZE})  : 9);
+</pre>
+
+
+<p>When I was translating this initially, I was in something of a drone mindset, not truly thinking about what I was doing. I’d copied the&nbsp;<em>$rhInfo</em>&nbsp;variable into the method signature and just kept on writing. I ended up with a statement that I eventually shortened quite a bit.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+$rhInfo.&lt;_BIG_BLOCK_SIZE&gt; = 2**
+  ( $rhInfo.&lt;_BIG_BLOCK_SIZE&gt; ??
+    _adjust2( $rhInfo.&lt;_BIG_BLOCK_SIZE&gt; ) !!
+                                        9 );
+</pre>
+
+
+<p>The ‘.’ after&nbsp;<em>$rhInfo</em>&nbsp;indicates we’re dealing with a reference, and the &lt;..&gt; notation is now how barewords look inside hashes. The old {_BIG_BLOCK_SIZE} is still there, but it’s pronounced {‘_BIG_BLOCK_SIZE’}. A lot of people use the {‘..’} in Perl already so it’s not a big change, and it actually simplifies the backend enormously.</p>
+
+
+
+<p>Also, at the start Larry and Damian pulled statistics on Perl code from CPAN and other repositories. They were looking for operator frequencies, among other things. Frequently used operators like&nbsp;<em>qw()</em>&nbsp;and&nbsp;<em>-&gt;</em>&nbsp;got even shorter in Raku.</p>
+
+
+
+<p>Others, like the ternary operator, weren’t so lucky. It got longer, and stretched to ‘?? .. !!’. So this is one place where the code will look a little funky. Maybe one day I’ll write a slang to fix it, but back to work.</p>
+
+
+
+<h2>Trimming the verge</h2>
+
+
+
+<p>Earlier I mentioned that this module was trimmed down from a much larger full OLE reader/writer. This was the first place that became evident. Since&nbsp;<em>$rhInfo</em>&nbsp;is now called&nbsp;<em>%hInfo</em>&nbsp;and initialized&nbsp;<strong>inside</strong>&nbsp;the method, this statement deserves to be looked at a little closer.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my %hInfo;
+%hInfo&lt;_BIG_BLOCK_SIZE&gt; = 2**
+  ( %hInfo&lt;_BIG_BLOCK_SIZE&gt; ??
+    _adjust2( %hInfo&lt;_BIG_BLOCK_SIZE&gt; ) !!
+                                        9 );
+</pre>
+
+
+<p>After replacing&nbsp;<em>$rhInfo</em>&nbsp;with&nbsp;<em>%hInfo</em>&nbsp;this is what I got. But since&nbsp;<em>%hInfo</em>&nbsp;is defined just above, the test&nbsp;<code>%hInfo&lt;_BIG_BLOCK_SIZE&gt;</code><em>&nbsp;</em>will never be true, so this entire block can be reduced to:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my %hInfo = _BIG_BLOCK_SIZE =&gt; 2**9;
+</pre>
+
+
+<p>While I’m here I’ll delete&nbsp;<em>_adjust2()</em>. No code pathway uses it, so out it goes. I’ll restore it if I have to, but right now I want the test scripts to pass, and that’s it. I’ve got the original source, and a map from Perl to Raku, and that’s all I need.</p>
+
+
+
+<h2>Culling yaks from the herd</h2>
+
+
+
+<p>Where there’s smoke there’s fire, so I stop what I’m doing and grep out every ‘sub X’ call in the source, putting it in a scratch monkey. Then I go through the source (which I have below the new Raku source, deleting lines as I go) and look for methods that aren’t used, like&nbsp;<em>adjust2()</em>. I delete each of these methods with&nbsp;<strong>extreme</strong>&nbsp;prejudice, because each line of code I don’t see is one I don’t have to translate.</p>
+
+
+
+<p>Checkpoint in git, and now it’s time for a lunch break. Afterwards, I’m getting into the&nbsp;<em>save()</em>method, and see what looks like a new yak to shave. Or a package to translate, to be precise.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+  if(ref($sFile) eq 'SCALAR') {
+    require IO::Scalar;
+    my $oIo = new IO::Scalar $sFile, O_WRONLY;
+    $rhInfo-&gt;{_FILEH_} = $oIo;
+    # ...
+}
+</pre>
+
+
+<p>In both Raku and Perl, you can create a single method called&nbsp;<code>new( $sFile )</code>&nbsp;that treats&nbsp;<em>$sFile</em>&nbsp;as either a filename (scalar), file content (scalar reference) or file handle (scalar object.) In Perl, if we wanted to handle filenames, file contents, or file handles differently, we’d have to switch like this, or have different method names.</p>
+
+
+
+<p>In Raku, we can handle this differently. In fact I can write the code to save() to a filename, and add save() to a filehandle later with no modifications needed. Above, I briefly touched on the fact that you can write more than one&nbsp;<em>new()</em>&nbsp;method, as long as the two method signatures were distinct.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+multi method save( Str $filename ) {...}
+multi method save( IO::Handle $fh ) {...}
+</pre>
+
+
+<p>Raku will let you write two methods called&nbsp;<em>save()</em>, as long as it can tell which one to call at runtime. So, I can call&nbsp;<code>$root.save( '/tmp/test.xlsx' );</code>&nbsp;or&nbsp;<code>$root.save( $out_filehandle );</code>&nbsp;and Raku will “dispatch” it to the right&nbsp;<em>save()</em>&nbsp;method automatically.</p>
+
+
+
+<p>We call it ‘multiple dispatch’ for just that reason, dispatching a function call to multiple versions of a method. And this means that I can write the first&nbsp;<em>save( Str $filename )</em>&nbsp;method without worrying about the other methods. I don’t have to add a new if-then branch to the existing code, or modify&nbsp;<em>save()</em>&nbsp;in any way.</p>
+
+
+
+<p>I can just write my&nbsp;<em>save()</em>&nbsp;method and ignore the other IO:: types. Also, if someone gets my code later and wants to add a&nbsp;<em>save()</em>&nbsp;method that saves to something I know nothing about, they can write their new&nbsp;<em>save()</em>&nbsp;method without interfering with mine.</p>
+
+
+
+<p>In this installment we’ve covered the basics of function and method calls, delved into the ternary operator, removed dead code and learned a little about multiple dispatch. Next time, we’ll open the binary filehandle we created above and delve into the mysteries of&nbsp;<em>pack()</em>&nbsp;and&nbsp;<em>unpack()</em>.</p>
+
+
+
+<p>I’ll also show you a new (yes, I couldn’t resist) grammar-based version of pack() that should cover the entire Perl gamut of packed types, with a bit of patience and a large enough test suite.</p>
+
+
+
+<p>As always, gentle Reader, thank you for your time and attention. If you have any (constructive, please) comments, criticisms or questions, please let me know in the comment section below.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2019/12/02/rewriting-perl-code-for-raku-iii-the-sorceror/" rel="bookmark"><time class="entry-date published" datetime="2019-12-02T13:05:55+01:00">December 2, 2019</time><time class="updated" datetime="2020-06-30T13:06:50+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/perl-programming/" rel="category tag">Perl programming</a>, <a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2019/12/02/rewriting-perl-code-for-raku-iii-the-sorceror/#respond">Leave a comment<span class="screen-reader-text"> on Rewriting Perl Code for Raku III: The&nbsp;Sorceror</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-63" class="post-63 post type-post status-publish format-standard hentry category-perl-programming category-raku-programming entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2019/11/24/rewriting-perl-code-for-raku-ii-electric-boogaloo/" rel="bookmark">Rewriting Perl Code for Raku II: Electric&nbsp;Boogaloo</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p>Picking up from&nbsp;<a href="http://web.archive.org/web/20200212094016/http://www.theperlfisher.com/index.php/2019/11/24/rewriting-legacy-code-for-raku/">Part One</a>, we’d just finished up rewriting a Perl script into the test suite for the Raku translation of&nbsp;<a href="http://web.archive.org/web/20200212094016/https://metacpan.org/pod/OLE::Storage_Lite">OLE::Storage_Lite</a>. Raku programming is made easier by having lots of tools, but Microsoft documents aren’t yet well-represented in the Raku ecosystem.</p>
+
+
+
+<p>Being able to read/write OLE allows us to create a whole range of Microsoft documents (at least where they’re documented.) Because of its day-to-day use, we’re focusing on Excel here. Many businesses still rely on Excel for their day-to-day task management, time tracking and home-grown processes.</p>
+
+
+
+<p>I’ve been known to wax philosophical about this after a few Westmalle Tripels at various conferences. Now is the time for doing something about it. Here’s what our burgeoning test suite looked like, at least in part. The current code is in&nbsp;<a href="http://web.archive.org/web/20200212094016/https://github.com/drforr/raku-OLE-Storage_Lite">raku-OLE-Storage_Lite</a>&nbsp;over on github.com. I’ve gotten rid of most of the Perl 5 test skeleton, but the essence remains.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+use v6;
+use Test;
+use OLE::Storage_Lite;
+
+plan 1;
+
+my $oDt = OLE::Storage_Lite::PPS::Root.new(
+  (),
+  ( 0, 0, 16, 4, 10, 100 ), # 2000/11/4 16:00:00:0000
+  ( $oWk, $oDir )
+);
+subtest 'Root', {
+  isa-ok $oDt, 'OLE::Storage_Lite::PPS::Root';
+  is $oDt.Name, 'Root Entry';
+  is-deeply $oDt.Time2nd, [ 0, 0, 16, 4, 10, 100 ];
+  # ...
+};
+done-testing;
+</pre>
+
+
+<p>Originally there really weren’t any Perl 5 tests for this module. I’m sure the original author treated the entire module as a black box, and they were happy to be able to run&nbsp;<em>samples/smpsv.pl</em>, open the new test.xls in Excel, and when it actually read the file, treat that as ‘ok 1’, push it to CPAN and call it a day.</p>
+
+
+
+<h2>Testing, testing</h2>
+
+
+
+<p>That’s wonderful, and I may eventually adopt that methodology. For the moment, the lack of a test suite leaves me a bit unsatisfied. I suppose I could treat the entire module as a black box and fix the translated version line-by-line as I go through it. I’ll have to do that eventually (spoiler alert: That’s actually where I am – I’m writing these pieces a bit after the fact.)</p>
+
+
+
+<p>That leaves me with the question of what to test, and what the quickest way to get there is. The individual Directory, Root and File objects are exposed to the user, and are part of the public API. So it makes some sense to create an object, look at the internals, and do my best to match that in Raku.</p>
+
+
+
+<h2>I Think I’m A Clone Now</h2>
+
+
+
+<p>There’s always two [implementations] of me standing around… I don’t want to get sidetracked by reading the entire OLE spec. I might start to realize what a huge job this really is, and abandon ship. So, I’m going to limit myself to the following:</p>
+
+
+
+<p>Create a narrowly defined 1:1 clone of the exact source of OLE::Storage_Lite in Perl 5. The objects will act exactly like the Perl 5 version, as will the API. This way I don’t have to think about what the API should do, how it should look in Raku, how the objects get laid out, anything fancy. All I need to worry about is:</p>
+
+
+
+<ol><li>When I write&nbsp;<code>warn $oDt.raku</code>, does the output look the same as&nbsp;<code>use YAML; warn Dump($oDt);</code>&nbsp;in Perl 5?</li><li>When I write the final file to disk, does the Raku code output exactly the same file as the original Perl 5 version?</li></ol>
+
+
+
+<p>That’s it. It takes away a lot of possibilities, but it lets me focus on getting the job done, not how things should look. Being able to test how the individual objects look will tell me that the read API works and saves enough data to be able to reconstruct the object in memory.</p>
+
+
+
+<p>Conversely, being able to match the binary output tells me that the write API works, so I’ve effectively tested as much as the original module did. Plus I can automate some of the process, especially on the read side.</p>
+
+
+
+<h2>Lost in Translation</h2>
+
+
+
+<p>You can check out the current source at&nbsp;<a href="http://web.archive.org/web/20200212094016/https://github.com/drforr/raku-OLE-Storage_Lite">raku-OLE-Storage_Lite</a>, and follow along with some of the changes I’ve made. I also made sure to keep a working copy of the original&nbsp;<a href="http://web.archive.org/web/20200212094016/https://metacpan.org/pod/OLE::Storage_Lite">OLE::Storage_Lite</a>Perl 5 module around. My Raku tree right now is very close to Perl 5.</p>
+
+
+
+<p>I can insert a debug statement like&nbsp;<code>die "[$iBlockNo] [$sData]\n"</code>&nbsp;in the Perl 5 code, go to the equivalent line in Raku, and expect that when I run the two test suites, that they’ll die in exactly the same way.</p>
+
+
+
+<p>This way when they&nbsp;<strong>don’t</strong>, I can immediately narrow down the problem simply by moving the ‘die’ statements up in the code until they return the same values. The line immediately below the ‘die’ statement will be the culprit.</p>
+
+
+
+<h3>The Nitty Gritty Perl Band</h3>
+
+
+
+<p>I’ll mention one thing in passing – the original Perl 5 source code is in a single file containing all of the packages. That’s not Raku style, so I’ve unpacked it into lib/OLE/Storage_Lite/* following the usual style of one Perl 5 class – one file.</p>
+
+
+
+<p>So, time to get our hands dirty. The new Raku module won’t compile for quite a while, so we’d better put this into git. I’m also using&nbsp;<a href="http://web.archive.org/web/20200212094016/https://modules.raku.org/dist/App::Mi6:cpan:SKAJI">App::Mi6</a>&nbsp;to do my development and eventual push to CPAN, so all of that boilerplate is there too.</p>
+
+
+
+<p>So, cue the montage scene of the dedicated Raku hacker pounding away at the keyboard, with the occasional break for food and/or adult beverage. Looking over her shoulder, we see a familiar split-screen view, with Perl 5 code on top, and a new Raku file below.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+use OLE::Storage_Lite::PPS;
+package OLE::Storage_Lite::PPS::Root;
+use vars qw($VERSION @ISA);
+@ISA = qw(OLE::Storage_Lite::PPS);
+</pre>
+
+<pre class="brush: plain; title: ; notranslate" title="">
+use OLE::Storage_Lite::PPS;
+unit class OLE::Storage_Lite::PPS::Root is OLE::Storage_Lite::PPS;
+</pre>
+
+
+<p>Raku has classes where Perl 5 has packages. The ‘unit’ declaration there says that the class declaration takes up the remainder of the file. This is sort of how Perl 5 does it, but gets rid of the ‘1;’ at the end of your package declaration.</p>
+
+
+
+<p>It’s also useful for another reason I’m not going to show. Namely that the Perl 5 code is directly below the Raku code, commented out. I’m flipping between vim windows to delete lines as I translate them by hand. So the ‘unit class’ declaration helps in case I accidentally un-comment Perl 5 code – I’ll get big honkin’ warnings when I run the test suite.</p>
+
+
+
+<h3>Moosey-ears!</h3>
+
+
+
+<p>(for those of you that remember the module’s release)</p>
+
+
+
+<p>Raku borrowed liberally from Perl 5’s Moose OO metamodel, to the point where using Raku will feel very similar. Just drop a few bits of syntactic sugar that Moose needed to work under Perl, and it’ll feel the same.</p>
+
+
+
+<p>In this case the ‘is’ does the same job as in Moose, to introduce a parent class. Raku doesn’t need the sugar that Moose sweetens your code with, so you can just say your class ‘is’ a subclass of any other class.</p>
+
+
+
+<p>Let’s keep rolling along here, with the next lines of the Perl 5 library:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+require Exporter;
+use strict;
+use IO::File;
+use IO::Handle;
+use Fcntl;
+use vars qw($VERSION @ISA);
+@ISA = qw(OLE::Storage_Lite::PPS Exporter);
+$VERSION = '0.19';
+sub _savePpsSetPnt($$$);
+sub _savePpsSetPnt2($$$);
+</pre>
+
+<pre class="brush: plain; title: ; notranslate" title="">
+use OLE::Storage_Lite::PPS;
+unit class OLE::Storage_Lite::PPS::Root:ver&lt;0.19&gt; is OLE::Storage_Lite::PPS;
+</pre>
+
+
+<p>Moving along… Okay, ya caught me, ‘:ver&lt;0.19&gt;’ is something new that we should add. Versions are now integrated into classes, so you can check them and even instantiate based on version number.</p>
+
+
+
+<p>The module actually doesn’t export anything, so we don’t need Exporter at all. Raku enables ‘strict’ automatically, has IO modules in core, and doesn”t need Fcntl. The forward declarations aren’t needed for Raku, so all that’s left is the module’s version number, which gets added to the class name. You can add other attributes, too.</p>
+
+
+
+<h2>Making things functional</h2>
+
+
+
+<p>To keep things simple for me writing the code, and me having to read the code weeks, months or years later, I want as close to a 1:1 relation between Perl 5 and Raku as I can. Another place where this requires an accommodation (but not much of one) is just a few lines down, writing the creation method ‘new’.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+sub new ($;$$$) {
+    my($sClass, $raTime1st, $raTime2nd, $raChild) = @_;
+    OLE::Storage_Lite::PPS::_new(
+        $sClass,
+        undef,
+        # ...
+    );
+}
+</pre>
+
+
+<p>By this point you’ll probably see more of why I say this module is a hard worker. It’s been around a long time, and function prototypes like this are one easy way to tell. Let’s rewrite it in a more modern Perl 5 style before making the jump to Raku, with function signatures.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+sub new($sClass, $raTime1st, $raTime2nd, $raChild) {
+    OLE::Storage_Lite::PPS::_new(
+        $sClass,
+        undef,
+        # ...
+    )
+}
+
+</pre>
+
+
+<p>Just drop the old function prototype, and replace it with the variables we need to populate. Well, almost. If you know what a subroutine prototype is, you might think I’m pulling a fast one on you. And you’d be right. Look back at the original Perl 5 code, and you’ll see ‘($;$$$)’ is the prototype.</p>
+
+
+
+<p>The ‘;’ separates required variables from optional variables, and we haven’t accounted for that in our Perl 5 code. Since I’m not here to modernize Perl 5 code but convert it to Raku, I’m going to ignore that in Perl 5 and go straight to Raku.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+multi method new( @aTime1st?, @aTime2nd?, @aChild? ) {
+  self.bless(
+    Time1st =&gt; @aTime1st,
+    Time2nd =&gt; @aTime2nd,
+    Child =&gt; @aChild
+  );
+}
+</pre>
+
+
+<h2>Under Construction</h2>
+
+
+
+<p>And there we are. Now, there’s quite a bit to take in, so I’ll take things slow. The first thing you’ll notice is the keyword ‘multi’. In Perl 5, you get to hand-roll your own constructors, so you can make them any way you like. In this case, the author chose to write&nbsp;<code>new($raTime1st, $raTime2nd, $raChild)</code>, which is pretty common.</p>
+
+
+
+<p>Raku gives me a default ‘new’ method, so I only need to hand-roll constructors when I want. Since I want to keep as close as reasonable to the original API, I’ll write a constructor that takes 3 arguments too. In my case I chose to simplify things just a bit here.</p>
+
+
+
+<p>I’ve found over several years of writing Raku code that I rarely use references. In Perl 5 they were pretty much the&nbsp;<strong>only</strong>&nbsp;way to pass arrays or hashes into a function, because of its propensity to “flatten” arguments.</p>
+
+
+
+<p>In Raku, you can still use the Perl 5 style, but formal argument lists are the way to go in my opinion. If you need to pass both an array and a hash to a Raku function, go for it. I encourage that in my tutorial courses, and recommend it to help break students out of their Perl 5 mindset.</p>
+
+
+
+<p>This is not to say that there’s anything wrong with Perl 5’s argument list, in fact they’ve taken some ideas from Raku for formal argument lists, and I encourage that. Cross-pollination of ideas should be encouraged, it’s how both languages grow and add new features.</p>
+
+
+
+<p><a href="http://web.archive.org/web/20200212094016/http://www.theperlfisher.com/index.php/2019/11/24/rewriting-legacy-code-for-raku/">Last week</a>&nbsp;was about the overall module, this week we delved a bit into the OO workings. Next week we’ll talk about references, attributes, and maybe progressive typing.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2019/11/24/rewriting-perl-code-for-raku-ii-electric-boogaloo/" rel="bookmark"><time class="entry-date published" datetime="2019-11-24T13:07:18+01:00">November 24, 2019</time><time class="updated" datetime="2020-06-30T13:08:09+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/perl-programming/" rel="category tag">Perl programming</a>, <a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2019/11/24/rewriting-perl-code-for-raku-ii-electric-boogaloo/#respond">Leave a comment<span class="screen-reader-text"> on Rewriting Perl Code for Raku II: Electric&nbsp;Boogaloo</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-66" class="post-66 post type-post status-publish format-standard hentry category-perl-programming category-raku-programming entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2019/11/24/rewriting-perl-code-for-raku/" rel="bookmark">Rewriting Perl Code for&nbsp;Raku</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p>This time around we’re going to talk about how to rewrite Perl code in Raku. Even in 2019, a lot of the office world revolves around spreadsheets, whether they be Excel,&nbsp;<a href="http://web.archive.org/web/20200212094016/http://libreoffice.org/">LibreOffice</a>&nbsp;or simple .csv files. Perl 5 has a plethora of modules to do this, a quick search for ‘Spreadsheet’ on&nbsp;<a href="http://web.archive.org/web/20200212094016/https://metacpan.org/">MetaCPAN</a>should convince you of that.</p>
+
+
+
+<p>The Raku world doesn’t have quite as many modules as you’d expect, though. While it’s been around for a few years, “heavy lifting” modules like Spreadsheet stuff really haven’t come around yet. This involves packing and unpacking binary formats, and in Perl 5 this centered around the&nbsp;<em>pack</em>&nbsp;and&nbsp;<em>unpack</em>&nbsp;builtins, which are relative newcomers to Raku.</p>
+
+
+
+<p>But Raku has built-in binary buffers, which take care of most of the need for pack/unpack. The main reason I can see is the&nbsp;<a href="http://web.archive.org/web/20200212094016/http://www.microsoft.com/interop/docs/supportingtechnologies.mspx">OLE</a>&nbsp;storage format. Basically it’s Microsoft’s way of packing a file system into a single data file. And at this point the proverbial yaks start to pile up, and reasonable people say “You know, Excel still accepts .csv files, I know how to build those.”</p>
+
+
+
+<p>Enter<a href="http://web.archive.org/web/20200212094016/https://github.com/drforr/raku-OLE-Storage_Lite">&nbsp;raku-OLE-Storage_Lite</a>&nbsp;– this is my translation-in-progress from Perl 5 to Raku. As of this writing it can read an entire OLE file (without data) and write a good portion of the sample file – I believe I’ve got maybe two methods left to debug.</p>
+
+
+
+<h2>Knee deep in yaks</h2>
+
+
+
+<p>CSV files are easy to write, but they come with their own set of troubles. When you import a .csv file into your Excel app (or LibreOffice, or whatever) you’re faced with a complex dialog asking you how to import your data, and the average user doesn’t want that every time, they just want to open their spreadsheet.</p>
+
+
+
+<p>So, it’s time to follow Liz’s lead and rewrite in Raku an existing module. First thing I did was go to&nbsp;<a href="http://web.archive.org/web/20200212094016/https://metacpan.org/pod/Spreadsheet::ParseExcel">Spreadsheet::ParseExcel</a>&nbsp;and see how they did things. Within a few minutes I’d already encountered the first yak. After opening the file, it delegates it to&nbsp;<a href="http://web.archive.org/web/20200212094016/https://metacpan.org/pod/OLE::Storage_Lite">OLE::Storage_Lite</a>, which is much like&nbsp;<a href="http://web.archive.org/web/20200212094016/http://www.jamesbrown.com/">James Brown</a>, the “hardest-working man in show business”.</p>
+
+
+
+<p>It’s still on version 0.19 at the time of writing, but I assure you that’s only because the current maintainer hasn’t updated the version to reflect reality. It may be legacy Perl rough-and-tumble code, but it’s been around for a long time. It wears its battle scars proudly.</p>
+
+
+
+<p>It relies heavily on&nbsp;<em>pack</em>&nbsp;and&nbsp;<em>unpack</em>, which are still&nbsp;<strong>technically</strong>&nbsp;experimental in Raku. The OO and coding style betrays its pre-5.00 origins, and the tests are, well, very pragmatic. “Does it load? Great! Can it convert timestamps internally? Great! Ship it!”</p>
+
+
+
+<p>To its credit, there’s a sample directory where you can use&nbsp;<em>smpview.pl</em>&nbsp;to view the contents of the internal filesystem of any OLE file, and a sample writer to create a known-working OLE file. That’ll do as a starting point.</p>
+
+
+
+<h3>Buckling down</h3>
+
+
+
+<p>So, reading an Excel spreadsheet means reading an OLE file system. And when I say file system, I’m not kidding. Inside your typical .xlsx file, there’s a small header and a root object. The root object contains “pointers” (really file offsets) to a document object, and inside that are file objects, each with pointers to the different blocks.</p>
+
+
+
+<p>This is all intended to reflect the original disk layout, so it looks very much like an NTFS superblock and block layout. The documentation seems to have moved to&nbsp;<a href="http://web.archive.org/web/20200212094016/https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-oleds/fdc5e702-d09e-4344-a77f-eb079d41f23f">this</a>&nbsp;page detailing OLE 1.0 and 2.0 formats, I’m not at all certain what the current version has.</p>
+
+
+
+<p>How are Excel spreadsheets arranged in here? Worksheets are OLE directories, and inside each worksheet, tabs are individual files. How’s that for a bit of inspiration? Luckily the Root directory, Files and nested Directories are all separate objects, with at least a few common methods aggregated into a superclass.</p>
+
+
+
+<h2>Legacy Code</h2>
+
+
+
+<p>This is a long-winded way of saying the module in question is very much legacy code. And, as I want to bring it into the proverbial light, I’ve got to give some issues some thought.</p>
+
+
+
+<ol><li>No useful tests, so I’ll have to write those.</li><li>How much code do I want to sacrifice?</li><li>How much can I save?</li></ol>
+
+
+
+<p>Well, I can put off #2 and #3 while writing some tests. Whoa, wait a minute. I don’t have a test file to work with, just some scripts over in sample/. Mumble, mumble, more yaks. Read README, find that smpsv.pl will create one, run that.</p>
+
+
+
+<p>Great, I’ve got a sample test.xsl file. But given the amount of potential bit-rot it seems prudent to actually make sure that I’ve got a working Excel file before committing a few days (ha!) to getting a module working. Double-click it, launch into Excel’s cloud-serviced app, find that it’s one of those Win10 panes I’ve never figured out how to close, open task-killer, kill that.</p>
+
+
+
+<p>Launch&nbsp;<a href="http://web.archive.org/web/20200212094016/https://www.libreoffice.org/">LibreOffice</a>&nbsp;which I happen to have lying around – my current project at work is parsing a spreadsheet in Perl 5, which is what inspired this whole workload.</p>
+
+
+
+<p>Yep, that parses; looks a bit odd because it’s coming up with a Japanese font, and some arbitrary English text, but it works. Also, looking at the code it generates all three object types – Root, File and Dir, so it’ll exercise the major code paths. Bonus.</p>
+
+
+
+<h2>Testing, testing</h2>
+
+
+
+<p>Now I’ve got the makings of a simple test file. The script builds objects individually, so I can run the individual calls, and check that the object’s internals look the way I want.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my $oDt = OLE::Storage_Lite::PPS::Root-&gt;new(
+  [ ],
+  [ 0, 0, 16, 4, 10, 100 ], # 2000/11/4 16:00:00:0000
+  [ $oWk, $oDir ]
+);
+</pre>
+
+
+<p>In Raku, this converts to:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my $oDt = OLE::Storage_Lite::PPS::Root.new(
+  (),
+  ( 0, 0, 16, 4, 10, 100 ), # 2000/11/4 16:00:00:0000
+  ( $oWk, $oDir )
+);
+</pre>
+
+
+<p>I’ve made one change already, to make things simpler for Raku users. In Perl, you have to pass lists as references unless you want to use the new function signatures. In Raku, you can just pass lists as you would ordinarily to your method call.</p>
+
+
+
+<p>Using native data types rather than passing references around may seem a bit odd at first to new Raku programmers, but the new variable classes are easier to enforce strong typing on later, when you get used to the language.</p>
+
+
+
+<h3>Going with the flow</h3>
+
+
+
+<p>Now we’ve got something we can test, namely making sure that we’ve got a valid OLE Root document. So, before we go ahead with the code, I’ll share a few little things. I know very little about this code, so I want to make sure that I&nbsp;<strong>intimately</strong>&nbsp;copy each detail of the object at this stage. Later on I might get fancy and replace things with their own object types, but for now, my goal is going to be 1:1 replication.</p>
+
+
+
+<p>I tend to like&nbsp;<a href="http://web.archive.org/web/20200212094016/https://github.com/tmux/tmux/wiki">tmux</a>&nbsp;as a shell environment, haven’t really gotten along with UIs. So, keeping in mind that I wanted an absolute 1:1 copy of the original object, I ended up doing this:</p>
+
+
+
+<ol><li>Switch to new window, open my copy of ‘samples/smpsv.pl’ in vim</li><li>Add ‘use YAML; die Dump( $oDt ) just below the line where it gets created</li><li>Switch to new window, run the sample script, copy the YAML output</li><li>Close the two new windows I created to keep clutter down</li><li>Paste the YAML code into the new Raku test.</li></ol>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my $oDt = OLE::Storage_Lite::PPS::Root.new(
+  (),
+  ( 0, 0, 16, 4, 10, 100 ), # 2000/11/4 16:00:00:0000
+  ( $oWk, $oDir )
+);
+--
+  Name: "R\0o\0o\0t\0 \0E\0n\0t\0r\0y\0"
+  No: ~
+  Time2nd:
+    - 0
+    - 0
+    - 16
+    - 4
+    - 10
+    - 100
+# and so on...
+</pre>
+
+
+<p>This should contain all I need to create an OLE file from this set of objects. I’m using this as a sneaky way of not reading the spec, at least not yet. As the old title goes: Algorithm + Data Structure = Program. Using YAML (or Data::Dumper) gives me the data structure, copying the Perl 5 code into Raku gives me the algorithm.</p>
+
+
+
+<p>I should almost be able to keep line-for-line fidelity, so when a patch is posted to the Perl 5 source I can import it into Raku without too much trouble. But once I’ve got a better test base and a few users in Raku I’ll probably rewrite this whole module in a more Raku-ready fashion. I can keep the old module around for reference.</p>
+
+
+
+<h2>Encoding worries</h2>
+
+
+
+<p>But we’ve also got a surprise lurking here. “R\0o\0ot\0 \0E\0n\0t\0r\0y\0” looks like binary garbage, but is actually UCS-2, I think. If it is, then the OLE file is limited to a subset of Unicode. I can put restrictions on it later if I have to, but ATM I actually don’t care.</p>
+
+
+
+<p>I’ve done enough time in the i18n salt mines that I know how to deal with this. Store the string in the best format possible (UTF-8 here) internally. When the time comes to write it to the network or disk, translate it to the final encoding.</p>
+
+
+
+<p>This way I can see what all the attributes are at a glance without changing encoding. I can also manipulate everything using regular Raku code until the last moment. If I have to, I can use Raku’s gradual typing to constrain the string. More importantly, I don’t have to do any of this&nbsp;<strong>now</strong>.</p>
+
+
+
+<h2>Got any change?</h2>
+
+
+
+<p>This means I’m going to change things just a little bit more. When data gets added to ‘Name’ I’m going to assume it’s UTF-8. Since I’m not doing any I/O yet, I can make whatever assumptions I want. Keeping the internals simple keeps my life simple, at least.</p>
+
+
+
+<p>So I’ll write out a quick&nbsp;<em>is-deeply</em>&nbsp;test and get on with things:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+is-deeply $oDt, (
+  Name =&gt; 'Root Entry',
+  Time2nd =&gt; ( 0, 0, 16, 4, 10, 100 ),
+  # ...
+  Child =&gt; ( $oWk, $oDir )
+);
+</pre>
+
+
+<p>This looks pretty straightforward, and almost how you’d write the original test in Perl 5. It won’t&nbsp;<strong>run</strong>&nbsp;yet, but that’s something we’ll tackle in the next part in the series.</p>
+
+
+
+<p>I’m not done quite yet, because I’ve got a lot of these things to write, and not all of them may have the ‘Child’ attribute. I could write a tiny method that skipped over the ‘Child’ attribute along with anything else I wanted, but that felt clumsy. It looked like:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+ok sorta-deeply $oDt, (
+  Name =&gt; 'Root Window',
+  Time2nd =&gt; ( 0, 0, 16, 4, 10, 100 ),
+  # ...
+), ( 'Child' );
+</pre>
+
+
+<p>And notice that&nbsp;<em>sorta-deeply</em>&nbsp;is a function that does all the work, then passes a simple Bool back to the test. I’d end up writing all of the code that&nbsp;<em>is-deeply</em>&nbsp;does (except for the recursion), and get something back that’s less useful.</p>
+
+
+
+<p>Next time we’ll get into making these tests pass. I’m writing the next section right after this, but you won’t get to see it for another week or so, I’m afraid. If you have questions or comments about the first part of this series, please feel free to comment below.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2019/11/24/rewriting-perl-code-for-raku/" rel="bookmark"><time class="entry-date published" datetime="2019-11-24T13:00:00+01:00">November 24, 2019</time><time class="updated" datetime="2020-06-30T13:09:03+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/perl-programming/" rel="category tag">Perl programming</a>, <a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2019/11/24/rewriting-perl-code-for-raku/#respond">Leave a comment<span class="screen-reader-text"> on Rewriting Perl Code for&nbsp;Raku</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-69" class="post-69 post type-post status-publish format-standard hentry category-raku-programming entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2019/08/08/templates-ii-electric-boogaloo/" rel="bookmark">Templates II: Electric&nbsp;Boogaloo</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p><a href="http://web.archive.org/web/20200212094016/http://theperlfisher.com/index.php/2019/07/18/templates-and-a-clean-start/">Last time</a>&nbsp;on this adventure writing the&nbsp;<a href="http://web.archive.org/web/20200212094016/http://template-toolkit.org/">Template Toolkit</a>&nbsp;language in Raku, we’d just created a small test suite that encompasses some of the problems we’re going to encounter. It’s no use without a grammar and a&nbsp;<strong>bunch</strong>&nbsp;of other parts, but it does give us an idea of what it’s going to look like.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+use Test;
+use Template::Toolkit::Grammar;
+use Template::Toolkit::Actions;
+
+# ... similar lines above this
+is-deeply the-tree( 'xx[% name %]x' ),
+    [ 'a', 'a', Directive.new( :content( 'name' ) ), 'a', ];
+# ... and similar lines below this.
+</pre>
+
+
+<p>The list here is what we’re going to return to&nbsp;<em>render()</em>, and I’d love to make that as simple as it can be without being&nbsp;<strong>too</strong>&nbsp;simple. Let’s focus for the moment just on one bit of the test suite here, the array I’m getting back.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+[ 'a', 'a', Directive.new( :content( 'name' ) ), 'a', ];
+</pre>
+
+
+<p>If these elements were&nbsp;<strong>all</strong>&nbsp;strings, then all&nbsp;<strong>render()</strong>&nbsp;would have to do is join the strings together, simples!</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+method render( Str $text ) returns Str {
+  my @terms = # magic to turn text into array of terms
+  @terms.join: '';
+}
+</pre>
+
+
+<p>Let’s create the ‘Directive’ class and see what happens, though.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+class Directive { has $.content }
+
+my @terms = 'a', 'a', Directive.new( :content( 'name' ) ), 'a';
+say @terms.join: '';
+# aaDirective&lt;94444485232315&gt;a
+</pre>
+
+
+<p>Whoops, that’s not what we want. Not&nbsp;<strong>bad</strong>&nbsp;exactly, but not what we want, either. Well, not to fear. Remember that in Template Toolkit, directives will always return a string. It may be an&nbsp;<strong>empty</strong>string, but they’ll always return some kind of string.</p>
+
+
+
+<p>As a side note, this may not always be true – some directives will even tell the renderer to stop parsing entirely. But it’s a pretty solid starting assumption. For instance, we could say that encountering the STOP directive just makes all future directives return ”.</p>
+
+
+
+<p>Of course, I’m harping on the term ‘string’ for a reason. Internally, everything is an object, and every object has a method that returns a readable value. Our Directive class didn’t specify one, so we get the default that returns ‘$name&lt;$address&gt;’.</p>
+
+
+
+<p>So, let’s supply our own method.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+class Directive { has $.content; method Str { $.content } }
+
+my @terms = 'a', 'a', Directive.new( :content( 'name' ) ), 'a';
+say @terms.join: ', ';
+# a, a, name, a
+</pre>
+
+
+<p>There. If we supply a .Str method we can make Directives do what we want. INCLUDE directives would open the file, slurp the contents and return them. Argument directives would take their argument name, look up the value, and return that. Or, more likely, would have a context object passed that does the lookup for them.</p>
+
+
+
+<h2>Where do we go from here?</h2>
+
+
+
+<p>Next time we’ll convince Grammars and Actions to work together, making processing a template as simple as:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+parse-template( $text ).join( '' );
+</pre>
+
+
+<p>Next in this series on writing your own template language using Raku, you should be able to define your own Template Toolkit directives and have them return the pre-processed text. We’ll add support for context and the ability to do simple ‘[% name %]’ tags, and maybe explore how to change ‘[%’..’%]’ tags on-the-fly.</p>
+
+
+
+<p>Thank you again, dear reader, for your interest, comments and critiques.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2019/08/08/templates-ii-electric-boogaloo/" rel="bookmark"><time class="entry-date published" datetime="2019-08-08T13:09:35+02:00">August 8, 2019</time><time class="updated" datetime="2020-06-30T13:10:06+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2019/08/08/templates-ii-electric-boogaloo/#respond">Leave a comment<span class="screen-reader-text"> on Templates II: Electric&nbsp;Boogaloo</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-72" class="post-72 post type-post status-publish format-standard hentry category-raku-programming entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2019/07/24/a-regex-amuse-bouche/" rel="bookmark">A Regex amuse-bouche</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p>Before continuing with the Template series, I thought I’d talk briefly about an interesting (well, at least to me) solution to a little problem. System and user libraries (the kind that end in .so or .a, not Perl libraries) have a section at the top that maps a function name (‘load_user’ or whatever) to an offset into the library, say, 0x193a.</p>
+
+
+
+<p>This arrangement worked fine for many years for C, Algol, FORTRAN and most other languages out there. But then along came languages that upset the apple cart, like C++ and Smalltalk, where a programmer could write two ‘load_user’ functions, call ‘load_user(1234)’ or ‘load_user(“Smith, John”)’ and expect the linker to load the right version of ‘load_user.’</p>
+
+
+
+<p>The problem here is that the library, the linker and all of the other programs in the tool chain expect there to only be one function called ‘load_user’ in any given library.</p>
+
+
+
+<p>Those of us that do Perl 5 and Raku programming don’t have to worry about this, but if you ever want to link to a C++ library, you probably should know at least a bit about “name mangling.”</p>
+
+
+
+<p>For a while, utilities like ‘CFront’ for the Macintosh (which the author actually filed bug reports on) were used to “rename” functions like ‘load_user(int)’ and ‘load_user(char*)’ to ‘i_load_user’ and ‘cs_load_user’ before being added to the library, and other tools to do the reverse.</p>
+
+
+
+<h2>Has Your Mother Sold Her Mangle?</h2>
+
+
+
+<p>Eventually things settled down, and this process of changing names to fit into the library was “baked in” to the tool chains. Not consistently, of course, couldn’t have that. But conventions arose and even today&nbsp;<a href="http://web.archive.org/web/20200212094016/https://en.wikipedia.org/wiki/Name_mangling">Wikipedia</a>&nbsp;lists at least 12 different ways to “mangle” ‘void h(void)’ into the existing library formats.</p>
+
+
+
+<p>We’ll just look at the first one, ‘_Z1hv’. The ‘_Z’ can be safely ignored, its purpose there is mainly to tell the linker something “special” is going on. ‘1h’ is the function name, and ‘v’ is its first (and only) parameter. Suppose, then, that you were tasked with writing a tool that undid this name mangling.</p>
+
+
+
+<p>Your first cut at extracting something useful might look something like</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+'_Z9load_useri' ~~ m{ ^ '_Z' \d+ (\w+) (.) $ };
+</pre>
+
+
+<p>Assuming&nbsp;<em>$mangle-me</em>&nbsp;has ‘_Z9load_useri’ in it (The mangled version of ‘void load_user(int)’) the regex engine goes through a bunch of simple steps.</p>
+
+
+
+<ul><li>Read and ignore ‘_Z’</li><li>Read and ignore ‘9’</li><li>Capture ‘load_user’ into $0</li><li>Capture ‘i’ into $1</li><li>There is no fifth thing.</li></ul>
+
+
+
+<p>But the person that wrote this library is playing silly buggers with someone (obviously&nbsp;<strong>us</strong>&nbsp;in this case) and there’s also a ‘_Z9load_userss’ which comes out of the other end of the mangle looking like ‘void load_user(char*, char*)’, loading a user with first and last names.</p>
+
+
+
+<p>Now we’re in a bit of a quandary. Run the same expression and see what happens:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+'_Z9load_userss' ~~ m{ ^ '_Z' \d+ (\w+) (.) $ };
+</pre>
+
+
+<p>Sure enough,&nbsp;<em>$1</em>&nbsp;is ‘s’, just as we wanted it, but what about&nbsp;<em>$0</em>? It’s now ‘load_users’, which… y’know, looks too legit to quit. But we must. And now we’re faced with the quandary. Do we make the first parameter an optional capture? ‘m{ … (.)? (.) $ }’ like so?</p>
+
+
+
+<p>No, that would capture the ‘r’ of ‘_Z9load_users’. There must be something else in the name that we’re overlooking, some clue… Aha! ‘load_user’ has 9 characters, and look just before it, we’ve got the number 9! Surely that tells us the number of characters in the function name! (and thankfully it actually&nbsp;<strong>does</strong>.)</p>
+
+
+
+<h2>Regexes 201</h2>
+
+
+
+<p>Now, how can we use this to our advantage? First things first, let’s get rid of some dead weight. We don’t care (for the moment) about parameters, so let’s just match the name and number of characters. And because we’re getting all serious up in here, let’s create a quick test.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+use Test;
+'_Z9load_user' ~~ m{ ^ '_Z' (\d+) (\w+) };
+is $0, '9';
+is $1, 'load_user';
+</pre>
+
+
+<p>Run the test script, see if it passes, I’m sure you know the drill. Go ahead and copy that, I’ll wait. Okay, the tests pass, so it’s time to play. I usually am working in a library that’s in git, so I’m usually on the “edit, run tests, git reset, edit…” treadmill by this point.</p>
+
+
+
+<p>So… How do we make use of this number? Well, let’s pull up the&nbsp;<a href="http://web.archive.org/web/20200212094016/https://docs.perl6.org/language/regexes">Regexes</a>&nbsp;page over at&nbsp;<a href="http://web.archive.org/web/20200212094016/https://docs.raku.org/">docs.raku.org</a>and look around. Back in Perl 5 there used to be this feature ‘m{ a{5} }x’ that matched just 5 copies of whatever it was in front of, that might be a good place to start looking.</p>
+
+
+
+<p>That’s now morphed into ‘m{ a ** 5 }’. Great, so let’s replace 5 with&nbsp;<em>$0</em>&nbsp;and go for it.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+'_Z9load_user' ~~ m{ ^ '_Z' (\d+) (\w ** $0) };
+</pre>
+
+
+<p>“Quantifier quantifies nothing…” That’s weird.&nbsp;<em>$0</em>&nbsp;is right there, staring me in the face. Maybe I just got the syntax wrong somehow?</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+'_Z9load_user' ~~ m{ ^ '_Z' (\d+) (\w ** 9) };
+</pre>
+
+
+<p>Nope, that works. What’s going on here?&nbsp;<em>$0</em>&nbsp;is defined… Wait, it’s a variable inside a regex, that&nbsp;<strong>used</strong>&nbsp;to require the ‘e’ modifier, didn’t it? Or something like that… &lt;read the manpage, scratch head… nothing there&gt; Hm. Are we at a dead end?</p>
+
+
+
+<h2>Kick it up a notch</h2>
+
+
+
+<p>No, we just need to remember about how string interpolation works. In Raku, “Hello, {$name}!” is a perfectly fine way to interpolate variables into your expression, and it works because no matter where it is, {} signals a code block. Let’s try that, surround&nbsp;<em>$0</em>&nbsp;with braces.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+'_Z9load_user' ~~ m{ ^ '_Z' (\d+) (\w ** {$0}) };
+</pre>
+
+
+<p>Weird. This time the test failed with ” instead of ‘load_user’. Maybe&nbsp;<em>$0</em>&nbsp;really isn’t defined? Now that it’s just regular Raku code, let’s check.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+'_Z9load_user' ~~ m{ ^ '_Z' (\d+) (\w ** {warn "Got '$0'"; $0}) };
+</pre>
+
+
+<p>“Use of Nil in string context.” So it’s really empty. Now, we have to&nbsp;<strong>really</strong>&nbsp;do some reading. Looking at the section on&nbsp;<a href="http://web.archive.org/web/20200212094016/https://docs.perl6.org/language/regexes#General_quantifier:_**_min..max">general quantifiers</a>&nbsp;says “only basic literal syntax for the right-hand side of the quantifier [what we want to play with] is supported,” so it looks like we’re at a dead end.</p>
+
+
+
+<p>But things like ‘{$0}’&nbsp;<strong>do</strong>&nbsp;work, so we&nbsp;<strong>can</strong>&nbsp;use variables. That means that my problem isn’t that the variable is being ignored, it’s just not being populated when I need it. Let’s look at the section on&nbsp;<a href="http://web.archive.org/web/20200212094016/https://docs.perl6.org/language/regexes#Capture_numbers">Capture numbers</a>&nbsp;to see when they get populated.</p>
+
+
+
+<p>Aha, you need to “publish” the capture using ‘{}’ right after it. Let’s see if that works…</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+'_Z9load_user' ~~ m{ ^ '_Z' (\d+) {} (\w ** {warn "Got '$0'"; $0}) };
+</pre>
+
+
+<p>Nope, something else is going on. And the next block down tells us the final solution – ‘:my’. This lets us create a variable inside the scope of the regular expression and use it as well, so let’s do just that.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+'_Z9load_user' ~~ m{ ^ '_Z'
+                     :my $length;          # Put $length in the proper scope
+                     (\d+) {$length = +$0} # Capture the length
+                     (\w ** {$length})     # And extract that many chars.
+                   };
+</pre>
+
+
+<p>And reformat things just a wee bit so we’ve got some room to work with. Now the test actually runs, and reads only as many characters of the function name as needs be.</p>
+
+
+
+<h2>And just one more thing…</h2>
+
+
+
+<p>It’s not just function names that follow this pattern, it’s also namespaces, and any special types that the function might use as parameters, so let’s package this up into something more useful.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my regexp pascalish-string {
+  :my $length;
+  (\d+) {$length = +$0}
+  (\w ** {$length})
+};
+'_Z9load_user' ~~ m{ ^ '_Z' &lt;pascalish-string&gt; };
+is $/&lt;pascalish-string&gt;[0], 9;
+is $/&lt;pascalish-string&gt;[1], 'load_user';
+</pre>
+
+
+<p>Pascal implementations were done back when RAM was at more of a premium, and stored a string like ‘load_user’ as ‘\x{09}load_user’ so the compiler knew how many bytes were available immediately rather than having to guess. It was limiting, but this was on computers like the early Macs (we’re talking pre-OS X, for that matter pre-System 7, for those of you that remember that far back.)</p>
+
+
+
+<p>So we can use this&nbsp;<em>&lt;pascalish-string&gt;</em>&nbsp;regular expression anywhere we want to match one of our counted terms. Because we’re using ‘my’ inside a regular expression nested inside another regular expression inside a burrito wrapped in an enigma, there are no scoping troubles.</p>
+
+
+
+<p>There are probably other ways of doing this, and I would love to see them. If you do come up with a better way to solve this, let me know in the comments and I’ll work your solution into an upcoming article.</p>
+
+
+
+<p>As usual, gentle reader, thank you for your time and attention, and if you have any comments, questions, clarifications or criticisms (constructive, please) let me know.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2019/07/24/a-regex-amuse-bouche/" rel="bookmark"><time class="entry-date published" datetime="2019-07-24T13:10:22+02:00">July 24, 2019</time><time class="updated" datetime="2020-06-30T13:10:56+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2019/07/24/a-regex-amuse-bouche/#respond">Leave a comment<span class="screen-reader-text"> on A Regex amuse-bouche</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-75" class="post-75 post type-post status-publish format-standard hentry category-raku-programming entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2019/07/18/templates-and-a-clean-start/" rel="bookmark">Templates and a Clean&nbsp;Start</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p>Before I get into the meat of the topic, which will eventually lead to a self-modifying grammar (yes, you heard me, self-modifying…) I have a confession to make, in that a series of articles on the old site may have led people astray. I wrote that series thinking to make parsing things where no grammar existed easier.</p>
+
+
+
+<p>It may have backfired. So, as a penance, I’m simultaneously pointing theperlfisher.{com,net} to this new site, and starting a new series of articles on Raku programming with a different approach. This time I’ll be incorporating more of my thoughts and what hopefully will be a different approach.</p>
+
+
+
+<h2>Begin as you mean to go on.</h2>
+
+
+
+<p>I would love to dump the CMS I’m currently using for something written in Raku. Among the many challenges that presents is displaying HTML, and to paraphrase Clint Eastwood,&nbsp;<a href="http://web.archive.org/web/20200212094016/https://www.youtube.com/watch?v=_VrFV5r8cs0">I do know my limitations.</a>&nbsp;So, I don’t want to write HTML. Ideally, not ever.</p>
+
+
+
+<p>So, that means&nbsp;<s>steal</s>&nbsp;borrowing HTML from other sites and making it my own. Since those are usually Perl 5 sites, that means dealing with Template Toolkit. And already I can hear some of you screaming “Raku already handles everything TT used to! Just use interpolated here-docs!”</p>
+
+
+
+<p>And, for the most part, you’re absolutely correct. Instead of the clunky ‘[% variable_name %]’ notation you can use clean inline interpolation with ‘{$variable-name}’, and being able to insert blocks of code inline means you don’t have to go through many of the hoops that you’re required to jump through with Template Toolkit.</p>
+
+
+
+<p>That’s all absolutely true, and I hope to be able to use all of those features and more in the final CMS, whatever that happens to be. This approach ignores the fact that most HTML out there is written with Template Toolkit, and that rewriting HTML, even if it’s just a few tiny tags, is an investment of time that could be better done elsewhere.</p>
+
+
+
+<p>If only there were Template Toolkit for Raku…</p>
+
+
+
+<h2>Let’s dive in!</h2>
+
+
+
+<p>If you’re not familiar with&nbsp;<a href="http://web.archive.org/web/20200212094016/http://template-toolkit.org/">Template Toolkit</a>, it’s a fairly lightweight programming language for writing HTML templates, among others. Please don’t confuse it with a markup language, designed to be rendered&nbsp;<strong>into</strong>&nbsp;HTML. This is a language that lets you combine your own code with a template and generate dynamic displays.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+&lt;h1&gt;Hello, [% name %]!&lt;/h1&gt;
+</pre>
+
+
+<p>That is a simple bit of Template Toolkit. Doesn’t look like much, does it? It’s obviously a fragment of a proper HTML document because there’s no ‘&lt;html&gt;’..'&lt;/html&gt;’ bracketing it, and obviously whatever’s between ‘[%’ and ‘%]’ is being treated specially. In this case, it’s being rendered by an engine that fills in the name, maybe something like…</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+$tt.render( 'hello.tt', :name( 'Jeff' ) );
+</pre>
+
+
+<p>where&nbsp;<em>hello.tt</em>&nbsp;is the name of the template file containing the previous code, and ‘Jeff’ is the name we want to substitute. We’ve got a lot of work to go through before we can get there, though. If you’ve read previous articles of mine on the subject, please try to ignore what I’ve said there.</p>
+
+
+
+<h3>Off the Deep End</h3>
+
+
+
+<p>First things first, we need a package to work in. For this, I generally rely on&nbsp;<a href="http://web.archive.org/web/20200212094016/https://modules.perl6.org/dist/App::Mi6:cpan:SKAJI">App::Mi6</a>&nbsp;to do the hard work for me. Start by installing the package with&nbsp;<em>zef</em>, and then we’ll get down to business. (It should be installed by default, if you’re still using rakudobrew please don’t.)</p>
+
+
+
+<pre class="wp-block-preformatted">$ zef install App::Mi6
+{a bit of noise}
+$ mi6 new Template::Toolkit
+Successfully created Template-Toolkit
+$ cd Template-Toolkit</pre>
+
+
+
+<p>Ultimately, we want this test (in t/01-basic.t – go ahead and add it) to pass:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+use Test;
+use Template::Toolkit;
+my $tt = Template::Toolkit.new;
+is $tt.render( 'hello.tt', :name( 'Jeff' ) ), '&lt;h1&gt;Hello, Jeff!&lt;/h1&gt;';
+</pre>
+
+
+<p>It’ll fail (and miserably, at that) but at least it’ll give us a goal. Also it should give us an idea of how others will use our API. Let’s think about that for a few moments, just to make sure we’re not painting ourselves into any obvious corners.</p>
+
+
+
+<p>In order to be useful, our module has to parse Perl 5 Template Toolkit files, and process them in a way that’s useful in Raku. Certain things will go by the wayside, to be sure, but the core will be a module that lets us load, maybe compile, and fill in a template.</p>
+
+
+
+<p>Hrm, I just said ‘fill in’ rather than ‘render’, what I said above. Should I change the method name? No, not really, the new module will still&nbsp;<strong>do</strong>&nbsp;what the Perl 5 code used to, it just won’t do it using Perl 5, so some of the old conventions won’t work. Let’s leave that decision for now, and go on.</p>
+
+
+
+<h2>Retrograde is all the rage</h2>
+
+
+
+<p>Let’s apply some basic retrograde logic to what we’ve got here, given what we know of Raku tools. In order to get the string ‘&lt;h1&gt;Hello, Jeff!&lt;/h1&gt;’ from ‘&lt;h1&gt;Hello, [% name %]!&lt;/h1&gt;’, we need a lot of mechanics at work.</p>
+
+
+
+<p>At first glance, it seems pretty obvious that ‘[% name %]’ is a substitution marker, so let’s just do a quick regexp like this:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+$text ~~ s:g{ '[%' (\w+) '%]' } = %args{$0};
+</pre>
+
+
+<p>That should replace every marker in the text with something from an&nbsp;<em>%arguments</em>&nbsp;hash that&nbsp;<em>render()</em>&nbsp;supplies to us. End of column, end of story. But not so fast, if all Template Toolkit supplied to us was the ability to substitute values for keys, then … there’s really no need for the module. And in fact, if you look at the docs, it can do many more things for us.</p>
+
+
+
+<p>For example, ‘[% INCLUDE %]’ lets us include other template files in our own, ‘[% IF %]’ .. ‘[% END %]’ lets us do things conditionally, and a whole host of other “directives” are available. But you’ll see here the one thing they have in common is they all start with ‘[%’ and end with ‘%]’.</p>
+
+
+
+<h3>Hold the phone</h3>
+
+
+
+<p>That isn’t entirely true, and in fact there’s going to be another article in the series about that. But it’s a good starting point. We may not know much about what the language itself looks like, but I can tell you that tags are balanced, not nested, and every ‘[%’ opening tag has a ‘%]’ tag that closes it.</p>
+
+
+
+<p>I’ll also point out that directives ( ‘[% foo %]’ ) can occur one after another without any intervening white space, and may not occur at all. So already some special cases are starting to creep in.</p>
+
+
+
+<p>In fact, let’s put this in as a separate test file entirely. So separate that we’re going to put it in a nested directory, in fact. Let’s open t/parser/01-basic.t and add this set of tests:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+use Test;
+use Template::Toolkit::Parser;
+
+my $p = Template::Toolkit::Parser.new;
+
+0000, AAAA
+0001, AAAB
+0010, AABA
+0011, AABB
+0100, ABAA
+0101, ABAB
+... # and so on up to
+1110, BBBA
+1111, BBBB
+</pre>
+
+
+<p>Now just HOLD THE PHONE here… we’re testing directives for Template Toolkit, not binary numbers, and whatever that other column is! Well, that’s true. We want to test text and directives, and make sure that we can get back text when we want it, and directives when we want them.</p>
+
+
+
+<p>At first blush you might think it’s just enough to make sure that ‘&lt;h1&gt; Hello,’ is parsed as text, and that ‘[% name %]’ is parsed as a directive, and just leave it at that. But those of you that have worked with regular expressions for a while might wonder how ‘[% name %][% other %]’ gets parsed… does it end at the first ‘%]’, or continue on to the next one?</p>
+
+
+
+<p>And what about text mixed with directives? Leading? Trailing text? Wow, a lot of combinations. In fact, if you wanted to be thorough, it wouldn’t hurt to cover all possible combinations of text and directives up to… say, 4 in a row.</p>
+
+
+
+<p>Let’s call text ‘T’, and directives ‘D’. I’ve got 4 slots, and only two choices for each. Filling the first slot gives me ‘T_ _ _’ and ‘D_ _ _’, for two choices. I can fill the next slot with ‘T T _ _’, ‘T D _ _’, ‘D T _ _’, and ‘D D _ _’, and I think you can see where we’re going with this.&nbsp;</p>
+
+
+
+<p>In fact, replace T with 0 and D with 1, and you’ve got the binary numbers from 0000 to 1111. So, let’s take advantage of this fact, and do some clever editing in our editor of choice:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+0010, 0010                            =&gt;
+is-deeply the-tree( '0010, AABA       =&gt;
+is-deeply the-tree( '0010' ), [ AABA  =&gt;
+is-deeply the-tree( '0010' ), [ AABA ];
+</pre>
+
+
+<p>A few quick search-and-replace commands should get you from the first line to the last line. Now it’s looking more like a Raku test, right? We’re not quite there yet, ‘0010’ still doesn’t look like a string of text and directives, and what’s this AABA thing? One more search-and-replace pass, this time global, should solve that.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+is-deeply the-tree( '0010' ), [ AABA ]; =&gt;
+is-deeply the-tree( 'xx1x' ), [ AABA ]; =&gt;
+is-deeply the-tree( 'xx[% name %]x' ), [ AABA ]; =&gt;
+is-deeply the-tree( 'xx[% name %]x' ), [ 'a', 'a', B'a', ]; =&gt;
+is-deeply the-tree( 'xx[% name %]x' ),
+          [ 'a', 'a', B'a', ]; =&gt;
+is-deeply the-tree( 'xx[% name %]x' ),
+    [ 'a', 'a', Directive.new( :content( 'name' ) ), 'a', ];
+</pre>
+
+
+<p>Starting out with the padded binary numbers covers every combination of text and directive possible (at least 4 long). A clever bit of search-and-replace in your favorite editor gives us a working set of test cases that check a set of “real-world” strings, and a file you can almost run. Next time we’ll fill in the details, and get from zero to a minimal (albeit working) Template Toolkit implementation.</p>
+
+
+
+<p>As always, dear reader, feel free to post whatever comments, questions, and/or suggestions that you may have, including ideas for future articles. I read and respond to every comment, and thank you for your time.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2019/07/18/templates-and-a-clean-start/" rel="bookmark"><time class="entry-date published" datetime="2019-07-18T13:11:17+02:00">July 18, 2019</time><time class="updated" datetime="2020-06-30T13:11:51+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2019/07/18/templates-and-a-clean-start/#respond">Leave a comment<span class="screen-reader-text"> on Templates and a Clean&nbsp;Start</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-78" class="post-78 post type-post status-publish format-standard hentry category-raku-programming entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2019/06/21/logic-programming-in-raku/" rel="bookmark">Logic Programming in&nbsp;Raku</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p>This is a small example of conference-driven development. I’m sitting in the board room at TPCiP – TCP in Pittsburgh surrounded by people doing both Perl 5 and Raku programming, and decided to look again at Picat, working on some simple examples. I was thinking that I might be able to translate some of the simpler backtracking examples from Picat to Raku and here’s a simple example.</p>
+
+
+
+<p>First the Picat code:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+fib(0,F) =&gt; F=1.
+fib(1,F) =&gt; F=1.
+fib(N,F),N&gt;1 =&gt; fib(N-1,F1),fib(N-2,F2),F=F1+F2.
+</pre>
+
+
+<p>Now here’s my equivalent Raku code:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+multi fib( 0, $F is rw ) { $F = 1 }
+multi fib( 1, $F is rw ) { $F = 1 }
+multi fib( $N is rw where * &gt; 1, $F is rw ) {
+  my ( $F1, $F2 ) = 0, 0;
+  my $N1 = $N - 1;
+  my $N2 = $N - 2;
+  fib( $N1, $F1 ) &amp;&amp; fib( $N2, $F2 ) &amp;&amp; $F = $F1 + $F2
+}
+</pre>
+
+
+<p>The Raku version is slightly larger because I need to declare some variables that Picat would ordinarily declare for me ($F1, $F2). There may be a way to work around declaring ($N1, $N2), but otherwise the two versions are identical.</p>
+
+
+
+<h2>How does it work?</h2>
+
+
+
+<p>You’ve probably guessed based on the inputs that&nbsp;<em>N</em>&nbsp;is index of the Fibonacci number, and&nbsp;<em>F</em>&nbsp;is the Fibonacci number itself. Picat doesn’t require you to declare variables, so you could ask it for the 7th Fibonacci number by calling fib(7,F) and looking at&nbsp;<em>F</em>.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my $Fib = 0;
+fib(7,$Fib);
+say $Fib     # 21
+</pre>
+
+
+<p>Or you could do the above in Raku, letting the code populate&nbsp;<em>$Fib</em>&nbsp;for you. This code relies on the fact that Raku lets you dispatch not just on signatures, not just on argument types, but on&nbsp;<strong>values</strong>. Look at the base case above:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+multi fib( 0, $F is rw ) { ... }
+</pre>
+
+
+<p><em>fi</em>b(…) is the function signature, and this function will get called whenever the first argument is 0, like so: fib(0, $Fib). This happens even if ‘multi fib( $N, $F )’ is the one doing the calling, everything gets run through the same dispatcher each time.</p>
+
+
+
+<p>So fib(2, $Fib) calls fib(1, $Fib) which calls ‘multi fib( 1, $F )’ and gives us a base case, for example. This lets the higher-order functions call our base cases, and still get the right value.</p>
+
+
+
+<h2>What are we missing?</h2>
+
+
+
+<p>Well, the Picat code can do something the Raku code can’t, at least for the moment, and this is what I want to spend some time working on. In Picat, I can call ‘fib(6,F)’ and&nbsp;<em>F</em>&nbsp;will be 13 when the code is done. This works in Raku too.</p>
+
+
+
+<p>But Picat will also let you call ‘fib(N,21)’ and&nbsp;<em>N</em>&nbsp;will be 7 when the calculation is finished. Take some time to let that settle. Yes, you can run the calculation both forward and backward. Give&nbsp;<em>N</em>&nbsp;a value, and&nbsp;<em>F</em>&nbsp;will be the Nth Fibonacci number. Give F a value, and it will tell you what&nbsp;<em>N</em>&nbsp;is.</p>
+
+
+
+<p>In fact, Picat will go one step further. If you don’t specify a value for either parameter but just specify variables, like ‘fib(N,F)’, then it will generate all the Fibonacci numbers and their indexes until you tell it to stop.</p>
+
+
+
+<p>This is because of the backtracking engine that it uses, which I want to see if I can mimick. ‘F=F1+F2’ doesn’t mean “Assign the sum of F1 and F2 to F”. Instead, “If any values are missing, find values that satisfy the equation, and keep generating them until you run out of possibilities.”</p>
+
+
+
+<p>That’s a bit of a mouthful, so let’s look at just&nbsp;<em>F1</em>. Supposing F=8 and F2=5, the backtracking engine would search all values of&nbsp;<em>F1</em>, and return just the matching value of 3. Now of course, it can’t search&nbsp;<strong>all</strong>&nbsp;values, because that means you’d be waiting forever, so there are pruning algorithms at work here.</p>
+
+
+
+<p>But the same logic can work with any combination of arguments, so if both&nbsp;<em>F1</em>&nbsp;and&nbsp;<em>F2</em>&nbsp;were missing, then the backtracking engine would run through all possible combinations of values (pruned appropriately) until it found a combination that would work.</p>
+
+
+
+<p>In this case, since in our example F=8, it would return a bunch of combinations, starting with (F1=1, F2=7), (F1=2, F2=6) and so on. But why, then, you ask, does it only return (F1=3, F2=5)? That’s because each value&nbsp;<em>F1</em>&nbsp;<strong>also</strong>&nbsp;has to satisfy fib(N1,F1), which means that&nbsp;<em>F1</em>&nbsp;has to be a Fibonacci number, as does&nbsp;<em>F2</em>.</p>
+
+
+
+<h2>Breakdown</h2>
+
+
+
+<p>This is the part where Raku breaks down a little bit. But what I think I might be able to do is use a trick I used a while ago, relying on the fact that operators are just functions, and they dispatch just like other functions. So I should be able to start out with something crude like:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my $F = Operator.new( :lhs(3) );
+my Value ($F1, $F2);
+$F = $F1 + $F2;
+</pre>
+
+
+<p>This way both&nbsp;<em>$F1</em>&nbsp;and&nbsp;<em>$F2</em>&nbsp;are bound to backtracking Values, they return a Operator, and the Operator is part of the backtracking engine. This way once the Operator engine determines the range of possible combinations of&nbsp;<em>$F1</em>&nbsp;and&nbsp;<em>$F2</em>&nbsp;that add to 3, it can assign them concurrently to&nbsp;<em>@F1.value</em>&nbsp;and&nbsp;<em>@F2.value</em>.</p>
+
+
+
+<h2>Smooth Operators</h2>
+
+
+
+<p>The Operator and Value classes, along with their overloaded operators, would look something like this:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+class Operator {
+  has ( $.lhs, $.rhs ); }
+class PlusOperator is Operator { }
+class AssignmentOperator is Operator {
+  method make-combinations() {...} }
+class Value {
+  has @.value }
+multi infix:&lt;=&gt;( Operator $lhs, Operator $rhs ) {
+  AssignmentOperator.new( :$lhs, :$rhs );
+}
+multi infix:&lt;+&gt;( Value $lhs, Value $rhs ) {
+  PlusOperator.new( :$lhs, :$rhs );
+}
+</pre>
+
+
+<p>This is purely a sketch that I haven’t tried out at all. My idea here is that once you’ve executed ‘$F = $F1 + $F2’,&nbsp;<em>$F</em>&nbsp;will be an&nbsp;<em>AssignmentOperator</em>&nbsp;instance. You should be able to call&nbsp;<em>$F.make-combinations()</em>&nbsp;that will solve the equation ‘3 = $F1 + $F2’ for all (constrained) values of&nbsp;<em>$F1</em>&nbsp;and&nbsp;<em>$F2</em>.</p>
+
+
+
+<p>That would populate&nbsp;<em>@F1.values</em>&nbsp;and&nbsp;<em>@F2.values</em>&nbsp;with (1,2) and (2,1) respectively. I’m about to play my first game of&nbsp;<em>Azul</em>, so I’ll leave the article here. The next article will hopefully implement this so you can see this all working. It won’t quite be a true backtracking engine, but it’s a start.</p>
+
+
+
+<p>Dear Reader, thank you for your attention, and please feel free to add comments, questions and suggestions.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2019/06/21/logic-programming-in-raku/" rel="bookmark"><time class="entry-date published" datetime="2019-06-21T13:12:10+02:00">June 21, 2019</time><time class="updated" datetime="2020-06-30T13:12:35+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2019/06/21/logic-programming-in-raku/#respond">Leave a comment<span class="screen-reader-text"> on Logic Programming in&nbsp;Raku</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-81" class="post-81 post type-post status-publish format-standard hentry category-raku-programming entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2019/05/20/quantum-tunneling/" rel="bookmark">Quantum Tunneling</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p>Introducing the new Perl Fisher site</p>
+
+
+
+<p>Before I get on to the meat of the article, welcome to the new home of The Perl Fisher. I intend to cover both Perl 5 and Raku programming here, but it’ll be mostly Raku content because that’s the language I find the most fun. Please excuse the dust, I’m still very much settling into the new home, and the overall look of the site is bound to change while I play with the new toys available to me.</p>
+
+
+
+<h3>Defeating Thanos with Raku</h3>
+
+
+
+<p>Don’t worry, no spoilers here. We’re just going to talk about a little-known feature of Raku, the quantum-tunneling variable type. If you’ve worked with Raku for any length of time, you’ve probably seen or written a class declaration that looks something like below.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+class Point2D {
+  has Real $.x;
+  has Real $.y;
+}
+</pre>
+
+
+<p>While the word ‘has’ does the real work, second-sigil syndrome strikes as well, in the shape of the ‘.’ between the scalar sigil ‘$’ and the variable name. Here it’s syntactical sugar for being an attribute name, but we can enlarge that ‘.’ to a ‘*’ and open up a world of possibilities.</p>
+
+
+
+<p>When we add the ‘*’ sigil to a variable name, we turn that variable into one that can quantum tunnel between scopes and solve problems that you probably used to do with a global variable. You can read more about dynamic variables and how they differ from ordinary globals at&nbsp;<a href="http://web.archive.org/web/20200212094016/https://docs.perl6.org/language/variables#The_*_twigil">The_*_twigil</a>at&nbsp;<a href="http://web.archive.org/web/20200212094016/https://docs.raku.org/">docs.raku.org</a>.</p>
+
+
+
+<h3>Testing, testing</h3>
+
+
+
+<p>I’m working on a project to try to augment the Raku grammar debugger with an emulator. The tools we have on CPAN and modules.perl6.org respectively are wonderful, but they’re limited because Raku compiles grammar rules down to single methods, which is wonderful for speed, but makes it almost impossible to look into.</p>
+
+
+
+<p>The grammar I’m writing isn’t important at the moment, but the testing part is. Below is a sample subtest that I’m writing for each term of a grammar that’s probably going to have ~50 terms by the time I’m done.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+subtest 'binary-number', {
+  subtest 'failing', {
+    ok fails( '0b', 'binary-number' );
+    ok fails( '3g', 'binary-number' );
+  };
+
+  is build-ast( '0101', 'binary-number' ), 5;
+};
+</pre>
+
+
+<p>This tests the ‘binary-number’ rule to see if it properly fails on ‘0b’ and ‘3g’. ‘0b’ fails because it’s the&nbsp;<strong>prefix</strong>&nbsp;of a binary number, and ‘3g’ because neither 3 nor ‘g’ are binary digits. It also makes certain that ‘0101’ gets translated into the decimal number 5. All important when testing a grammar that parses … well, itself eventually. Oroborous redux, as it were.</p>
+
+
+
+<h3>Dry up, will you…</h3>
+
+
+
+<p>The test is simple, and straightforward. ‘0b’ should fail, ‘0101’ should be built into a node of an abstract syntax tree. But it’s got some flaws. It talks too much. See how ‘binary-number’ repeats itself? If I want to copy that, rename it to ‘hex-number’ and add a few changes, I have to copy the block, rename all the incidences of ‘binary-number’ to ‘hex-number’ and&nbsp;<strong>then</strong>&nbsp;fix the existing tests.</p>
+
+
+
+<p>Thus I run the risk of forgetting to update the name ‘binary-number’. And there’s an even greater bugaboo there. If I&nbsp;<strong>don’t</strong>, the test won’t fail. Because the subtest doesn’t know that it’s supposed to be testing the ‘binary-number’ rule. There are a bunch of ways to solve this problem, of course, but for this post we’re going to use Ant-Man(tm).</p>
+
+
+
+<h3>Entering the Quantum Realm</h3>
+
+
+
+<p>I don’t want to do&nbsp;<strong>too</strong>&nbsp;much work here, I just want to get rid of the duplicate ‘binary-number’ entries. So, let’s take a look at what&nbsp;<em>fails()</em>&nbsp;does.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+sub fails( Str $sample, Str $rule-name ) returns Bool {
+  !?( $g.parse( $sample, :rule( $rule-name ) );
+}
+</pre>
+
+
+<p>The ‘!?(…)’ casts&nbsp;<em>$g.parse(…)</em>&nbsp;to a Boolean and negates it, so if&nbsp;<em>$g</em>&nbsp;can’t parse the statement, it returns&nbsp;<em>True</em>. So, first let’s make&nbsp;<em>$rule-name</em>&nbsp;optional.&nbsp;</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+sub fails( Str $sample, Str $rule-name? ) returns Bool {
+  !?( $g.parse( $sample, :rule( $rule-name ) );
+}
+</pre>
+
+
+<h4>Opening the wormhole</h4>
+
+
+
+<p>Now, we’re going to summon Ant-Man(tm). Remember earlier I mentioned that quantum variables use a wormhole? Well, we’re going to open one end of the wormhole right here in our&nbsp;<em>fails()</em>&nbsp;function, just like this.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+sub fails( Str $sample, Str $rule-name? ) returns Bool {
+  !?( $g.parse( $sample, :rule( $*ANT-MAN // $rule-name ) );
+}
+</pre>
+
+
+<p>Rerun our tests, and … wait, they should fail, we haven’t declared&nbsp;<em>$*ANT-MAN</em>&nbsp;anywhere! Well, just like in quantum physics,&nbsp;<em>$*ANT-MAN</em>&nbsp;doesn’t have enough energy to tunnel over the quantum barrier because we haven’t defined him yet.&nbsp;</p>
+
+
+
+<p>So let’s do that, but remember that&nbsp;<em>$*ANT-MAN</em>&nbsp;is a quantum variable, so he can tunnel through the quantum barrier of a function scope. In fact, he can tunnel through any number of them. So, let’s define a new version of&nbsp;<em>subtest()</em>&nbsp;that looks and acts like the old one first before we go boldly where no Raku programmer has gone before.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+sub Subtest( Str $rule-name, Block $test-code ) {
+  subtest $rule-name, $test-code;
+}
+</pre>
+
+
+<p>We should be able now to replace the outer&nbsp;<em>subtest()</em>&nbsp;block with our new&nbsp;<em>Subtest()</em>&nbsp;block, and it should act just as it used to.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+Subtest 'binary-number', {
+  subtest 'failing', {
+    ok fail( '0b', 'binary-number' );
+    ...
+  };
+  ...
+};
+</pre>
+
+
+<h4>Tunneling through</h4>
+
+
+
+<p>Our test suite still works, and the output still is what we expect. Now, let’s give&nbsp;<em>$*ANT-MAN</em>enough energy to tunnel through the quantum barrier by defining him as the subtest name we want:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+sub Subtest( Str $rule-name Block $test-code ) {
+  my $*RULE-NAME = $rule-name;
+  subtest $rule-name, $test-code;
+}
+</pre>
+
+
+<p>And now run our test suite. Which… doesn’t change. Come to think of it, we don’t want it to change. If it&nbsp;<strong>did</strong>&nbsp;change, we’d have to go through and change all of our test suites, which would be bad. So, putting things together, this code works just fine.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+sub fails( Str $sample, Str $rule-name? ) returns Bool {
+  !?( $g.parse( $sample, :rule( $*ANT-MAN // $rule-name ) );
+}
+sub Subtest( Str $rule-name Block $test-code ) {
+  my $*RULE-NAME = $rule-name;
+  subtest $rule-name, $test-code;
+}
+
+Subtest 'binary-number', {
+  subtest 'failing', {
+    ok fails( '0b', 'binary-number' );
+  };
+};
+</pre>
+
+
+<p>Notice by the way that&nbsp;<em>$*ANT-MAN</em>&nbsp;has tunneled through not one but&nbsp;<strong>two</strong>&nbsp;function signatures to get to where he is. And to prove it, finally, delete the inside ‘binary-number’.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+Subtest 'binary-number', {
+  subtest 'failing', {
+    ok fails( '0b' );
+  };
+};
+</pre>
+
+
+<p>So ‘binary-number’ gets passed along to&nbsp;<em>$*ANT-MAN</em>&nbsp;who jumps into the quantum realm, tunnels through the outer&nbsp;<strong>and</strong>&nbsp;inner pairs of braces, and finally lands in&nbsp;<em>fails()</em>&nbsp;where he passes the value on to the :rule() declaration. Whew, that’s a lot of work.</p>
+
+
+
+<h3>Oh, snap.</h3>
+
+
+
+<p>(sorry, couldn’t resist.) If you’re like me, and I know&nbsp;<em>I</em>&nbsp;am, you’ve probably come across a few cases where this technique would come in handy. Especially if you’re dealing with legacy code. Sometimes you need to add just one little flag to a function and set that flag in a top-level handler on one page of a website.</p>
+
+
+
+<p>The catch is that between the lower level and the top level there’s a chain of 8 function calls where you have to add that as a parameter. Wouldn’t it be nice if there was a workaround? Well, in Raku there is.</p>
+
+
+
+<p>Thanks for getting all the way to the bottom of this, my inaugural article on Raku on the next generation of the Perl Fisher website. Feel free to leave comments and constructive criticism in the comments section below, and come back every so often to watch the website grow over the coming months.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2019/05/20/quantum-tunneling/" rel="bookmark"><time class="entry-date published" datetime="2019-05-20T13:12:46+02:00">May 20, 2019</time><time class="updated" datetime="2020-06-30T13:13:19+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2019/05/20/quantum-tunneling/#respond">Leave a comment<span class="screen-reader-text"> on Quantum Tunneling</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+	<nav class="navigation pagination" role="navigation" aria-label="Posts">
+		<h2 class="screen-reader-text">Posts navigation</h2>
+		<div class="nav-links"><span aria-current="page" class="page-numbers current">1</span>
+<a class="page-numbers" href="https://perlfisher.wordpress.com/page/2/">2</a>
+<a class="page-numbers" href="https://perlfisher.wordpress.com/page/3/">3</a>
+<a class="next page-numbers" href="https://perlfisher.wordpress.com/page/2/"><span class="nav-next-text">Older posts</span> <svg class="svg-icon" width="22" height="22" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></a></div>
+	</nav>
+		</main><!-- .site-main -->
+	</section><!-- .content-area -->
+
+
+	</div><!-- #content -->
+
+		<footer id="colophon" class="site-footer responsive-max-width">
+	
+		<div class="site-info">
+										<a class="site-name" href="https://perlfisher.wordpress.com/" rel="home">The Perl Fisher</a><span class="comma">,</span>
+						<a href="https://wordpress.com/?ref=footer_website" rel="nofollow">Create a free website or blog at WordPress.com.</a>					</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+
+</div><!-- #page -->
+
+<!--  -->
+<div id="wpadminbar" class="marketing-bar"><div class="marketing-bar-text">Create your website at WordPress.com</div><a class="marketing-bar-button" href="https://wordpress.com/?ref=marketing_bar">Get started</a></div><script src='//0.gravatar.com/js/gprofiles.js?ver=202027y'></script>
+<script>
+var WPGroHo = {"my_hash":""};
+</script>
+<script type='text/javascript' src='https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	</div>
+<script>
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/perlfisher.wordpress.com\/public.api\/connect\/?action=request","logoutURL":"https:\/\/perlfisher.wordpress.com\/wp-login.php?action=logout&_wpnonce=d116cd9af7","homeURL":"https:\/\/perlfisher.wordpress.com\/","postID":"51","gravDefault":"identicon","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"0","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1573483029j'></script>
+
+	<div id="carousel-reblog-box">
+		<form action="#" name="carousel-reblog">
+			<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Add your thoughts here... (optional)"></textarea>
+			<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Post to</label>
+			<select name="carousel-reblog-to-blog-id" id="carousel-reblog-to-blog-id">
+						</select>
+
+			<div class="submit">
+				<span class="canceltext"><a href="#" class="cancel">Cancel</a></span>
+				<input type="submit" name="carousel-reblog-submit" class="button" id="carousel-reblog-submit" value="Reblog Post" />
+				<input type="hidden" id="carousel-reblog-blog-id" value="179562945" />
+				<input type="hidden" id="carousel-reblog-blog-url" value="https://perlfisher.wordpress.com" />
+				<input type="hidden" id="carousel-reblog-blog-title" value="The Perl Fisher" />
+				<input type="hidden" id="carousel-reblog-post-url" value="" />
+				<input type="hidden" id="carousel-reblog-post-title" value="" />
+			</div>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="7a441e3a98" /><input type="hidden" name="_wp_http_referer" value="/" />		</form>
+
+		<div class="arrow"></div>
+	</div>
+<div class="widget widget_eu_cookie_law_widget"><div
+	class="hide-on-button ads-active"
+	data-hide-timeout="30"
+	data-consent-expiration="180"
+	id="eu-cookie-law"
+>
+	<form method="post">
+		<input type="submit" value="Close and accept" class="accept" />
+
+		Privacy &amp; Cookies: This site uses cookies. By continuing to use this website, you agree to their use. <br />
+To find out more, including how to control cookies, see here:
+		<a href="https://automattic.com/cookies" >
+			Cookie Policy		</a>
+ </form>
+</div>
+</div><script type='text/javascript' src='https://s1.wp.com/_static/??-eJzTLy/QTc7PK0nNK9EvyClNz8wr1i+uzCtJrMjITM/IAeKS1CJMEWP94uSizIISoOIM5/yiVL2sYh19yo1yKiotzgjISczMAxpon2traGpuYGRgYmlhmgUAFLxAeg=='></script>
+<script type='text/javascript'>
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "https://s1.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.9b";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.head.appendChild( corecss );
+		var themecssurl = "https://s2.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeDefault.css?m=1363304414h&amp;ver=3.0.9b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		document.head.appendChild( themecss );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+
+	// Infinite scroll support
+	if ( typeof( jQuery ) !== 'undefined' ) {
+		jQuery( function( $ ) {
+			$( document.body ).on( 'post-load', function() {
+				SyntaxHighlighter.highlight();
+			} );
+		} );
+	}
+</script>
+<link rel='stylesheet' id='all-css-0-3' href='https://s0.wp.com/wp-content/mu-plugins/carousel/jetpack-carousel.css?m=1592560282h&cssminify=yes' type='text/css' media='all' />
+<script>
+var actionbardata = {"siteID":"179562945","siteName":"The Perl Fisher","siteURL":"http:\/\/perlfisher.wordpress.com","icon":"<img alt='' src='https:\/\/s2.wp.com\/i\/logo\/wpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/hever","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fperlfisher.wordpress.com%2F2019%2F12%2F15%2Frewriting-perl-code-for-raku-part-v%2F&signup_flow=account","themeURL":"https:\/\/wordpress.com\/theme\/hever\/","xhrURL":"https:\/\/perlfisher.wordpress.com\/wp-admin\/admin-ajax.php","nonce":"76a041671f","isSingular":"","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"0385734db6\" \/>","referer":"https:\/\/perlfisher.wordpress.com\/","canFollow":"1","feedID":"107157609","statusMessage":"","customizeLink":"https:\/\/perlfisher.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fperlfisher.wordpress.com%2F","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Hever","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fperlfisher.wordpress.com%2F2019%2F12%2F15%2Frewriting-perl-code-for-raku-part-v%2F&signup_flow=account\">Log in now.<\/a>","stats":"Stats"}};
+</script>
+<script>
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/perlfisher.wordpress.com\/wp-admin\/admin-ajax.php","nonce":"7cf6d212fa","display_exif":"1","display_comments":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/perlfisher.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fperlfisher.wordpress.com%2F2019%2F12%2F15%2Frewriting-perl-code-for-raku-part-v%2F","blog_id":"179562945","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">Email (Required)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Name (Required)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Website<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogged","reblog_add_thoughts":"Add your thoughts here... (optional)","reblogging":"Reblogging...","post_reblog":"Post Reblog","stats_query_args":"blog=179562945&v=wpcom&tz=2&user_id=0&subd=perlfisher","is_public":"1","reblog_enabled":""};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyVjEsOwjAMRC9EMFQqggXiLCaxKof8FDstxycsqBCLSuxGb2YeLMXYnJSSghdwNLOl8tx72cFXFZspoU2cBBZ2E6kAtd7mB5MJuIBSLAGVfviGB13kZO5YIaIo1Z5MnqlWdt2ysj8NWtE+ZOtklXN6n9a0sbZYcxMK4ElLN5sP6J9bvB7HyzCeDsN58C8J+3rN'></script>
+	<script>
+	/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
+	</script>
+	<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script><script src="//stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'179562945','blog_tz':'2','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'179562945','v':'wpcom','tz':'2','user_id':'0','subd':'perlfisher'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE0/bU8yQkx3RTR3RmZTSndoTltKYUswZWZFZmRxfG9BJixbMnFRZUJFVlYldWhGJUt6SXVuT3dFdWZPLV9pSlE2XUk3YWVtbmdUeElCdnA5ZlVwZkhadkQ1ZThVeXJJcEpKMy1iUGRFRFBRSGRnY3p+elo3V0M2Uz0sUUhwSTUuXTM1WFlDdXB5LGJxa21zSGwzbmpad1kmM2szZWdKJlRoMUc/YnpkdEZbflNteFhGVkZCLUczSz9VX0hNb3Bic0U2dTMxTGQyM1RfcDdfaEhyRHRdNGxrU1JHQ3dGaWlETlJ5cVlrdi1kW2kzPXc2WCtzUHUsL0huKy9+XSxDcitDVFtBMmNKZGk4Ng=='}]);
+_stq.push([ 'clickTrackerInit', '179562945', '0' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+		<script defer src="data:text/javascript,%21function%28%29%7B%22use%20strict%22%3Bvar%20e%3D%5B%5D%2Ct%3D%22wpcom.simple.ttfb.batcache.%22%3Btry%7Bfor%28var%20n%3Dperformance.getEntriesByType%28%22navigation%22%29%5B0%5D%7C%7C%7B%7D%2Co%3D0%2Cs%3Ddocument.body.childNodes%2Cc%3Ds.length-1%3Bc%3E%3D0%3Bc--%29s%5Bc%5D.nodeType%3D%3D%3DNode.COMMENT_NODE%26%26s%5Bc%5D.textContent.indexOf%28%22served%20from%20batcache%22%29%3E0%26%26%28o%3D1%29%3Bvar%20r%3DMath.round%28n.responseStart%7C%7C0%29%3Bif%28r%3E0%26%26%28o%3Fe.push%28t%2B%22hit%3A%22%2Br%2B%22%7Cms%22%29%3Ae.push%28t%2B%22miss%3A%22%2Br%2B%22%7Cms%22%29%29%2Ce.length%29document.createElement%28%22img%22%29.src%3D%22https%3A%2F%2Fpixel.wp.com%2Fboom.gif%3Fjson%3D%22%2BencodeURIComponent%28JSON.stringify%28%7Bbeacons%3Ae%7D%29%29%7Dcatch%28e%29%7B%7D%7D%28%29%3B"></script>
+		<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>
+<!--
+	generated in 0.215 seconds
+	183034 bytes batcached for 300 seconds
+-->

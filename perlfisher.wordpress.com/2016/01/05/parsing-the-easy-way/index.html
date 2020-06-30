@@ -1,0 +1,1055 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="profile" href="https://gmpg.org/xfn/11" />
+	<title>Parsing the easy way &#8211; The Perl Fisher</title>
+<link rel='dns-prefetch' href='//s2.wp.com' />
+<link rel='dns-prefetch' href='//s1.wp.com' />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//wordpress.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel="alternate" type="application/rss+xml" title="The Perl Fisher &raquo; Feed" href="https://perlfisher.wordpress.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="The Perl Fisher &raquo; Comments Feed" href="https://perlfisher.wordpress.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="The Perl Fisher &raquo; Parsing the easy&nbsp;way Comments Feed" href="https://perlfisher.wordpress.com/2016/01/05/parsing-the-easy-way/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s2.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.2"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s1.wp.com/_static/??-eJylktFuwyAMRX9oxKFdtOVh2rcAcRkNJAiDqvx9ga5ptk7dpD3avsdc28DJMzVPEacILjFvkzYTwcmr2TFyxuLyLWoU0RNsMGlnvYJOhBGjmTSTIkCWfs3cwZs3rRmR4IjRCzWyGt3Jr1qdcigx6FwJCK/NvmlBJmOHYqfiMoiwAMXF4v/bxA90f2lTqdsQQZTB6RcXh2QtIxOR4WDqpi4V4M9t2/G+78AHdCa5FX3cUM2fPnizKxMNhuKaZD+zm0OUXeS88yIWhcuuBNq8gCk+wi6/RMrslYhdHdfN1UO+uzfe9buu7V/4/ngGR4LqhQ==?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<style id='global-styles-inline-css'>
+:root {
+	--wp--preset--color--primary: #1279BE;
+	--wp--preset--color--secondary: #FFB302;
+	--wp--preset--color--foreground-dark: #101010;
+	--wp--preset--color--foreground: #303030;
+	--wp--preset--color--foreground-light: #757575;
+	--wp--preset--color--background-dark: #C5C5C5;
+	--wp--preset--color--background-light: #F8F8F8;
+	--wp--preset--color--background: #FFFFFF;
+	--wp--preset--font-size--small: 17.3914;
+	--wp--preset--font-size--normal: 23;
+	--wp--preset--font-size--large: 26.45;
+	--wp--preset--font-size--huge: 30.4174;
+	--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);
+	--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);
+	--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);
+	--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);
+	--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);
+	--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);
+	--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);
+	--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);
+	--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);
+	--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);
+	--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);
+	--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);
+}
+
+</style>
+<link rel='stylesheet' id='all-css-2-1' href='https://s1.wp.com/_static/??/wp-content/mu-plugins/comment-likes/css/comment-likes.css,/i/noticons/noticons.css?m=1436783281j&cssminify=yes' type='text/css' media='all' />
+<link rel='stylesheet' id='print-css-3-1' href='https://s1.wp.com/wp-content/themes/pub/varia/print.css?m=1571655471h&cssminify=yes' type='text/css' media='print' />
+<link rel='stylesheet' id='all-css-4-1' href='https://s1.wp.com/_static/??-eJx9jdEOwiAMRX9IrDOZmQ/Gb2GssipQAmXEvxfjy4yLb72559xCjcpwEAwCMqPHDLGMMOOCCbI8He5NzjvYxhadSAMF80FVjYb9j+CLiq5YChkqTRYlA5bW8oNQOV1B0EenpY1uf1wNWGTl2GghDl9B3Zym9E9NODq27bTQqFV8S1d/6frzoTv1x2G4vwBBPGeN?cssminify=yes' type='text/css' media='all' />
+<link crossorigin="anonymous" rel='stylesheet' id='hever-fonts-css'  href='https://fonts.googleapis.com/css?family=PT+Sans%3A400%2C400i%2C700%2C700i&#038;subset=latin%2Clatin-ext' media='all' />
+<link rel='stylesheet' id='all-css-6-1' href='https://s1.wp.com/_static/??/wp-content/themes/pub/hever/style.css,/wp-content/mu-plugins/actionbar/actionbar.css?m=1587159585j&cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-8-1' href='https://s0.wp.com/_static/??-eJxti0EKgCAQAD+ULWGJHaK3mJgaqyut0fejQ4eo0zAwA2cRlnJ1uUI6RMHDx8xQiKtY0cQdOJg9Zv+wtcwN/F9MNhoUSJ7e8plqcMkxhB480mLwDuY0dYMepVJaqu0CZXY33g==?cssminify=yes' type='text/css' media='all' />
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJx9jMkKAjEQRH/ITCdqkBzEb5mlJ3TIZpJ28O+NuBw8CAUFVa8Ktiwozp4XrOC6rozl/rbB1R38A0QgW8aGQ6D4gecUG8b2ZEOayKPgimW0PetHa/rlsmdLscLK3otKDQUu1Cha8WpAHaXUyhgNuWAgDt/pjXDrd5dwVtrstTQndXAPbQFMJA=='></script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s2.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://perlfisher.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Rough-and-tumble on IRC' href='https://perlfisher.wordpress.com/2015/07/11/rough-and-tumble-on-irc/' />
+<link rel='next' title='Bottoms Up' href='https://perlfisher.wordpress.com/2016/01/07/bottoms-up/' />
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://perlfisher.wordpress.com/2016/01/05/parsing-the-easy-way/" />
+<link rel='shortlink' href='https://wp.me/pc9qwx-21' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fperlfisher.wordpress.com%2F2016%2F01%2F05%2Fparsing-the-easy-way%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fperlfisher.wordpress.com%2F2016%2F01%2F05%2Fparsing-the-easy-way%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Parsing the easy way" />
+<meta property="og:url" content="https://perlfisher.wordpress.com/2016/01/05/parsing-the-easy-way/" />
+<meta property="og:description" content="Caveat Emptor&nbsp; There are many Perl 6 tutorials out there, this is not one of them. It assumes some familiarity with the language and some familiarity with regular expressions, the mini-languag…" />
+<meta property="article:published_time" content="2016-01-05T12:38:25+00:00" />
+<meta property="article:modified_time" content="2020-06-30T11:42:49+00:00" />
+<meta property="og:site_name" content="The Perl Fisher" />
+<meta property="og:image" content="https://s0.wp.com/i/blank.jpg" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:text:title" content="Parsing the easy&nbsp;way" />
+<meta name="twitter:card" content="summary" />
+<meta property="fb:app_id" content="249643311490" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://s1.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="icon" type="image/x-icon" href="https://s1.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="apple-touch-icon" href="https://s2.wp.com/i/webclip.png" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://perlfisher.wordpress.com/osd.xml" title="The Perl Fisher" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<link rel="pingback" href="https://perlfisher.wordpress.com/xmlrpc.php">		<script type="text/javascript">
+		function __ATA_CC() {var v = document.cookie.match('(^|;) ?personalized-ads-consent=([^;]*)(;|$)');return v ? 1 : 0;}
+		var __ATA_PP = { pt: 1, ht: 0, tn: 'hever', amp: false, siteid: 8982, blogid: 179562945, consent: __ATA_CC(), flag: 2 };
+		</script>
+		<script type="text/javascript">
+		!function(t){var n={};function e(r){if(n[r])return n[r].exports;var o=n[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,e),o.l=!0,o.exports}e.m=t,e.c=n,e.d=function(t,n,r){e.o(t,n)||Object.defineProperty(t,n,{enumerable:!0,get:r})},e.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},e.t=function(t,n){if(1&n&&(t=e(t)),8&n)return t;if(4&n&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(e.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&n&&"string"!=typeof t)for(var o in t)e.d(r,o,function(n){return t[n]}.bind(null,o));return r},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,n){return Object.prototype.hasOwnProperty.call(t,n)},e.p="https://c0.pubmine.com/2.6.01584004761084/",e(e.s=184)}({0:function(t,n){t.exports=function(t,n,e){return n in t?Object.defineProperty(t,n,{value:e,enumerable:!0,configurable:!0,writable:!0}):t[n]=e,t}},1:function(t,n){t.exports=function(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}},10:function(t,n,e){"use strict";var r=e(50),o=e(17),i=e(23);t.exports=function(t,n,e){if(!r(t))return e;if(!o(n))return e;try{var u=n.split(".").reduce((function(t,n){return t[n]}),t);return i(u)?e:u}catch(t){return e}}},12:function(t,n){function e(n){return"function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?t.exports=e=function(t){return typeof t}:t.exports=e=function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},e(n)}t.exports=e},14:function(t,n,e){"use strict";t.exports=function(t){return"function"==typeof t}},15:function(t,n,e){"use strict";t.exports=function(){}},17:function(t,n,e){"use strict";t.exports=function(t){return"string"==typeof t}},184:function(t,n,e){"use strict";e.r(n);var r=e(0),o=e.n(r),i=e(12),u=e.n(i),c=e(32),f=e.n(c),s=e(15),a=e.n(s),p=e(37),l=e.n(p),d=e(52),v=e(53),m=e(28);function y(t,n){var e=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);n&&(r=r.filter((function(n){return Object.getOwnPropertyDescriptor(t,n).enumerable}))),e.push.apply(e,r)}return e}function b(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},n={};"object"===u()(window.__ATA_PP)&&null!==window.__ATA_PP&&(n=window.__ATA_PP);var e=function(t){for(var n=1;n<arguments.length;n++){var e=null!=arguments[n]?arguments[n]:{};n%2?y(Object(e),!0).forEach((function(n){o()(t,n,e[n])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(e)):y(Object(e)).forEach((function(n){Object.defineProperty(t,n,Object.getOwnPropertyDescriptor(e,n))}))}return t}({r:(new Date).getTime()},n,{},Object(d.a)(t),{ref:window.top!==window?document.referrer:window.location.href,us_privacy:Object(v.a)()}),r=l()("//s.pubmine.com/mhead.js",e);f()(r,a.a)}Object(m.b)()?Object(m.a)().then(b,b):b()},2:function(t,n){function e(t,n){for(var e=0;e<n.length;e++){var r=n[e];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}t.exports=function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}},21:function(t,n,e){"use strict";t.exports=function(t){return"string"==typeof t&&t.length>0}},23:function(t,n,e){"use strict";t.exports=function(t){return void 0===t}},24:function(t,n,e){"use strict";t.exports=function(t,n){return t.indexOf(n)>-1}},28:function(t,n,e){"use strict";e.d(n,"a",(function(){return p})),e.d(n,"b",(function(){return l}));var r=e(38),o=e.n(r),i=e(10),u=e.n(i),c=e(14),f=e.n(c),s=e(4);function a(t){var n=Date.now();return function(t){return new o.a((function(n,e){var r;window.setTimeout((function(){clearTimeout(r),e&&e("cmp ping timeout")}),t),function t(){window.__cmp?window.__cmp("ping",null,(function(o,i){i&&o.cmpLoaded?n():i?r=window.setTimeout(t,50):e&&e("cmp ping returned error with data: ".concat(JSON.stringify(o)))})):e&&e("CMP is not defined")}()}))}(t).then((function(){var e=Date.now()-n,r=t-e;return new o.a((function(t,n){window.__cmp?(window.__cmp("getConsentData",null,(function(e,r){r?t(e):n&&n("cmp getConsentData returned error with data: ".concat(JSON.stringify(e)))})),setTimeout((function(){n&&n("cmp getConsentData timeout")}),r)):n&&n("CMP is not defined")}))}))}function p(){return a(arguments.length>0&&void 0!==arguments[0]?arguments[0]:500).catch((function(t){return s.a.error(t),"boolean"==typeof(n=u()(window,"__ATA_PP.gdpr_applies"))?{gdprApplies:n}:{};var n}))}function l(){return f()(window.__cmp)}},29:function(t,n,e){"use strict";t.exports=function(t,n){for(var e=0,r=t.length;e<r;e++){var o=t[e];if(n(o,e))return o}return null}},30:function(t,n,e){"use strict";var r=e(29),o=e(24);t.exports=function(t,n){void 0===n&&(n=document.cookie);var e=n.split("; "),i=r(e,(function(n){return o(n,t+"=")}));return i?i.split("=")[1]:""}},32:function(t,n,e){"use strict";var r=e(15),o=e(14);t.exports=function(t,n,e){var i,u,c=document.createElement("script"),f=n instanceof HTMLElement&&n;if(i=o(n)?n:o(e)?e:r,c.src=t,c.onload=function(){i(void 0)},c.onerror=function(){i("error")},f)u=f;else{var s=document.getElementsByTagName("head");u=s&&0!==s.length?s[0]:document.documentElement}u.appendChild(c)}},37:function(t,n,e){"use strict";var r=e(24),o=e(89);t.exports=function(t,n){var e=o(n);return 0===e.length?t:t+(r(t,"?")?"&":"?")+e}},38:function(t,n,e){"use strict";var r,o=e(51),i=e(14);!function(t){t.REJECTED="rejected",t.RESOLVED="resolved",t.PENDING="pending"}(r||(r={}));var u=function(){function t(t,n){var e=this;this.status=r.PENDING,this.emitter=new o,this.onFulfilled=function(t){e.status===r.PENDING&&(e.status=r.RESOLVED,e.emitter.emit(r.RESOLVED,[t]))},this.onRejected=function(t){e.status===r.PENDING&&(e.status=r.REJECTED,e.emitter.emit(r.REJECTED,[t]))};var i=function(){return t(e.onFulfilled,e.onRejected)};n?i():setTimeout(i,0)}return t.resolve=function(n){return new t((function(t){t(n)}))},t.reject=function(n){return new t((function(t,e){e(n)}))},t.prototype.then=function(n,e){var o=this;return new t((function(u,c){o.emitter.on(r.RESOLVED,(function(e){if(i(n)){var r=n(e);r instanceof t?r.then(u,c):u(r)}else u(e)})),o.emitter.on(r.REJECTED,(function(n){if(i(e)){var r=e(n);r instanceof t?r.then(u,c):u(r)}else c(n)}))}),!0)},t.prototype.catch=function(n){var e=this;return new t((function(o){i(n)&&e.emitter.on(r.REJECTED,(function(e){var r=n(e);r instanceof t?r.then(o):o(r)})),e.emitter.on(r.RESOLVED,o)}),!0)},t}();t.exports=u},4:function(t,n,e){"use strict";var r=e(1),o=e.n(r),i=e(2),u=e.n(i),c=e(0),f=e.n(c),s=function(){function t(){o()(this,t)}return u()(t,null,[{key:"configure",value:function(n){t.config=n}},{key:"error",value:function(t){function n(n,e){return t.apply(this,arguments)}return n.toString=function(){return t.toString()},n}((function(t,n){this.config&&this.config.onError?this.config.onError(t,n):window.console&&console.log(t,n)}))}]),t}();f()(s,"config",void 0),n.a=s},50:function(t,n,e){"use strict";t.exports=function(t){var n=typeof t;return"object"===n&&null!=t||"function"===n}},51:function(t,n,e){"use strict";var r=function(){function t(){this.events={}}return t.prototype.on=function(t,n){if(this.events[t]){if(-1!==(e=this.events[t]).indexOf(n))throw new Error('This handler has already been subcribed for "'+t+'" event');e.push(n)}else{var e;(e=[]).push(n),this.events[t]=e}},t.prototype.off=function(t,n){var e=this.events[t],r=e.indexOf(n);-1!==r&&e.splice(r,1)},t.prototype.emit=function(t,n){void 0===n&&(n=[]);var e=this.events[t];e&&e.map((function(t){n?t.apply(void 0,n):t()}))},t}();t.exports=r},52:function(t,n,e){"use strict";e.d(n,"a",(function(){return i}));var r=e(17),o=e.n(r);function i(t){var n=t.gdprApplies,e=t.consentData;return{gdpr:"boolean"==typeof n?Number(n):void 0,gdpr_consent:o()(e)?e:void 0}}},53:function(t,n,e){"use strict";e.d(n,"a",(function(){return f}));var r=e(30),o=e.n(r),i=e(21),u=e.n(i),c="usprivacy";function f(){var t=o()(c);return u()(t)?t:null}},62:function(t,n,e){"use strict";t.exports=function(t){return null===t}},89:function(t,n,e){"use strict";var r=e(62),o=e(23);t.exports=function(t){var n=Object.keys(t),e=[];return n.forEach((function(n){var i=t[n];r(i)||o(i)||e.push(n+"="+encodeURIComponent(t[n]))})),e.join("&")}}});
+		</script><meta name="application-name" content="The Perl Fisher" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://perlfisher.wordpress.com/feed/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="description" content="Caveat Emptor&nbsp; There are many Perl 6 tutorials out there, this is not one of them. It assumes some familiarity with the language and some familiarity with regular expressions, the mini-language that Perl 6 grammars derived from. You should probably also have an idea of why someone would want to write one. I&#039;m going to&hellip;" />
+<link rel="amphtml" href="https://perlfisher.wordpress.com/2016/01/05/parsing-the-easy-way/amp/"></head>
+
+<body class="post-template-default single single-post postid-125 single-format-standard wp-embed-responsive customizer-styles-applied singular image-filters-enabled hide-homepage-title admin-bar highlander-enabled highlander-light">
+
+	
+<div id="page" class="site">
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+	
+		<header id="masthead" class="site-header responsive-max-width">
+
+			
+
+			<p class="site-title"><a href="https://perlfisher.wordpress.com/" rel="home">The Perl Fisher</a></p>
+	
+
+							<nav id="site-navigation" class="main-navigation" aria-label="Main Navigation">
+					<input type="checkbox" role="button" aria-haspopup="true" id="toggle" class="hide-visually">
+					<label for="toggle" id="toggle-menu" class="button">
+						Menu						<span class="dropdown-icon open">+</span>
+						<span class="dropdown-icon close">&times;</span>
+						<span class="hide-visually expanded-text">expanded</span>
+						<span class="hide-visually collapsed-text">collapsed</span>
+					</label>
+					<div class="menu-primary-container"><ul id="menu-primary" class="main-menu" aria-label="submenu"><li id="menu-item-40" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-40"><a href="https://perlfisher.wordpress.com/blog-3/">Home</a></li>
+<li id="menu-item-19" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-19"><a href="https://perlfisher.wordpress.com/blog/">Home</a></li>
+<li id="menu-item-41" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-41"><a href="https://perlfisher.wordpress.com/blog-2-2/">Blog</a></li>
+<li id="menu-item-20" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20"><a href="https://perlfisher.wordpress.com/blog-2/">Blog</a></li>
+<li id="menu-item-42" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-42"><a href="https://perlfisher.wordpress.com/about-2/">About</a></li>
+<li id="menu-item-21" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-21"><a href="https://perlfisher.wordpress.com/about/">About</a></li>
+<li id="menu-item-43" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-43"><a href="https://perlfisher.wordpress.com/contact-2/">Contact</a></li>
+<li id="menu-item-22" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-22"><a href="https://perlfisher.wordpress.com/contact/">Contact</a></li>
+</ul></div>				</nav><!-- #site-navigation -->
+			
+			
+		</header><!-- #masthead -->
+
+	
+	<div id="content" class="site-content">
+
+	<section id="primary" class="content-area">
+		<main id="main" class="site-main">
+
+			
+<article id="post-125" class="post-125 post type-post status-publish format-standard hentry category-raku-programming entry">
+
+	<header class="entry-header responsive-max-width">
+		<h1 class="entry-title">Parsing the easy&nbsp;way</h1>				<div class="entry-meta">
+			<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2016/01/05/parsing-the-easy-way/" rel="bookmark"><time class="entry-date published" datetime="2016-01-05T13:38:25+01:00">January 5, 2016</time><time class="updated" datetime="2020-06-30T13:42:49+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span>		</div><!-- .meta-info -->
+			</header>
+
+	
+	<div class="entry-content">
+		
+<h2>Caveat Emptor&nbsp;</h2>
+
+
+
+<p>There are many Perl 6 tutorials out there, this is not one of them. It assumes some familiarity with the language and some familiarity with regular expressions, the mini-language that Perl 6 grammars derived from. You should probably also have an idea of why someone would want to write one.</p>
+
+
+
+<p>I&#8217;m going to simply talk about being able to take a file in a given language (PHP is my chosen victim, as being able to interpret PHP code in Perl 6 seems like a useful goal) and create a grammar (giant regular expression) that turns your PHP code into a Perl 6 match object which you can then walk.</p>
+
+
+
+<p>If this doesn&#8217;t sound useful to you, well, it isn&#8217;t without a bit of additional work. In Perl 6 you can combine this matching object with a set of actions that trigger when a match is made, and&nbsp;<em>those</em>&nbsp;can do many wondrous things. For instance, an action could be made that triggers when &#8216;$a = 5;&#8217; is matched, and that could set the Perl 6 variable $a to 5, thus setting a Perl 6 variable from inside PHP 5 code.</p>
+
+
+
+<h2>Inspiration&nbsp;</h2>
+
+
+
+<p>I&#8217;m working on some talks for upcoming conferences&nbsp; (FOSDEM, OSCON to name a few), and was stuck on how to explain a clean way to write and debug a parser. I&#8217;d rather not go the CS 401 generic route of creating the usual expression grammar thing that everyone uses to prove what a pain left-recursion can be, so I figured that PHP would be worthwhile, and if I can get a full PHP grammar out of a talk, so be it.</p>
+
+
+
+<p>Now, PHP being a Perl derivative means that the grammar is a bit &#8230; dodgy. If you&#8217;ve ever seen the Perl lexer, you know the challenges we face. There&#8217;s also the additional challenge of Perl 6 being relatively new, so it&#8217;s even more important that we work in a stepwise fashion.</p>
+
+
+
+<p>When I created&nbsp;<a href="http://web.archive.org/web/20160105123320/https://github.com/drforr/perl6-ANTLR4" target="_blank" rel="noreferrer noopener">perl6-ANTLR4</a>&nbsp;I had the benefit of a grammar to work from, and a reasonable idea of how I was going to convert it. With PHP I really had no such guarantee, so through trial-and-error I came across the following approach. It might not scale to the full language, but it&#8217;s one way of approaching the problem.</p>
+
+
+
+<p>I&#8217;ll put the full PHP source up on GitHub once I&#8217;m convinced this is a workable approach, but the basic idea I&#8217;ve come up with is as follows:</p>
+
+
+
+<ol><li>Collect the sample source into a corpus/ directory.</li><li>Write a test file that parses each file in the corpus.</li><li>Write a stub grammar whose TOP rule consists of each file in the corpus separated by an &#8216;|&#8217; alternation symbol.</li><li>Run the test file over the corpus.</li><li>For each token you find, create a &#8216;token FOO { &#8230; }&#8217; rule. Most of these should be formulaic, and if you&#8217;re creative with an edge-case test case the rest should fall out.</li><li>Search/replace each occurrence of the token with &#8216;&lt;FOO&gt;&#8217; (and the appropriate quotes, this does get tedious.)</li><li>Repeat steps 5 and 6 until the grammar is tokenized.</li><li>For each common sequence of tokens you find, create a &#8216;rule bar { &#8230; }&#8217; rule that matches them.</li><li>Replace the common sequence of tokens with &#8216;&lt;bar&gt;&#8217; as need be.</li><li>Repeat steps 8 and 9 until the language is parsed, or you&#8217;re out of patience.&nbsp;</li></ol>
+
+
+
+<p>This won&#8217;t make much sense without some examples, so I&#8217;ll draw on my current tackling of PHP for inspiration. Incidentally I&#8217;m impressed that the existing Perl 6 grammar construct can handle this approach, which I&#8217;ve already applied to sequences of upwards of several thousand tokens in a row.</p>
+
+
+
+<p>Here&#8217;s a sample (suitably truncated) Perl 6 test file:</p>
+
+
+
+<pre class="wp-block-preformatted">use v6;<br>use PHP::Grammar;<br>use Test;       </pre>
+
+
+
+<pre class="wp-block-preformatted">plan 1;</pre>
+
+
+
+<pre class="wp-block-preformatted">my $g = PHP::Grammar.new; </pre>
+
+
+
+<pre class="wp-block-preformatted">ok $g.parsefile('corpus-5/addglob.php');<br>ok $g.parsefile('corpus-5/addpattern.php';</pre>
+
+
+
+<p>In a nutshell, this simply tests that our PHP grammar matches the content of addglob.php and addpattern.php in our corpus-5/ directory. It should do so trivially, because the grammar file consists of almost nothing but these two files verbatim.</p>
+
+
+
+<p>The starting grammar file should look like this:</p>
+
+
+
+<pre class="wp-block-preformatted">use v6;<br>grammar PHP::Grammar<br>        {<br>        rule TOP<br>                {<br># corpus-5/addglob.php below, just stick it in quotes.                <br>'&lt;?php </pre>
+
+
+
+<pre class="wp-block-preformatted">class a {<br>        public function test($arg = c::TESTCONSTANT) {<br>                echo __METHOD__ . "($arg)\n";<br>        }       <br> <br>        static public function staticTest() {<br>        }<br>}'      </pre>
+
+
+
+<pre class="wp-block-preformatted">|<br># corpus-5/addpattern.php below, remember to escape "'&lt;'.'?php';?&gt;"<br>'#!/usr/bin/php<br>&lt;?php<br>echo \'&lt;\'.\'?php\';?&gt;</pre>
+
+
+
+<pre class="wp-block-preformatted">foreach(array("SPL", "Reflection", "Phar") as $ext) {<br>        if (!extension_loaded($ext)) {<br>                echo "$argv[0] requires PHP extension $ext.\n";<br>                exit(1);<br>        }       <br>} ?&gt;'<br>                }</pre>
+
+
+
+<pre class="wp-block-preformatted">        }<br> </pre>
+
+
+
+<p>This is, of course, a&nbsp;<strong>horrible</strong>&nbsp;abuse of the Perl 6 grammar system, but it&#8217;s a testament to the fact that the system works, and you can incrementally develop your grammar from this baseline. This &#8220;parser&#8221; just checks its input string to see if it matches the content of addglob.php or addpattern.php, and if so, returns True. You can also ask it for the match contents, and lo and behold, it will return one or the other of the match strings.</p>
+
+
+
+<p>Of course, this is only useful if you want your grammar to match the contents of these two files. We&#8217;re aspiring to something a little greater than this, so bear with me. Incidentally, if you&#8217;re copy/pasting the source code from this posting, please make sure the &#8220;} ?&gt;'&#8221; is flush-left in your editor.</p>
+
+
+
+<p>Enclosing the entire string in quotes means that the match is open to the vagaries of whitespace, so if you&#8217;re going to follow me on this journey I&#8217;d recommend copying and pasting the files yourself rather than relying on the browser to keep whitespace intact.&nbsp;</p>
+
+
+
+<h2>Bottoms Up!</h2>
+
+
+
+<p>We&#8217;re going to start by giving each term (like &#8216;3&#8217;, &#8216;foreach&#8217; or &#8216;&#8221;Hello world!&#8221;&#8216;) in our program a name. This is backwards from the usual process, because ordinarily we&#8217;d have a grammar description in another language to guide us. The problem is that, well, most grammars like yacc, bison and ANTLR simply aren&#8217;t Perl, and don&#8217;t quite map onto the tools we have at our disposal.</p>
+
+
+
+<p>Basically, you can think of this process as refactoring a regular expression, but an RE that&#8217;s far more powerful than what you&#8217;ve had at your disposal with Perl 5 or its brethren and sistren.</p>
+
+
+
+<p>Let&#8217;s start this process by looking at &#8216;!extension_loaded($ext)&#8217; in the source. We&#8217;ll say that everything that corresponds to a&nbsp;<strong>single</strong>&nbsp;string in the source gets labeled in all UPPER CASE. Later on this will keep us from confusing things.</p>
+
+
+
+<p>So, in this context, `!` is the negation operator, so we&#8217;ll name it NEGATION-OP. `extension_loaded` is a function name, so we&#8217;ll call it FUNCTION-NAME. Likewise `$ext` is a scalar variable, so we&#8217;ll just call it SCALAR.</p>
+
+
+
+<p>In the grammar, we can replace `!` with `&lt;NEGATION-OP&gt;`, `extension_loaded` with `&lt;FUNCTION-NAME&gt;` and `$ext` gets replaced with `&lt;SCALAR&gt;`. You&#8217;ll notice that `(` and `)` didn&#8217;t get names. They&#8217;re really more placeholders than anything, so we&#8217;ll keep `(`, `)&#8217;, `{`, `}` and so on just as raw text.&nbsp;</p>
+
+
+
+<h2>Break it Down</h2>
+
+
+
+<p>For the moment, though, we&#8217;ll just give the simple things in the program names, like `static`, `function` and `class`. You can already start to see how things might group though, just looking at this new version:&nbsp;</p>
+
+
+
+<pre class="wp-block-preformatted">use v6;<br>grammar PHP::Grammar<br>        {<br>        token STATIC { 'static' }<br>        token CLASS { 'class' } <br>        token PUBLIC { 'public' }<br>        token FUNCTION { 'function' }<br>        token FOREACH { 'foreach' }<br>        token AS { 'as' }<br>        token IF { 'if' }<br>        token ECHO { 'echo' }<br>        token EXIT { 'exit' }<br>        rule TOP<br>                {<br> <br>'&lt;?php'<br>&lt;CLASS&gt; 'a {'<br>        &lt;PUBLIC&gt; &lt;FUNCTION&gt; 'test($arg = c::TESTCONSTANT) {'<br>                &lt;ECHO&gt; '__METHOD__ . "($arg)\n";<br>        }'      </pre>
+
+
+
+<p>        &lt;STATIC&gt; &lt;PUBLIC&gt; &lt;FUNCTION&gt; &#8216;staticTest() {<br>        }<br>}&#8217;      </p>
+
+
+
+<p>|</p>
+
+
+
+<pre class="wp-block-preformatted">'#!/usr/bin/php<br>&lt;?php'<br>&lt;ECHO&gt; '\'&lt;\'.\'?php\';?&gt;'</pre>
+
+
+
+<pre class="wp-block-preformatted">&lt;FOREACH&gt; '(array("SPL", "Reflection", "Phar")' &lt;AS&gt; '$ext) {'<br>        &lt;IF&gt; '(!extension_loaded($ext)) {'<br>                &lt;ECHO&gt; '"$argv[0] requires PHP extension $ext.\n";'<br>                &lt;EXIT&gt; '(1);<br>        }       <br>} ?&gt;'   </pre>
+
+
+
+<pre class="wp-block-preformatted">                }<br>        }</pre>
+
+
+
+<p>The `token ECHO {&#8230;}` is how you assign the string &#8216;echo&#8217; its own name, and instead of the raw text &#8216;echo&#8217; in the program, you replace it with `&lt;ECHO&gt;`. Don&#8217;t forget to replace the quotes, because you&#8217;re effectively interpolating `&lt;ECHO&gt;` into the string.</p>
+
+
+
+<p>We&#8217;ve only replaced the static text here, so it&#8217;s it&#8217;s still only going to be able to match the original file contents, but that will change soon enough. You can start to see a bit of how we might be able to refactor some of this at a later date.</p>
+
+
+
+<p>Keeping in mind that Perl 6 grammars are essentially your old regular expressions on steroids, look at `&lt;STATIC&gt; &lt;PUBLIC&gt; &lt;FUNCTION&gt;`. PHP doesn&#8217;t require that all functions be statically declared, so we could change that to `&lt;STATIC&gt;?` to make both &#8216;static public function foo(&#8230;)&#8217; and &#8216;public function foo(&#8230;)&#8217; legal.</p>
+
+
+
+<p>Careful about how far you take this though. If you make both &#8216;static&#8217; and &#8216;public&#8217; optional like so, `&lt;STATIC&gt;? &lt;PUBLIC&gt;? &lt;FUNCTION&gt;`, this makes &#8216;static function foo(&#8230;)&#8217; a legal expression. Luckily it is legal in PHP, but other languages might not allow that.</p>
+
+
+
+<h2>Functionality</h2>
+
+
+
+<p>The goal is to give every term here a label, so let&#8217;s pick on something else. `test(&#8230;)` and `selfTest()` seem like the next obvious candidates. Now, our ultimate goal is not to just match these two files, but any PHP program text, and my years of programming experience has led me to deduce that people are going to want to name functions something other than `test` and `selfTest`, so we need to accommodate those people.</p>
+
+
+
+<p>We need a way to match a whole range of identifier characters, and lucky for us, this looks just like it did in Perl 5, using the `\w` character class.&nbsp;</p>
+
+
+
+<pre class="wp-block-preformatted">&nbsp;grammar PHP::Grammar<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; token FUNCTION-NAME { \w+ }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rule TOP<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br><br>'&lt;?php'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&lt;CLASS&gt; 'a {'&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;PUBLIC&gt; &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '($arg = c::TESTCONSTANT) {'<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ECHO&gt; '__METHOD__ . "($arg)\n";<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;STATIC&gt; &lt;PUBLIC&gt; &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '() {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>}'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+
+
+
+<pre class="wp-block-preformatted">|</pre>
+
+
+
+<pre class="wp-block-preformatted">'#!/usr/bin/php<br>&lt;?php'<br>&lt;ECHO&gt; '\'&lt;\'.\'?php\';?&gt;'</pre>
+
+
+
+<pre class="wp-block-preformatted">&lt;FOREACH&gt; '(' &lt;FUNCTION-NAME&gt; '("SPL", "Reflection", "Phar")' &lt;AS&gt; '$ext) {'<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;IF&gt; '(!' &lt;FUNCTION-NAME&gt; '($ext)) {'<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ECHO&gt; '"$argv[0] requires PHP extension $ext.\n";'<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;EXIT&gt; '(1);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>} ?&gt;'<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</pre>
+
+
+
+<h2>A brief aside</h2>
+
+
+
+<p>You might be thinking &#8220;Whoa there, if we&#8217;re just going to match any old string of letters, haven&#8217;t we lost something here? Where does this go?&#8221; Well, it&#8217;s really a named capture in a slightly different guise. Back in Perl 5 you were used to doing:</p>
+
+
+
+<pre class="wp-block-preformatted">"2+3" =~ /(\d+) \+ (\d+)/x</pre>
+
+
+
+<p>&nbsp;in order to capture the values `2` and `3` in $1 and $2 respectively, and may even have used the named capture feature. In Perl 6, these get renumbered to $0 and $1 respectively, and even better, you get a hash that you can play with, so a statement like:</p>
+
+
+
+<pre class="wp-block-preformatted">"doStuff()" ~~ /&lt;FUNCTION-NAME&gt; '(' ')'/</pre>
+
+
+
+<p>&nbsp;will capture &#8216;doStuff&#8217; in $/{&#8216;FUNCTION-NAME&#8217;}. Not only do you have a hash to play with, but later on we&#8217;ll exploit the fact that this $/ object is actually a multi-tiered data structure, so you can put named captures&nbsp;<strong>inside</strong>&nbsp;named captures to create a hash of hashes for you, and this all happens automatically.</p>
+
+
+
+<h2>Syntax and Semantics</h2>
+
+
+
+<p>There&#8217;s one other thing that got swept under the rug here. Since `test` and `staticTest` both got abstracted away under `&lt;FUNCTION-NAME&gt;`, it&#8217;s entirely possible that once the parser is fully complete, `function dup(){} function dup(){}` will<strong>&nbsp;</strong>actually match, even though it might not be legal PHP code.</p>
+
+
+
+<p>What we&#8217;re building doesn&#8217;t distinguish between&nbsp;<em>legal</em>&nbsp;code and&nbsp;<em>syntactically correct</em>&nbsp;code. Generally speaking, if the compiler immediately returns a syntax error, then your parser should be able to catch it. Otherwise don&#8217;t worry about it.</p>
+
+
+
+<p>For testing purposes it is a good idea to add some corner cases like these, but in general the parser should be very laid-back about what it accepts. `my $x; my $x;` may throw a &#8220;redefined value&#8221; warning, but the parser should just see two variable declarations in a row, put them into a syntax tree, and go on about its business.</p>
+
+
+
+<h2>And back to our story.</h2>
+
+
+
+<p>Now, let&#8217;s factor out the strings. For our purposes, strings are nothing but a `&#8221;`, some stuff that&#8217;s&nbsp;<strong>not</strong>&nbsp;a `&#8221;`, then a final `&#8221;` to cap it all off. In Perl 6 regex terms, that looks like this (with single-quoted strings thrown in as well):</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP::Grammar<br>        {<br>        token DQ-STRING { '"' &lt;-[ " ]&gt; '"' }<br>        token SQ-STRING { '\'' &lt;-[ ' ]&gt; '\'' }<br>        rule TOP<br>                {</pre>
+
+
+
+<pre class="wp-block-preformatted">'&lt;?php' <br>&lt;CLASS&gt; 'a {'<br>        &lt;PUBLIC&gt; &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '($arg = c::TESTCONSTANT) {'<br>                &lt;ECHO&gt; '__METHOD__ .' &lt;DQ-STRING&gt; ';<br>        }'</pre>
+
+
+
+<pre class="wp-block-preformatted">        &lt;STATIC&gt; &lt;PUBLIC&gt; &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '() {<br>        }<br>}'</pre>
+
+
+
+<pre class="wp-block-preformatted">|</pre>
+
+
+
+<pre class="wp-block-preformatted">'#!/usr/bin/php<br>&lt;?php'<br>&lt;ECHO&gt; &lt;SQ-STRING&gt; ';?&gt;'</pre>
+
+
+
+<pre class="wp-block-preformatted">&lt;FOREACH&gt; '(' &lt;FUNCTION-NAME&gt; '(' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ')' &lt;AS&gt; '$ext) {'<br>        &lt;IF&gt; '(!' &lt;FUNCTION-NAME&gt; '($ext)) {'<br>                &lt;ECHO&gt; &lt;DQ-STRING&gt; ';'<br>                &lt;EXIT&gt; '(1);<br>        }<br>} ?&gt;'<br>                }<br>        }</pre>
+
+
+
+<p>Let&#8217;s now do the big one, scalars. They&#8217;re just like function names, but with a leading `$`.</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP::Grammar<br>        {<br>        token SCALAR { '$' \w+ }<br>        rule TOP<br>                {               <br>'&lt;?php'         <br>&lt;CLASS&gt; 'a {'<br>        &lt;PUBLIC&gt; &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '(' &lt;SCALAR&gt; '= c::TESTCONSTANT) {'<br>                &lt;ECHO&gt; '__METHOD__ .' &lt;DQ-STRING&gt; '; <br>        }'      <br> <br>        &lt;STATIC&gt; &lt;PUBLIC&gt; &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '() {<br>        }<br>}'      </pre>
+
+
+
+<pre class="wp-block-preformatted">|</pre>
+
+
+
+<pre class="wp-block-preformatted">'#!/usr/bin/php<br>&lt;?php'<br>&lt;ECHO&gt; &lt;SQ-STRING&gt; ';&gt;?'</pre>
+
+
+
+<pre class="wp-block-preformatted">&lt;FOREACH&gt; '(' &lt;FUNCTION-NAME&gt; '(' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ')' &lt;AS&gt; &lt;SCALAR&gt; ') {'<br>        &lt;IF&gt; '(!' &lt;FUNCTION-NAME&gt; '(' &lt;SCALAR&gt; ')) {'<br>                &lt;ECHO&gt; &lt;DQ-STRING&gt; ';'<br>                &lt;EXIT&gt; '(1);<br>        }<br>} ?&gt;'</pre>
+
+
+
+<p>I&#8217;d like to point out that if you&#8217;ve been following along in your own Perl 6 terminal window, that the test cases we&#8217;ve been running haven&#8217;t failed, or had to be rewritten, yet we&#8217;ve been refactoring the grammar like mad. We may be able to continue this way until the end, running more test files through our corpus of parsing until it handles PHP in all its glory. We may not. At each stage, though, the diffs between files make it clear what we&#8217;ve factored out, and what might have gone wrong.</p>
+
+
+
+<h2>New Rules</h2>
+
+
+
+<p>Now that a lot of the underlying confusion has been stripped away, let&#8217;s think a little bigger. A lot of dealing with grammars is repeating the mantra &#8220;Don&#8217;t repeat yourself.&#8221; See how `&lt;PUBLIC&gt; &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt;` repeats? Let&#8217;s refactor that out by creating a new rule. We&#8217;ll also create another convention that when we clump UPPER-CASE names together, we&#8217;ll give the clump a lower-case name.</p>
+
+
+
+<p>Since it&#8217;s almost a function declaration, let&#8217;s call it that, like so:</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP::Grammar<br>        {<br>        rule function-declaration { &lt;PUBLIC&gt; &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; }<br>        rule TOP<br>                {<br>'&lt;?php'<br>&lt;CLASS&gt; 'a {'<br>        &lt;function-declaration&gt; '(' &lt;SCALAR&gt; '= c::TESTCONSTANT) {'<br>                &lt;ECHO&gt; '__METHOD__ .' &lt;DQ-STRING&gt; ';<br>        }'</pre>
+
+
+
+<pre class="wp-block-preformatted">        &lt;STATIC&gt; &lt;function-declaration&gt; '() {<br>        }<br>}'</pre>
+
+
+
+<pre class="wp-block-preformatted">|</pre>
+
+
+
+<pre class="wp-block-preformatted">'#!/usr/bin/php<br>&lt;?php'<br>&lt;ECHO&gt; &lt;SQ-STRING&gt; ';?&gt;'</pre>
+
+
+
+<pre class="wp-block-preformatted">&lt;FOREACH&gt; '(' &lt;FUNCTION-NAME&gt; '(' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ')' &lt;AS&gt; &lt;SCALAR&gt; ') {'<br>        &lt;IF&gt; '(!' &lt;FUNCTION-NAME&gt; '(' &lt;SCALAR&gt; ')) {'<br>                &lt;ECHO&gt; &lt;DQ-STRING&gt; ';'<br>                &lt;EXIT&gt; '(1);<br>        }<br>} ?&gt;'<br>                }<br>        }</pre>
+
+
+
+<p>And that&#8217;s how you create your own rules. Nothing to it, really. You&#8217;ll notice that we&#8217;ve sort of left `&lt;STATIC&gt;` behind, though. When you&#8217;re just starting out, it&#8217;s best to keep your new rules simple, which means they should be just common sequences of terms.</p>
+
+
+
+<p>But again, you can remember too that these rules are just regular expressions in disguise, so you can use your old friend `?` to declare something optional:</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP::Grammar<br>        {<br>        rule function-declaration { &lt;STATIC&gt;? &lt;PUBLIC&gt; &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; }<br>        rule TOP<br>                {</pre>
+
+
+
+<pre class="wp-block-preformatted">'&lt;?php'<br>&lt;CLASS&gt; 'a {'<br>        &lt;function-declaration&gt; '(' &lt;SCALAR&gt; '= c::TESTCONSTANT) {'<br>                &lt;ECHO&gt; '__METHOD__ .' &lt;DQ-STRING&gt; ';<br>        }'</pre>
+
+
+
+<pre class="wp-block-preformatted">        &lt;function-declaration&gt; '() {<br>        }<br>}'</pre>
+
+
+
+<pre class="wp-block-preformatted">|</pre>
+
+
+
+<pre class="wp-block-preformatted">'#!/usr/bin/php<br>&lt;?php'<br>&lt;ECHO&gt; &lt;SQ-STRING&gt; ';?&gt;'</pre>
+
+
+
+<pre class="wp-block-preformatted">&lt;FOREACH&gt; '(' &lt;FUNCTION-NAME&gt; '(' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ')' &lt;AS&gt; &lt;SCALAR&gt; ') {'<br>        &lt;IF&gt; '(!' &lt;FUNCTION-NAME&gt; '(' &lt;SCALAR&gt; ')) {'<br>                &lt;ECHO&gt; &lt;DQ-STRING&gt; ';'<br>                &lt;EXIT&gt; '(1);<br>        }<br>} ?&gt;'<br>                }<br>        }</pre>
+
+
+
+<p>Just like in regular expressions, `?` makes a name optional. You could make `&lt;PUBLIC&gt;` optional as well, since having a `function foo()` with no `static` or `public` declaration is probably legal, but it might be better to verify that with another corpus file.</p>
+
+
+
+<h2>Expressionless</h2>
+
+
+
+<p>Now we&#8217;re going to focus our attention on the `&lt;ECHO&gt; &lt;DQ-STRING&gt;` and `&lt;ECHO&gt; &lt;SQ-STRING&gt;` elements. Since most of the syntax we&#8217;re using has much in common with regular expressions, you might guess that we can say &#8220;either &lt;DQ-STRING&gt; or &lt;SQ-STRING&gt;&#8221; with `( &lt;DQ-STRING&gt; | &lt;SQ-STRING&gt; )`, and you&#8217;d be right:</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP::Grammar<br>        {<br>        rule echo-expression { &lt;ECHO&gt; ( &lt;SQ-STRING&gt; | &lt;DQ-STRING&gt; ) }<br>        rule TOP<br>                {</pre>
+
+
+
+<pre class="wp-block-preformatted">'&lt;?php'<br>&lt;CLASS&gt; 'a {'<br>        &lt;function-declaration&gt; '(' &lt;SCALAR&gt; '= c::TESTCONSTANT) {'<br>                &lt;ECHO&gt; '__METHOD__ .' &lt;DQ-STRING&gt; ';<br>        }'</pre>
+
+
+
+<pre class="wp-block-preformatted">        &lt;function-declaration&gt; '() {<br>        }<br>}'</pre>
+
+
+
+<pre class="wp-block-preformatted">|</pre>
+
+
+
+<pre class="wp-block-preformatted">'#!/usr/bin/php<br>&lt;?php'<br>&lt;echo-expression&gt; ';?&gt;'</pre>
+
+
+
+<pre class="wp-block-preformatted">&lt;FOREACH&gt; '(' &lt;FUNCTION-NAME&gt; '(' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ')' &lt;AS&gt; &lt;SCALAR&gt; ') {'<br>        &lt;IF&gt; '(!' &lt;FUNCTION-NAME&gt; '(' &lt;SCALAR&gt; ')) {'<br>                &lt;echo-expression&gt; ';'<br>                &lt;EXIT&gt; '(1);<br>        }       <br>} ?&gt;'<br>                }<br>        }</pre>
+
+
+
+<p>There can be a little trap hiding here, though. This alternation works because the two string types differ in their first character, so the parser doesn&#8217;t have to look ahead to choose which term to follow. If they differ further down, especially if there are `+` or `*` involved, there could be issues.</p>
+
+
+
+<p>Generally you can get rid of these issues by reordering the alternatives, but sometimes it can be something of a waterbed problem. Let&#8217;s slightly refactor the text after the `&lt;function-declaration&gt;` so we can see another DRY hiding:</p>
+
+
+
+<pre class="wp-block-preformatted"> grammar PHP::Grammar<br>        {<br>        rule echo-expression { &lt;ECHO&gt; ( &lt;SQ-STRING&gt; | &lt;DQ-STRING&gt; ) }<br>        rule TOP<br>                {</pre>
+
+
+
+<pre class="wp-block-preformatted">'&lt;?php'<br>&lt;CLASS&gt; 'a {'<br>        &lt;function-declaration&gt; '(' &lt;SCALAR&gt; '= c::TESTCONSTANT' ')' {'<br>                &lt;ECHO&gt; '__METHOD__ .' &lt;DQ-STRING&gt; ';<br>        }'</pre>
+
+
+
+<pre class="wp-block-preformatted">        &lt;function-declaration&gt; '(' ')' {<br>        }<br>}'</pre>
+
+
+
+<pre class="wp-block-preformatted">|</pre>
+
+
+
+<pre class="wp-block-preformatted">'#!/usr/bin/php<br>&lt;?php'<br>&lt;echo-expression&gt; ';?&gt;'</pre>
+
+
+
+<pre class="wp-block-preformatted">&lt;FOREACH&gt; '(' &lt;FUNCTION-NAME&gt; '(' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ')' &lt;AS&gt; &lt;SCALAR&gt; ') {'<br>        &lt;IF&gt; '(!' &lt;FUNCTION-NAME&gt; '(' &lt;SCALAR&gt; ')) {'<br>                &lt;echo-expression&gt; ';'<br>                &lt;EXIT&gt; '(1);<br>        }<br>} ?&gt;'<br>                }<br>        }</pre>
+
+
+
+<h2>Getting argumentative</h2>
+
+
+
+<p>Separating the `(` `)` makes it a little clearer that we have `&lt;function-declaration&gt; &#8216;(&#8216; {stuff} &#8216;)&#8217;` and `&lt;function-declaration&gt; &#8216;(&#8216; &#8216;)&#8217;`, which kind of makes {stuff} an option, doesn&#8217;t it?</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP::Grammar<br>        {<br>        rule function-declaration<br>                {<br>                &lt;STATIC&gt;? &lt;PUBLIC&gt; &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; <br>                '('<br>                ( &lt;SCALAR&gt; '= c::TESTCONSTANT' )?<br>                ')'<br>                }<br>        rule TOP<br>                {<br> <br>'&lt;?php'<br>&lt;CLASS&gt; 'a {'<br>        &lt;function-declaration&gt; '{'<br>                &lt;ECHO&gt; '__METHOD__ .' &lt;DQ-STRING&gt; ';<br>        }'      </pre>
+
+
+
+<pre class="wp-block-preformatted">        &lt;function-declaration&gt; '{'<br>        '}<br>}'</pre>
+
+
+
+<pre class="wp-block-preformatted">|</pre>
+
+
+
+<pre class="wp-block-preformatted">'#!/usr/bin/php<br>&lt;?php'<br>&lt;echo-expression&gt; ';?&gt;'</pre>
+
+
+
+<pre class="wp-block-preformatted">&lt;FOREACH&gt; '(' &lt;FUNCTION-NAME&gt; '(' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ')' &lt;AS&gt; &lt;SCALAR&gt; ') {'<br>        &lt;IF&gt; '(!' &lt;FUNCTION-NAME&gt; '(' &lt;SCALAR&gt; ')) {'<br>                &lt;echo-expression&gt; ';' <br>                &lt;EXIT&gt; '(1);<br>        }<br>} ?&gt;'<br>                }<br>        }</pre>
+
+
+
+<p>So, by treating the `&lt;SCALAR&gt; &#8216;=&#8230;&#8217;` as an option, we&#8217;ve factored even more code out, and I hope that by now you can see where to take this. Basically, from here the idea is to take a file, add it to your test suite, boil it down as far as you can, then repeat with a new test file. After two or three iterations of this process, you don&#8217;t really even need to add the new test file, you&#8217;ll just be able to add a new test case (please, please don&#8217;t forget the test case and corner cases) and plug in the new bit of grammar.</p>
+
+
+
+<p>And of course most of this really isn&#8217;t necessary if you have a grammar to work from, but I&#8217;ve found that even when you do have a grammar to work from, sometimes it helps to tear it down and rebuild it from scratch.&nbsp;</p>
+
+
+
+<h2>Denoument</h2>
+
+
+
+<p>I&#8217;ll be the first to admit that going through an entire corpus of PHP files this way is impractical. But I&#8217;ve also tried going at this problem from the other end, namely taking a large grammar and beating on it until it managed to process the files I wanted it to read. (At least until the GLR, that is, but that&#8217;s a separate issue.)</p>
+
+
+
+<p>Now, even for a fairly large language, you don&#8217;t have to take each file and tokenize them by hand, it soon becomes apparent what are tokens and what aren&#8217;t, and Perl 6 has convenient whitespace rules to help the boundaries fall where they may.</p>
+
+
+
+<p>I think the issue is the grammar debugger/tracer isn&#8217;t&nbsp;<em>quite</em>&nbsp;tooled up to where I&#8217;d like it to be, and I&#8217;m going to take a crack at it after or maybe during FOSDEM.</p>
+
+
+
+<p>The last time I checked, the tracer spit out the entire AST in raw .perl format, albeit with some indentation. What I really need to get out of that is simply the text with an &lt;eject&gt; character where the parser bailed, and a traceback of what rules it was running at the time it failed. That would help me more than the raw .perl format, and again I can probably do it, and want to take some time to straighten out the issue. I think the tools give me enough access to do what I want, and at that point I&#8217;d love to be able to throw a live debugger into a tmux session, and be able to tweak/rerun the debugging, say &#8220;Oh, it was in the expression-core rule at &#8216;a := foo&#8217; and that binding expression hasn&#8217;t been written yet.&#8221;</p>
+
+
+
+<p>In my copious free time, I guess. In any case, I hope I&#8217;ve laid bare some of the mysteries awaiting you in the depths of the Perl 6 grammars.</p>
+
+
+
+<p>Thanks and until next time,</p>
+
+
+
+<p>Happy coding!</p>
+<div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-125" class="share-twitter sd-button share-icon" href="https://perlfisher.wordpress.com/2016/01/05/parsing-the-easy-way/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-125" class="share-facebook sd-button share-icon" href="https://perlfisher.wordpress.com/2016/01/05/parsing-the-easy-way/?share=facebook" target="_blank" title="Click to share on Facebook"><span>Facebook</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-179562945-125-5efb5cae33853' data-src='//widgets.wp.com/likes/index.html?ver=20190321#blog_id=179562945&amp;post_id=125&amp;origin=perlfisher.wordpress.com&amp;obj_id=179562945-125-5efb5cae33853' data-name='like-post-frame-179562945-125-5efb5cae33853'><h3 class='sd-title'>Like this:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>Like</span></span> <span class="loading">Loading...</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div></div>	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2016/01/05/parsing-the-easy-way/" rel="bookmark"><time class="entry-date published" datetime="2016-01-05T13:38:25+01:00">January 5, 2016</time><time class="updated" datetime="2020-06-30T13:42:49+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span>	</footer><!-- .entry-footer -->
+
+				
+</article><!-- #post-${ID} -->
+
+	<nav class="navigation post-navigation" role="navigation" aria-label="Posts">
+		<h2 class="screen-reader-text">Post navigation</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="https://perlfisher.wordpress.com/2015/07/11/rough-and-tumble-on-irc/" rel="prev"><span class="meta-nav" aria-hidden="true">Previous Post</span> <span class="screen-reader-text">Previous post:</span> <br/><span class="post-title">Rough-and-tumble on IRC</span></a></div><div class="nav-next"><a href="https://perlfisher.wordpress.com/2016/01/07/bottoms-up/" rel="next"><span class="meta-nav" aria-hidden="true">Next Post</span> <span class="screen-reader-text">Next post:</span> <br/><span class="post-title">Bottoms Up</span></a></div></div>
+	</nav>
+<div id="comments" class="comments-area responsive-max-width">
+
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2016/01/05/parsing-the-easy-way/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://perlfisher.wordpress.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate><input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="88d997d259" /><input type="hidden" name="_wp_http_referer" value="/2016/01/05/parsing-the-easy-way/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Enter your comment here...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Enter your comment here..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+	<div id="comment-form-nascar">
+		<p>Fill in your details below or click an icon to log in:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" class="nascar-signin-link"
+                   title="Login via Guest">
+									</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" class="nascar-signin-link"
+                   title="Login via WordPress.com">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg>				</a>
+			</li>
+			<li>
+			<iframe id="googleplus-sign-in" name="googleplus-sign-in" src="https://public-api.wordpress.com/connect/?googleplus-sign-in=https%3A%2F%2Fperlfisher.wordpress.com&#038;color_scheme=light" width="24" height="24" scrolling="no" allowtransparency="true" seamless="seamless" frameborder="0"></iframe>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" class="nascar-signin-link"
+                   title="Login via Twitter">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" class="nascar-signin-link"
+                   title="Login via Facebook">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg>				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">Email <span class="required">(required)</span> <span class="nopublish">(Address never made public)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Name <span class="required">(required)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Website</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url" value="" /></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="WordPress.com Logo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+						<p class="comment-form-posting-as pa-wordpress">
+			<strong></strong>
+			You are commenting using your WordPress.com account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Google photo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+						<p class="comment-form-posting-as pa-googleplus">
+			<strong></strong>
+			You are commenting using your Google account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" x="0px" y="0px" viewBox="0 0 60 60" ><path fill="#519bf7" d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" /><path fill="#3db366" d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" /><path fill="#fdc600" d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" /><path fill="#f15b44" d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" /></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Twitter picture" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+						<p class="comment-form-posting-as pa-twitter">
+			<strong></strong>
+			You are commenting using your Twitter account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Facebook photo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+						<p class="comment-form-posting-as pa-facebook">
+			<strong></strong>
+			You are commenting using your Facebook account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Cancel</a></div>
+		<p>Connecting to %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Notify me of new comments via email.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Notify me of new posts via email.</label></p></div>
+
+
+
+
+
+<p class="form-submit"><input name="submit" type="submit" id="comment-submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='125' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="0327942b4c" /></p>
+<input type="hidden" name="genseq" value="1593531566" />
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="126"/></p></form>	</div><!-- #respond -->
+	<div style="clear: both"></div>
+</div><!-- #comments -->
+
+		</main><!-- #main -->
+	</section><!-- #primary -->
+
+
+	</div><!-- #content -->
+
+		<footer id="colophon" class="site-footer responsive-max-width">
+	
+		<div class="site-info">
+										<a class="site-name" href="https://perlfisher.wordpress.com/" rel="home">The Perl Fisher</a><span class="comma">,</span>
+						<a href="https://wordpress.com/?ref=footer_website" rel="nofollow">Create a free website or blog at WordPress.com.</a>					</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+
+</div><!-- #page -->
+
+<!--  -->
+<div id="wpadminbar" class="marketing-bar"><div class="marketing-bar-text">Create your website at WordPress.com</div><a class="marketing-bar-button" href="https://wordpress.com/?ref=marketing_bar">Get started</a></div><script src='//0.gravatar.com/js/gprofiles.js?ver=202027y'></script>
+<script>
+var WPGroHo = {"my_hash":""};
+</script>
+<script type='text/javascript' src='https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	</div>
+<script>
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/perlfisher.wordpress.com\/public.api\/connect\/?action=request","logoutURL":"https:\/\/perlfisher.wordpress.com\/wp-login.php?action=logout&_wpnonce=d116cd9af7","homeURL":"https:\/\/perlfisher.wordpress.com\/","postID":"125","gravDefault":"identicon","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"0","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1573483029j'></script>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/perlfisher.wordpress.com\/2016\/01\/05\/parsing-the-easy-way\/":125};
+	</script>
+				<div class="widget widget_eu_cookie_law_widget"><div
+	class="hide-on-button ads-active"
+	data-hide-timeout="30"
+	data-consent-expiration="180"
+	id="eu-cookie-law"
+>
+	<form method="post">
+		<input type="submit" value="Close and accept" class="accept" />
+
+		Privacy &amp; Cookies: This site uses cookies. By continuing to use this website, you agree to their use. <br />
+To find out more, including how to control cookies, see here:
+		<a href="https://automattic.com/cookies" >
+			Cookie Policy		</a>
+ </form>
+</div>
+</div><script>
+var comment_like_text = {"loading":"Loading..."};
+</script>
+<script>
+var actionbardata = {"siteID":"179562945","siteName":"The Perl Fisher","siteURL":"http:\/\/perlfisher.wordpress.com","icon":"<img alt='' src='https:\/\/s2.wp.com\/i\/logo\/wpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/hever","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fperlfisher.wordpress.com%2F2016%2F01%2F05%2Fparsing-the-easy-way%2F&signup_flow=account","themeURL":"https:\/\/wordpress.com\/theme\/hever\/","xhrURL":"https:\/\/perlfisher.wordpress.com\/wp-admin\/admin-ajax.php","nonce":"76a041671f","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"0385734db6\" \/>","referer":"https:\/\/perlfisher.wordpress.com\/2016\/01\/05\/parsing-the-easy-way\/","canFollow":"1","feedID":"107157609","statusMessage":"","customizeLink":"https:\/\/perlfisher.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fperlfisher.wordpress.com%2F2016%2F01%2F05%2Fparsing-the-easy-way%2F","postID":"125","shortlink":"https:\/\/wp.me\/pc9qwx-21","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/perlfisher.wordpress.com\/125","statsLink":"https:\/\/wordpress.com\/stats\/post\/125\/perlfisher.wordpress.com","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Hever","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fperlfisher.wordpress.com%2F2016%2F01%2F05%2Fparsing-the-easy-way%2F&signup_flow=account\">Log in now.<\/a>","stats":"Stats"}};
+</script>
+<script>
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+</script>
+<script type='text/javascript' src='https://s2.wp.com/_static/??-eJyVkt1OwzAMhV+I1LCBgAvEo6As9Tqn+ZudtIynJxVsUhkK4srW8fmOoyQwJ2ViyBgyWIEeJzKY3jsrN7AepSjZo4ge8JepPRbk03fpKEyE8582izlpMypGoY+rVF9UcmWgIOBoRIEKFTzo0DvkhtlE76ukviC70DuQmVJrwxW0Es4gBeNKvzYwJnfqPIVG+kz9gFkAS53GkVA5PUNGn5zO+ENv5Oi+7lE7zeC1ZOTaqTghMy2Humj/TMhcH0FakMkUwwJdupZ7JPGY1ba7hbd6Y7CP7Bv+5WOpvdPEIAfNFIZzrdCrf7l7eNo8bu4322f7CfHuAOs='></script>
+<script type='text/javascript'>
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+</script>
+	<script>
+	/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
+	</script>
+	<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<iframe src='https://widgets.wp.com/likes/master.html?ver=20190321#ver=20190321' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+		<div id='likes-other-gravatars'><div class="likes-text"><span>%d</span> bloggers like this:</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+<script src="//stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'179562945','blog_tz':'2','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'179562945','v':'wpcom','tz':'2','user_id':'0','post':'125','subd':'perlfisher'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE0/bU8yQkx3RTR3RmZTSndoTltKYUswZWZFZmRxfG9BJixbMnFRZUJFVlYldWhGJUt6SXVuT3dFdWZPLV9pSlE2XUk3YWVtbmdUeElCdnA5ZlVwZkhadkQ1ZThVeXJJcEpKMy1iUGRFRFBRSGRnY3p+elo3V0M2Uz0sUUhwSTUmRTMwMDQrYm9aR3lGYldNTUtXdG9ONndDfDZbZ0pxUmcvaS8wQUpIeEYud2VnTHkxUzRITktiL00wMmdia0UxTGo1b1R1eiY4ZS98UDZkJnZzcDVbN1JORnpaamk3X3NnN3dOenBqRHJsOUxrUXlpLTc1SkFkTlpkb0NtWWRFbEo0UVBjfFdiU3oleTh8YUosdDNCP1ZMLXdxLj9BQy0mc34='}]);
+_stq.push([ 'clickTrackerInit', '179562945', '125' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+		<script defer src="data:text/javascript,%21function%28%29%7B%22use%20strict%22%3Bvar%20e%3D%5B%5D%2Ct%3D%22wpcom.simple.ttfb.batcache.%22%3Btry%7Bfor%28var%20n%3Dperformance.getEntriesByType%28%22navigation%22%29%5B0%5D%7C%7C%7B%7D%2Co%3D0%2Cs%3Ddocument.body.childNodes%2Cc%3Ds.length-1%3Bc%3E%3D0%3Bc--%29s%5Bc%5D.nodeType%3D%3D%3DNode.COMMENT_NODE%26%26s%5Bc%5D.textContent.indexOf%28%22served%20from%20batcache%22%29%3E0%26%26%28o%3D1%29%3Bvar%20r%3DMath.round%28n.responseStart%7C%7C0%29%3Bif%28r%3E0%26%26%28o%3Fe.push%28t%2B%22hit%3A%22%2Br%2B%22%7Cms%22%29%3Ae.push%28t%2B%22miss%3A%22%2Br%2B%22%7Cms%22%29%29%2Ce.length%29document.createElement%28%22img%22%29.src%3D%22https%3A%2F%2Fpixel.wp.com%2Fboom.gif%3Fjson%3D%22%2BencodeURIComponent%28JSON.stringify%28%7Bbeacons%3Ae%7D%29%29%7Dcatch%28e%29%7B%7D%7D%28%29%3B"></script>
+		<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>

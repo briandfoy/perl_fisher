@@ -1,0 +1,1033 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	xmlns:georss="http://www.georss.org/georss" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:media="http://search.yahoo.com/mrss/"
+	>
+
+<channel>
+	<title>Uncategorized &#8211; The Perl Fisher</title>
+	<atom:link href="https://perlfisher.wordpress.com/category/uncategorized/feed/" rel="self" type="application/rss+xml" />
+	<link>https://perlfisher.wordpress.com</link>
+	<description></description>
+	<lastBuildDate>Tue, 30 Jun 2020 11:38:02 +0000</lastBuildDate>
+	<language>en</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>http://wordpress.com/</generator>
+<cloud domain='perlfisher.wordpress.com' port='80' path='/?rsscloud=notify' registerProcedure='' protocol='http-post' />
+<image>
+		<url>https://s0.wp.com/i/buttonw-com.png</url>
+		<title>Uncategorized &#8211; The Perl Fisher</title>
+		<link>https://perlfisher.wordpress.com</link>
+	</image>
+	<atom:link rel="search" type="application/opensearchdescription+xml" href="https://perlfisher.wordpress.com/osd.xml" title="The Perl Fisher" />
+	<atom:link rel='hub' href='https://perlfisher.wordpress.com/?pushpress=hub'/>
+	<item>
+		<title>Rewriting Perl code for Raku Part V</title>
+		<link>https://perlfisher.wordpress.com/2019/12/15/rewriting-perl-code-for-raku-part-v/</link>
+					<comments>https://perlfisher.wordpress.com/2019/12/15/rewriting-perl-code-for-raku-part-v/#respond</comments>
+		
+		<dc:creator><![CDATA[Perl Fisher]]></dc:creator>
+		<pubDate>Sun, 15 Dec 2019 11:19:50 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">http://theperlfisher.wordpress.com/?p=31</guid>
+
+					<description><![CDATA[Last week&#160;we started to talk about the&#160;pack()&#160;and&#160;unpack()&#160;builtins for Raku and Perl. These aren’t terribly common built-ins to use, so I thought I’d take some time to go over these in detail and talk about how I use them and debug files that use them. As a gentle reminder,&#160;OLE::Storage_Lite&#160;is a Perl module to read and write<a class="more-link" href="https://perlfisher.wordpress.com/2019/12/15/rewriting-perl-code-for-raku-part-v/">Continue reading <span class="screen-reader-text">"Rewriting Perl code for Raku Part&#160;V"</span></a>]]></description>
+										<content:encoded><![CDATA[
+<p><a href="http://web.archive.org/web/20200212094016/http://www.theperlfisher.com/index.php/2019/12/08/rewriting-perl-code-for-raku-iv-a-new-hope/">Last week</a>&nbsp;we started to talk about the&nbsp;<em>pack()</em>&nbsp;and&nbsp;<em>unpack()</em>&nbsp;builtins for Raku and Perl. These aren’t terribly common built-ins to use, so I thought I’d take some time to go over these in detail and talk about how I use them and debug files that use them.</p>
+
+
+
+<p>As a gentle reminder,&nbsp;<a href="https://metacpan.org/pod/OLE::Storage_Lite">OLE::Storage_Lite</a>&nbsp;is a Perl module to read and write a subset of the Microsoft OLE storage format. As part of my effort at the start, I’ve got a “translation” of the original Perl code pounded out, without much thought to whether it’ll work, or really even compile. It looks like the Perl version, but with most of the {} changed to &lt;&gt; and -&gt; changed to ..</p>
+
+
+
+<p>What to test first… The reading side seems to be the easiest, because I can check object-by-object to see what the data&nbsp;<strong>should</strong>&nbsp;look like. Replicating that for Raku becomes essentially fixing the bugs I know I’ve introduced on the way.</p>
+
+
+
+<h2>Testing testing… is this on?</h2>
+
+
+
+<p>Before we dive into the Raku code, though, let’s just set up a quick test in Perl. There really wasn’t one to begin with, which is a testament to how well-used the module is. I’ve got a ‘test.xls’ file that I’ve already checked in LibreOffice to make sure it works, so I’ll add a test script that reads the file and checks the root object.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+use Test::More;
+use OLE::Storage_Lite;
+
+my $root = OLE::Storage_Lite-&gt;new( 'sample/test.xls' );
+use YAML; die Dump($root);
+isa_ok $root, 'OLE::Storage_Lite::PPS::Root';
+is $root-&gt;No, 0;
+is $root-&gt;PrevPps, 0xfffffffe;
+</pre>
+
+
+<p>You might be reading the code and wondering what the heck&nbsp;<em>die()</em>&nbsp;is doing in a test suite. It’s not because in my current copy it’s commented out, but it’s a quick and dirty way to get the data for the Raku version of the file, which looks almost the same.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+use Test;
+use OLE::Storage_Lite;
+
+my $root = OLE::Storage_Lite.new( 'sample/test.xls' );
+die $root.perl;
+isa_ok $root, 'OLE::Storage_Lite::PPS::Root';
+is $root.No, 0;
+is $root.PrevPps, 0xfffffffe;
+</pre>
+
+
+<p>Notice there’s hardly any difference overall, just a few minor syntax tweaks. And I don’t need to use YAML. But I’ve got a Q&amp;D way to run my code, and since my screen looks something like this:</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="56" data-permalink="https://perlfisher.wordpress.com/tmux-vim-screen-1-1/" data-orig-file="https://perlfisher.files.wordpress.com/2020/06/tmux-vim-screen-1-1.png" data-orig-size="1457,1002" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="tmux-vim-screen-1-1" data-image-description="" data-medium-file="https://perlfisher.files.wordpress.com/2020/06/tmux-vim-screen-1-1.png?w=300" data-large-file="https://perlfisher.files.wordpress.com/2020/06/tmux-vim-screen-1-1.png?w=750" src="https://perlfisher.files.wordpress.com/2020/06/tmux-vim-screen-1-1.png?w=1024" alt="" class="wp-image-56" srcset="https://perlfisher.files.wordpress.com/2020/06/tmux-vim-screen-1-1.png?w=1024 1024w, https://perlfisher.files.wordpress.com/2020/06/tmux-vim-screen-1-1.png?w=150 150w, https://perlfisher.files.wordpress.com/2020/06/tmux-vim-screen-1-1.png?w=300 300w, https://perlfisher.files.wordpress.com/2020/06/tmux-vim-screen-1-1.png?w=768 768w, https://perlfisher.files.wordpress.com/2020/06/tmux-vim-screen-1-1.png 1457w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>I’ve got most of what I need in my face. This is all a rather plain&nbsp;<a href="https://github.com/tmux/tmux/wiki">TMUX</a>&nbsp;setup, running multiple panes so I can see what’s going on. On the left is vim running in split-screen mode with the Perl and Raku test files open. The rest are shells in the Perl and Raku directories, and some commands to get byte dumps of the files.</p>
+
+
+
+<p>I’ve also in my shells set up the following aliases:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+alias 5 = "perl -Ilib"
+alias 5p = "prove -Ilib"
+alias 6 = "perl6 -Ilib"
+alias 6p = "prove -e'perl6 -Ilib'"
+</pre>
+
+
+<p>This way I can run both Perl and Raku test suites with just a few keystrokes, and not have to worry about details such as&nbsp;<em>-I</em>&nbsp;paths. You’re of course welcome to do things exactly the same, completely different, or even radically better than I am, in which case please let me know.</p>
+
+
+
+<p>You might notice the use of the language’s old name here. I haven’t changed over to the new binaries yet, but the techniques I’ll talk about here won’t change.</p>
+
+
+
+<h2>Keeping it Clean</h2>
+
+
+
+<p>We now have two scripts that should produce the same output, but probably won’t, for any number of reasons. I’ve got a whole article’s worth of things that I had to do to make the new module compile, let alone run. But that’s for a later issue.</p>
+
+
+
+<p>Let’s start out with this section, which might be familiar to longtime (ha!) readers.&nbsp;</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+  $rhInfo-&gt;{_FILEH_}-&gt;seek(0, 0);
+  $rhInfo-&gt;{_FILEH_}-&gt;read($sWk, 8);
+  return undef unless($sWk eq &quot;xD0xCFx11xE0xA1xB1x1AxE1&quot;);
+</pre>
+
+
+<p>This is in Perl, of course. In Raku I’ve chosen to write</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+  $file.seek( 0, SeekFromBeginning );
+  my Str $sWk = $file.read( 8 ).unpack('A8');
+  die "Header ID incorrect" if $sWk ne HEADER-ID;
+</pre>
+
+
+<p>It’s a bit ungraceful to&nbsp;<em>die()</em>&nbsp;inside a module, but this guarantees that execution stops way before it can cause a hard-to-debug problem down the road. The first change is that I’ve refactored&nbsp;<code>$rhInfo-&gt;{_FILEH_}</code>&nbsp;out into its own&nbsp;<em>$file</em>&nbsp;variable so I don’t have to repeat references to&nbsp;<em>$rhInfo</em>&nbsp;all over the place, like the original.</p>
+
+
+
+<p>Next is using the built-in&nbsp;<em>IO::Handle</em>&nbsp;constant ‘SeekFromBeginning’ instead of the rather anodyne 0 as in Perl. Probably the parent&nbsp;<em>OLE::Storage</em>&nbsp;module looked ahead in the file to determine something before reading in earnest. I’m keeping it here for no good reason other than it might be nice to separate ‘read’ functionality into a different method.</p>
+
+
+
+<h3>Diving in</h3>
+
+
+
+<p>The next line will cause some consternation, so I’ll unpack it slowly. The original author used Hungarian notation for their variable names, so the ‘s’ of&nbsp;<em>$sWk</em>&nbsp;means that it’s a string type. I’ve adopted this for the Raku code as well, actually enforcing the variable type without additional code.</p>
+
+
+
+<p>File handles have both a fancy&nbsp;<em>lines()</em>&nbsp;method that lets you read files line-by-line, and a raw&nbsp;<em>read()</em>method that lets you read raw bytes. If I stopped right here and just looked at the raw bytes, the code would actually fail, and I’ve talked about why in earlier parts. Suffice to say that&nbsp;<em>read()</em>returns a buffer of uninterpreted bytes, not a string that you have to decode later.</p>
+
+
+
+<p>Decoding here is the job of the&nbsp;<em>unpack()</em>&nbsp;statement. It acts just like its Perl counterpart, but is experimental. Lucky for me, it implements enough of the Perl builtin that I can use it to read the entire OLE file.&nbsp;</p>
+
+
+
+<p>Now, unlike other builtins (again, keeping in mind it’s experimental,) it’s only available as a method call. There is a version of&nbsp;<em>unpack()</em>&nbsp;that works on multiple arguments, but if you try to call it as a builtin, expect:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+===SORRY!=== Error while compiling -e
+Undeclared routine:
+    unpack used at line 1. Did you mean 'pack'?
+</pre>
+
+
+<p>This may be fixed in your version, feel free to try it and let me know if I should upgrade&nbsp;<img src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/72x72/1f642.png" alt="🙂" class="wp-smiley" style="height: 1em; max-height: 1em;" />&nbsp;In any case, the last bit you’re wondering about is the ‘A8’ business as its argument. I think this isn’t explained correctly in the documentation, so I’ll explain in my own way.</p>
+
+
+
+<p><em>read()</em>&nbsp;returns a raw string of bytes, without interpretation. If it sees hex 041, it doesn’t “know” if you meant the ASCII character ‘A’ or the number 41, so it doesn’t interpret the data, it just puts the data into the buffer. It relies on the the Buf(fer)’s&nbsp;<em>pack()</em>&nbsp;and&nbsp;<em>unpack()</em>&nbsp;methods to assign types to the data.</p>
+
+
+
+<p>So finally,&nbsp;<code>unpack( "A8" )</code>&nbsp;pulls out 8 “ASCII” characters and puts them into&nbsp;<em>$sWk</em>. Now I used scare-quotes there because ASCII is a 7-bit encoding, not 8 bits as many people seem to think. It only encodes from 0x00-0x7f, so anything over that isn’t legal ASCII.</p>
+
+
+
+<p>Which just means that the “A” of “A8” doesn’t truly correspond to ASCII, but it’s close enough. So, we call&nbsp;<em>unpack( “A8” )</em>&nbsp;on the buffer that&nbsp;<em>$file.read( 8 )</em>&nbsp;returns, and get back a string that we can finally check against our header.</p>
+
+
+
+<h2>Debugging</h2>
+
+
+
+<p>But what if the header isn’t what we expect? Your first instinct might be to say you must’ve screwed up and sent it the wrong file. Luckily it’s pretty easy to check that, just call&nbsp;<code>$file.slurp.print;</code>&nbsp;That’ll tell you the contents quickly. If it’s text you’ve probably got the wrong file – OLE files do contain text but it’s usually zip’ed or in UCS-2.</p>
+
+
+
+<p>Let’s assume though that it’s an actual binary file, and a real spreadsheet that Excel (or LibreOffice in my case) can read. Since the headers don’t match, it must be a different version of OLE that our code isn’t ready to handle.</p>
+
+
+
+<p>That means we need to know what the first 8 bytes of the file actually are. We’ve got a bunch of tools at our disposal, but what I want to introduce is&nbsp;<em>hexdump(1)</em>&nbsp;(don’t worry about the (1), force of habit.) Run this command on the file:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+hexdump -C sample-file.xls | head -1
+</pre>
+
+
+<p>This should generate something like this:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+00000000  d0 c9 11 a0 af b1 13 d1  00 00 00 00 00 00 00 00  |................|
+</pre>
+
+
+<p>(original bytes changed to protect the innocent file) The numbers on the left (‘00000000’) tell us how far we are into the file (in hex), the next two groups of 8 are the hex values of the individual bytes of the file, and the dots between ‘|..|’ are where any printable characters would appear, if there were any.</p>
+
+
+
+<p>So now we know what the first 8 bytes of this file look like, and we can add (without much muss or fuss) some checks to our original file, and come up with this:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+$file.seek( 0, SeekFromBeginning );
+my Str $sWk = $file.read( 8 ).unpack('A8');
+die "Unknown OLE header!" if $sWk eq "xd0xc9x11xa0xafxb1x13xd1";
+die "Header ID incorrect" if $sWk ne HEADER-ID;
+</pre>
+
+
+<p>This check isn’t in my source, so don’t go looking for it. As far as I know there aren’t any other OLE header strings than what I check for, but then I’m trying to get away without reading the spec. My blood pressure doesn’t need that.</p>
+
+
+
+<h2>Getting at the details</h2>
+
+
+
+<p>Of course, binary packed formats contain more stuff than just ASCII strings. OLE was originally written in the days of 16-bit CPUs, so it’s got other ways to pack in data. Let’s look at a fragment of the file format: (not from the spec, this is just my interpretation)</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+0000: 0xD0 0xCF 0x11 0xE0 0xA1 0xB1 0x1A 0xE1 # header
+0008: 0x00 0x09           # size of large block of data (in power-of-2)
+000a: 0x00 0x06           # size of small block of data
+000c: 0x00 0x00 0x00 0x03 # Number of BDB blocks
+0010: 0xff 0xff 0xff 0xfe # Starting block
+</pre>
+
+
+<p>So, this is the first 20 (0x0010+4) bytes of an OLE header block. You may have already caught on to the fact that there are at least 3 sizes of data here. The first 8 bytes on line 0000 is the header data we talked about ad nauseam.</p>
+
+
+
+<p>Next, the header says that a “large” block of data is 2**9 bytes long, and a “small” block of data is 2**6 bytes long, this time in pairs of bytes. Finally we’ve got the number of BDB blocks (whatever those are, probably Berkeley DB) and the starting block’s index number, all in 4-byte chunks.</p>
+
+
+
+<p>This means we need to read 2 2-byte chunks and 2 4-byte chunks into memory. This time though, we have to read them as numbers. Once again,&nbsp;<em>unpack()</em>&nbsp;comes to the rescue. Last time we used the ‘A’ character, this time we’ll do something just a little bit different.</p>
+
+
+
+<p>Let’s read the&nbsp;<a href="http://web.archive.org/web/20200212094016/https://docs.raku.org/routine/unpack">documentation</a>&nbsp;for&nbsp;<em>unpack()</em>&nbsp;to see what we can use. Halfway down the page we come to a table which gives us the letter abbreviations for each type of data we can read, and what it is in terms of where it is in memory.</p>
+
+
+
+<p>For now, replace the term ‘element’ with ‘byte’ while you’re reading the documentation. We need to read (0x00, 0x09) as a 2-byte integer, so let’s look for “two elements” on the right-hand side. “Extracts two elements and returns them as a single unsigned integer” seems to be what we need.</p>
+
+
+
+<p>So it looks like the letter we need to use is “S”, and since we only want to read one at a time, that’s all we need. But the original Perl source uses “v”, so that’s what I’ll use as well.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+  $iWk = _getInfoFromFile($rhInfo-&gt;{_FILEH_}, 0x1E, 2, &quot;v&quot;);
+  return undef unless(defined($iWk));
+  $rhInfo-&gt;{_BIG_BLOCK_SIZE} = 2 ** $iWk;
+</pre>
+
+
+<p>But as you can see, the Perl source creates a wrapper around the&nbsp;<em>pack()</em>&nbsp;method, much to my annoyance. I’d prefer to simply write this:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+$iWk = $file.read( 2 ).unpack( &quot;v&quot; );
+%hInfo&lt;_BIG_BLOCK_SIZE&gt; = 2**$iWk;
+</pre>
+
+
+<p>but to keep things looking as similar to the original Perl code as I can, my code looks like&nbsp;</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+  my Int $iWk = self._getInfoFromFile( $file, 0x1E, 2, &quot;v&quot; );
+  die &quot;Big block size missing&quot; unless defined( $iWk );
+  %hInfo&lt;_BIG_BLOCK_SIZE&gt; = 2 ** $iWk;
+</pre>
+
+
+<p>which is just one line longer, and that’s because of the safety check. Of course,&nbsp;<em>pack()</em>&nbsp;and&nbsp;<em>unpack()</em>can take more than one format character at time. In Perl, there’s yet another mini-language (like regex, and what used to be called the&nbsp;<em>format</em>&nbsp;statement) for these builtins, and that’s not quite done yet.</p>
+
+
+
+<p>But you can still take the entire header we’ve collected so far, and write it into a single&nbsp;<em>unpack()</em>statement like so:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+my ( $header, $large-size, $small-size, $num-bdbs, $start-block ) =
+  $file.read( 20 ).unpack( "A8 vv VV" );
+</pre>
+
+
+<p>This format is of course much more compact and much easier to read. In all probability once I get done with the main module I’ll convert everything over to this style and the code will become much, much quieter. Binary protocols, especially those for moisture evaporators, tend to have lots of code that looks like:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+my $rev = $file.read(2).unpack("v")
+if $rev == 0x01 {
+  $r2 = $file.read(2).unpack("v");
+} else {
+  $d2 = $file.read(4).unpack("V");
+}
+</pre>
+
+
+<p>where the next bytes you read depend upon the version of the protocol. Even though I’ve just been rattling off code based on the Perl version, I don’t know what the protocol may&nbsp;<strong>do</strong>&nbsp;at any given point. So it makes sense to read just one int or long ahead while developing.</p>
+
+
+
+<p>I could read a version number as “V” because they started out using “v1”, “v2” and so on up to “v42792643522”. But then 30 lines and 2 revs later they may have changed from “V” to “vcc” because they wanted to support “v2.1.0” style.</p>
+
+
+
+<p>And if that header were something like “A8 V CC* V vv” I have to go back and break up the format string and statement at the very least. If I go term-by-term I just have to find the version number and add an if-then statement just below.</p>
+
+
+
+<p>Now that you’ve got a fairly good grounding in&nbsp;<em>unpack()</em>, I think it’s time for break. Next time we’ll cover writing our file back out, the most fun part of the operation.</p>
+
+
+
+<hr class="wp-block-separator" />
+
+
+
+<p>Again, many thanks to those of you that have read this far. As usual, Gentle Reader, please feel free to leave constructive questions, comments, critiques and improvements in the comment section. I do require an email address for validation, but I don’t use it for any other purpose. Thank you again, and I’ll see you in part VI of this series.</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://perlfisher.wordpress.com/2019/12/15/rewriting-perl-code-for-raku-part-v/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		
+		<media:content url="https://1.gravatar.com/avatar/dcfbf9237da4c5ca3f8b972e1dddc8f1?s=96&#38;d=identicon&#38;r=G" medium="image">
+			<media:title type="html">theperlfisherdaaea6189e</media:title>
+		</media:content>
+
+		<media:content url="https://perlfisher.files.wordpress.com/2020/06/tmux-vim-screen-1-1.png?w=1024" medium="image" />
+	</item>
+		<item>
+		<title>From Regular Expressions to Grammars, Pt. 4</title>
+		<link>https://perlfisher.wordpress.com/2016/02/28/from-regular-expressions-to-grammars-pt-4/</link>
+					<comments>https://perlfisher.wordpress.com/2016/02/28/from-regular-expressions-to-grammars-pt-4/#respond</comments>
+		
+		<dc:creator><![CDATA[Perl Fisher]]></dc:creator>
+		<pubDate>Sun, 28 Feb 2016 12:24:06 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">http://perlfisher.wordpress.com/?p=103</guid>
+
+					<description><![CDATA[If you&#8217;re new to Regular Expressions (at least as they&#8217;re used in Perl 6), then I&#8217;d suggest starting with&#160;the 1st part&#160;of this series. Those of you with a solid grasp of regular expressions may want to skip ahead to&#160;last week&#8217;s&#160;posting. Now, on with the show! In Last Week&#8217;s Episode We were starting to develop a<a class="more-link" href="https://perlfisher.wordpress.com/2016/02/28/from-regular-expressions-to-grammars-pt-4/">Continue reading <span class="screen-reader-text">"From Regular Expressions to Grammars, Pt.&#160;4"</span></a>]]></description>
+										<content:encoded><![CDATA[
+<p>If you&#8217;re new to Regular Expressions (at least as they&#8217;re used in Perl 6), then I&#8217;d suggest starting with&nbsp;<a href="http://web.archive.org/web/20190103092939/http://theperlfisher.blogspot.ro/2016/02/from-regular-expressions-to-grammars-pt.html" target="_blank" rel="noreferrer noopener">the 1st part</a>&nbsp;of this series. Those of you with a solid grasp of regular expressions may want to skip ahead to&nbsp;<a href="http://web.archive.org/web/20190103092939/http://theperlfisher.blogspot.ro/2016/02/from-regular-expressions-to-grammars-pt_20.html" target="_blank" rel="noreferrer noopener">last week&#8217;s</a>&nbsp;posting. Now, on with the show!</p>
+
+
+
+<h2>In Last Week&#8217;s Episode</h2>
+
+
+
+<p>We were starting to develop a compiler in Perl 6 that would take a JavaScript expression like</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+ var a = 3; console.log( "Hey, did you know a = " + a + "?" );  
+
+</pre>
+
+
+<p>and turn it into Perl 6 code that compilers like&nbsp;<a href="http://web.archive.org/web/20190103092939/http://perl6.org/" target="_blank" rel="noreferrer noopener">Rakudo Perl</a>&nbsp;can run. Before we get started it&#8217;s probably a good idea to figure out what that code will look like. If you already know Perl 5, then code like this should look familiar to you.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+my $a = 3;
+say "Hey, did you know a = " ~ $a ~ "?";
+</pre>
+
+
+<p>We&#8217;ll need to make sure that our regular expressions have captured the essence of the JavaScript. If you remember from last time, we captured our text with this set of regular expressions:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+my rule Number { \d+ };
+my rule Variable { \w+ };
+my rule String { '&quot;' &lt;-[ &quot; ]&gt;+ '&quot;' };
+my rule Assignment-Expression { var &lt;Variable&gt; '=' &lt;Number&gt; };
+my rule Function-Call { console '.' log '(' &lt;String&gt; '+' &lt;Variable&gt; '+' &lt;String&gt; ')' };
+
+say 'var a = 3; console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; );' ~~
+rule { &lt;Assignment-Expression&gt; ';' &lt;Function-Call&gt; ';' }
+</pre>
+
+
+<p>If you put this into a Perl 6 source file and run it, the output might look a little strange at first:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+｢var a = 3; console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; );｣
+ Assignment-Expression =&gt; ｢var a = 3｣
+    Variable =&gt; ｢a ｣
+    Number =&gt; ｢3｣
+ Function-Call =&gt; ｢console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; )｣
+    String =&gt; ｢&quot;Hey, did you know a = &quot; ｣
+    Variable =&gt; ｢a ｣
+    String =&gt; ｢&quot;?&quot; ｣
+
+</pre>
+
+
+<p>If you&#8217;ll ignore the ｢｣ marks for the moment, you can see that the matches are indented, almost like a file explorer window, with &#8216;Assignment-Expression&#8217; being a directory, and &#8216;Variable&#8217; and &#8216;Number&#8217; being files inside that directory. That&#8217;s not too far from the truth, actually. When I see this sort of structure, I find that it helps to visualize it like so, with just a bit of added syntax &#8211;</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+$/ =&gt; ｢var a = 3; console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; );｣
+ &lt;Assignment-Expression&gt; =&gt; ｢var a = 3｣
+    &lt;Variable&gt; =&gt; ｢a ｣
+    &lt;Number&gt; =&gt; ｢3｣
+ &lt;Function-Call&gt; =&gt; ｢console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; )｣
+    &lt;String&gt; =&gt; ｢&quot;Hey, did you know a = &quot; ｣
+    &lt;Variable&gt; =&gt; ｢a ｣
+    &lt;String&gt; =&gt; ｢&quot;?&quot; ｣
+
+</pre>
+
+
+<p>This makes it almost too easy to figure out how to print out text, and points out a tiny problem in our regular expression. Let&#8217;s print out the number we&#8217;ve assigned&nbsp;<em>a</em>&nbsp;to, just to start out with. The first line tells us the root of the directory, or match, tree is&nbsp;<em>$/</em>.&nbsp;&nbsp;If you add &#8216;say $/;&#8217; to the end of your test file and rerun it, you&#8217;ll see the entire expression printed out twice. That must mean that&nbsp;<em>$/</em>&nbsp;is the entire match.</p>
+
+
+
+<p>Going down one layer is just as easy as adding what&#8217;s on the left side of the =&gt; arrow. Change the previous &#8216;say&#8217; statement to &#8216;say $/&lt;Assignment-Expression&gt;;&#8217;, and look at how the output changes. It should now look like this:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+｢var a = 3｣
+  Variable =&gt; ｢a ｣
+  Number =&gt; ｢3｣
+
+</pre>
+
+
+<p>Let&#8217;s put our (invisible) markers back in, so we can see where to go&#8230;&nbsp;</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+$/&lt;Assignment-Expression&gt; =&gt; ｢var a = 3｣
+  &lt;Variable&gt; =&gt; ｢a ｣
+  &lt;Number&gt; =&gt; ｢3｣
+
+</pre>
+
+
+<p>We can now see that our target, the number 3, is just one layer further down. Again, we can add what&#8217;s on the left-hand side of the expression, so let&#8217;s do just that.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+say $/&lt;Assignment-Expression&gt;&lt;Number&gt;;
+  ｢3｣
+
+</pre>
+
+
+<p>And we have almost exactly what we want. The ｢｣ are in the way, so let&#8217;s &#8220;cast&#8221; the value here back to a number. I&#8217;ve put &#8220;cast&#8221; in scare quotes because it&#8217;s not&nbsp;<strong>quite</strong>&nbsp;what C/C++ programmers think of as &#8220;casting&#8221;. What we want to do is roughly the equivalent of &#8216;sscanf(str,&#8221;%d&#8221;,&amp;num)&#8221;, but in Perl 6, the operation is much simpler.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+say +$/&lt;Assignment-Expression&gt;&lt;Number&gt;;
+  3
+
+</pre>
+
+
+<p>Without getting into too much detail,&nbsp;<em>$/</em>&nbsp;is an object that has an implicit number, string and boolean value hiding inside of it. Adding &#8216;+&#8217; to the front reveals the hidden number inside the&nbsp;<em>$/</em>&nbsp;object.</p>
+
+
+
+<h2>From JavaScript to Perl</h2>
+
+
+
+<p>We&#8217;re not too far off from being able to generate Perl 6 code from our JavaScript. Let&#8217;s use what we&#8217;ve learned above with our first statement, the assignment.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+say 'my $' ~ $/&lt;Assignment-Expression&gt;&lt;Variable&gt; ~ ' = ' ~
+      $/&lt;Assignment-Expression&gt;&lt;Number&gt; ~ ';';
+
+my $a = 3;
+
+</pre>
+
+
+<p>We&#8217;ve just used 7 lines of Perl 6 to turn code in one language into another language. And most of the Perl 6 code is reusable, because strings, numbers and JavaScript/C/Java-style variable names are common across most languages out there.</p>
+
+
+
+<p>Last time, we learned how to create matches using regular expressions. This time we&#8217;ve learned how we can&nbsp;<strong>use</strong>&nbsp;what we&#8217;ve matched, and how to find what we want inside a&nbsp;<em>say</em>&nbsp;statement. The invisible matching markers are useful enough that I might actually write a module that puts them back into match expressions, it shouldn&#8217;t be hard.</p>
+
+
+
+<p>There is one problem with that scheme, and if we look at the &lt;Function-Call&gt; matches, it&#8217;s pretty easy to see the problem.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+$/&lt;Function-Call&gt; =&gt; ｢console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; )｣
+  &lt;String&gt; =&gt; ｢&quot;Hey, did you know a = &quot; ｣
+  &lt;Variable&gt; =&gt; ｢a ｣
+  &lt;String&gt; =&gt; ｢&quot;?&quot; ｣
+
+</pre>
+
+
+<p>When we write &#8220;say $/&lt;Function-Call&gt;&lt;String&gt;;&#8221;, which &lt;String&gt; will we get? Before you run this, try to guess. Is it the first one, because Perl 6 won&#8217;t replace a match object once it&#8217;s been created? Is it the last one, because the last one &#8220;overwrites&#8221; the first one? Does the compiler simply &#8220;get confused&#8221; and prints nothing? Try it and see!</p>
+
+
+
+<p>It actually returns both matches in a list, so you can reference either one. Our invisible markers now get to look like&nbsp;</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+$/&lt;Function-Call&gt; =&gt; ｢console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; )｣
+  &lt;String&gt;[0] =&gt; ｢&quot;Hey, did you know a = &quot; ｣
+  &lt;Variable&gt; =&gt; ｢a ｣
+  &lt;String&gt;[1] =&gt; ｢&quot;?&quot; ｣
+
+</pre>
+
+
+<p>So if we want to print out the first string, we can write &#8220;say $/&lt;Function-Call&gt;&lt;String&gt;[0];&#8221; and get back &nbsp;｢&#8221;Hey, did you know a = &#8221; ｣ complete with the funky Japanese quotation marks. Thankfully there&#8217;s a shortcut to getting rid of those, just like there was with the number 3.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+say ~$/&lt;Function-Call&gt;&lt;String&gt;[0];
+  &quot;Hey, did you know a = &quot;
+
+</pre>
+
+
+<p>The &#8216;~&#8221; operator &#8220;stringifies&#8221; the match, just like &#8216;+&#8217; &#8220;numifies&#8221; the match that gets returned. So, you can probably write the final line yourself&#8230;</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+say 'say ' ~ $/&lt;Function-Call&gt;&lt;String&gt;[0] ~ ' ~ '
+  ' $' ~ $/&lt;Function-Call&gt;&lt;Variable&gt; ~ ' ~ '
+  $&lt;Function-Call&gt;&lt;String&gt;[1] ~ ';';
+
+say &quot;Hey, did you know a = &quot; ~ $a ~ &quot;?&quot;;
+
+</pre>
+
+
+<p>And we&#8217;ve compiled our two lines of JavaScript into Perl 6.</p>
+
+
+
+<h2>Refactoring</h2>
+
+
+
+<p>What we&#8217;ve got works, but there&#8217;s quite a bit of repetition. Here&#8217;s what we&#8217;ve got so far.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+my rule Variable { \w+ };
+my rule String { '&quot;' &lt;-[ &quot; ]&gt;+ '&quot;' };
+my rule Assignment-Expression { var &lt;Variable&gt; '=' &lt;Number&gt; };
+my rule Function-Call { console '.' log '(' &lt;String&gt; '+' &lt;Variable&gt; '+' &lt;String&gt; ')' };
+
+'var a = 3; console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; );' ~~
+rule { &lt;Assignment-Expression&gt; ';' &lt;Function-Call&gt; ';' }
+
+say 'my $' ~ $/&lt;Assignment-Expression&gt;&lt;Variable&gt; ~
+       ' = ' ~ $/&lt;Assignment-Expression&gt;&lt;Number&gt; ~
+       ';';
+
+say 'say ' ~ $/&lt;Function-Call&gt;&lt;String&gt;[0] ~
+       ' ~ $' ~ $/&lt;Function-Call&gt;&lt;Variable&gt; ~
+      ' ~ ' ~ $/&lt;Function-Call&gt;&lt;String&gt;[1] ~
+      ';';
+
+</pre>
+
+
+<p>The rules look pretty good, the repetitions of &lt;String&gt; and &lt;Variable&gt; are pretty much unavoidable, but look at the &#8216;say&#8217; statements. You&#8217;ll see that &lt;Assignment-Expression&gt; and &lt;Function-Call&gt; repeat themselves several times. One way to get rid of this repetition is to create a temporary variable, but that could get ugly.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+my $assignment-expression = $/&lt;Assignment-Expression&gt;;
+say 'my $' ~ $assignment-expression&lt;Variable&gt; ~ ' = ' ~
+    $assignment-expression&lt;Number&gt; ~ ';'
+
+</pre>
+
+
+<p>Instead, let&#8217;s take advantage of Perl 6&#8217;s subroutine signatures, and reuse the&nbsp;<em>$/</em>&nbsp;variable name so we can reuse the code we wrote above, and just drop out the &lt;Assignment-Expression&gt; part. I&#8217;ll name the subroutine after the rule, just to keep things straight. (You&#8217;ll see why later.)</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+sub assignment-expression( $/ ) {
+    'my $' ~ $/&lt;Variable&gt; ~ ' = ' ~ $/&lt;Number&gt; ~ ';'
+}
+
+say assignment-expression( $/&lt;Assignment-Expression&gt; ); 
+
+</pre>
+
+
+<p>Let&#8217;s do the same for &lt;Function-Call&gt; as well, creating a function with the same name and&nbsp;<em>$/</em>&nbsp;subroutine signature. It now fits neatly on one line, and only repeats the &lt;String&gt; bit because it has to.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+sub function-call( $/ ) {
+    'say ' ~ $/&lt;String&gt;[0] ~ ' ~ ' ~ $/&lt;Variable&gt; ~ ' ~ ' ~ $/&lt;String&gt;[1] ~ ';'
+}
+
+say function-call( $/&lt;Function-Call&gt; ); 
+
+</pre>
+
+
+<h2>Objectification</h2>
+
+
+
+<p>I&#8217;ve made quite a few choices along the way to get us to this point in the narrative. Here&#8217;s where we are after the last bout of refactoring:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+
+my rule Number { \d+ };
+my rule Variable { \w+ };
+my rule String { '&quot;' &lt;-[ &quot; ]&gt;+ '&quot;' };
+my rule Assignment-Expression { var &lt;Variable&gt; '=' &lt;Number&gt; };
+my rule Function-Call { console '.' log '(' &lt;String&gt; '+' &lt;Variable&gt; '+' &lt;String&gt; ')' };
+
+'var a = 3; console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; );' ~~
+rule { &lt;Assignment-Expression&gt; ';' &lt;Function-Call&gt; ';' }
+
+sub assignment-expression( $/ ) {
+    'my $' ~ $/&lt;Variable&gt; ~ ' = ' ~ $/&lt;Number&gt; ~ ';'
+}
+
+sub function-call( $/ ) {
+    'say ' ~ $/&lt;String&gt;[0] ~ ' ~ $' ~ $/&lt;Variable&gt; ~ ' ~ ' ~ $/&lt;String&gt;[1] ~ ';';
+}
+say assignment-expression( $/&lt;Assignment-Expression&gt; );
+say function-call( $/&lt;Function-Call&gt; );
+
+</pre>
+
+
+<p>Here&#8217;s where this all pays off. &nbsp;Let&#8217;s pack up the last two &#8216;say&#8217; calls first. We haven&#8217;t given the top-level rule a name, so let&#8217;s just call it &#8230; well, &#8216;top&#8217; for now.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+sub top( $/ ) { assignment-expression( $/ ) ~ function-Call( $/ ) }
+
+</pre>
+
+
+<h3>Pack up your Troubles&nbsp;</h3>
+
+
+
+<p>We haven&#8217;t done much with the rules sitting at the top of the file for a while, so let&#8217;s work with those. In Perl 6, and for that matter programming in general, it&#8217;s a good idea to package up your code for reuse. While Perl 6 lets us package up code with the &#8216;class&#8217; keyword, the rules we have really aren&#8217;t &#8220;code&#8221; in any sense. While they can be used in code, and we do use them, they don&#8217;t really make any decisions on their own.</p>
+
+
+
+<p>So we shouldn&#8217;t use the &#8216;class&#8217; keyword to package them up. Instead, there&#8217;s another convenient type meant for packaging up a bunch of regular expressions and rules, called a &#8216;grammar&#8217;. It looks just like the syntax for declaring a &#8216;rule&#8217;, and that&#8217;s actually by design.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+
+grammar JavaScript {
+  rule Number { \d+ };
+  rule Variable { \w+ };
+  rule String { '&quot;' &lt;-[ &quot; ]&gt;+ '&quot;' };
+  rule Assignment-Expression { var &lt;Variable&gt; '=' &lt;Number&gt; };
+  rule Function-Call { console '.' log '(' &lt;String&gt; '+' &lt;Variable&gt; '+' &lt;String&gt; ')' };
+
+  rule TOP { &lt;Assignment-Expression&gt; ';' &lt;Function-Call&gt; ';' };
+}
+</pre>
+
+
+<p>You&#8217;ll note that we gave our top-level rule a name as well, and just called it &#8216;TOP&#8217; for the time being. If you&#8217;re playing along at home, you&#8217;ve probably made the change and are wondering how the &#8220;&#8216;var a = 3;&#8230;&#8217; ~~ rule { &#8230; }&#8221; thing plays out, because trying things like &#8220;&#8216;var a = 3;&#8230;&#8217; ~~ JavaScript;&#8221; won&#8217;t quite work.</p>
+
+
+
+<p>Grammars are just like classes, in that they&#8217;re really just clumps of potential code. They can&#8217;t be made to do work on their own, they have to be converted from potential to .. well, kinetic code. We can do that just like you do with any class.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+my $javaScript = JavaScript.new;
+</pre>
+
+
+<p>And now we have a variable that we can work with. Now, let&#8217;s put it to work. All grammar classes come with a built-in &#8216;parse()&#8217; method that we can use to get at the regular expressions inside it. Let&#8217;s modify our match statement to take advantage of that &#8211;</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+
+$javaScript.parse(
+    'var a = 3; console.log( "Hey, did you know a = " + a + "?" );');
+
+</pre>
+
+
+<p>And our code should work again.</p>
+
+
+
+<h3>Taking Action</h3>
+
+
+
+<p>Now that we&#8217;ve bundled up all of our matching stuff into one tidy little class, it&#8217;d be nice if we could do the same for those subroutines. Let&#8217;s try that here, and put our subroutines into their own namespace, just like we did with the rules. We&#8217;ll have to change from &#8216;sub&#8217; to &#8216;method&#8217;, and our &#8216;top&#8217; method will have to use &#8216;self.&#8217; to call the other methods.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+class Actions {
+    method assignment-expression( $/ ) {
+      'my $' ~ $/&lt;Variable&gt; ~ ' = ' ~ $/&lt;Number&gt; ~ ';'
+    }
+
+    method function-call( $/ ) {
+      'say ' ~ $/&lt;String&gt;[0] ~ ' ~ $' ~ $/&lt;Variable&gt; ~ ' ~ ' ~ $/&lt;String&gt;[1] ~ ';';
+    }
+
+    method top( $/ ) {
+        self.assignment-expression( $/&lt;Assignment-Expression&gt; ) ~
+        self.function-call( $/&lt;Function-Call&gt; )
+    }
+}
+</pre>
+
+
+<p>And just like before, we can create the Actions object in one line</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+ my $actions = Actions.new;
+</pre>
+
+
+<p>And call the top&nbsp;<strong>almost</strong>&nbsp;like we did before.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+say $actions.top( $/ );
+</pre>
+
+
+<p>We&#8217;ve changed things around quite a bit, so here&#8217;s a look at where we stand.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+grammar JavaScript {
+  rule Number { \d+ };
+  rule Variable { \w+ };
+  rule String { '&quot;' &lt;-[ &quot; ]&gt;+ '&quot;' };
+  rule Assignment-Expression { var &lt;Variable&gt; '=' &lt;Number&gt; };
+  rule Function-Call { console '.' log '(' &lt;String&gt; '+' &lt;Variable&gt; '+' &lt;String&gt; ')' };
+  rule TOP { &lt;Assignment-Expression&gt; ';' &lt;Function-Call&gt; ';' }
+}
+my $j = JavaScript.new;
+
+$j.parse('var a = 3; console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; );');
+
+class Actions {
+    method assignment-expression( $/ ) {
+      'my $' ~ $/&lt;Variable&gt; ~ ' = ' ~ $/&lt;Number&gt; ~ ';'
+    }
+
+    method function-call( $/ ) {
+      'say ' ~ $/&lt;String&gt;[0] ~ ' ~ $' ~ $/&lt;Variable&gt; ~ ' ~ ' ~ $/&lt;String&gt;[1] ~ ';';
+    }
+
+    method top( $/ ) {
+      self.assignment-expression( $/&lt;Assignment-Expression&gt; ) ~
+      self.function-call( $/&lt;Function-Call&gt; )
+    }
+}
+
+my $actions = Actions.new;
+say $actions.top($/);
+</pre>
+
+
+<p>Don&#8217;t worry, we&#8217;re almost there. Now that we have a separate class for the actions, let&#8217;s rename the methods to exactly match the grammar rules, so we don&#8217;t forget what they are.&nbsp;</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+class Actions {
+    method Assignment-Expression( $/ ) {
+      'my $' ~ $/&lt;Variable&gt; ~ ' = ' ~ $/&lt;Number&gt; ~ ';'
+    }
+
+    method Function-Call( $/ ) {
+      'say ' ~ $/&lt;String&gt;[0] ~ ' ~ $' ~ $/&lt;Variable&gt; ~ ' ~ ' ~ $/&lt;String&gt;[1] ~ ';';
+    }
+
+    method TOP( $/ ) {
+      self.Assignment-Expression( $/&lt;Assignment-Expression&gt; ) ~
+      self.Function-Call( $/&lt;Function-Call&gt; )
+    }
+}
+</pre>
+
+
+<p>Furthermore, there&#8217;s one last bit of magic that we can take advantage of. We&#8217;re going to combine the $javascript and $actions objects like so.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+say $javascript.parse('....', :actions($actions) );
+</pre>
+
+
+<p>The &#8216;:actions(&#8230;)&#8217; is just a fancy way of declaring an optional argument to the &#8216;parse()&#8217; method. We&#8217;re telling the regular expression engine that any time a rule like &lt;Function-Call&gt; or &lt;TOP&gt; matches, we&#8217;d like it to call the corresponding method in our class.</p>
+
+
+
+<p>This almost works as-is, but if you run the code with these modifications, you&#8217;ll see the parser returns the original match object, with those Japanese quote marks. So it seems like we&#8217;re back at square one. Not quite.</p>
+
+
+
+<p>Go ahead and add a temporary &#8220;say &#8216;Hello!&#8217;;&#8221; to one of the methods, just to confirm that they&#8217;re getting called. This is important proof that the regex engine is working and properly parsing what it&#8217;s going over. You can even use some of the tricks we learned above and write &#8220;say $/&lt;Variable&gt;;&#8221; to see if the match is getting run as you thought it should. Go ahead and play around, come back here when you&#8217;re done.</p>
+
+
+
+<h3>Mixed Signals</h3>
+
+
+
+<p>What&#8217;s happening is the methods are getting called, but their output is being lost. Let&#8217;s capture the output and use the final (ha!) feature of the grammar, the Abstract Syntax Tree. Now, this might dredge up notions of sitting in classrooms watching boxes and lines being drawn on the chalkboard, but it&#8217;s not really that bad. We&#8217;ve already seen one, in fact the output from say() is an AST.<br>Let&#8217;s look at the&nbsp;<strong>other</strong>&nbsp;syntax tree, the one we&#8217;re building in the background. Add &#8216;.ast&#8217; to the end of the &#8220;$javascript.parse(&#8230;).ast;&#8221; call, like that. This will show us the syntax tree we&#8217;re building on our own. Or will it?<br>If you do this, you&#8217;ll see it prints&nbsp;<em>(Any)</em>, which generally is the equivalent of &#8220;failed match&#8221;, but we know from previous testing that the match hasn&#8217;t failed. So what&#8217;s going on here? While our methods are getting run, and they return output, Perl 6 doesn&#8217;t know what to do with the output, or where it fits in the AST it&#8217;s been asked to build.<br>The key is a little thing called &#8220;make&#8221;. Add this where we used to put &#8216;say&#8217;, at the start of the methods.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+class Actions {
+    method Assignment-Expression( $/ ) {
+      make 'my $' ~ $/&lt;Variable&gt; ~ ' = ' ~ $/&lt;Number&gt; ~ ';'
+    }
+
+    method Function-Call( $/ ) {
+      make 'say ' ~ $/&lt;String&gt;[0] ~ ' ~ $' ~ $/&lt;Variable&gt; ~ ' ~ ' ~ $/&lt;String&gt;[1] ~ ';'
+    }
+
+    method TOP( $/ ) {
+      make $/&lt;Assignment-Expression&gt;.ast ~ $/&lt;Function-Call&gt;.ast
+    }
+}
+</pre>
+
+
+<p>Also, because Perl 6 is calling the methods for us, we don&#8217;t need to call self.Function-Call(&#8230;) on our own, all we need to do is look at the syntax tree that Function-Call(&#8230;) returns to us. And there we have it. A complete, albeit tiny compiler. In case you&#8217;ve gotten lost with the editing, here&#8217;s the final result.</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+grammar JavaScript {
+  rule Number { \d+ };
+  rule Variable { \w+ };
+  rule String { '&quot;' &lt;-[ &quot; ]&gt;+ '&quot;' };
+  rule Assignment-Expression { var &lt;Variable&gt; '=' &lt;Number&gt; };
+  rule Function-Call { console '.' log '(' &lt;String&gt; '+' &lt;Variable&gt; '+' &lt;String&gt; ')' };
+  rule TOP { &lt;Assignment-Expression&gt; ';' &lt;Function-Call&gt; ';' }
+}
+
+class Actions {
+  method Assignment-Expression( $/ ) {
+    make 'my $' ~ $/&lt;Variable&gt; ~ ' = ' ~ $/&lt;Number&gt; ~ ';' }
+
+  method Function-Call( $/ ) {
+    make 'say ' ~ $/&lt;String&gt;[0] ~
+     ' ~ $' ~ $/&lt;Variable&gt; ~ ' ~ ' ~ $/&lt;String&gt;[1] ~ ';'; }
+
+  method TOP( $/ ) {
+    make $/&lt;Assignment-Expression&gt;.ast ~ $/&lt;Function-Call&gt;.ast }
+}
+
+my $j = JavaScript.new;
+my $a = Actions.new;
+say $j.parse(
+   'var a = 3; console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; );',
+   :actions($a)).ast;
+</pre>
+
+
+<h3>Where Do We Go From Here&nbsp;</h3>
+
+
+
+<p>One simple but neat change you can do is expand the Assignment-Expression to accept both numbers and strings. We talked last time about alternatives in the rules, so this hint should be enough to get you started:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+rule Assignment-Expression { var &lt;Variable&gt; '=' ( &lt;Number&gt; | &lt;String&gt; ) }
+</pre>
+
+
+<p>You&#8217;ll have to modify the Assignment-Expression method a little bit to make this work. Or you could get crafty and realize that ( &lt;Number&gt; | &lt;String&gt; ) could be turned into its own little generic &#8220;Term&#8221; rule, &#8220;rule Term { &lt;Number&gt; | &lt;String&gt; }&#8221;, add an action &#8220;method Term( $/ ) { make $/&lt;Number&gt; or $/&lt;String&gt; }&#8221; and only change one thing in Assignment-Expression.</p>
+
+
+
+<p>Time and again when helping people out online, I&#8217;ve had to say that Perl 5 regular expressions aren&#8217;t&nbsp;<strong>quite</strong>&nbsp;the tool they need, whether they&#8217;re trying to find a bit of HTML in a document, rewriting an RTF file or pulling out a title from a LaTeX doc. I&#8217;ve had to say &#8220;Use HTML::Parser&#8221;, or &#8220;Check out the RTF modules on CPAN&#8221; or &#8220;Try Parser::MCG&#8221; to tackle these thorny questions.</p>
+
+
+
+<p>Perl 6 regular expressions can handle all of those tasks and much more. Plus, the techniques I&#8217;ve mentioned in this tutorial aren&#8217;t specific to JavaScript. You can use these same techniques to parse any language that can be broken down into tokens. It may take some creative use of higher-level rules, but it can be done.</p>
+
+
+
+<p>Your methods don&#8217;t have to return Perl 6 text when they parse JavaScript. They could just as easily count up the number of function calls, flag lines of code that can cause problems or do inline optimization. Perl 6 is written in Perl 6, so you could even use these techniques to compile from Perl 6 to JavaScript.</p>
+
+
+
+<p>Thank you, gentle reader, for making it this far with me. I hope you&#8217;ve learned something along the way, or at least been entertained by what vistas Perl 6 opens up. Next month I&#8217;ll probably briefly return to Perl 5 and more real-world debugging.</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://perlfisher.wordpress.com/2016/02/28/from-regular-expressions-to-grammars-pt-4/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		
+		<media:content url="https://1.gravatar.com/avatar/dcfbf9237da4c5ca3f8b972e1dddc8f1?s=96&#38;d=identicon&#38;r=G" medium="image">
+			<media:title type="html">theperlfisherdaaea6189e</media:title>
+		</media:content>
+	</item>
+		<item>
+		<title>Rough-and-tumble on IRC</title>
+		<link>https://perlfisher.wordpress.com/2015/07/11/rough-and-tumble-on-irc/</link>
+					<comments>https://perlfisher.wordpress.com/2015/07/11/rough-and-tumble-on-irc/#respond</comments>
+		
+		<dc:creator><![CDATA[Perl Fisher]]></dc:creator>
+		<pubDate>Sat, 11 Jul 2015 11:36:55 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">http://perlfisher.wordpress.com/?p=119</guid>
+
+					<description><![CDATA[I just put this up on Facebook, but thought it might be more interesting in general, as something of an insight as to how tempests can start in teapots on IRC. I&#8217;ve been on IRC for&#8230; well, I&#8217;d be embarrassed to tell how long. A lot of that time has been trying to help people<a class="more-link" href="https://perlfisher.wordpress.com/2015/07/11/rough-and-tumble-on-irc/">Continue reading <span class="screen-reader-text">"Rough-and-tumble on IRC"</span></a>]]></description>
+										<content:encoded><![CDATA[
+<p>I just put this up on Facebook, but thought it might be more interesting in general, as something of an insight as to how tempests can start in teapots on IRC.</p>
+
+
+
+<p>I&#8217;ve been on IRC for&#8230; well, I&#8217;d be embarrassed to tell how long. A lot of that time has been trying to help people with problems, but increasingly I find myself running into situations which are simply sheer functional fixation.</p>
+
+
+
+<p>Put yourself in a novice programmer&#8217;s shoes, starting out with a new module. You download the module, or yum install it, or local::lib, or whatever. You&#8217;re in a hurry, so you grab a few lines from the SYNOPSIS section, throw it in your code, add another call that you saw later on, and are surprised&nbsp;when it doesn&#8217;t work.</p>
+
+
+
+<p>Perl has reported an error whose *very first line* is in the module you&#8217;re using. You&#8217;ve got some background in C, so your instinct is to fixate on the very last error, which is in this new module&#8217;s code. So of course this module is at fault. It&#8217;s written by someone you don&#8217;t know from Eve, and is probably broken in some weird way, because it&#8217;s breaking in some place you didn&#8217;t even *call*.Google doesn&#8217;t find you any helpful hints (of course, it never does, but that doesn&#8217;t stop you from trying), so your final lifeline is IRC. And so the conversation begins (OP in &#8220;&#8221;, others in various margins):<br>&#8220;Hi, where do I get a new version of module Lemur?&#8221;<br>&gt; CPAN, what version are you running?<br>&#8220;Dunno, how do I find out?&#8221; &#8230; &#8220;Okay, 1.30.&#8221;<br>] Please nopaste your code, there&#8217;s a pastebin in the topic<br>&gt; That&#8217;s the latest, what&#8217;s wrong?<br>] Please, please nopaste your code. Wherever.<br>&#8220;Dunno, it broke.&#8221;<br>} Could you show us the error log?<br>) You probably need to call -&gt;new() with &#8216;frink&#8217;, &#8216;frink&#8217;, &#8216;frink&#8217;<br>&gt; That&#8217;s the latest version, so it&#8217;s probably not broken, what are you doing?<br>&#8220;Stuff.&#8221;<br>&gt; Show us your error log, if you&#8217;re using Apache it&#8217;s probably in /var/www/logs<br>] PLEASE PASTE YOUR SOURCE CODE<br>&gt; Fine, show us your code.<br>&#8230;15 minutes have passed, and by this time the guy is so frustrated by people not &#8220;fixing the module for him&#8221; that he simply gives up and logs out.<br>&#8220;&gt;&#8221; is taking the user at face value, and walking through what&#8217;s a normal debugging sequence for a broken module. Prosaic and rather slow, but it does keep the OP engaged, and would probably hold enough interest to get him to the end.<br>&#8220;]&#8221; realizes that the odds are that the OP has a problem in their code, and seeing what they&#8217;ve tried is a quick way to debug the problem. This starts to create resistance, however because the OP may not know much perl, but he knows an error when he sees it, and it ain&#8217;t in his code. So showing their *own* code is irrelevant, and the requests start to get annoying.<br>&#8220;}&#8221; also knows the problem is likely in the OP&#8217;s code, and is trying a different approach to the problem. It also probably feels a bit irrelevant, but might meet with less resistance.<br>&#8220;)&#8221; knows that the most likely newbie mistake is to not call the constructor correctly, and manages to intuit a fix. His voice gets lost in the sea of requests on the channel, and slowly sinks into the waves.<br>Now of course, the OP&nbsp;<strong>really</strong>&nbsp;should have used Catalyst::REST::Plugin instead of the first cgi-lib.pl based module that Google found, and saved 2000 lines of code, but they&#8217;ve already written off IRC as a whole because they just kept hammering him with irrelevant questions and insulting his intelligence because he knows what&#8217;s wrong, just not how to fix it.<br>In a realtime conversation, the problems I intimated above are amplified tenfold and more, simply because of the interaction between IRC newbie and oldtimer. I&#8217;ve tried a bunch of different conversational styles in the past in order to help get people to interact, but ultimately I&#8217;ve been stymied by the lack of physical proximity. Maybe what we need isn&#8217;t facial interaction but pheromone recognition.</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://perlfisher.wordpress.com/2015/07/11/rough-and-tumble-on-irc/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		
+		<media:content url="https://1.gravatar.com/avatar/dcfbf9237da4c5ca3f8b972e1dddc8f1?s=96&#38;d=identicon&#38;r=G" medium="image">
+			<media:title type="html">theperlfisherdaaea6189e</media:title>
+		</media:content>
+	</item>
+		<item>
+		<title>A Beginning&#8230; is a Very Delicate Time.</title>
+		<link>https://perlfisher.wordpress.com/2015/05/10/a-beginning-is-a-very-delicate-time/</link>
+					<comments>https://perlfisher.wordpress.com/2015/05/10/a-beginning-is-a-very-delicate-time/#respond</comments>
+		
+		<dc:creator><![CDATA[Perl Fisher]]></dc:creator>
+		<pubDate>Sun, 10 May 2015 11:37:30 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">http://perlfisher.wordpress.com/?p=122</guid>
+
+					<description><![CDATA[Well, they say the first post is the hardest, so let&#8217;s get this out of the way.&#160; Yes, the title is a play on the opera&#160;&#8216;The Pearl Fishers&#8217;&#160;by Georges Bizet, by way of Iain Banks, mentioned in his book&#160;&#8216;Surface Detail&#8217;.&#160; If you haven&#8217;t read his works, hie thee unto your favorite bookstore and search for&#160;&#8216;Consider<a class="more-link" href="https://perlfisher.wordpress.com/2015/05/10/a-beginning-is-a-very-delicate-time/">Continue reading <span class="screen-reader-text">"A Beginning&#8230; is a Very Delicate&#160;Time."</span></a>]]></description>
+										<content:encoded><![CDATA[
+<p>Well, they say the first post is the hardest, so let&#8217;s get this out of the way.&nbsp;</p>
+
+
+
+<p>Yes, the title is a play on the opera&nbsp;<a href="http://web.archive.org/web/20160105123320/http://en.wikipedia.org/wiki/Les_p%C3%AAcheurs_de_perles" rel="noreferrer noopener" target="_blank">&#8216;The Pearl Fishers&#8217;</a>&nbsp;by Georges Bizet, by way of Iain Banks, mentioned in his book&nbsp;<a href="http://web.archive.org/web/20160105123320/http://en.wikipedia.org/wiki/Surface_Detail_(novel)" rel="noreferrer noopener" target="_blank">&#8216;Surface Detail&#8217;.</a>&nbsp; If you haven&#8217;t read his works, hie thee unto your favorite bookstore and search for&nbsp;<a href="http://web.archive.org/web/20160105123320/http://en.wikipedia.org/wiki/Consider_Phlebas" rel="noreferrer noopener" target="_blank">&#8216;Consider Phlebas&#8217;,</a><a href="http://web.archive.org/web/20160105123320/http://en.wikipedia.org/wiki/Excession" rel="noreferrer noopener" target="_blank">&#8216;Excession&#8217;</a>&nbsp;or&nbsp;<a href="http://web.archive.org/web/20160105123320/http://en.wikipedia.org/wiki/Use_of_Weapons" rel="noreferrer noopener" target="_blank">&#8216;Use of Weapons&#8217;</a>. When I&#8217;m not online or hacking offline I have a large collection of twisty puzzles, Sudoku-like puzzles and an electric concert `ukulele to keep me entertained. Or, now that the near-Russian winter has subsided I can get out and explore rural Romania.</p>
+
+
+
+<p>During the workday I do some&nbsp;<a href="http://web.archive.org/web/20160105123320/http://www.perl.org/" rel="noreferrer noopener" target="_blank">perl5</a>&nbsp;hacking, systems architecture, application profiling and performance/scaling improvements. At night I explore the undiscovered country of&nbsp;<a href="http://web.archive.org/web/20160105123320/http://www.perl6.org/" rel="noreferrer noopener" target="_blank">perl6</a>development, especially getting lost in a forest of&nbsp;<a href="http://web.archive.org/web/20160105123320/https://github.com/drforr/perl6-ANTLR4" rel="noreferrer noopener" target="_blank">abstract syntax trees</a>&nbsp;and stalking the wild hyperoperators. I also hang about on the seedy underbelly of IRC (and of course, FB) helping people with their problems, often when they least expect it.</p>
+
+
+
+<p>A typical topic will likely be &#8220;What&#8217;s in its current tmux(1) session, preciousss?&#8221; or &#8220;What bug made me curse the most vehememtly today?&#8221; when I&#8217;m talking programming. Things will get philosophical on occasion, as time and again I see new programmers making the same mistakes as their predecessors. If they&#8217;re going to make mistakes (and if you don&#8217;t, you&#8217;re not learning) I&#8217;d at least like them to be new ones.</p>
+
+
+
+<p>And on that proverbial bombshell, it&#8217;s time to start.</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://perlfisher.wordpress.com/2015/05/10/a-beginning-is-a-very-delicate-time/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		
+		<media:content url="https://1.gravatar.com/avatar/dcfbf9237da4c5ca3f8b972e1dddc8f1?s=96&#38;d=identicon&#38;r=G" medium="image">
+			<media:title type="html">theperlfisherdaaea6189e</media:title>
+		</media:content>
+	</item>
+	</channel>
+</rss>

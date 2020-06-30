@@ -1,0 +1,1121 @@
+<!doctype html>
+<html amp lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
+	
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Rewriting Perl Code for Raku" />
+<meta property="og:url" content="https://perlfisher.wordpress.com/2019/11/24/rewriting-perl-code-for-raku/" />
+<meta property="og:description" content="This time around we’re going to talk about how to rewrite Perl code in Raku. Even in 2019, a lot of the office world revolves around spreadsheets, whether they be Excel,&nbsp;" />
+<meta property="article:published_time" content="2019-11-24T12:00:00+00:00" />
+<meta property="article:modified_time" content="2020-06-30T11:09:03+00:00" />
+<meta property="og:site_name" content="The Perl Fisher" />
+<meta property="og:image" content="https://s0.wp.com/i/blank.jpg" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:text:title" content="Rewriting Perl Code for Raku" />
+<meta name="twitter:card" content="summary" />
+<meta property="fb:app_id" content="249643311490" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+	<title>Rewriting Perl Code for Raku &#8211; The Perl Fisher</title>
+		<link rel="canonical" href="https://perlfisher.wordpress.com/2019/11/24/rewriting-perl-code-for-raku/" />
+	<script type='text/javascript' src='https://cdn.ampproject.org/v0.js' async></script>
+<script type='text/javascript' src='https://cdn.ampproject.org/v0/amp-social-share-0.1.js' async custom-element="amp-social-share"></script>
+<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>	<script type="application/ld+json">{"@context":"http:\/\/schema.org","publisher":{"@type":"Organization","name":"The Perl Fisher","logo":"https:\/\/s2.wp.com\/wp-content\/plugins\/amp-1.4\/assets\/images\/amp-page-fallback-wordpress-publisher-logo.png"},"@type":"BlogPosting","mainEntityOfPage":"https:\/\/perlfisher.wordpress.com\/2019\/11\/24\/rewriting-perl-code-for-raku\/","headline":"Rewriting Perl Code for Raku","datePublished":"2019-11-24T12:00:00+01:00","dateModified":"2020-06-30T11:09:03+02:00","author":{"@type":"Person","name":"Perl Fisher"},"image":{"@type":"ImageObject","url":"https:\/\/1.gravatar.com\/avatar\/dcfbf9237da4c5ca3f8b972e1dddc8f1?s=200&amp;d=identicon&amp;r=G","width":200,"height":200}}</script>
+	<meta name="generator" content="AMP Plugin v1.4.2; mode=reader; experiences=website"><meta name="generator" content="WordPress.com" />
+	<style amp-custom>
+		/* Generic WP styling */
+
+.alignright {
+	float: right;
+}
+
+.alignleft {
+	float: left;
+}
+
+.aligncenter {
+	display: block;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.amp-wp-enforced-sizes {
+	/** Our sizes fallback is 100vw, and we have a padding on the container; the max-width here prevents the element from overflowing. **/
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+
+/*
+ * Prevent cases of amp-img converted from img to appear with stretching by using object-fit to scale.
+ * See <https://github.com/ampproject/amphtml/issues/21371#issuecomment-475443219>.
+ * Also use object-fit:contain in worst case scenario when we can't figure out dimensions for an image.
+ * Additionally, in side of \AMP_Img_Sanitizer::determine_dimensions() it could $amp_img->setAttribute( 'object-fit', 'contain' )
+ * so that the following rules wouldn't be needed.
+ */
+amp-img.amp-wp-enforced-sizes[layout="intrinsic"] > img,
+amp-anim.amp-wp-enforced-sizes[layout="intrinsic"] > img {
+	object-fit: contain;
+}
+
+amp-fit-text blockquote,
+amp-fit-text h1,
+amp-fit-text h2,
+amp-fit-text h3,
+amp-fit-text h4,
+amp-fit-text h5,
+amp-fit-text h6 {
+	font-size: inherit;
+}
+
+/**
+ * Override a style rule in Twenty Sixteen and Twenty Seventeen.
+ * It set display:none for audio elements.
+ * This selector is the same, though it adds body and uses amp-audio instead of audio.
+ */
+body amp-audio:not([controls]) {
+	display: inline-block;
+	height: auto;
+}
+
+/*
+ * Style the default template messages for submit-success, submit-error, and submitting. These elements are inserted
+ * by the form sanitizer when a POST form lacks the action-xhr attribute.
+ */
+.amp-wp-default-form-message > p {
+	margin: 1em 0;
+	padding: 0.5em;
+}
+
+.amp-wp-default-form-message[submitting] > p,
+.amp-wp-default-form-message[submit-success] > p.amp-wp-form-redirecting {
+	font-style: italic;
+}
+
+.amp-wp-default-form-message[submit-success] > p:not(.amp-wp-form-redirecting) {
+	border: solid 1px #008000;
+	background-color: #90ee90;
+	color: #000;
+}
+
+.amp-wp-default-form-message[submit-error] > p {
+	border: solid 1px #f00;
+	background-color: #ffb6c1;
+	color: #000;
+}
+
+/* Prevent showing empty success message in the case of an AMP-Redirect-To response header. */
+.amp-wp-default-form-message[submit-success] > p:empty {
+	display: none;
+}
+
+amp-carousel .amp-wp-gallery-caption {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.5);
+	color: #fff;
+	padding: 1rem;
+}
+
+.wp-block-gallery[data-amp-carousel="true"] {
+	display: block;
+	flex-wrap: unset;
+}
+
+/* Template Styles */
+
+.amp-wp-content,
+.amp-wp-title-bar div {
+		margin: 0 auto;
+	max-width: 750px;
+	}
+
+html {
+	background: #0a89c0;
+}
+
+body {
+	background: #fff;
+	color: #353535;
+	font-family: Georgia, 'Times New Roman', Times, Serif;
+	font-weight: 300;
+	line-height: 1.75em;
+}
+
+p,
+ol,
+ul,
+figure {
+	margin: 0 0 1em;
+	padding: 0;
+}
+
+a,
+a:visited {
+	color: #0a89c0;
+}
+
+a:hover,
+a:active,
+a:focus {
+	color: #353535;
+}
+
+/* Quotes */
+
+blockquote {
+	color: #353535;
+	background: rgba(127,127,127,.125);
+	border-left: 2px solid #0a89c0;
+	margin: 8px 0 24px 0;
+	padding: 16px;
+}
+
+blockquote p:last-child {
+	margin-bottom: 0;
+}
+
+/* UI Fonts */
+
+.amp-wp-meta,
+.amp-wp-header div,
+.amp-wp-title,
+.wp-caption-text,
+.amp-wp-tax-category,
+.amp-wp-tax-tag,
+.amp-wp-comments-link,
+.amp-wp-footer p,
+.back-to-top {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+}
+
+/* Header */
+
+.amp-wp-header {
+	background-color: #0a89c0;
+}
+
+.amp-wp-header div {
+	color: #fff;
+	font-size: 1em;
+	font-weight: 400;
+	margin: 0 auto;
+	max-width: calc(840px - 32px);
+	padding: .875em 16px;
+	position: relative;
+}
+
+.amp-wp-header a {
+	color: #fff;
+	text-decoration: none;
+}
+
+
+.amp-wp-header .amp-wp-site-icon {
+	/** site icon is 32px **/
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 50%;
+	position: absolute;
+	right: 18px;
+	top: 10px;
+}
+
+/* Article */
+
+.amp-wp-article {
+	color: #353535;
+	font-weight: 400;
+	margin: 1.5em auto;
+	max-width: 840px;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+}
+
+/* Article Header */
+
+.amp-wp-article-header {
+	align-items: center;
+	align-content: stretch;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin: 1.5em 16px 0;
+}
+
+.amp-wp-title {
+	color: #353535;
+	display: block;
+	flex: 1 0 100%;
+	font-weight: 900;
+	margin: 0 0 .625em;
+	width: 100%;
+}
+
+/* Article Meta */
+
+.amp-wp-meta {
+	color: #696969;
+	display: inline-block;
+	flex: 2 1 50%;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 0 0 1.5em;
+	padding: 0;
+}
+
+.amp-wp-article-header .amp-wp-meta:last-of-type {
+	text-align: right;
+}
+
+.amp-wp-article-header .amp-wp-meta:first-of-type {
+	text-align: left;
+}
+
+.amp-wp-byline amp-img,
+.amp-wp-byline .amp-wp-author {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.amp-wp-byline amp-img {
+	border: 1px solid #0a89c0;
+	border-radius: 50%;
+	position: relative;
+	margin-right: 6px;
+}
+
+.amp-wp-posted-on {
+	text-align: right;
+}
+
+/* Featured image */
+
+.amp-wp-article-featured-image {
+	margin: 0 0 1em;
+}
+.amp-wp-article-featured-image amp-img {
+	margin: 0 auto;
+}
+.amp-wp-article-featured-image.wp-caption .wp-caption-text {
+	margin: 0 18px;
+}
+
+/* Article Content */
+
+.amp-wp-article-content {
+	margin: 0 16px;
+}
+
+.amp-wp-article-content ul,
+.amp-wp-article-content ol {
+	margin-left: 1em;
+}
+
+.amp-wp-article-content .wp-caption {
+	max-width: 100%;
+}
+
+.amp-wp-article-content amp-img {
+	margin: 0 auto;
+}
+
+.amp-wp-article-content amp-img.alignright {
+	margin: 0 0 1em 16px;
+}
+
+.amp-wp-article-content amp-img.alignleft {
+	margin: 0 16px 1em 0;
+}
+
+/* Captions */
+
+.wp-caption {
+	padding: 0;
+}
+
+.wp-caption.alignleft {
+	margin-right: 16px;
+}
+
+.wp-caption.alignright {
+	margin-left: 16px;
+}
+
+.wp-caption .wp-caption-text {
+	border-bottom: 1px solid #c2c2c2;
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 0;
+	padding: .66em 10px .75em;
+}
+
+/* AMP Media */
+
+.alignwide,
+.alignfull {
+	clear: both;
+}
+
+amp-carousel {
+	background: #c2c2c2;
+	margin: 0 -16px 1.5em;
+}
+amp-iframe,
+amp-youtube,
+amp-instagram,
+amp-vine {
+	background: #c2c2c2;
+	margin: 0 -16px 1.5em;
+}
+
+.amp-wp-article-content amp-carousel amp-img {
+	border: none;
+}
+
+amp-carousel > amp-img > img {
+	object-fit: contain;
+}
+
+.amp-wp-iframe-placeholder {
+	background: #c2c2c2 url( https://s2.wp.com/wp-content/plugins/amp-1.4/assets/images/placeholder-icon.png ) no-repeat center 40%;
+	background-size: 48px 48px;
+	min-height: 48px;
+}
+
+/* Article Footer Meta */
+
+.amp-wp-article-footer .amp-wp-meta {
+	display: block;
+}
+
+.amp-wp-tax-category,
+.amp-wp-tax-tag {
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	margin: 1.5em 16px;
+}
+
+.amp-wp-comments-link {
+	color: #696969;
+	font-size: .875em;
+	line-height: 1.5em;
+	text-align: center;
+	margin: 2.25em 0 1.5em;
+}
+
+.amp-wp-comments-link a {
+	border-style: solid;
+	border-color: #c2c2c2;
+	border-width: 1px 1px 2px;
+	border-radius: 4px;
+	background-color: transparent;
+	color: #0a89c0;
+	cursor: pointer;
+	display: block;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 18px;
+	margin: 0 auto;
+	max-width: 200px;
+	padding: 11px 16px;
+	text-decoration: none;
+	width: 50%;
+	-webkit-transition: background-color 0.2s ease;
+			transition: background-color 0.2s ease;
+}
+
+/* AMP Footer */
+
+.amp-wp-footer {
+	border-top: 1px solid #c2c2c2;
+	margin: calc(1.5em - 1px) 0 0;
+}
+
+.amp-wp-footer div {
+	margin: 0 auto;
+	max-width: calc(840px - 32px);
+	padding: 1.25em 16px 1.25em;
+	position: relative;
+}
+
+.amp-wp-footer h2 {
+	font-size: 1em;
+	line-height: 1.375em;
+	margin: 0 0 .5em;
+}
+
+.amp-wp-footer p {
+	color: #696969;
+	font-size: .8em;
+	line-height: 1.5em;
+	margin: 0 85px 0 0;
+}
+
+.amp-wp-footer a {
+	text-decoration: none;
+}
+
+.back-to-top {
+	bottom: 1.275em;
+	font-size: .8em;
+	font-weight: 600;
+	line-height: 2em;
+	position: absolute;
+	right: 16px;
+}
+		/* Generated by grunt-webfont */
+
+
+
+@font-face {
+	font-family:"social-logos";
+	src:url("social-logos.eot?51b607ee5b5cb2a0e4517176475a424c");
+	font-weight:normal;
+	font-style:normal;
+}
+@font-face {
+	font-family:"social-logos";
+	src:url("social-logos.eot?51b607ee5b5cb2a0e4517176475a424c");
+	src:url("social-logos.eot?#iefix") format("embedded-opentype"),
+		url("data:application/font-woff;charset=utf-8;base64,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") format("woff"),
+		url("social-logos.ttf?51b607ee5b5cb2a0e4517176475a424c") format("truetype");
+	font-weight:normal;
+	font-style:normal;
+}
+
+.social-logo {
+	font-family:"social-logos";
+	display:inline-block;
+	vertical-align:middle;
+	line-height:1;
+	font-weight:normal;
+	font-style:normal;
+	speak:none;
+	text-decoration:inherit;
+	text-transform:none;
+	text-rendering:auto;
+	-webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing:grayscale;
+}
+
+
+/* Icons */
+
+
+.social-logo__amazon:before {
+	content:"\f600";
+}
+
+
+.social-logo__behance:before {
+	content:"\f101";
+}
+
+
+.social-logo__blogger-alt:before {
+	content:"\f601";
+}
+
+
+.social-logo__blogger:before {
+	content:"\f602";
+}
+
+
+.social-logo__codepen:before {
+	content:"\f216";
+}
+
+
+.social-logo__dribbble:before {
+	content:"\f201";
+}
+
+
+.social-logo__dropbox:before {
+	content:"\f225";
+}
+
+
+.social-logo__eventbrite:before {
+	content:"\f603";
+}
+
+
+.social-logo__facebook:before {
+	content:"\f203";
+}
+
+
+.social-logo__feed:before {
+	content:"\f413";
+}
+
+
+.social-logo__flickr:before {
+	content:"\f211";
+}
+
+
+.social-logo__foursquare:before {
+	content:"\f226";
+}
+
+
+.social-logo__ghost:before {
+	content:"\f61c";
+}
+
+
+.social-logo__github:before {
+	content:"\f200";
+}
+
+
+.social-logo__google-plus-alt:before {
+	content:"\f218";
+}
+
+
+.social-logo__google-plus:before {
+	content:"\f206";
+}
+
+
+.social-logo__instagram:before {
+	content:"\f215";
+}
+
+
+.social-logo__linkedin:before {
+	content:"\f207";
+}
+
+
+.social-logo__mail:before {
+	content:"\f410";
+}
+
+
+.social-logo__medium:before {
+	content:"\f623";
+}
+
+
+.social-logo__path-alt:before {
+	content:"\f604";
+}
+
+
+.social-logo__path:before {
+	content:"\f219";
+}
+
+
+.social-logo__pinterest-alt:before {
+	content:"\f210";
+}
+
+
+.social-logo__pinterest:before {
+	content:"\f209";
+}
+
+
+.social-logo__pocket:before {
+	content:"\f224";
+}
+
+
+.social-logo__polldaddy:before {
+	content:"\f217";
+}
+
+
+.social-logo__print:before {
+	content:"\f469";
+}
+
+
+.social-logo__reddit:before {
+	content:"\f222";
+}
+
+
+.social-logo__share:before {
+	content:"\f415";
+}
+
+
+.social-logo__skype:before {
+	content:"\f220";
+}
+
+
+.social-logo__spotify:before {
+	content:"\f515";
+}
+
+
+.social-logo__squarespace:before {
+	content:"\f605";
+}
+
+
+.social-logo__stumbleupon:before {
+	content:"\f223";
+}
+
+
+.social-logo__telegram:before {
+	content:"\f606";
+}
+
+
+.social-logo__tumblr-alt:before {
+	content:"\f607";
+}
+
+
+.social-logo__tumblr:before {
+	content:"\f214";
+}
+
+
+.social-logo__twitch:before {
+	content:"\f516";
+}
+
+
+.social-logo__twitter-alt:before {
+	content:"\f202";
+}
+
+
+.social-logo__twitter:before {
+	content:"\f610";
+}
+
+
+.social-logo__vimeo:before {
+	content:"\f212";
+}
+
+
+.social-logo__whatsapp:before {
+	content:"\f608";
+}
+
+
+.social-logo__wordpress:before {
+	content:"\f205";
+}
+
+
+.social-logo__xanga:before {
+	content:"\f609";
+}
+
+
+.social-logo__youtube:before {
+	content:"\f213";
+}
+amp-social-share,
+.amp-social-share {
+	border-radius: 50%;
+	color: #fff;
+	-webkit-border-radius: 50%;
+	position: relative;
+	line-height: 1;
+	width: 32px;
+	height: 32px;
+	margin: 0 5px 5px 0;
+	vertical-align: middle;
+}
+
+amp-social-share::before,
+.amp-social-share::before {
+	display: inline-block;
+	font: normal 18px/1 'social-logos';
+	padding: 7px;
+	position: relative;
+	top: 1px;
+	vertical-align: top;
+	text-align: center;
+}
+
+.amp-social-share.print {
+	background: #e9e9e9;
+	font-size: 0;
+	cursor: pointer;
+	display: inline-block;
+	vertical-align: middle;
+	border: none;
+	padding: 0;
+}
+
+.amp-social-share.print::before {
+	content: '\f469';
+	color: #656565;
+}
+
+amp-social-share[type='tumblr'] {
+	background: #2c4762;
+}
+
+amp-social-share[type='tumblr']::before {
+	content: '\f607';
+}
+
+amp-social-share[type='facebook'] {
+	background: #1877F2;
+}
+
+amp-social-share[type='facebook']::before {
+	content: '\f203';
+}
+
+amp-social-share[type='twitter'] {
+	background: #00acee;
+}
+
+amp-social-share[type='twitter']::before {
+	content: '\f202';
+}
+
+amp-social-share[type='pinterest'] {
+	background: #ca1f27;
+}
+
+amp-social-share[type='pinterest']::before {
+	content: '\f210';
+}
+
+amp-social-share[type='telegram'] {
+	background: #0088cc;
+}
+
+amp-social-share[type='telegram']::before {
+	content: '\f606';
+}
+
+amp-social-share[type='linkedin'] {
+	background: #0077b5;
+}
+
+amp-social-share[type='linkedin']::before {
+	content: '\f207';
+}
+
+amp-social-share[type='pocket'] {
+	background: #ee4056;
+}
+
+amp-social-share[type='pocket']::before {
+	content: '\f224';
+}
+
+amp-social-share[type='reddit'] {
+	background: #cee3f8;
+	color: #555;
+}
+
+amp-social-share[type='reddit']::before {
+	content: '\f222';
+}
+
+amp-social-share[type='skype'] {
+	background: #00AFF0;
+}
+
+amp-social-share[type='skype']::before {
+	content: '\f220';
+}
+
+amp-social-share[type='whatsapp'] {
+	background: #43d854;
+}
+
+amp-social-share[type='whatsapp']::before {
+	content: '\f608';
+}
+.wp-block-jetpack-rating-star span.screen-reader-text { border: 0; clip: rect(1px, 1px, 1px, 1px); clip-path: inset(50%); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; word-wrap: normal; }.wp-block-jetpack-rating-spiciness span, .wp-block-jetpack-rating-priciness span { display: none; }	</style>
+</head>
+
+<body class="">
+
+<header id="top" class="amp-wp-header">
+	<div>
+		<a href="https://perlfisher.wordpress.com/">
+									<span class="amp-site-title">
+				The Perl Fisher			</span>
+		</a>
+
+					</div>
+</header>
+
+<article class="amp-wp-article">
+	<header class="amp-wp-article-header">
+		<h1 class="amp-wp-title">Rewriting Perl Code for Raku</h1>
+			<div class="amp-wp-meta amp-wp-byline">
+					<amp-img src="https://secure.gravatar.com/avatar/dcfbf9237da4c5ca3f8b972e1dddc8f1?s=24&#038;d=identicon&#038;r=g" alt="Perl Fisher" width="24" height="24" layout="fixed"></amp-img>
+				<span class="amp-wp-author author vcard">Perl Fisher</span>
+	</div>
+<div class="amp-wp-meta amp-wp-posted-on">
+	<time datetime="2019-11-24T13:00:00+00:00">
+		7 months ago	</time>
+</div>
+	</header>
+
+	
+	<div class="amp-wp-article-content">
+		
+<p>This time around we’re going to talk about how to rewrite Perl code in Raku. Even in 2019, a lot of the office world revolves around spreadsheets, whether they be Excel, <a href="http://web.archive.org/web/20200212094016/http://libreoffice.org/">LibreOffice</a> or simple .csv files. Perl 5 has a plethora of modules to do this, a quick search for ‘Spreadsheet’ on <a href="http://web.archive.org/web/20200212094016/https://metacpan.org/">MetaCPAN</a>should convince you of that.</p>
+
+
+
+<p>The Raku world doesn’t have quite as many modules as you’d expect, though. While it’s been around for a few years, “heavy lifting” modules like Spreadsheet stuff really haven’t come around yet. This involves packing and unpacking binary formats, and in Perl 5 this centered around the <em>pack</em> and <em>unpack</em> builtins, which are relative newcomers to Raku.</p>
+
+
+
+<p>But Raku has built-in binary buffers, which take care of most of the need for pack/unpack. The main reason I can see is the <a href="http://web.archive.org/web/20200212094016/http://www.microsoft.com/interop/docs/supportingtechnologies.mspx">OLE</a> storage format. Basically it’s Microsoft’s way of packing a file system into a single data file. And at this point the proverbial yaks start to pile up, and reasonable people say “You know, Excel still accepts .csv files, I know how to build those.”</p>
+
+
+
+<p>Enter<a href="http://web.archive.org/web/20200212094016/https://github.com/drforr/raku-OLE-Storage_Lite"> raku-OLE-Storage_Lite</a> – this is my translation-in-progress from Perl 5 to Raku. As of this writing it can read an entire OLE file (without data) and write a good portion of the sample file – I believe I’ve got maybe two methods left to debug.</p>
+
+
+
+<h2>Knee deep in yaks</h2>
+
+
+
+<p>CSV files are easy to write, but they come with their own set of troubles. When you import a .csv file into your Excel app (or LibreOffice, or whatever) you’re faced with a complex dialog asking you how to import your data, and the average user doesn’t want that every time, they just want to open their spreadsheet.</p>
+
+
+
+<p>So, it’s time to follow Liz’s lead and rewrite in Raku an existing module. First thing I did was go to <a href="http://web.archive.org/web/20200212094016/https://metacpan.org/pod/Spreadsheet::ParseExcel">Spreadsheet::ParseExcel</a> and see how they did things. Within a few minutes I’d already encountered the first yak. After opening the file, it delegates it to <a href="http://web.archive.org/web/20200212094016/https://metacpan.org/pod/OLE::Storage_Lite">OLE::Storage_Lite</a>, which is much like <a href="http://web.archive.org/web/20200212094016/http://www.jamesbrown.com/">James Brown</a>, the “hardest-working man in show business”.</p>
+
+
+
+<p>It’s still on version 0.19 at the time of writing, but I assure you that’s only because the current maintainer hasn’t updated the version to reflect reality. It may be legacy Perl rough-and-tumble code, but it’s been around for a long time. It wears its battle scars proudly.</p>
+
+
+
+<p>It relies heavily on <em>pack</em> and <em>unpack</em>, which are still <strong>technically</strong> experimental in Raku. The OO and coding style betrays its pre-5.00 origins, and the tests are, well, very pragmatic. “Does it load? Great! Can it convert timestamps internally? Great! Ship it!”</p>
+
+
+
+<p>To its credit, there’s a sample directory where you can use <em>smpview.pl</em> to view the contents of the internal filesystem of any OLE file, and a sample writer to create a known-working OLE file. That’ll do as a starting point.</p>
+
+
+
+<h3>Buckling down</h3>
+
+
+
+<p>So, reading an Excel spreadsheet means reading an OLE file system. And when I say file system, I’m not kidding. Inside your typical .xlsx file, there’s a small header and a root object. The root object contains “pointers” (really file offsets) to a document object, and inside that are file objects, each with pointers to the different blocks.</p>
+
+
+
+<p>This is all intended to reflect the original disk layout, so it looks very much like an NTFS superblock and block layout. The documentation seems to have moved to <a href="http://web.archive.org/web/20200212094016/https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-oleds/fdc5e702-d09e-4344-a77f-eb079d41f23f">this</a> page detailing OLE 1.0 and 2.0 formats, I’m not at all certain what the current version has.</p>
+
+
+
+<p>How are Excel spreadsheets arranged in here? Worksheets are OLE directories, and inside each worksheet, tabs are individual files. How’s that for a bit of inspiration? Luckily the Root directory, Files and nested Directories are all separate objects, with at least a few common methods aggregated into a superclass.</p>
+
+
+
+<h2>Legacy Code</h2>
+
+
+
+<p>This is a long-winded way of saying the module in question is very much legacy code. And, as I want to bring it into the proverbial light, I’ve got to give some issues some thought.</p>
+
+
+
+<ol><li>No useful tests, so I’ll have to write those.</li><li>How much code do I want to sacrifice?</li><li>How much can I save?</li></ol><p>Well, I can put off #2 and #3 while writing some tests. Whoa, wait a minute. I don’t have a test file to work with, just some scripts over in sample/. Mumble, mumble, more yaks. Read README, find that smpsv.pl will create one, run that.</p>
+
+
+
+<p>Great, I’ve got a sample test.xsl file. But given the amount of potential bit-rot it seems prudent to actually make sure that I’ve got a working Excel file before committing a few days (ha!) to getting a module working. Double-click it, launch into Excel’s cloud-serviced app, find that it’s one of those Win10 panes I’ve never figured out how to close, open task-killer, kill that.</p>
+
+
+
+<p>Launch <a href="http://web.archive.org/web/20200212094016/https://www.libreoffice.org/">LibreOffice</a> which I happen to have lying around – my current project at work is parsing a spreadsheet in Perl 5, which is what inspired this whole workload.</p>
+
+
+
+<p>Yep, that parses; looks a bit odd because it’s coming up with a Japanese font, and some arbitrary English text, but it works. Also, looking at the code it generates all three object types – Root, File and Dir, so it’ll exercise the major code paths. Bonus.</p>
+
+
+
+<h2>Testing, testing</h2>
+
+
+
+<p>Now I’ve got the makings of a simple test file. The script builds objects individually, so I can run the individual calls, and check that the object’s internals look the way I want.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my $oDt = OLE::Storage_Lite::PPS::Root-&gt;new(
+  [ ],
+  [ 0, 0, 16, 4, 10, 100 ], # 2000/11/4 16:00:00:0000
+  [ $oWk, $oDir ]
+);
+</pre>
+
+
+<p>In Raku, this converts to:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my $oDt = OLE::Storage_Lite::PPS::Root.new(
+  (),
+  ( 0, 0, 16, 4, 10, 100 ), # 2000/11/4 16:00:00:0000
+  ( $oWk, $oDir )
+);
+</pre>
+
+
+<p>I’ve made one change already, to make things simpler for Raku users. In Perl, you have to pass lists as references unless you want to use the new function signatures. In Raku, you can just pass lists as you would ordinarily to your method call.</p>
+
+
+
+<p>Using native data types rather than passing references around may seem a bit odd at first to new Raku programmers, but the new variable classes are easier to enforce strong typing on later, when you get used to the language.</p>
+
+
+
+<h3>Going with the flow</h3>
+
+
+
+<p>Now we’ve got something we can test, namely making sure that we’ve got a valid OLE Root document. So, before we go ahead with the code, I’ll share a few little things. I know very little about this code, so I want to make sure that I <strong>intimately</strong> copy each detail of the object at this stage. Later on I might get fancy and replace things with their own object types, but for now, my goal is going to be 1:1 replication.</p>
+
+
+
+<p>I tend to like <a href="http://web.archive.org/web/20200212094016/https://github.com/tmux/tmux/wiki">tmux</a> as a shell environment, haven’t really gotten along with UIs. So, keeping in mind that I wanted an absolute 1:1 copy of the original object, I ended up doing this:</p>
+
+
+
+<ol><li>Switch to new window, open my copy of ‘samples/smpsv.pl’ in vim</li><li>Add ‘use YAML; die Dump( $oDt ) just below the line where it gets created</li><li>Switch to new window, run the sample script, copy the YAML output</li><li>Close the two new windows I created to keep clutter down</li><li>Paste the YAML code into the new Raku test.</li></ol><pre class="brush: plain; title: ; notranslate" title="">
+my $oDt = OLE::Storage_Lite::PPS::Root.new(
+  (),
+  ( 0, 0, 16, 4, 10, 100 ), # 2000/11/4 16:00:00:0000
+  ( $oWk, $oDir )
+);
+--
+  Name: "R\0o\0o\0t\0 \0E\0n\0t\0r\0y\0"
+  No: ~
+  Time2nd:
+    - 0
+    - 0
+    - 16
+    - 4
+    - 10
+    - 100
+# and so on...
+</pre>
+
+
+<p>This should contain all I need to create an OLE file from this set of objects. I’m using this as a sneaky way of not reading the spec, at least not yet. As the old title goes: Algorithm + Data Structure = Program. Using YAML (or Data::Dumper) gives me the data structure, copying the Perl 5 code into Raku gives me the algorithm.</p>
+
+
+
+<p>I should almost be able to keep line-for-line fidelity, so when a patch is posted to the Perl 5 source I can import it into Raku without too much trouble. But once I’ve got a better test base and a few users in Raku I’ll probably rewrite this whole module in a more Raku-ready fashion. I can keep the old module around for reference.</p>
+
+
+
+<h2>Encoding worries</h2>
+
+
+
+<p>But we’ve also got a surprise lurking here. “R\0o\0ot\0 \0E\0n\0t\0r\0y\0” looks like binary garbage, but is actually UCS-2, I think. If it is, then the OLE file is limited to a subset of Unicode. I can put restrictions on it later if I have to, but ATM I actually don’t care.</p>
+
+
+
+<p>I’ve done enough time in the i18n salt mines that I know how to deal with this. Store the string in the best format possible (UTF-8 here) internally. When the time comes to write it to the network or disk, translate it to the final encoding.</p>
+
+
+
+<p>This way I can see what all the attributes are at a glance without changing encoding. I can also manipulate everything using regular Raku code until the last moment. If I have to, I can use Raku’s gradual typing to constrain the string. More importantly, I don’t have to do any of this <strong>now</strong>.</p>
+
+
+
+<h2>Got any change?</h2>
+
+
+
+<p>This means I’m going to change things just a little bit more. When data gets added to ‘Name’ I’m going to assume it’s UTF-8. Since I’m not doing any I/O yet, I can make whatever assumptions I want. Keeping the internals simple keeps my life simple, at least.</p>
+
+
+
+<p>So I’ll write out a quick <em>is-deeply</em> test and get on with things:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+is-deeply $oDt, (
+  Name =&gt; 'Root Entry',
+  Time2nd =&gt; ( 0, 0, 16, 4, 10, 100 ),
+  # ...
+  Child =&gt; ( $oWk, $oDir )
+);
+</pre>
+
+
+<p>This looks pretty straightforward, and almost how you’d write the original test in Perl 5. It won’t <strong>run</strong> yet, but that’s something we’ll tackle in the next part in the series.</p>
+
+
+
+<p>I’m not done quite yet, because I’ve got a lot of these things to write, and not all of them may have the ‘Child’ attribute. I could write a tiny method that skipped over the ‘Child’ attribute along with anything else I wanted, but that felt clumsy. It looked like:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+ok sorta-deeply $oDt, (
+  Name =&gt; 'Root Window',
+  Time2nd =&gt; ( 0, 0, 16, 4, 10, 100 ),
+  # ...
+), ( 'Child' );
+</pre>
+
+
+<p>And notice that <em>sorta-deeply</em> is a function that does all the work, then passes a simple Bool back to the test. I’d end up writing all of the code that <em>is-deeply</em> does (except for the recursion), and get something back that’s less useful.</p>
+
+
+
+<p>Next time we’ll get into making these tests pass. I’m writing the next section right after this, but you won’t get to see it for another week or so, I’m afraid. If you have questions or comments about the first part of this series, please feel free to comment below.</p>
+<div id="jp-post-flair" class="sharedaddy"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><amp-social-share type="twitter" height="32px" width="32px"></amp-social-share><amp-social-share type="facebook" height="32px" width="32px" data-param-app_id="249643311490"></amp-social-share></div></div></div></div>	</div>
+
+	<footer class="amp-wp-article-footer">
+			<div class="amp-wp-meta amp-wp-tax-category">
+		Categories: <a href="https://perlfisher.wordpress.com/category/perl-programming/" rel="category tag">Perl programming</a>, <a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a>	</div>
+
+		<div class="amp-wp-meta amp-wp-comments-link">
+		<a href="https://perlfisher.wordpress.com/2019/11/24/rewriting-perl-code-for-raku/#respond">
+			Leave a Comment		</a>
+	</div>
+	</footer>
+</article>
+
+<footer class="amp-wp-footer">
+	<div>
+		<h2>The Perl Fisher</h2>
+		<a href="#top" class="back-to-top">Back to top</a>
+	</div>
+</footer>
+
+
+	<amp-pixel src="https://pixel.wp.com/b.gif?rand=RANDOM&#038;host=perlfisher.wordpress.com&#038;ref=DOCUMENT_REFERRER&#038;amp=1&#038;blog=179562945&#038;v=wpcom&#038;tz=2&#038;user_id=0&#038;post=66&#038;subd=perlfisher"></amp-pixel>
+	<amp-pixel src="https://pixel.wp.com/b.gif?rand=RANDOM&#038;v=wpcom-no-pv&#038;crypt=UE40eW5QN0p8M2Y%2FRE0%2FbU8yQkx3RTR3RmZTSndoTltKYUswZWZFZmRxfG9BJixbMnFRZUJFVlYldWhGJUt6SXVuT3dFdWZPLV9pSlE2XUk3YWVtbmdUeElCdnA5ZlVwZkhadkQ1ZThVeXJJcEpKMy1iUGRFRFBRSGRnY3p%2Belo3V0M2Uz0sUUhwSTUub2daNUVYSldVeDFsQSttZVJ3WUpvPUVkeEw4dWVnP01ycVgxX3xVZUglMF1vfmJKb3B2b1h3bGQxZGo3LVdkREZoRjR5LHx4a2lLZ1Z8WGtjblklX0xxbD14T0dzUGM1UWdwMA%3D%3D"></amp-pixel>
+	
+</body>
+</html>

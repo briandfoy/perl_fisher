@@ -1,0 +1,2424 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="profile" href="https://gmpg.org/xfn/11" />
+	<title>The Perl Fisher &#8211; Page 2</title>
+<link rel='dns-prefetch' href='//s2.wp.com' />
+<link rel='dns-prefetch' href='//s1.wp.com' />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel="alternate" type="application/rss+xml" title="The Perl Fisher &raquo; Feed" href="https://perlfisher.wordpress.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="The Perl Fisher &raquo; Comments Feed" href="https://perlfisher.wordpress.com/comments/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s2.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.2"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s1.wp.com/_static/??-eJylktluwyAQRX+oeExSq/VD1W8BPKUkDEYMKPLfB5zGShellfo4y7m6s8ApCjOHjCEDFRF9sS4wnKKZSTA5j8uXqDPMD3CDaT/bDSSVjphdsEKrBLX1c+YbfOVsqaHGZGslITx3+64HXZyfmr45Cu90UmkBzovH/8vkd6S/yKwUwwFzVBVPqk3Cv7h4K94LdhkFTm4d/VIB+dj3gxzHAWJCcoU29L6gmT98yG7XJpoc5y0pfmZvrtl2UfMUVW4dVF0p9HUBId/DLmfXunplFlfH6+bWL3ilFzmMu6Efn+T+cAbpTNjH?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<style id='global-styles-inline-css'>
+:root {
+	--wp--preset--color--primary: #1279BE;
+	--wp--preset--color--secondary: #FFB302;
+	--wp--preset--color--foreground-dark: #101010;
+	--wp--preset--color--foreground: #303030;
+	--wp--preset--color--foreground-light: #757575;
+	--wp--preset--color--background-dark: #C5C5C5;
+	--wp--preset--color--background-light: #F8F8F8;
+	--wp--preset--color--background: #FFFFFF;
+	--wp--preset--font-size--small: 17.3914;
+	--wp--preset--font-size--normal: 23;
+	--wp--preset--font-size--large: 26.45;
+	--wp--preset--font-size--huge: 30.4174;
+	--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);
+	--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);
+	--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);
+	--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);
+	--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);
+	--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);
+	--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);
+	--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);
+	--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);
+	--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);
+	--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);
+	--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);
+}
+
+</style>
+<link rel='stylesheet' id='print-css-3-1' href='https://s1.wp.com/wp-content/themes/pub/varia/print.css?m=1571655471h&cssminify=yes' type='text/css' media='print' />
+<link rel='stylesheet' id='all-css-4-1' href='https://s1.wp.com/_static/??-eJx9jdEOwiAMRX9IrDOZmQ/Gb2GssipQAmXEvxfjy4yLb72559xCjcpwEAwCMqPHDLGMMOOCCbI8He5NzjvYxhadSAMF80FVjYb9j+CLiq5YChkqTRYlA5bW8oNQOV1B0EenpY1uf1wNWGTl2GghDl9B3Zym9E9NODq27bTQqFV8S1d/6frzoTv1x2G4vwBBPGeN?cssminify=yes' type='text/css' media='all' />
+<link crossorigin="anonymous" rel='stylesheet' id='hever-fonts-css'  href='https://fonts.googleapis.com/css?family=PT+Sans%3A400%2C400i%2C700%2C700i&#038;subset=latin%2Clatin-ext' media='all' />
+<link rel='stylesheet' id='all-css-6-1' href='https://s1.wp.com/_static/??/wp-content/themes/pub/hever/style.css,/wp-content/mu-plugins/actionbar/actionbar.css?m=1587159585j&cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-8-1' href='https://s0.wp.com/wp-content/themes/h4/global.css?m=1420737423h&cssminify=yes' type='text/css' media='all' />
+<script type='text/javascript' src='https://s1.wp.com/_static/??-eJx9zd0KwjAMBeAXsuuqFumF+Cxzy0pG09Ymdfj2Vvy5EBECuTjfSfSaFcYx1AlYL20uFcrttbqFN/ofUIS+DAIdYXzjMUWBKA+bEwsB8+DhR0rpjAFUZSgNRGlv5vTtcqgeI+u5hqAYBRRMKBi9eiba7PveGueszgUIK32qV4S1nTvR0Vi3tb07mN1yB22JV38='></script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s2.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://perlfisher.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress.com" />
+<link rel='shortlink' href='https://wp.me/c9qwx' />
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="The Perl Fisher" />
+<meta property="og:url" content="https://perlfisher.wordpress.com/" />
+<meta property="og:site_name" content="The Perl Fisher" />
+<meta property="og:image" content="https://s0.wp.com/i/blank.jpg" />
+<meta property="og:locale" content="en_US" />
+<meta property="fb:app_id" content="249643311490" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://s1.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="icon" type="image/x-icon" href="https://s1.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="apple-touch-icon" href="https://s2.wp.com/i/webclip.png" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://perlfisher.wordpress.com/osd.xml" title="The Perl Fisher" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+		<script type="text/javascript">
+		function __ATA_CC() {var v = document.cookie.match('(^|;) ?personalized-ads-consent=([^;]*)(;|$)');return v ? 1 : 0;}
+		var __ATA_PP = { pt: 0, ht: 0, tn: 'hever', amp: false, siteid: 8982, blogid: 179562945, consent: __ATA_CC(), flag: 2 };
+		</script>
+		<script type="text/javascript">
+		!function(t){var n={};function e(r){if(n[r])return n[r].exports;var o=n[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,e),o.l=!0,o.exports}e.m=t,e.c=n,e.d=function(t,n,r){e.o(t,n)||Object.defineProperty(t,n,{enumerable:!0,get:r})},e.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},e.t=function(t,n){if(1&n&&(t=e(t)),8&n)return t;if(4&n&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(e.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&n&&"string"!=typeof t)for(var o in t)e.d(r,o,function(n){return t[n]}.bind(null,o));return r},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,n){return Object.prototype.hasOwnProperty.call(t,n)},e.p="https://c0.pubmine.com/2.6.01584004761084/",e(e.s=184)}({0:function(t,n){t.exports=function(t,n,e){return n in t?Object.defineProperty(t,n,{value:e,enumerable:!0,configurable:!0,writable:!0}):t[n]=e,t}},1:function(t,n){t.exports=function(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}},10:function(t,n,e){"use strict";var r=e(50),o=e(17),i=e(23);t.exports=function(t,n,e){if(!r(t))return e;if(!o(n))return e;try{var u=n.split(".").reduce((function(t,n){return t[n]}),t);return i(u)?e:u}catch(t){return e}}},12:function(t,n){function e(n){return"function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?t.exports=e=function(t){return typeof t}:t.exports=e=function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},e(n)}t.exports=e},14:function(t,n,e){"use strict";t.exports=function(t){return"function"==typeof t}},15:function(t,n,e){"use strict";t.exports=function(){}},17:function(t,n,e){"use strict";t.exports=function(t){return"string"==typeof t}},184:function(t,n,e){"use strict";e.r(n);var r=e(0),o=e.n(r),i=e(12),u=e.n(i),c=e(32),f=e.n(c),s=e(15),a=e.n(s),p=e(37),l=e.n(p),d=e(52),v=e(53),m=e(28);function y(t,n){var e=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);n&&(r=r.filter((function(n){return Object.getOwnPropertyDescriptor(t,n).enumerable}))),e.push.apply(e,r)}return e}function b(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},n={};"object"===u()(window.__ATA_PP)&&null!==window.__ATA_PP&&(n=window.__ATA_PP);var e=function(t){for(var n=1;n<arguments.length;n++){var e=null!=arguments[n]?arguments[n]:{};n%2?y(Object(e),!0).forEach((function(n){o()(t,n,e[n])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(e)):y(Object(e)).forEach((function(n){Object.defineProperty(t,n,Object.getOwnPropertyDescriptor(e,n))}))}return t}({r:(new Date).getTime()},n,{},Object(d.a)(t),{ref:window.top!==window?document.referrer:window.location.href,us_privacy:Object(v.a)()}),r=l()("//s.pubmine.com/mhead.js",e);f()(r,a.a)}Object(m.b)()?Object(m.a)().then(b,b):b()},2:function(t,n){function e(t,n){for(var e=0;e<n.length;e++){var r=n[e];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}t.exports=function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}},21:function(t,n,e){"use strict";t.exports=function(t){return"string"==typeof t&&t.length>0}},23:function(t,n,e){"use strict";t.exports=function(t){return void 0===t}},24:function(t,n,e){"use strict";t.exports=function(t,n){return t.indexOf(n)>-1}},28:function(t,n,e){"use strict";e.d(n,"a",(function(){return p})),e.d(n,"b",(function(){return l}));var r=e(38),o=e.n(r),i=e(10),u=e.n(i),c=e(14),f=e.n(c),s=e(4);function a(t){var n=Date.now();return function(t){return new o.a((function(n,e){var r;window.setTimeout((function(){clearTimeout(r),e&&e("cmp ping timeout")}),t),function t(){window.__cmp?window.__cmp("ping",null,(function(o,i){i&&o.cmpLoaded?n():i?r=window.setTimeout(t,50):e&&e("cmp ping returned error with data: ".concat(JSON.stringify(o)))})):e&&e("CMP is not defined")}()}))}(t).then((function(){var e=Date.now()-n,r=t-e;return new o.a((function(t,n){window.__cmp?(window.__cmp("getConsentData",null,(function(e,r){r?t(e):n&&n("cmp getConsentData returned error with data: ".concat(JSON.stringify(e)))})),setTimeout((function(){n&&n("cmp getConsentData timeout")}),r)):n&&n("CMP is not defined")}))}))}function p(){return a(arguments.length>0&&void 0!==arguments[0]?arguments[0]:500).catch((function(t){return s.a.error(t),"boolean"==typeof(n=u()(window,"__ATA_PP.gdpr_applies"))?{gdprApplies:n}:{};var n}))}function l(){return f()(window.__cmp)}},29:function(t,n,e){"use strict";t.exports=function(t,n){for(var e=0,r=t.length;e<r;e++){var o=t[e];if(n(o,e))return o}return null}},30:function(t,n,e){"use strict";var r=e(29),o=e(24);t.exports=function(t,n){void 0===n&&(n=document.cookie);var e=n.split("; "),i=r(e,(function(n){return o(n,t+"=")}));return i?i.split("=")[1]:""}},32:function(t,n,e){"use strict";var r=e(15),o=e(14);t.exports=function(t,n,e){var i,u,c=document.createElement("script"),f=n instanceof HTMLElement&&n;if(i=o(n)?n:o(e)?e:r,c.src=t,c.onload=function(){i(void 0)},c.onerror=function(){i("error")},f)u=f;else{var s=document.getElementsByTagName("head");u=s&&0!==s.length?s[0]:document.documentElement}u.appendChild(c)}},37:function(t,n,e){"use strict";var r=e(24),o=e(89);t.exports=function(t,n){var e=o(n);return 0===e.length?t:t+(r(t,"?")?"&":"?")+e}},38:function(t,n,e){"use strict";var r,o=e(51),i=e(14);!function(t){t.REJECTED="rejected",t.RESOLVED="resolved",t.PENDING="pending"}(r||(r={}));var u=function(){function t(t,n){var e=this;this.status=r.PENDING,this.emitter=new o,this.onFulfilled=function(t){e.status===r.PENDING&&(e.status=r.RESOLVED,e.emitter.emit(r.RESOLVED,[t]))},this.onRejected=function(t){e.status===r.PENDING&&(e.status=r.REJECTED,e.emitter.emit(r.REJECTED,[t]))};var i=function(){return t(e.onFulfilled,e.onRejected)};n?i():setTimeout(i,0)}return t.resolve=function(n){return new t((function(t){t(n)}))},t.reject=function(n){return new t((function(t,e){e(n)}))},t.prototype.then=function(n,e){var o=this;return new t((function(u,c){o.emitter.on(r.RESOLVED,(function(e){if(i(n)){var r=n(e);r instanceof t?r.then(u,c):u(r)}else u(e)})),o.emitter.on(r.REJECTED,(function(n){if(i(e)){var r=e(n);r instanceof t?r.then(u,c):u(r)}else c(n)}))}),!0)},t.prototype.catch=function(n){var e=this;return new t((function(o){i(n)&&e.emitter.on(r.REJECTED,(function(e){var r=n(e);r instanceof t?r.then(o):o(r)})),e.emitter.on(r.RESOLVED,o)}),!0)},t}();t.exports=u},4:function(t,n,e){"use strict";var r=e(1),o=e.n(r),i=e(2),u=e.n(i),c=e(0),f=e.n(c),s=function(){function t(){o()(this,t)}return u()(t,null,[{key:"configure",value:function(n){t.config=n}},{key:"error",value:function(t){function n(n,e){return t.apply(this,arguments)}return n.toString=function(){return t.toString()},n}((function(t,n){this.config&&this.config.onError?this.config.onError(t,n):window.console&&console.log(t,n)}))}]),t}();f()(s,"config",void 0),n.a=s},50:function(t,n,e){"use strict";t.exports=function(t){var n=typeof t;return"object"===n&&null!=t||"function"===n}},51:function(t,n,e){"use strict";var r=function(){function t(){this.events={}}return t.prototype.on=function(t,n){if(this.events[t]){if(-1!==(e=this.events[t]).indexOf(n))throw new Error('This handler has already been subcribed for "'+t+'" event');e.push(n)}else{var e;(e=[]).push(n),this.events[t]=e}},t.prototype.off=function(t,n){var e=this.events[t],r=e.indexOf(n);-1!==r&&e.splice(r,1)},t.prototype.emit=function(t,n){void 0===n&&(n=[]);var e=this.events[t];e&&e.map((function(t){n?t.apply(void 0,n):t()}))},t}();t.exports=r},52:function(t,n,e){"use strict";e.d(n,"a",(function(){return i}));var r=e(17),o=e.n(r);function i(t){var n=t.gdprApplies,e=t.consentData;return{gdpr:"boolean"==typeof n?Number(n):void 0,gdpr_consent:o()(e)?e:void 0}}},53:function(t,n,e){"use strict";e.d(n,"a",(function(){return f}));var r=e(30),o=e.n(r),i=e(21),u=e.n(i),c="usprivacy";function f(){var t=o()(c);return u()(t)?t:null}},62:function(t,n,e){"use strict";t.exports=function(t){return null===t}},89:function(t,n,e){"use strict";var r=e(62),o=e(23);t.exports=function(t){var n=Object.keys(t),e=[];return n.forEach((function(n){var i=t[n];r(i)||o(i)||e.push(n+"="+encodeURIComponent(t[n]))})),e.join("&")}}});
+		</script><meta name="application-name" content="The Perl Fisher" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://perlfisher.wordpress.com/feed/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /></head>
+
+<body class="home blog paged wp-embed-responsive paged-2 customizer-styles-applied hfeed image-filters-enabled hide-homepage-title admin-bar highlander-enabled highlander-light">
+
+	
+<div id="page" class="site">
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+	
+		<header id="masthead" class="site-header responsive-max-width">
+
+			
+
+			<h1 class="site-title"><a href="https://perlfisher.wordpress.com/" rel="home">The Perl Fisher</a></h1>
+	
+
+							<nav id="site-navigation" class="main-navigation" aria-label="Main Navigation">
+					<input type="checkbox" role="button" aria-haspopup="true" id="toggle" class="hide-visually">
+					<label for="toggle" id="toggle-menu" class="button">
+						Menu						<span class="dropdown-icon open">+</span>
+						<span class="dropdown-icon close">&times;</span>
+						<span class="hide-visually expanded-text">expanded</span>
+						<span class="hide-visually collapsed-text">collapsed</span>
+					</label>
+					<div class="menu-primary-container"><ul id="menu-primary" class="main-menu" aria-label="submenu"><li id="menu-item-40" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-40"><a href="https://perlfisher.wordpress.com/blog-3/">Home</a></li>
+<li id="menu-item-19" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-19"><a href="https://perlfisher.wordpress.com/blog/">Home</a></li>
+<li id="menu-item-41" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-41"><a href="https://perlfisher.wordpress.com/blog-2-2/">Blog</a></li>
+<li id="menu-item-20" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20"><a href="https://perlfisher.wordpress.com/blog-2/">Blog</a></li>
+<li id="menu-item-42" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-42"><a href="https://perlfisher.wordpress.com/about-2/">About</a></li>
+<li id="menu-item-21" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-21"><a href="https://perlfisher.wordpress.com/about/">About</a></li>
+<li id="menu-item-43" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-43"><a href="https://perlfisher.wordpress.com/contact-2/">Contact</a></li>
+<li id="menu-item-22" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-22"><a href="https://perlfisher.wordpress.com/contact/">Contact</a></li>
+</ul></div>				</nav><!-- #site-navigation -->
+			
+			
+		</header><!-- #masthead -->
+
+	
+	<div id="content" class="site-content">
+
+	<section id="primary" class="content-area">
+		<main id="main" class="site-main">
+
+		
+<article id="post-84" class="post-84 post type-post status-publish format-standard hentry category-raku-programming entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2019/04/12/spacing-out/" rel="bookmark">Spacing Out</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p>After having had some comments about the grammar approach I’ve been using, I’ve started to rethink things. I may have isolated at least one problem people may have been having. I’m working on a grammar for a language called ‘picat’ – you can look up a quick explanation at&nbsp;<a href="http://web.archive.org/web/20190814083216/http://www.picat-lang.org/">picat.org</a>.</p>
+
+
+
+<p>It’s a constraint-based programming language that maps insanely well onto Perl 6. A fragment of the grammar I’m working on follows, done in a top-down fashion. The actual grammar rule&nbsp;<em>&lt;comment&gt;</em>&nbsp;isn’t the important thing, because this problem can occur with anything.</p>
+
+
+
+<p>If you must know, it’s a C-style /* .. */ comment. Of course I ran the test to make sure this little block of code properly matched beforehand. This way I could go along making one small change at a time, simple because it’s fairly late at night and I’ve got a flight to catch tomorrow..&nbsp;</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+&lt;comment&gt;
+&lt;comment&gt;
+&lt;comment&gt;
+
+'go' '=&gt;'
+   'doors(10).'
+</pre>
+
+
+<h3>Breaking up is hard to do</h3>
+
+
+
+<p>The natural thing to do here is, of course, say to yourself “Hrm, I’ve got 3&nbsp;<em>&lt;comment&gt;</em>&nbsp;comment blocks in a row. We all know there are only 3 important numbers in computer science, 0, 1, and Infinity. So 3 is wrong and should be replaced with&nbsp;<em>&lt;comment&gt;+</em>.”&nbsp;</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+&lt;comment&gt;+
+
+'go' '=&gt;'
+   'doors(10).'
+</pre>
+
+
+<p>I then rerun the test, because I’m sticking to my nighttime rule of “one change, one retest”, and to my horror it breaks. I’ve only changed one thing, but … why is it breaking? Surely &lt;A&gt;+ should at&nbsp;<strong>least</strong>&nbsp;match &lt;A&gt; &lt;A&gt; &lt;A&gt; … that’s how DFA equivalences work in finite automata.</p>
+
+
+
+<p>That’s also one point where Perl 6 and traditional DFAs (Deterministic Finite Automata) part ways. After a few years of doing Perl 6 programming, I see Perl 6 as almost overly helpful. Tools like&nbsp;<em>flex</em>&nbsp;and&nbsp;<em>bison</em>&nbsp;made me think of grammars as something that belonged outside the language.</p>
+
+
+
+<h3>Where it all breaks down</h3>
+
+
+
+<p>Unfortunately modules like&nbsp;<a href="http://web.archive.org/web/20190814083216/https://github.com/jnthn/grammar-debugger">Grammar::Debugger</a>, through&nbsp;<strong>no</strong>&nbsp;fault of their own, can’t quite help here. While it’s a great module to tell you what particular rule or token failed, the problem here is&nbsp;<strong>between</strong>&nbsp;the terms.</p>
+
+
+
+<p>&lt;A&gt; {whitespace-optional} &lt;A&gt; is subtly different than &lt;A&gt;+ because &lt;A&gt; &lt;A&gt; lets the parser read whitespace between the two terms; &lt;A&gt;+ assumes the terms come one after the other, whitespace be darned.</p>
+
+
+
+<p>So, the simplest solution I have to offer is to let the comment eat the whitespace after it as well, so you can insert your &lt;comment&gt; token anywhere you like and it’ll still eat the whitespace no matter how you add it.</p>
+
+
+
+<p>Another solution proposed on Reddit would be to use &lt;A&gt;˽+, with a space between the closing ‘&gt;’ and the modifier. Said user went beyond the call of duty and composed a “Seven stages of whitespace” post to make the point.</p>
+
+
+
+<p>The &lt;comment&gt; token I have, like I said, is for C/C++ style “balanced” comments. Here they’re not balanced; /* This is a comment */ but this is not */, and/* This is a comment /* so is this */ this looks like it should but really isn’t. */&nbsp;</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+token comment
+  {
+  '/*' .+? '*/' \s*
+  }
+</pre>
+
+
+<p>And all is well with the grammar. You can put this rule anywhere you like and it’ll behave whether you write &lt;comment&gt; &lt;comment&gt; or &lt;comment&gt;+. This little article was inspired by a Twitter user inspired after reading my first tutorial series. They got into the actual work of creating a grammar and problems started to happen.</p>
+
+
+
+<h3>Wrapping up</h3>
+
+
+
+<p>My original tutorial series was just that, a tutorial, I felt that getting too deep into the process interrupts the flow, so I didn’t talk about the work that went into it. Now that the series is pretty much done, I think it’ll be beneficial to talk about the actual problems of debugging one of these beasts.</p>
+
+
+
+<p>And these thing can most definitely be beasts. Using my&nbsp;<a href="http://web.archive.org/web/20190814083216/https://github.com/drforr/perl6-ANTLR4">ANTLR4 to Perl 6 converter</a>&nbsp;you can generate some incredibly huge grammars. But just generating them doesn’t necessarily mean they’ll compile, although a few do right out of the box, which I’m genuinely amazed at.</p>
+
+
+
+<p>The full test suite actually chooses a few grammars, converts them to Perl 6, compiles them and tests against sample input. I’m not sure how faithful they are to the real grammar, but they work.</p>
+
+
+
+<p>Perl 6 does amazing things with precompiling and JITing. Grammars and regular expressions are one of the hardest-working things in Perl 6, so they get compiled down to functions. This means I can’t step into them even inside NQP, the dark side of Perl 6.</p>
+
+
+
+<p>I’ve got ideas, so I’m going to keep working on grammar stuff. That means when I run into problems, well, it’s time to write another article. So look forward to a new series. Likely with a prosaic name of “Perl 6 Grammars Debun^wDebugged” or something similar. Thank you again, dear reader. Comments, clarifications and questions are of course welcome.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2019/04/12/spacing-out/" rel="bookmark"><time class="entry-date published" datetime="2019-04-12T13:17:13+02:00">April 12, 2019</time><time class="updated" datetime="2020-06-30T13:19:53+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2019/04/12/spacing-out/#respond">Leave a comment<span class="screen-reader-text"> on Spacing Out</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-88" class="post-88 post type-post status-publish format-standard hentry category-raku-programming entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2018/03/14/who-ordered-that-array/" rel="bookmark">Who ordered that&nbsp;(array)?</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p>ou know how it is when coming back to some code after days, weeks or in this case, maybe even months away? I&#8217;m going through that right now, and thought I&#8217;d talk about one issue I just ran into. While reworking the actions for the ANTLR4 translator, I&nbsp;<strong>really</strong>&nbsp;don&#8217;t want to rewrite the grammar. It passes the full ANTLR4 corpus, and I don&#8217;t want to touch that.<br>So I&#8217;ve just finished rewriting a bunch of tests, and am ready to capture ANTLR tokens so that I can rewrite them into Perl 6. The match object looks like this when you dump it (&#8220;dump&#8221; is a bit overblown &#8211; in other languages you might need a separate Dump() method, in Perl 6 &#8220;say $/&#8221; is all you need.):</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+prequelConstruct =&gt; ｢tokens { INDENT }｣
+ tokensSpec =&gt; ｢tokens { INDENT }｣
+  token_list_trailing_comma =&gt; ｢INDENT ｣
+   tokenName =&gt; ｢INDENT｣
+    ID =&gt; ｢INDENT｣
+</pre>
+
+
+<p>But when I started trying to capture the &#8216;INDENT&#8217; text with <em>$/&lt;prequelConstruct&gt;&lt;tokensSpec&gt;&lt;token_list_trailing_comma&gt;</em>, I get this weird error:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+Type Array does not support associative indexing.
+  in method TOP at /home/jgoff/perl6-ANTLR4/lib/ANTLR4/Actions/Perl6.pm6 (ANTLR4::Actions::Perl6) line 88
+</pre>
+
+
+<p>But&#8230; but&#8230; it&#8217;s just&nbsp;<em>prequelConstruct</em>&nbsp;containing a&nbsp;<em>tokensSpec</em>&nbsp;and so on, I don&#8217;t see any arrays involved. Now, if I were using &#8216;dd&#8217; rather than the built-in stringifier I&#8217;d probably see the problem right away. Unfortunately if you&#8217;re using the default &#8216;say $/&#8217; stringifier, there&#8217;s no easy way to see what&#8217;s going on. What&#8217;s happening here is the&nbsp;<em>prequelConstruct</em>&nbsp;actually contains an&nbsp;<strong>array</strong>&nbsp;of matches, but the default &#8216;say&#8217; output won&#8217;t show you this.<br>Thankfully, Perl 6, just like its sister Perl 5, encourages experimentation. If you back off and just use &#8216;say $/&lt;prequelConstruct&gt;;&#8217;, that will work. When you add &#8216;&lt;tokensSpec&gt;&#8217;, which&nbsp;<strong>looks like</strong>&nbsp;what should be the next layer down, you&#8217;ll get the &#8216;Type Array&#8230;&#8217; error, which will tell you that&nbsp;<em>prequelConstruct</em>&nbsp;contains an array of stuff. &#8216;dd&#8217; should tell you more clearly what portion of the match is an array, and what are hash keys, and I&#8217;d recommend using that to clarify what&#8217;s going on. This is just a little posting to help people debug what I suspect is a common confusion.<br>Thank you again, dear reader. Comments, clarifications and questions are of course welcome.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2018/03/14/who-ordered-that-array/" rel="bookmark"><time class="entry-date published" datetime="2018-03-14T13:20:02+01:00">March 14, 2018</time><time class="updated" datetime="2020-06-30T13:20:40+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2018/03/14/who-ordered-that-array/#respond">Leave a comment<span class="screen-reader-text"> on Who ordered that&nbsp;(array)?</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-91" class="post-91 post type-post status-publish format-standard hentry category-raku-programming entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2018/01/11/abusing-multiple-dispatch-creatively/" rel="bookmark">Abusing multiple-dispatch creatively</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p>As part of creating a new POD tree for the Perl 6 utilities in hopes of letting others create their own subclasses, I came across this interesting use of multiple-dispatch. One of the Pod types that the Perl 6 compiler generates is for inline attributes like making&nbsp;<strong>text bold</strong>&nbsp;or&nbsp;<em>italic</em>&nbsp;with formatting codes like &#8216;B&lt;text bold&gt;&#8217;. Bold, italic, and underline formatting codes all generate the same&nbsp;<em>Pod::FormattingCode</em>&nbsp;object, with a different&nbsp;<em>.type</em>&nbsp;value, so they look something like</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+class Pod::FormattingCode {
+  has Str $.type; # This is 'B', 'I', etcetera as the need arises.
+}
+class Pod::FormattingCode::Bold { }
+</pre>
+
+
+<p>I have a bunch of&nbsp;<em>.to-node()</em>&nbsp;methods that are specialized on turning raw Pod objects into something a little more useful. One of these, to convert a&nbsp;<em>Pod::FormattingCode</em>&nbsp;into my internal&nbsp;<em>Node::FormattingCode::Bold</em>&nbsp;object, looks like this:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+multi method to-node( Pod::FormattingCode $pod ) {
+  given $pod.type {
+    when 'B' {
+      Node::FormattingCode::Bold.new( :type( $pod.type ) )
+    }
+  }
+}
+
+my $bold = Pod::FormattingCode.new( :type( 'B' ) );
+self.to-node( $bold ); # Calls the multi method above.
+
+</pre>
+
+
+<p>All of the methods that convert $something to a node are named&nbsp;<em>.to-node()</em>, and I can rely on Perl 6&#8217;s multiple dispatch to keep them separate for me. This is important to me mainly because of locality of reference. If you&#8217;re debugging my code, and you want to know where something gets converted to a&nbsp;<em>Node::</em>&nbsp;object, just look through the&nbsp;<em>.to-node()</em>&nbsp;methods. Now, looking at the&nbsp;<em>given-when</em>&nbsp;block, that&#8217;s going to grow, and by quite a bit. At least three lines for every formatting code that I find in the documentation.<br>And it gets a bit worse. Say I want to do the right thing, and factor out the &#8216;.new(&#8230;)&#8217; lines into their own method, because I&#8217;m pretty sure they&#8217;ll grow, as I find neat little corner cases for each of the Pod types. I&#8217;d have to name them something ugly, which breaks up my idea.<br>Since the method still converts a&nbsp;<em>Pod</em>&nbsp;object to a&nbsp;<em>Node</em>&nbsp;object, it&#8217;d be nice to be able to reuse the&nbsp;<em>.to-node()</em>&nbsp;method, but to fit it into the existing scheme of things I&#8221;d have to create a new object like a&nbsp;<em>Pod::FormattingCode::Bold</em>, create a new instance of that, and then I&#8217;d be able to do multiple-dispatch on&nbsp;<strong>that</strong>&nbsp;type. But that means creating not one but&nbsp;<strong>two</strong>&nbsp;new classes for every&nbsp;<em>Pod::FormattingCode</em>&nbsp;&#8211; one for the &#8220;shim&#8221; that I use to dispatch on, and another one for the actual object I&#8217;m going to return to the user. And it&#8217;s even&nbsp;<strong>worse</strong>than that, because it&#8217;s possible, though very unlikely, that the Perl 6 team will one day create a&nbsp;<em>Pod::FormattingCode::Bold</em>&nbsp;class and trounce on my own name-space, undoing my hard work.<br>Well, as you might have guessed, there&nbsp;<strong>is</strong>&nbsp;a solution, and it doesn&#8217;t involve trouncing on anyone&#8217;s namespaces. And it&nbsp;<strong>still</strong>&nbsp;lets us stick to the principle of reusing&nbsp;<em>.to-node()</em>&nbsp;for all of our node-conversion needs. Here&#8217;s how you write it:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+multi method to-node( Pod::FormattingCode $pod ) {
+  self.to-node( $pod, $pod.type );
+}
+multi method to-node( Pod::FormattingCode $pod, 'B' ) {
+  Node::FormattingCode::Bold.new( :type( 'B' ) );
+}
+
+my $bold = Pod::FormattingCode.new( :type( 'B' ) );
+self.to-node( $bold ); # Returns a Node::FormattingCode::Bold object.
+
+</pre>
+
+
+<p>What this does may not be obvious at first glance, so I&#8217;ll walk through it. We create a&nbsp;<em>Pod::FormattingCode</em>&nbsp;object of type &#8216;B&#8217; for Bold, and magic happens. The first magical bit is that multiple-dispatch kicks in, so that when&nbsp;<em>.to-node()</em>&nbsp;gets called, Perl 6 does its best to find the closest signature. And in this case it&#8217;s a perfect match.&nbsp;<em>.to-node( Pod::FormattingCode )</em>&nbsp;is perfectly matched by the first method. Inside&nbsp;<strong>that</strong>&nbsp;method, we do something a little sneaky. We break out the type, and rely&nbsp;<strong>again</strong>&nbsp;on multiple dispatch. This time we&#8217;re calling&nbsp;<em>.to-node( Pod::FormattingCode $pod, &#8216;B&#8217; )</em>, and&nbsp;<strong>again</strong>&nbsp;we have a perfect match, but this time it&#8217;s the second method, down below. That creates the new&nbsp;<em>Node::FormattingCode::Bold</em>&nbsp;object and returns it.<br>How did that work, you might ask? Well, multiple dispatch in languages like C++ or Java work based on types. You can&nbsp;<strong>sort of</strong>&nbsp;simulate what we just did in C++ with templates, and Java&#8217;s generic&nbsp;<strong>sort of</strong>&nbsp;do what we did, but not quite, and with much more work. TL;DR Perl 6&#8217;s multiple dispatch works on argument&nbsp;<strong>values</strong>&nbsp;as well as types, so you can dispatch both on a generic&nbsp;<em>Str</em>&nbsp;class as well as a specific instance &#8220;foo&#8221; of&nbsp;<em>Str</em>. This means you can write Haskell-like code in Perl 6.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+multi sub fib( $n where * &lt; 0 ) { 0 }
+multi sub fib( 0 ) { 0 }
+multi sub fib( 1 ) { 1 }
+multi sub fib( $n ) { fib( $n - 1 ) + fib( $n - 2 ) }
+
+</pre>
+
+
+<p>The&nbsp;<em>where</em>&nbsp;declaration there lets us cleanly handle negative values as well, as a bonus. No matter what (integer) value the client passes to the&nbsp;<em>fib</em>&nbsp;subroutine, Perl 6 will dispatch it cleanly, so that&nbsp;<em>fib(2)</em>&nbsp;will call&nbsp;<em>sub fib(1)</em>&nbsp;and return 1, rather than calling&nbsp;<em>sub fib($n)</em>&nbsp;and going into an infinite regress. I was just working along on&nbsp;<em>Pod::To::Tree</em>, did that particular bit of refactoring and thought you might like to hear about it. This is your friendly neighborhood Perl Fisher, signing off.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2018/01/11/abusing-multiple-dispatch-creatively/" rel="bookmark"><time class="entry-date published" datetime="2018-01-11T13:20:54+01:00">January 11, 2018</time><time class="updated" datetime="2020-06-30T13:21:32+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2018/01/11/abusing-multiple-dispatch-creatively/#respond">Leave a comment<span class="screen-reader-text"> on Abusing multiple-dispatch creatively</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-94" class="post-94 post type-post status-publish format-standard hentry category-raku-programming entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2018/01/07/tree-surgery/" rel="bookmark">Tree Surgery</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p>HTML and I tend to get along like a house on fire. I can work with it when the need arises, but I still prefer to do semantic markup and let CSS do with it what the end-user wants to see, which these days is shiny sidebars, blogroll posts and code blocks that neatly let the user just drag-and-select the text they want and copy it into their editor of choice.<br>As you can see by this posting, I haven&#8217;t quite gotten there yet. Equally, you can see that I haven&#8217;t given up altogether, because I&#8217;m still here, posting and tweaking things. A couple of months ago (okay, it just&nbsp;<strong>feels</strong>&nbsp;that way) I figured out that it&#8217;d be much simpler for me to take a Perl 6 POD document and add the markup that I need to that.<br>After some pondering I realized &#8220;Wait, isn&#8217;t there already a Perl 6 POD converter out there? Called&nbsp;<em>perl6 &#8211;doc</em>? And can&#8217;t I re-purpose what it does to generate Blogspot-ready HTML?&#8221;<br><a href="http://web.archive.org/web/20190103092939/https://github.com/perl6/Pod-To-HTML">Pod::To::HTML</a>&nbsp;already is out there, but the way the code is written made it hard if not impossible to subclass, because most of the important stuff was inside&nbsp;<em>sub</em>&nbsp;blocks, not out in&nbsp;<em>method</em>s where they could easily be sub-classed.<br>So I started rewriting it. A few days later, after grumbling and wondering why&nbsp;<strong>this</strong>&nbsp;particular bit had been written the way it was, I went onto the usual suspect&nbsp;<a href="http://web.archive.org/web/20190103092939/https://perl6.org/community/irc">Perl IRC</a>&nbsp;channel where the author likely hung out, so I could get a useful answer. He wasn&#8217;t around, but someone pointed me to another module,&nbsp;<a href="http://web.archive.org/web/20190103092939/https://github.com/houseabsolute/perl6-Pod-TreeWalker">Pod::TreeWalker</a>, and told me that he too was interested in fixing this.<br>So, as things happen, conversation started. I rewrote the guts of what I had with&nbsp;<a href="http://web.archive.org/web/20190103092939/https://github.com/houseabsolute/perl6-Pod-TreeWalker">Pod::TreeWalker</a>, and found that it did some things I really didn&#8217;t want it to. All I wanted&#8230; hoo boy. I know that phrase all too well, it usually means I&#8217;m going to end up rewriting some module only to run into the problems&nbsp;<strong>they</strong>&nbsp;encountered. Well, once more into the breach, and all that.<br>So, I decided that while I liked&nbsp;<a href="http://web.archive.org/web/20190103092939/https://github.com/houseabsolute/perl6-Pod-TreeWalker">Pod::TreeWalker</a>&#8216;s style &#8211; it&#8217;s an event-driven system, it did place some limitations on how you could work with it. For example, when a pod-table-start event came along, it was pretty easy to figure out &#8220;Hey, this is the start of a POD table, so I can generate a `&lt;table&gt;&#8217; string and add it to my running HTML.&#8221; And this worked fine, for all of about 20 minutes. Because it also generated other events in places where I didn&#8217;t think it should, such as paragraphs inside a list item, which made the generated HTML look odd.<br>For instance,</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+=item foo
+</pre>
+
+
+<p>generates this sequence, when marshalled back out to HTML:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+&lt;li&gt;&lt;p&gt;foo&lt;/p&gt;&lt;/li&gt;
+</pre>
+
+
+<p>What&#8217;s happening here is that the library sends out:</p>
+
+
+
+<ul><li>An &#8216;item-start&#8217; event, so I tack on &#8216;&lt;li&gt;&#8217; to the HTML.<ul><li>A &#8216;paragraph-start&#8217; event, so I tack on &#8216;&lt;p&gt;&#8217; to the HTML.</li><li>A &#8216;text&#8217; event, with &#8216;foo&#8217; as the txt, so I tack on &#8216;foo&#8217;.</li><li>A &#8216;paragraph-end&#8217; event, so I tack on &#8216;&lt;/p&gt;&#8217; to the HTML.</li></ul></li><li>An &#8216;item-end&#8217; event, so I tack on &#8216;&lt;/li&gt;&#8217; to the HTML.</li></ul>
+
+
+
+<p>Now, as I&#8217;ve mentioned earlier, I didn&#8217;t particularly like the fact that the sequencer created a paragraph event, when there&#8217;s no particular need to do so. But I&#8217;m stuck with it. I still have possibilities, though. I can&#8230;</p>
+
+
+
+<ol><li>Post-process the HTML and do a quick regex to remove the &lt;p&gt;..&lt;/p&gt; tags, but, and repeat after me, friends don&#8217;t let friends run regex on HTML.</li><li>When a &#8216;paragraph-start&#8217; event is encountered, see if the HTML has &lt;li&gt; already there, and ignore it if so. But see #1.</li><li>Hack the module to pass along the &#8220;parent&#8221; event when firing off an event, so I could look at the &#8220;parent&#8221; event and if that&#8217;s a paragraph, ignore it.</li><li>Wait a minute, parent&#8230; &lt;digs_through_source/&gt; it&#8217;s already got a tree of POD it&#8217;s walking, if I pull out just the tree, then it&#8217;s actually&nbsp;<strong>less</strong>&nbsp;code to walk the tree, and when I encounter the &lt;p&gt; node I can tell it to look at its parent&#8230; right.</li></ol>
+
+
+
+<p>Armed with this realization, I sally forth. Lucky for me, Perl 6 POD is already laid out as a tree, so it&#8217;s pretty simple to start walking it. Now, there are a bunch of straightforward ways to write a walker like this, but I rather prefer to use the multiple-dispatch features of Perl 6 for this purpose.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+method walk( $node ) {
+  self.visit( $node );
+  if $node.^can('contents') {
+    for @( $node.contents ) -&gt; $child {
+      self.walk( $child );
+    }
+  }
+}
+
+</pre>
+
+
+<p>POD nodes are laid out in a pretty simple fashion. They&#8217;re either &#8220;leaves&#8221; like text blocks (our infamous paragraph contents) or they&#8217;re shells, like a list of items. An easy way to tell whether a node is a leaf or not is whether it has &#8216;contents&#8217;, and we do that by the &#8220;^can(&#8216;contents&#8217;)&#8221; test. Just calling the method directly would work as well, but every time we called it on a leaf node, we&#8217;d get a runtime error. Not good.<br>Once you know that bit, the code sort of falls into place.</p>
+
+
+
+<ul><li>Visit $node (AKA &#8220;do something with it&#8221;, like print its text)</li><li>If it&#8217;s got children:<ul><li>For each child (that&#8217;s the &#8220;@( $node.contents ) -&gt; $child&#8221; bit)</li><li>Walk over that child.</li></ul></li></ul>
+
+
+
+<p>So your user-declared&nbsp;<em>visit()</em>&nbsp;method will get called once on every node in the entire tree, in a depth-first search, so it&#8217;s in the perfect order to return HTML to you. Well, almost, but the exceptions aren&#8217;t worth talking about.<br>Great, we can walk the tree in depth-first order, and we&#8217;ve got a handy&nbsp;<em>visit()</em>&nbsp;method that&#8217;ll do something. We can even add a&nbsp;<em>$.html</em>&nbsp;attribute that we can accumulate our HTML into as we go along, problem solved!</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+has Str $.html;
+method visit( $node ) {
+  if $node ~~ Pod::Table {
+    $.html ~ '&lt;table&gt;'; # .. hey, wait a minute...
+  }
+}
+
+</pre>
+
+
+<p>Hold the phone, this just tells me when we&#8217;ve encountered, say, a Table node. I wanted to be able to write something when a table starts, and when it ends. And I wanted to know what the table&#8217;s parent was, like we talked about lo those many paragraphs ago.<br>No worries, we&#8217;re really close, honest. I&#8217;ll change the&nbsp;<em>walk()</em>&nbsp;method just to show you.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+method walk( $node, $parent = Nil ) {
+  self.start-node( $node, $parent );
+  if $node.^can('contents') {
+    for @( $node.contents ) -&gt; $child {
+      self.walk( $child, $node );
+    }
+  }
+  self.end-node( $node, $parent );
+}
+
+</pre>
+
+
+<p>The &#8216;= Nil&#8217; is a handy shortcut so that you can call the&nbsp;<em>walk()</em>&nbsp;without having to specify a Nil parent. In your code you can just call&nbsp;<em>walk($pod)</em>&nbsp;without anything special, Perl 6 will just fill in the missing argument for you.<br>Also, you&#8217;ll see that the generic&nbsp;<em>visit()</em>&nbsp;call is gone, there&#8217;s now in its place a&nbsp;<em>start-node($node,$parent)</em>&nbsp;and&nbsp;<em>end-node($node,$parent)</em>&nbsp;call. We can easily use them like this:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+has $.html;
+method start-node( $node, $parent ) {
+  given $node {
+    when Pod::Table { $!html ~= '&lt;table&gt;' }
+  }
+}
+method end-node( $node, $parent ) {
+  given $node {
+    when Pod::Table { $!html ~= '&lt;/table&gt;' }
+  }
+}
+
+</pre>
+
+
+<p>And voilá!&nbsp;<em>start-node()</em>&nbsp;gets called when a table starts, and its companion&nbsp;<em>end-node()</em>&nbsp;gets called after all of the table contents are displayed, so we can write in the &#8216;&lt;/table&gt;&#8217; tag at the right time. And we can even check out the table&#8217;s parent node at&nbsp;<em>$parent</em>. If there isn&#8217;t one, then we&#8217;re at the top of the tree!<br>There are a few minor downsides to this, though. For one, every time we learn about a new Pod node, we&#8217;re going to have to update both the&nbsp;<em>start-node()</em>&nbsp;and&nbsp;<em>end-node()</em>&nbsp;method. But we can fix that simply. Perl 6 lets us dispatch methods by type, using the&nbsp;<em>multi</em>&nbsp;keyword. So, let&#8217;s try that.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+has $.html;
+method start-node( Pod::Table $node, $parent ) { $!html ~= '&lt;table&gt;' }
+method end-node( Pod::Table $node, $parent ) { $!html ~= '&lt;/table&gt;' }
+
+</pre>
+
+
+<p>Much less noise, and Perl 6 will know exactly how to dispatch our types. But when the code out in the wild encounters a new Pod node that we didn&#8217;t know about, it&#8217;ll break with a horrible stacktrace, so let&#8217;s fix that right now.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+has $.html;
+method start-node( $node, $parent ) { die "Unknown node " ~ $node.^WHAT.perl }
+method end-node( $node, $parent ) { die "Unknown node " ~ $node.^WHAT.perl }
+
+</pre>
+
+
+<p>There, now our code will gracefully die when it&#8217;s encountered a node that it&#8217;s never seen before, and report exactly what the node is so that when someone makes a bug report on GitHub we&#8217;ll know what to do.<br>Now, I should reveal that my upcoming&nbsp;<a href="http://web.archive.org/web/20190103092939/https://github.com/drforr/perl6-Pod-To-HTMLBody.git">Pod::To::HTMLBody</a>&nbsp;module doesn&#8217;t quite work like this. I do use some of these techniques behind the scenes, and ultimately I walk the tree almost exactly in the same way, but I&#8217;ve done things differently for several different reasons. I guess you&#8217;ll have to wait for the next part of this article to learn what&#8217;s going on, and what new challenges I faced making this particular module.<br>Until then, this is your humble author signing off.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2018/01/07/tree-surgery/" rel="bookmark"><time class="entry-date published" datetime="2018-01-07T13:21:47+01:00">January 7, 2018</time><time class="updated" datetime="2020-06-30T13:22:16+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2018/01/07/tree-surgery/#respond">Leave a comment<span class="screen-reader-text"> on Tree Surgery</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-97" class="post-97 post type-post status-publish format-standard hentry category-raku-programming entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2017/11/26/test-all-the-things/" rel="bookmark">Test All The&nbsp;Things</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p>Is this thing on? Hello? Great, you can see me. This time is all about unit testing in Perl 6. Are you curious about what that t/ directory is for, and want to fill that empty space with some test files? You&#8217;ve come to the right post. If you don&#8217;t know what I&#8217;m talking about, now might be a good idea to go look at a few&nbsp;<a href="http://web.archive.org/web/20190103092939/https://modules.perl6.org/" target="_blank" rel="noreferrer noopener">Perl 6 modules</a>&nbsp;and check out the testing directory.<br>Perl has a long tradition of extensive test suites for its modules, and Perl 6 continues that tradition. You can start by downloading a module from GitHub following the&nbsp;<a href="http://web.archive.org/web/20190103092939/https://modules.perl6.org/" target="_blank" rel="noreferrer noopener">Perl 6 modules</a>link and checking out its t/ directory.<br>Perl 6 comes with a built-in&nbsp;<a href="http://web.archive.org/web/20190103092939/https://docs.perl6.org/language/testing">Test</a>&nbsp;module, which looks a lot like Perl 5&#8217;s Test::More module. I&#8217;m not going to go into great detail (in this post, at least) about what all the methods do, I&#8217;m going to focus on just two or three ideas that I came up with when writing my own test suites.<br>DRYing out your tests<br>Sometimes you get into the zone writing tests, and your tests start to bunch up.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+is sprintf( "%s", "a" ), "a", "'a' roundtrips.";
+is sprintf( "%s", "€" ), "€", "'€' roundtrips.";
+is sprintf( "%s", "\x[263a]" ), "\x[263a]", "Smiley roundtrips.";
+
+</pre>
+
+
+<p>While something of a contrived example, it&#8217;s pretty obvious that all of these tests should be bundled together. You certainly could put them in their own file, and in this case it might be a good idea because being able to roundtrip strings (make sure that the input is the same as the output) needs some pretty thorough testing.<br>Right now, though, as it stands, three lines hardly is worth the effort to think of a new name for the file, copy to the new location, delete the old content, add it to git and do a push. Let&#8217;s come up with an easier way to group these.<br>Visually separating them with a block certainly works&#8230;</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+{
+  is sprintf( "%s", "a" ), "a", "'a' roundtrips.";
+  is sprintf( "%s", "€" ), "€", "'€' roundtrips.";
+  is sprintf( "%s", "\x[263a]" ), "\x[263a]", "Smiley roundtrips.";
+}
+
+</pre>
+
+
+<p>While it certainly looks better, it doesn&#8217;t help the repetition any. &#8220;roundtrips&#8221; still repeats, and every time we come up with a new string that might break&nbsp;<em>sprintf()</em>&nbsp;we&#8217;ve got to add it in three places. Let&#8217;s tackle that first, before going on to the final round.<br>It&#8217;s certainly tempting to write a quick subroutine to do this, so let&#8217;s dash off one.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+sub roundtrip( $name ) {
+  is sprintf( "%s", $name ), $name, "'$name' roundtrips."
+}
+{
+  roundtrip( "a" );
+  roundtrip( "€" );
+  roundtrip( "\x[263a]" );
+}
+
+</pre>
+
+
+<p>Yippee! We&#8217;ve eliminated almost all of the redundancy, and our test output still works!</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+ok 1 - 'a' roundtrips.
+ok 2 - '€' roundtrips.
+ok 3 - '☺' roundtrips.
+
+</pre>
+
+
+<p>There&#8217;s a problem lurking here, though. A couple, actually. What happens when&nbsp;<em>sprintf()</em>breaks?</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+ok 1 - 'a' roundtrips.
+not ok 2 - '€' roundtrips.
+# Failed test ''€' roundtrips.'
+# at t/10-sprintf.t line 4
+ok 3 - '☺' roundtrips.
+
+</pre>
+
+
+<p>Pretending we&#8217;re in a hurry and this is just one of a number of problems we have to debug this evening (just like in real life), open your editor and go to line 4 to quickly trace down the bug&#8230;</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+use Test;
+
+sub roundtrip( $name ) {
+  is sprintf( "%s", $name ), $name, "'$name' roundtrips." # line 4
+}
+{
+  roundtrip( "a" );
+  roundtrip( "€" );
+  roundtrip( "\x[263a]" );
+}
+
+</pre>
+
+
+<p>Hold the phone here, I expected to jump to the test that failed, and I&#8217;m on a test subroutine! This would get even more confusing if I had a test library, and&nbsp;<em>roundtrip()</em>&nbsp;wasn&#8217;t even in my test file. It&#8217;d be even a bit confusing if I just saw the word &#8217;roundtrip&#8217; repeated over and over, and just searched for that. Or even worse, imagine that this is a file with 200+ tests in it, and every tenth test is for a low Unicode character, so you&#8217;ve got to page through 20 different tests &#8217;til you find the right one. There&#8217;s got to be a better way.<br>Now you could certainly throw away your changes, roll back to the point where you refactored and call the time a waste. It&#8217;s easy enough to salvage, though.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+use Test;
+
+sub roundtrip( $name ) {
+  sprintf( "%s", $name )
+}
+{
+  is roundtrip( "a" ), "a", "'a' roundtrips.";
+  is roundtrip( "€" ), "€", "'€' roundtrips.";
+  is roundtrip( "\x[263a]" ), "\x[263a]", "'\x[263a]' roundtrips.";
+}
+
+</pre>
+
+
+<p>This solves the problem, so when an&nbsp;<em>is()</em>&nbsp;test fails, we&#8217;ll get pointed directly at the line number, and can jump there in Atom, Emacs, Vim or whatever. But we&#8217;ve gotten our duplication back. Let&#8217;s try to refactor our way out of this, while making sure that we don&#8217;t put the&nbsp;<em>is()</em>&nbsp;back into the helper&nbsp;<em>roundtrip()</em>&nbsp;subroutine.<br>We&#8217;ll start by noting that&nbsp;<em>is( $string, $roundtripped )</em>&nbsp;(ignoring the&nbsp;<em>$message</em>&nbsp;parameter) is equivalent to&nbsp;<em>ok( $string eq $roundtripped )</em>. Change the test from&nbsp;<em>is()</em>&nbsp;to&nbsp;<em>ok()</em>&nbsp;first, then add&nbsp;<em>eq $name</em>&nbsp;inside&nbsp;<em>roundtrip()</em>, and get rid of the redundant argument.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+use Test;
+
+sub roundtrip( $name ) {
+  sprintf( "%s", $name ) eq $name
+}
+{
+  ok roundtrip( "a" ), "'a' roundtrips.";
+  ok roundtrip( "€" ), "'€' roundtrips.";
+  ok roundtrip( "\x[263a]" ), "'\x[263a]' roundtrips.";
+}
+
+</pre>
+
+
+<p>That&#8217;s pretty good, but there&#8217;s a constant &#8217;roundtrips.&#8217; string there. Also we&#8217;ve got this&nbsp;<em>{..}</em>block that&#8217;s unused, so let&#8217;s put that block to work by factoring out the &#8217;roundtrips.&#8217; bit, using&nbsp;<em>subtest {..}</em>.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+use Test;
+
+sub roundtrip( $name ) {
+  sprintf( "%s", $name ) eq $name
+}
+subtest 'roundtrips', {
+  ok roundtrip( "a" ), "'a'";
+  ok roundtrip( "€" ), "'€'";
+  ok roundtrip( "\x[263a]" ), "'\x[263a]'";
+};
+
+</pre>
+
+
+<p>Looking good, but we&#8217;ve lost a bit along the way. Earlier, when we ran our test suite, we&#8217;d get nicely labeled output. Now&#8230; not so much.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+  ok 1 - 'a'
+  ok 2 - '€'
+  ok 3 - '☺'
+ok 1 - roundtrips
+
+</pre>
+
+
+<p>In a simple, short file like this, scanning from the&nbsp;<em>ok 1 &#8211; &#8216;a&#8217;</em>&nbsp;line, thinking &#8220;Okay, why are we testing &#8216;a&#8217;?&#8230; Aha, roundtrip tests.&#8221; is pretty quick, and the indentation tells us we&#8217;re grouping a bunch of tests, but it would be&nbsp;<strong>really</strong>&nbsp;nice to be able to put that test message where it belongs, in the roundtrip message. So let&#8217;s do just that.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+use Test;
+
+sub roundtrip( $name ) {
+  sprintf( "%s", $name ) eq $name, "'$name' roundtrips."
+}
+subtest 'roundtrips', {
+  ok roundtrip( "a" );
+  ok roundtrip( "€" );
+  ok roundtrip( "\x[263a]" );
+};
+
+</pre>
+
+
+<p>Great, we&#8217;ve got just one test function that tests and gives us a message! Let&#8217;s run it!</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+  ok 1 -
+  ok 2 -
+  ok 3 -
+ok 1 - roundtrips
+
+</pre>
+
+
+<p>What&#8217;s going on here?&nbsp;<em>roundtrip()</em>&nbsp;returns both the truthiness of our test and the message correctly, you can test that on the command line yourself. Yes, Virginia, Perl 6 subroutines&nbsp;<strong>can</strong>&nbsp;return more than one value &#8211;&nbsp;<em>perl6 -e&#8217;sub test { &#8220;foo&#8221;, &#8220;bar&#8221; }; say test();&#8217;</em>&nbsp;will return&nbsp;<em>[ foo bar ]</em>&nbsp;as you&#8217;d expect.<br>So&nbsp;<em>ok()</em>&nbsp;is getting the list that&nbsp;<em>roundtrip()</em>&nbsp;returns, and should be unpacking that list and&#8230;hey, waitaminnit.&nbsp;<em>roundtrip()</em>&nbsp;returns a list, and&nbsp;<em>ok()</em>&nbsp;expects one argument and one optional argument&#8230; maybe&nbsp;<strong>that&#8217;s</strong>&nbsp;what&#8217;s going wrong here. So, how do we solve this?<br>Luckily for us, there&#8217;s an easy way to unpack our list into two arguments. It&#8217;s not&nbsp;<strong>quite</strong>destructuring (there&#8217;s another way to do that) but it works for us. The&nbsp;<strong>| (pipe)</strong>&nbsp;symbol before a list &#8220;expands&#8221; that list inline into a bunch of individual arguments, so let&#8217;s put that before the&nbsp;<em>roundtrip()</em>&nbsp;call and unpack the list.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+use Test;
+
+sub roundtrip( $name ) {
+  sprintf( "%s", $name ) eq $name, "'$name' roundtrips."
+}
+subtest 'roundtrips', {
+  ok |roundtrip( "a" );
+  ok |roundtrip( "€" );
+  ok |roundtrip( "\x[263a]" );
+};
+
+</pre>
+
+
+<p>And rerunning our test suite now, our output is what we expect.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+  ok 1 - 'a' roundtrips.
+  ok 2 - '€' roundtrips.
+  ok 3 - '☺' roundtrips.
+ok 1 - roundtrips
+
+</pre>
+
+
+<p>This may be a bridge too far for some, and I respect your decision. Using the&nbsp;<em>subtest()</em>&nbsp;block may be all you need, because you can quickly search for a keyword in the string and bounce immediately to the start of the tests where one fails. You may even want to go to the lengths of using&nbsp;<code>ok( roundtrip($_) ) for &lt; a € ☺ &gt;</code>&nbsp;to get rid of the last duplicated call to&nbsp;<em>roundtrip()</em>, that&#8217;s your choice. all I&#8217;m offering here is some ways to DRY out your test files.<br>Gentle Reader, if you&#8217;ve gotten this far, thank you. I do read all the comments that I get, at least eventually. I&#8217;m also @DrForr on Twitter, &#8216;Jeff Goff&#8217; on Facebook and LinkedIn. Thank you for your time, and I hope it was worth your while.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2017/11/26/test-all-the-things/" rel="bookmark"><time class="entry-date published" datetime="2017-11-26T13:22:32+01:00">November 26, 2017</time><time class="updated" datetime="2020-06-30T13:23:04+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2017/11/26/test-all-the-things/#respond">Leave a comment<span class="screen-reader-text"> on Test All The&nbsp;Things</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-100" class="post-100 post type-post status-publish format-standard hentry category-raku-programming entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2017/04/19/wrangling-metadata-the-right-way/" rel="bookmark">Wrangling Metadata the Right&nbsp;Way</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p>If you&#8217;re new to Regular Expressions or Grammars (at least as they&#8217;re used in Perl 6), then I&#8217;d suggest starting with&nbsp;<a href="http://web.archive.org/web/20190103092939/http://theperlfisher.blogspot.ro/2016/02/from-regular-expressions-to-grammars-pt.html" target="_blank" rel="noreferrer noopener">the 1st part</a>&nbsp;of a full tutorial on Perl 6 grammars. Now to the heart of the matter!</p>
+
+
+
+<p>I&#8217;m rewriting the ANTLR -&gt; Perl 6 grammar translator, and the code was simply too old to really be refactored &#8211; it predated the Great List Refactor, ask any old Perl 6 hand about that. This&nbsp;<strong>does</strong>&nbsp;require some familiarity with how grammars and Abstract Syntax Trees are related, so please bear with me.<br>Grammar rules (rules that tell Perl 6 how you want to match text) look something like:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+rule parserRuleSpec
+        {
+        &lt;ID&gt;
+        ':'
+        &lt;parserAltList&gt;
+        ';'
+        }
+
+</pre>
+
+
+<p>Here an &lt;ID&gt; is simply the name of a parser rule, and &lt;parserAltList&gt; is its body, consisting of a series of &#8220;alternations&#8221;. Like YACC, Marpa or ANTLR, you can tell Perl 6 to run a block of code when it successfully parses a &lt;parserRuleSpec&gt; in the target string. Let&#8217;s assume that our target looks like:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+integer : \d+ ;
+</pre>
+
+
+<p>Even if you don&#8217;t know the exact details, it shouldn&#8217;t be hard to guess that &lt;ID&gt; matches &#8216;integer&#8217;, and &lt;parserAltList&gt; matches &#8216;\d+&#8217;. If you don&#8217;t ask Perl 6 to do anything to this, the &#8216;integer&#8217; and &#8216;\d+&#8217; bits tend to sort of get lost in what can look like a confusing blizzard of hashes and arrays, it certainly was confusing to me. But we can help make sense of all of this. When this particular rule succeeds, we can stop right&nbsp;<strong>there</strong>&nbsp;and do something useful with that data. It&#8217;d be nice to get back a neat little hash, with some consistently-named keys, so we can do something like this:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+method parserRuleSpec( $/ )              # rule parserRuleSpec
+        {                                #         {
+        make {                           #
+             name =&gt;                     #
+                 $/&lt;ID&gt;.Str,             #         &lt;ID&gt;
+                 # ':'                   #         ':' 
+             body =&gt;                     #
+                 $/&lt;parserAltList&gt;.Str   #         &lt;parserAltList&gt;
+                 # ';'                   #         ';'
+             }                           #
+        }                                #         }
+
+</pre>
+
+
+<p>[If this doesn&#8217;t render neatly, my apologies, but I wanted to make it clear what I&#8217;ve done.] I&#8217;ve added a parserRuleSpec() method that will be run whenever the parser completely and correctly matches a parserRuleSpec rule. Whenever I want to inspect a parserRuleSpec rule, I don&#8217;t have to dig around inside Match objects and look for strings, all I need to do is something like &#8216;say $/&lt;parserRuleSpec&gt;.ast.gist&#8217; and now I&#8217;ll get a nice simple representation of a parserRuleSpec as a hash with &#8216;name&#8217; and &#8216;body&#8217; keys:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say $/&lt;parserRuleSpec&gt;.ast.gist;
+
+# {name =&gt; 'integer', body =&gt; '\d+'}
+
+</pre>
+
+
+<p>So our potentially-gnarly parserRuleSpec is now tamed, and resides in a nice neat data structure. And if you note, it&#8217;s a pretty mechanical process. Copy the original rule, change &#8216;rule&#8217; to &#8216;method&#8217;, wrap with &#8216;make { }&#8217;, and give names to the &lt;ID&gt; etc. tags. In fact, you could probably automate it, but that&#8217;s another article for another time 🙂 My point here is that you don&#8217;t always want this kind of routinely-generated data structure.<br>If you have a rule like &#8216;integer : \d+ ;&#8217;, then it&#8217;s not unreasonable to assume that other rules will follow, like &#8216;float : \d+ &#8220;.&#8221; \d+ ;&#8217;. Eventually, you&#8217;ll want to collect these into some other data structure, maybe like this:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my %rules;
+for $/&lt;parserRules&gt; -&gt; $rule
+        {
+        %rules{ $rule.&lt;name&gt; } = $rule.&lt;body&gt;;
+        }
+say %rules.gist;
+
+# {integer =&gt; '\d+', float =&gt; '\d+ &quot;.&quot; \d+'}
+
+</pre>
+
+
+<p>Or you could even write it more compactly:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my %rules;
+%rules{ $_.&lt;name&gt; } = $_.&lt;body&gt; for $/&lt;parserRules&gt;;
+say %rules.gist;
+
+# {integer =&gt; '\d+', float =&gt; '\d+ &quot;.&quot; \d+'}
+
+</pre>
+
+
+<p>There are of course other ways to write this, but there&#8217;s another way altogether to avoid the complications. When I started out on this current project (early last year, as it happens) I was of the opinion that the AST return blocks should contain all of the information they needed, so that I never had to &#8220;go back&#8221; for more data. During the rewrite I realized that&#8217;s not necessarily the case, and I can make things more flexible in this case by simply not returning the name as part of the AST, and letting the outer layer do what it wants with the actual name. So, this code now looks like: (skipping the original rule declaration)</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+method parserRuleSpec( $/ )
+        {
+        make $/&lt;parserAltList&gt;.Str
+        }
+
+my %rules;
+for $/&lt;parserRules&gt; -&gt; $rule
+        {
+        %rules{ $rule&lt;ID&gt;&gt;.Str } = $rule.ast;
+        }
+say %rules.gist;
+
+# {integer =&gt; '\d+', float =&gt; '\d+ &quot;.&quot; \d+'}
+
+</pre>
+
+
+<h3>A bit of philosophy, if I may</h3>
+
+
+
+<p>There are two subtle points to be made about this. The first is that I&#8217;m separating the metadata (just the name, but ANTLR decorates rules with other things) from the meat of the rule, so that the user doesn&#8217;t have to wade through as much detail initially. When the user wants to look at the rule, a simple &#8216;say $rule.ast.gist&#8217; will give them an idea of what the rule contains, without a blizzard of metadata like actions and exceptions.<br>Second, and more subtle, as the author of the code I don&#8217;t have to care about what&#8217;s&nbsp;<strong>in</strong>&nbsp;a rule, I just have to grab the .ast and return it. Say, for instance, I got halfway through coding these rules up, and realized that alongside the &#8216;content&#8217; I needed to pass an action parameter as well, so</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my %rules;
+for $/&lt;parserRules&gt; -&gt; $rule
+        {
+        %rules{ $rule.&lt;name&gt; } = $rule.&lt;body&gt;;
+        }
+say %rules.gist;
+
+# {integer =&gt; '\d+', float =&gt; '\d+ &quot;.&quot; \d+'}
+
+</pre>
+
+
+<p>now had to have an &#8216;action&#8217; hash key added:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my %rules;
+for $/&lt;parserRules&gt; -&gt; $rule
+        {
+        %rules{ $rule.&lt;name&gt; } = # If only this were $rule.ast...
+            {
+            body =&gt; $rule.&lt;body&gt;,
+            action =&gt; rule.&lt;action&gt;
+            };
+        }
+say %rules.gist;
+
+# {integer =&gt; {body =&gt; '\d+', action =&gt; '$int-count++'}, float =&gt; {body =&gt; '\d+ &quot;.&quot; \d+', action =&gt; '$float-count++'}}
+
+</pre>
+
+
+<p>Now, every time I want to add a&nbsp;<strong>new</strong>&nbsp;argument alongside &#8216;body&#8217;, I have to add it in at least two places &#8211; the original method that generated the .ast data structure, and the place in the driver code where I capture the data and store it in a higher-level .ast data structure. Actually I&#8217;ve forgotten about the test code (sigh, yes,&nbsp;<strong>again</strong>) so make that three places. And the documentation makes at least four. Those last two don&#8217;t count as much because no matter what you do you&#8217;ve got to update test data, and if your test suite didn&#8217;t catch the change, it really shouldn&#8217;t be called a test suite unless you&#8217;re doing some very specific black-box testing.</p>
+
+
+
+<h3>In conclusion</h3>
+
+
+
+<p>After this long writeup I&#8217;m going to go back to the ANTLR4 test bed with an eye towards eliminating this redundancy. The idea of capturing everything I needed in a grammar layer in a single pass appealed to me when I was first starting to write this, and I imagine the idea of &#8220;one grammar rule returns one AST hash&#8221; has some appeal. It&#8217;s of course not as simple, especially since grammar rules can match optional things, match X or Y or Z but not all, and so on, but knowing that everything you need is in a single hash is handy when you&#8217;re starting out, but I&#8217;m now seeing this as a counterexample to the KISS (Keep It Simple, you Silly thing) principle, and am going to check in the current ANTLR layer and refactor with this in mind before doing more work.Gentle Reader, if you&#8217;ve gotten this far, thank you. I do read all the comments that I get, at least eventually. I&#8217;m also @DrForr on Twitter, &#8216;Jeff Goff&#8217; on Facebook and LinkedIn. Thank you for your time, and I hope it was worth your while.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2017/04/19/wrangling-metadata-the-right-way/" rel="bookmark"><time class="entry-date published" datetime="2017-04-19T13:23:23+02:00">April 19, 2017</time><time class="updated" datetime="2020-06-30T13:23:52+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2017/04/19/wrangling-metadata-the-right-way/#respond">Leave a comment<span class="screen-reader-text"> on Wrangling Metadata the Right&nbsp;Way</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-103" class="post-103 post type-post status-publish format-standard hentry category-uncategorized entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2016/02/28/from-regular-expressions-to-grammars-pt-4/" rel="bookmark">From Regular Expressions to Grammars, Pt.&nbsp;4</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p>If you&#8217;re new to Regular Expressions (at least as they&#8217;re used in Perl 6), then I&#8217;d suggest starting with&nbsp;<a href="http://web.archive.org/web/20190103092939/http://theperlfisher.blogspot.ro/2016/02/from-regular-expressions-to-grammars-pt.html" target="_blank" rel="noreferrer noopener">the 1st part</a>&nbsp;of this series. Those of you with a solid grasp of regular expressions may want to skip ahead to&nbsp;<a href="http://web.archive.org/web/20190103092939/http://theperlfisher.blogspot.ro/2016/02/from-regular-expressions-to-grammars-pt_20.html" target="_blank" rel="noreferrer noopener">last week&#8217;s</a>&nbsp;posting. Now, on with the show!</p>
+
+
+
+<h2>In Last Week&#8217;s Episode</h2>
+
+
+
+<p>We were starting to develop a compiler in Perl 6 that would take a JavaScript expression like</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+ var a = 3; console.log( "Hey, did you know a = " + a + "?" );  
+
+</pre>
+
+
+<p>and turn it into Perl 6 code that compilers like&nbsp;<a href="http://web.archive.org/web/20190103092939/http://perl6.org/" target="_blank" rel="noreferrer noopener">Rakudo Perl</a>&nbsp;can run. Before we get started it&#8217;s probably a good idea to figure out what that code will look like. If you already know Perl 5, then code like this should look familiar to you.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my $a = 3;
+say "Hey, did you know a = " ~ $a ~ "?";
+</pre>
+
+
+<p>We&#8217;ll need to make sure that our regular expressions have captured the essence of the JavaScript. If you remember from last time, we captured our text with this set of regular expressions:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my rule Number { \d+ };
+my rule Variable { \w+ };
+my rule String { '&quot;' &lt;-[ &quot; ]&gt;+ '&quot;' };
+my rule Assignment-Expression { var &lt;Variable&gt; '=' &lt;Number&gt; };
+my rule Function-Call { console '.' log '(' &lt;String&gt; '+' &lt;Variable&gt; '+' &lt;String&gt; ')' };
+
+say 'var a = 3; console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; );' ~~
+rule { &lt;Assignment-Expression&gt; ';' &lt;Function-Call&gt; ';' }
+</pre>
+
+
+<p>If you put this into a Perl 6 source file and run it, the output might look a little strange at first:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+｢var a = 3; console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; );｣
+ Assignment-Expression =&gt; ｢var a = 3｣
+    Variable =&gt; ｢a ｣
+    Number =&gt; ｢3｣
+ Function-Call =&gt; ｢console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; )｣
+    String =&gt; ｢&quot;Hey, did you know a = &quot; ｣
+    Variable =&gt; ｢a ｣
+    String =&gt; ｢&quot;?&quot; ｣
+
+</pre>
+
+
+<p>If you&#8217;ll ignore the ｢｣ marks for the moment, you can see that the matches are indented, almost like a file explorer window, with &#8216;Assignment-Expression&#8217; being a directory, and &#8216;Variable&#8217; and &#8216;Number&#8217; being files inside that directory. That&#8217;s not too far from the truth, actually. When I see this sort of structure, I find that it helps to visualize it like so, with just a bit of added syntax &#8211;</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+$/ =&gt; ｢var a = 3; console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; );｣
+ &lt;Assignment-Expression&gt; =&gt; ｢var a = 3｣
+    &lt;Variable&gt; =&gt; ｢a ｣
+    &lt;Number&gt; =&gt; ｢3｣
+ &lt;Function-Call&gt; =&gt; ｢console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; )｣
+    &lt;String&gt; =&gt; ｢&quot;Hey, did you know a = &quot; ｣
+    &lt;Variable&gt; =&gt; ｢a ｣
+    &lt;String&gt; =&gt; ｢&quot;?&quot; ｣
+
+</pre>
+
+
+<p>This makes it almost too easy to figure out how to print out text, and points out a tiny problem in our regular expression. Let&#8217;s print out the number we&#8217;ve assigned&nbsp;<em>a</em>&nbsp;to, just to start out with. The first line tells us the root of the directory, or match, tree is&nbsp;<em>$/</em>.&nbsp;&nbsp;If you add &#8216;say $/;&#8217; to the end of your test file and rerun it, you&#8217;ll see the entire expression printed out twice. That must mean that&nbsp;<em>$/</em>&nbsp;is the entire match.</p>
+
+
+
+<p>Going down one layer is just as easy as adding what&#8217;s on the left side of the =&gt; arrow. Change the previous &#8216;say&#8217; statement to &#8216;say $/&lt;Assignment-Expression&gt;;&#8217;, and look at how the output changes. It should now look like this:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+｢var a = 3｣
+  Variable =&gt; ｢a ｣
+  Number =&gt; ｢3｣
+
+</pre>
+
+
+<p>Let&#8217;s put our (invisible) markers back in, so we can see where to go&#8230;&nbsp;</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+$/&lt;Assignment-Expression&gt; =&gt; ｢var a = 3｣
+  &lt;Variable&gt; =&gt; ｢a ｣
+  &lt;Number&gt; =&gt; ｢3｣
+
+</pre>
+
+
+<p>We can now see that our target, the number 3, is just one layer further down. Again, we can add what&#8217;s on the left-hand side of the expression, so let&#8217;s do just that.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say $/&lt;Assignment-Expression&gt;&lt;Number&gt;;
+  ｢3｣
+
+</pre>
+
+
+<p>And we have almost exactly what we want. The ｢｣ are in the way, so let&#8217;s &#8220;cast&#8221; the value here back to a number. I&#8217;ve put &#8220;cast&#8221; in scare quotes because it&#8217;s not&nbsp;<strong>quite</strong>&nbsp;what C/C++ programmers think of as &#8220;casting&#8221;. What we want to do is roughly the equivalent of &#8216;sscanf(str,&#8221;%d&#8221;,&amp;num)&#8221;, but in Perl 6, the operation is much simpler.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say +$/&lt;Assignment-Expression&gt;&lt;Number&gt;;
+  3
+
+</pre>
+
+
+<p>Without getting into too much detail,&nbsp;<em>$/</em>&nbsp;is an object that has an implicit number, string and boolean value hiding inside of it. Adding &#8216;+&#8217; to the front reveals the hidden number inside the&nbsp;<em>$/</em>&nbsp;object.</p>
+
+
+
+<h2>From JavaScript to Perl</h2>
+
+
+
+<p>We&#8217;re not too far off from being able to generate Perl 6 code from our JavaScript. Let&#8217;s use what we&#8217;ve learned above with our first statement, the assignment.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say 'my $' ~ $/&lt;Assignment-Expression&gt;&lt;Variable&gt; ~ ' = ' ~
+      $/&lt;Assignment-Expression&gt;&lt;Number&gt; ~ ';';
+
+my $a = 3;
+
+</pre>
+
+
+<p>We&#8217;ve just used 7 lines of Perl 6 to turn code in one language into another language. And most of the Perl 6 code is reusable, because strings, numbers and JavaScript/C/Java-style variable names are common across most languages out there.</p>
+
+
+
+<p>Last time, we learned how to create matches using regular expressions. This time we&#8217;ve learned how we can&nbsp;<strong>use</strong>&nbsp;what we&#8217;ve matched, and how to find what we want inside a&nbsp;<em>say</em>&nbsp;statement. The invisible matching markers are useful enough that I might actually write a module that puts them back into match expressions, it shouldn&#8217;t be hard.</p>
+
+
+
+<p>There is one problem with that scheme, and if we look at the &lt;Function-Call&gt; matches, it&#8217;s pretty easy to see the problem.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+$/&lt;Function-Call&gt; =&gt; ｢console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; )｣
+  &lt;String&gt; =&gt; ｢&quot;Hey, did you know a = &quot; ｣
+  &lt;Variable&gt; =&gt; ｢a ｣
+  &lt;String&gt; =&gt; ｢&quot;?&quot; ｣
+
+</pre>
+
+
+<p>When we write &#8220;say $/&lt;Function-Call&gt;&lt;String&gt;;&#8221;, which &lt;String&gt; will we get? Before you run this, try to guess. Is it the first one, because Perl 6 won&#8217;t replace a match object once it&#8217;s been created? Is it the last one, because the last one &#8220;overwrites&#8221; the first one? Does the compiler simply &#8220;get confused&#8221; and prints nothing? Try it and see!</p>
+
+
+
+<p>It actually returns both matches in a list, so you can reference either one. Our invisible markers now get to look like&nbsp;</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+$/&lt;Function-Call&gt; =&gt; ｢console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; )｣
+  &lt;String&gt;[0] =&gt; ｢&quot;Hey, did you know a = &quot; ｣
+  &lt;Variable&gt; =&gt; ｢a ｣
+  &lt;String&gt;[1] =&gt; ｢&quot;?&quot; ｣
+
+</pre>
+
+
+<p>So if we want to print out the first string, we can write &#8220;say $/&lt;Function-Call&gt;&lt;String&gt;[0];&#8221; and get back &nbsp;｢&#8221;Hey, did you know a = &#8221; ｣ complete with the funky Japanese quotation marks. Thankfully there&#8217;s a shortcut to getting rid of those, just like there was with the number 3.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say ~$/&lt;Function-Call&gt;&lt;String&gt;[0];
+  &quot;Hey, did you know a = &quot;
+
+</pre>
+
+
+<p>The &#8216;~&#8221; operator &#8220;stringifies&#8221; the match, just like &#8216;+&#8217; &#8220;numifies&#8221; the match that gets returned. So, you can probably write the final line yourself&#8230;</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say 'say ' ~ $/&lt;Function-Call&gt;&lt;String&gt;[0] ~ ' ~ '
+  ' $' ~ $/&lt;Function-Call&gt;&lt;Variable&gt; ~ ' ~ '
+  $&lt;Function-Call&gt;&lt;String&gt;[1] ~ ';';
+
+say &quot;Hey, did you know a = &quot; ~ $a ~ &quot;?&quot;;
+
+</pre>
+
+
+<p>And we&#8217;ve compiled our two lines of JavaScript into Perl 6.</p>
+
+
+
+<h2>Refactoring</h2>
+
+
+
+<p>What we&#8217;ve got works, but there&#8217;s quite a bit of repetition. Here&#8217;s what we&#8217;ve got so far.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my rule Variable { \w+ };
+my rule String { '&quot;' &lt;-[ &quot; ]&gt;+ '&quot;' };
+my rule Assignment-Expression { var &lt;Variable&gt; '=' &lt;Number&gt; };
+my rule Function-Call { console '.' log '(' &lt;String&gt; '+' &lt;Variable&gt; '+' &lt;String&gt; ')' };
+
+'var a = 3; console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; );' ~~
+rule { &lt;Assignment-Expression&gt; ';' &lt;Function-Call&gt; ';' }
+
+say 'my $' ~ $/&lt;Assignment-Expression&gt;&lt;Variable&gt; ~
+       ' = ' ~ $/&lt;Assignment-Expression&gt;&lt;Number&gt; ~
+       ';';
+
+say 'say ' ~ $/&lt;Function-Call&gt;&lt;String&gt;[0] ~
+       ' ~ $' ~ $/&lt;Function-Call&gt;&lt;Variable&gt; ~
+      ' ~ ' ~ $/&lt;Function-Call&gt;&lt;String&gt;[1] ~
+      ';';
+
+</pre>
+
+
+<p>The rules look pretty good, the repetitions of &lt;String&gt; and &lt;Variable&gt; are pretty much unavoidable, but look at the &#8216;say&#8217; statements. You&#8217;ll see that &lt;Assignment-Expression&gt; and &lt;Function-Call&gt; repeat themselves several times. One way to get rid of this repetition is to create a temporary variable, but that could get ugly.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my $assignment-expression = $/&lt;Assignment-Expression&gt;;
+say 'my $' ~ $assignment-expression&lt;Variable&gt; ~ ' = ' ~
+    $assignment-expression&lt;Number&gt; ~ ';'
+
+</pre>
+
+
+<p>Instead, let&#8217;s take advantage of Perl 6&#8217;s subroutine signatures, and reuse the&nbsp;<em>$/</em>&nbsp;variable name so we can reuse the code we wrote above, and just drop out the &lt;Assignment-Expression&gt; part. I&#8217;ll name the subroutine after the rule, just to keep things straight. (You&#8217;ll see why later.)</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+sub assignment-expression( $/ ) {
+    'my $' ~ $/&lt;Variable&gt; ~ ' = ' ~ $/&lt;Number&gt; ~ ';'
+}
+
+say assignment-expression( $/&lt;Assignment-Expression&gt; ); 
+
+</pre>
+
+
+<p>Let&#8217;s do the same for &lt;Function-Call&gt; as well, creating a function with the same name and&nbsp;<em>$/</em>&nbsp;subroutine signature. It now fits neatly on one line, and only repeats the &lt;String&gt; bit because it has to.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+sub function-call( $/ ) {
+    'say ' ~ $/&lt;String&gt;[0] ~ ' ~ ' ~ $/&lt;Variable&gt; ~ ' ~ ' ~ $/&lt;String&gt;[1] ~ ';'
+}
+
+say function-call( $/&lt;Function-Call&gt; ); 
+
+</pre>
+
+
+<h2>Objectification</h2>
+
+
+
+<p>I&#8217;ve made quite a few choices along the way to get us to this point in the narrative. Here&#8217;s where we are after the last bout of refactoring:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+
+my rule Number { \d+ };
+my rule Variable { \w+ };
+my rule String { '&quot;' &lt;-[ &quot; ]&gt;+ '&quot;' };
+my rule Assignment-Expression { var &lt;Variable&gt; '=' &lt;Number&gt; };
+my rule Function-Call { console '.' log '(' &lt;String&gt; '+' &lt;Variable&gt; '+' &lt;String&gt; ')' };
+
+'var a = 3; console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; );' ~~
+rule { &lt;Assignment-Expression&gt; ';' &lt;Function-Call&gt; ';' }
+
+sub assignment-expression( $/ ) {
+    'my $' ~ $/&lt;Variable&gt; ~ ' = ' ~ $/&lt;Number&gt; ~ ';'
+}
+
+sub function-call( $/ ) {
+    'say ' ~ $/&lt;String&gt;[0] ~ ' ~ $' ~ $/&lt;Variable&gt; ~ ' ~ ' ~ $/&lt;String&gt;[1] ~ ';';
+}
+say assignment-expression( $/&lt;Assignment-Expression&gt; );
+say function-call( $/&lt;Function-Call&gt; );
+
+</pre>
+
+
+<p>Here&#8217;s where this all pays off. &nbsp;Let&#8217;s pack up the last two &#8216;say&#8217; calls first. We haven&#8217;t given the top-level rule a name, so let&#8217;s just call it &#8230; well, &#8216;top&#8217; for now.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+sub top( $/ ) { assignment-expression( $/ ) ~ function-Call( $/ ) }
+
+</pre>
+
+
+<h3>Pack up your Troubles&nbsp;</h3>
+
+
+
+<p>We haven&#8217;t done much with the rules sitting at the top of the file for a while, so let&#8217;s work with those. In Perl 6, and for that matter programming in general, it&#8217;s a good idea to package up your code for reuse. While Perl 6 lets us package up code with the &#8216;class&#8217; keyword, the rules we have really aren&#8217;t &#8220;code&#8221; in any sense. While they can be used in code, and we do use them, they don&#8217;t really make any decisions on their own.</p>
+
+
+
+<p>So we shouldn&#8217;t use the &#8216;class&#8217; keyword to package them up. Instead, there&#8217;s another convenient type meant for packaging up a bunch of regular expressions and rules, called a &#8216;grammar&#8217;. It looks just like the syntax for declaring a &#8216;rule&#8217;, and that&#8217;s actually by design.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+
+grammar JavaScript {
+  rule Number { \d+ };
+  rule Variable { \w+ };
+  rule String { '&quot;' &lt;-[ &quot; ]&gt;+ '&quot;' };
+  rule Assignment-Expression { var &lt;Variable&gt; '=' &lt;Number&gt; };
+  rule Function-Call { console '.' log '(' &lt;String&gt; '+' &lt;Variable&gt; '+' &lt;String&gt; ')' };
+
+  rule TOP { &lt;Assignment-Expression&gt; ';' &lt;Function-Call&gt; ';' };
+}
+</pre>
+
+
+<p>You&#8217;ll note that we gave our top-level rule a name as well, and just called it &#8216;TOP&#8217; for the time being. If you&#8217;re playing along at home, you&#8217;ve probably made the change and are wondering how the &#8220;&#8216;var a = 3;&#8230;&#8217; ~~ rule { &#8230; }&#8221; thing plays out, because trying things like &#8220;&#8216;var a = 3;&#8230;&#8217; ~~ JavaScript;&#8221; won&#8217;t quite work.</p>
+
+
+
+<p>Grammars are just like classes, in that they&#8217;re really just clumps of potential code. They can&#8217;t be made to do work on their own, they have to be converted from potential to .. well, kinetic code. We can do that just like you do with any class.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my $javaScript = JavaScript.new;
+</pre>
+
+
+<p>And now we have a variable that we can work with. Now, let&#8217;s put it to work. All grammar classes come with a built-in &#8216;parse()&#8217; method that we can use to get at the regular expressions inside it. Let&#8217;s modify our match statement to take advantage of that &#8211;</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+
+$javaScript.parse(
+    'var a = 3; console.log( "Hey, did you know a = " + a + "?" );');
+
+</pre>
+
+
+<p>And our code should work again.</p>
+
+
+
+<h3>Taking Action</h3>
+
+
+
+<p>Now that we&#8217;ve bundled up all of our matching stuff into one tidy little class, it&#8217;d be nice if we could do the same for those subroutines. Let&#8217;s try that here, and put our subroutines into their own namespace, just like we did with the rules. We&#8217;ll have to change from &#8216;sub&#8217; to &#8216;method&#8217;, and our &#8216;top&#8217; method will have to use &#8216;self.&#8217; to call the other methods.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+class Actions {
+    method assignment-expression( $/ ) {
+      'my $' ~ $/&lt;Variable&gt; ~ ' = ' ~ $/&lt;Number&gt; ~ ';'
+    }
+
+    method function-call( $/ ) {
+      'say ' ~ $/&lt;String&gt;[0] ~ ' ~ $' ~ $/&lt;Variable&gt; ~ ' ~ ' ~ $/&lt;String&gt;[1] ~ ';';
+    }
+
+    method top( $/ ) {
+        self.assignment-expression( $/&lt;Assignment-Expression&gt; ) ~
+        self.function-call( $/&lt;Function-Call&gt; )
+    }
+}
+</pre>
+
+
+<p>And just like before, we can create the Actions object in one line</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+ my $actions = Actions.new;
+</pre>
+
+
+<p>And call the top&nbsp;<strong>almost</strong>&nbsp;like we did before.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say $actions.top( $/ );
+</pre>
+
+
+<p>We&#8217;ve changed things around quite a bit, so here&#8217;s a look at where we stand.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+grammar JavaScript {
+  rule Number { \d+ };
+  rule Variable { \w+ };
+  rule String { '&quot;' &lt;-[ &quot; ]&gt;+ '&quot;' };
+  rule Assignment-Expression { var &lt;Variable&gt; '=' &lt;Number&gt; };
+  rule Function-Call { console '.' log '(' &lt;String&gt; '+' &lt;Variable&gt; '+' &lt;String&gt; ')' };
+  rule TOP { &lt;Assignment-Expression&gt; ';' &lt;Function-Call&gt; ';' }
+}
+my $j = JavaScript.new;
+
+$j.parse('var a = 3; console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; );');
+
+class Actions {
+    method assignment-expression( $/ ) {
+      'my $' ~ $/&lt;Variable&gt; ~ ' = ' ~ $/&lt;Number&gt; ~ ';'
+    }
+
+    method function-call( $/ ) {
+      'say ' ~ $/&lt;String&gt;[0] ~ ' ~ $' ~ $/&lt;Variable&gt; ~ ' ~ ' ~ $/&lt;String&gt;[1] ~ ';';
+    }
+
+    method top( $/ ) {
+      self.assignment-expression( $/&lt;Assignment-Expression&gt; ) ~
+      self.function-call( $/&lt;Function-Call&gt; )
+    }
+}
+
+my $actions = Actions.new;
+say $actions.top($/);
+</pre>
+
+
+<p>Don&#8217;t worry, we&#8217;re almost there. Now that we have a separate class for the actions, let&#8217;s rename the methods to exactly match the grammar rules, so we don&#8217;t forget what they are.&nbsp;</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+class Actions {
+    method Assignment-Expression( $/ ) {
+      'my $' ~ $/&lt;Variable&gt; ~ ' = ' ~ $/&lt;Number&gt; ~ ';'
+    }
+
+    method Function-Call( $/ ) {
+      'say ' ~ $/&lt;String&gt;[0] ~ ' ~ $' ~ $/&lt;Variable&gt; ~ ' ~ ' ~ $/&lt;String&gt;[1] ~ ';';
+    }
+
+    method TOP( $/ ) {
+      self.Assignment-Expression( $/&lt;Assignment-Expression&gt; ) ~
+      self.Function-Call( $/&lt;Function-Call&gt; )
+    }
+}
+</pre>
+
+
+<p>Furthermore, there&#8217;s one last bit of magic that we can take advantage of. We&#8217;re going to combine the $javascript and $actions objects like so.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say $javascript.parse('....', :actions($actions) );
+</pre>
+
+
+<p>The &#8216;:actions(&#8230;)&#8217; is just a fancy way of declaring an optional argument to the &#8216;parse()&#8217; method. We&#8217;re telling the regular expression engine that any time a rule like &lt;Function-Call&gt; or &lt;TOP&gt; matches, we&#8217;d like it to call the corresponding method in our class.</p>
+
+
+
+<p>This almost works as-is, but if you run the code with these modifications, you&#8217;ll see the parser returns the original match object, with those Japanese quote marks. So it seems like we&#8217;re back at square one. Not quite.</p>
+
+
+
+<p>Go ahead and add a temporary &#8220;say &#8216;Hello!&#8217;;&#8221; to one of the methods, just to confirm that they&#8217;re getting called. This is important proof that the regex engine is working and properly parsing what it&#8217;s going over. You can even use some of the tricks we learned above and write &#8220;say $/&lt;Variable&gt;;&#8221; to see if the match is getting run as you thought it should. Go ahead and play around, come back here when you&#8217;re done.</p>
+
+
+
+<h3>Mixed Signals</h3>
+
+
+
+<p>What&#8217;s happening is the methods are getting called, but their output is being lost. Let&#8217;s capture the output and use the final (ha!) feature of the grammar, the Abstract Syntax Tree. Now, this might dredge up notions of sitting in classrooms watching boxes and lines being drawn on the chalkboard, but it&#8217;s not really that bad. We&#8217;ve already seen one, in fact the output from say() is an AST.<br>Let&#8217;s look at the&nbsp;<strong>other</strong>&nbsp;syntax tree, the one we&#8217;re building in the background. Add &#8216;.ast&#8217; to the end of the &#8220;$javascript.parse(&#8230;).ast;&#8221; call, like that. This will show us the syntax tree we&#8217;re building on our own. Or will it?<br>If you do this, you&#8217;ll see it prints&nbsp;<em>(Any)</em>, which generally is the equivalent of &#8220;failed match&#8221;, but we know from previous testing that the match hasn&#8217;t failed. So what&#8217;s going on here? While our methods are getting run, and they return output, Perl 6 doesn&#8217;t know what to do with the output, or where it fits in the AST it&#8217;s been asked to build.<br>The key is a little thing called &#8220;make&#8221;. Add this where we used to put &#8216;say&#8217;, at the start of the methods.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+class Actions {
+    method Assignment-Expression( $/ ) {
+      make 'my $' ~ $/&lt;Variable&gt; ~ ' = ' ~ $/&lt;Number&gt; ~ ';'
+    }
+
+    method Function-Call( $/ ) {
+      make 'say ' ~ $/&lt;String&gt;[0] ~ ' ~ $' ~ $/&lt;Variable&gt; ~ ' ~ ' ~ $/&lt;String&gt;[1] ~ ';'
+    }
+
+    method TOP( $/ ) {
+      make $/&lt;Assignment-Expression&gt;.ast ~ $/&lt;Function-Call&gt;.ast
+    }
+}
+</pre>
+
+
+<p>Also, because Perl 6 is calling the methods for us, we don&#8217;t need to call self.Function-Call(&#8230;) on our own, all we need to do is look at the syntax tree that Function-Call(&#8230;) returns to us. And there we have it. A complete, albeit tiny compiler. In case you&#8217;ve gotten lost with the editing, here&#8217;s the final result.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+grammar JavaScript {
+  rule Number { \d+ };
+  rule Variable { \w+ };
+  rule String { '&quot;' &lt;-[ &quot; ]&gt;+ '&quot;' };
+  rule Assignment-Expression { var &lt;Variable&gt; '=' &lt;Number&gt; };
+  rule Function-Call { console '.' log '(' &lt;String&gt; '+' &lt;Variable&gt; '+' &lt;String&gt; ')' };
+  rule TOP { &lt;Assignment-Expression&gt; ';' &lt;Function-Call&gt; ';' }
+}
+
+class Actions {
+  method Assignment-Expression( $/ ) {
+    make 'my $' ~ $/&lt;Variable&gt; ~ ' = ' ~ $/&lt;Number&gt; ~ ';' }
+
+  method Function-Call( $/ ) {
+    make 'say ' ~ $/&lt;String&gt;[0] ~
+     ' ~ $' ~ $/&lt;Variable&gt; ~ ' ~ ' ~ $/&lt;String&gt;[1] ~ ';'; }
+
+  method TOP( $/ ) {
+    make $/&lt;Assignment-Expression&gt;.ast ~ $/&lt;Function-Call&gt;.ast }
+}
+
+my $j = JavaScript.new;
+my $a = Actions.new;
+say $j.parse(
+   'var a = 3; console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; );',
+   :actions($a)).ast;
+</pre>
+
+
+<h3>Where Do We Go From Here&nbsp;</h3>
+
+
+
+<p>One simple but neat change you can do is expand the Assignment-Expression to accept both numbers and strings. We talked last time about alternatives in the rules, so this hint should be enough to get you started:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+rule Assignment-Expression { var &lt;Variable&gt; '=' ( &lt;Number&gt; | &lt;String&gt; ) }
+</pre>
+
+
+<p>You&#8217;ll have to modify the Assignment-Expression method a little bit to make this work. Or you could get crafty and realize that ( &lt;Number&gt; | &lt;String&gt; ) could be turned into its own little generic &#8220;Term&#8221; rule, &#8220;rule Term { &lt;Number&gt; | &lt;String&gt; }&#8221;, add an action &#8220;method Term( $/ ) { make $/&lt;Number&gt; or $/&lt;String&gt; }&#8221; and only change one thing in Assignment-Expression.</p>
+
+
+
+<p>Time and again when helping people out online, I&#8217;ve had to say that Perl 5 regular expressions aren&#8217;t&nbsp;<strong>quite</strong>&nbsp;the tool they need, whether they&#8217;re trying to find a bit of HTML in a document, rewriting an RTF file or pulling out a title from a LaTeX doc. I&#8217;ve had to say &#8220;Use HTML::Parser&#8221;, or &#8220;Check out the RTF modules on CPAN&#8221; or &#8220;Try Parser::MCG&#8221; to tackle these thorny questions.</p>
+
+
+
+<p>Perl 6 regular expressions can handle all of those tasks and much more. Plus, the techniques I&#8217;ve mentioned in this tutorial aren&#8217;t specific to JavaScript. You can use these same techniques to parse any language that can be broken down into tokens. It may take some creative use of higher-level rules, but it can be done.</p>
+
+
+
+<p>Your methods don&#8217;t have to return Perl 6 text when they parse JavaScript. They could just as easily count up the number of function calls, flag lines of code that can cause problems or do inline optimization. Perl 6 is written in Perl 6, so you could even use these techniques to compile from Perl 6 to JavaScript.</p>
+
+
+
+<p>Thank you, gentle reader, for making it this far with me. I hope you&#8217;ve learned something along the way, or at least been entertained by what vistas Perl 6 opens up. Next month I&#8217;ll probably briefly return to Perl 5 and more real-world debugging.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2016/02/28/from-regular-expressions-to-grammars-pt-4/" rel="bookmark"><time class="entry-date published" datetime="2016-02-28T13:24:06+01:00">February 28, 2016</time><time class="updated" datetime="2020-06-30T13:24:40+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/uncategorized/" rel="category tag">Uncategorized</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2016/02/28/from-regular-expressions-to-grammars-pt-4/#respond">Leave a comment<span class="screen-reader-text"> on From Regular Expressions to Grammars, Pt.&nbsp;4</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-106" class="post-106 post type-post status-publish format-standard hentry category-raku-programming entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2016/02/20/from-regular-expressions-to-grammars-pt-3/" rel="bookmark">From Regular Expressions to Grammars, Pt.&nbsp;3</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p>If you haven&#8217;t been following this series, please check out&nbsp;<a href="http://web.archive.org/web/20190103092939/http://theperlfisher.blogspot.ro/2016/02/from-regular-expressions-to-grammars-pt.html" target="_blank" rel="noreferrer noopener">Part 1</a>&nbsp;of this series&nbsp;before continuing to read.</p>
+
+
+
+<h2>Movin&#8217; on up</h2>
+
+
+
+<p>After an admittedly whirlwind tour of the basic set of regular expressions, it&#8217;s time to enter the big league. We&#8217;ll take it slow, and just for variety, we&#8217;ll tackle a bit of JavaScript. I&#8217;ve developed this technique over a few prior posts, so if you&#8217;ve been reading past entries this may seem a bit of a refresher.</p>
+
+
+
+<p>At the end of the series, we&#8217;ll have created a small JIT interpreter for a small bit of JavaScript, to wit, this line:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+var a = 3; console.log( "Hey, did you know a = " + a + "?" );
+
+</pre>
+
+
+<p>We&#8217;ll take this one step at a time. I generally like to put this into source code control so I can easily checkpoint and revert source when an approach doesn&#8217;t work out. Like many people these days, I use git, but feel free to use mercurial, darcs, SVN or whatever works best for you.</p>
+
+
+
+<p>The best compiler in the world won&#8217;t help if it can&#8217;t read your input, so let&#8217;s start with a simple test.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say 'var a = 3; console.log( "Hey, did you know a = " + a + "?" );' ~~
+/'var a = 3; console.log( "Hey, did you know a = " + a + "?" );'/
+
+</pre>
+
+
+<p>The &#8216;say&#8217; is included so that we can see the output from the match. Right now, we expect that since we&#8217;re attempting to match a quoted string against an exact copy of itself, the match should trivially succeed. It&#8217;s roughly the same as</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say 'Hello, world!' ~~ /'Hello, world!'/
+</pre>
+
+
+<p>The entire expression is enclosed within single quotes, so we don&#8217;t have to concern ourselves with what gets quoted and what doesn&#8217;t.</p>
+
+
+
+<p>Anyway, copy the &#8220;say &#8216;a = 3&#8230;.&#8221; statement into a file somewhere and run &#8216;perl6 test.pl6&#8217;, assuming your file is called &#8216;test.pl6&#8217;. &nbsp;It should print out precisely what it matched, which is the string itself:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+jgoff@Demeisen:~$ perl6 test.pl6
+
+｢var a = 3; console.log( "Hey, did you know a = " + a + "?" );｣
+
+</pre>
+
+
+<p>This result lets us know that the match succeeded, and tells us that it matched the entire expression. So, go ahead and checkpoint this in your git (or whatever, I&#8217;ll assume git from here on out) repository and let&#8217;s dive in to refactor things just a bit.</p>
+
+
+
+<h2>Use Cases</h2>
+
+
+
+<p>If we were at this point to go ahead and write the compiler code, it&#8217;d end up being pretty boring. It would be able to compile that exact string to Perl 6 and generate &#8216;my $a = 3; say &#8220;Hey, did you know a = &#8221; ~ $a ~ &#8220;?&#8221;;&#8217;, but it couldn&#8217;t do anything else. See for yourself by changing the &#8220;say &#8216;&#8230;'&#8221; part of the expression to test your own variations.</p>
+
+
+
+<p>JavaScript commonly gets &#8220;minified&#8221; before being sent to the browser, with no unnecessary whitespace in the string. So, go ahead and remove the whitespace from the &#8220;say &#8216;&#8230;'&#8221; part of your expression, and rerun the test. I&#8217;ll wait here.</p>
+
+
+
+<p>Did it match? I thought not. Do a &#8216;git reset &#8211;hard&#8217; to get back to the last known-working point, and let&#8217;s continue. While regular expressions are terribly powerful, they can also be very finicky, as we&#8217;re about to learn. Let&#8217;s focus for a few moments on just one of the statements in our compiler, the &#8220;a = 3;&#8221; statement.</p>
+
+
+
+<p>Programmers will come up with lots of creative ways to express this simple statement, from the terse &#8216;a=3;&#8217; to tabbing out the &#8216;= 3&#8217; portion to line up with something else, to the extreme of even putting the semicolon on the next line so that they don&#8217;t have to add it all the time when copying text around. (Yes, I&#8217;ve seen that style in the wild.)</p>
+
+
+
+<p>Remembering the rule that alphanumerics don&#8217;t need to be escaped, we can combine what we&#8217;ve just learned and match all possible variants like so &#8211;</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say 'a=3;' ~~ / \s* a \s* '=' \s* 3 \s* ';' \s*/
+
+</pre>
+
+
+<p>Which matches any whitespace variant you can dream up, anything from &#8220;a=3;&#8221; to &#8220;\n &nbsp; &nbsp;a &nbsp; &nbsp; = 3;&#8221; and beyond. There are two lessons to be learned here. The first is that by breaking up our string wherever a programmer might want to insert whitespace, we&#8217;ve taken our first step towards &#8220;tokenizing&#8221; the expression. We&#8217;ll go into more depth about that later.</p>
+
+
+
+<p>The second is that while it&#8217;s more flexible, the expression now has these \s* scattered throughout it, making it a little harder to read. Also, inserting &#8220;\s*&#8221; between every word seems like something a computer should be able to do. And in fact, it can. And there&#8217;s already a shorthand in Perl 6 for this.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say 'a=3;' ~~ rule { a '=' 3 ';' }
+
+</pre>
+
+
+<p>No more \s* interrupting us between every place we might want to put whitespace. Let&#8217;s get back to our original expression and apply what we&#8217;ve learned here.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say 'var a = 3; console.log( "Hey, did you know a = " + a + "?" );' ~~
+rule { var a '=' 3 ';'
+          console '.' log '(' '"Hey, did you know a = "' '+' a '+' '"?"' ')' ';' }
+
+</pre>
+
+
+<h2>Structure and Form</h2>
+
+
+
+<p>You might notice that &#8220;Hey, did you know a = &#8221; and &#8220;?&#8221; didn&#8217;t receive the same quoting treatment as the other parts of the rule. While there are some deep reasons here, the main one is practicality. Eventually this compiler we&#8217;re writing should be able to accept &#8220;!&#8221; instead of &#8220;?&#8221;, &#8220;Hello world!&#8221; instead of &#8220;Hey&#8230;&#8221;, and we want to make sure all of these input strings are acceptable.<br>So, it&#8217;s time for a bit of refactoring. Let&#8217;s take a fairly short expression, &#8220;Hello, world!&#8221; to work with. You might remember from the last section that the \w shorthand matches alphanumerics, so a first cut at refactoring &#8220;Hello, world!&#8221; might look like this:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say '"Hello, world!"' ~~ rule { '"' \w+ ',' \w+ '!' '"' }
+
+</pre>
+
+
+<p>And indeed, that will match. It&#8217;ll match &#8220;Goodbye, world!&#8221;, &#8220;Frankly, dear!&#8221; and a host of other expressions. It&#8217;d be nice, though, if there were a way to combine the \w, &#8216;,&#8217; and &#8216;!&#8217; into one thing that we could then match on, because that would let us match &#8220;hello!&#8221;, &#8220;Whats up, doc&#8221; and a&nbsp;<strong>lot</strong>&nbsp;more. Again, yes, there is a shortcut for that.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say '&quot;Hello, world!&quot;' ~~ rule { '&quot;' &lt;[ \s \w , ! ]&gt;+ '&quot;' }
+
+</pre>
+
+
+<p>lets you match a group of characters and/or shortcuts, so &lt;[ a b c ]&gt; on its own would match &#8216;a&#8217;, &#8216;b&#8217; or &#8216;c&#8217; but not &#8216;3&#8217; or &#8217;32&#8217;. We&#8217;re still not quite there, because there&#8217;s a lot more to add in to that expression, you&#8217;d have to add &#8216;?&#8217;, &#8216;+&#8217;, &#8216;.&#8217;, &#8216;;&#8217; for starters, like &lt;[ \s \w , ! ? + . ; ]&gt; and so on. And when you bring Unicode into the mix, you&#8217;ll have to add another million-plus characters for the CJKV region alone.</p>
+
+
+
+<p>By now you won&#8217;t be surprised at all to learn that yes, there&#8217;s a shortcut for this too. The shortest of all shortcuts, it&#8217;s simply &#8216;.&#8217;. So our expression now looks like</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say '"Hello, world!"' ~~ rule { '"' .+ '"' }
+
+</pre>
+
+
+<p>Which says &#8220;Match a quotation mark, then anything, then another quotation mark.&#8221; And if you spell it out like that, you can probably spot the problem as fast as I did. Simply put, the &#8216;.&#8217; shortcut matches&nbsp;<strong>any</strong>&nbsp;character, and yes, this includes the&nbsp;｢&#8221;｣ (using Japanese quotation marks to make the problem a little clearer.) So what we really want to do is &#8220;Match a quotation mark, then anything but the quotation mark, then another quotation mark.&#8221;</p>
+
+
+
+<p>You say &#8220;Anything but&#8221; in regex-speak like &lt;-[..]&gt;, where the [..] is whatever you&nbsp;<strong>don&#8217;t</strong>&nbsp;want to match. We want &#8220;anything but a quotation mark&#8221;, so in to the [] the quotation mark goes, like so:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say 'var a = 3; console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; );' ~~
+rule { var a '=' 3 ';'
+          console '.' log '(' '&quot;' &lt;-[ &quot; ]&gt; '&quot;' '+' a '+' '&quot;' &lt;-[ &quot; ]&gt; '&quot;' ')' ';' }
+
+</pre>
+
+
+<p>In real-world code people like to put quotation marks inside quoted strings, but we won&#8217;t worry about those for the moment.</p>
+
+
+
+<h2>Nest Eggs</h2>
+
+
+
+<p>Checkpoint here, and go ahead and play with the strings and whitespace. It can now match &#8216;a=3;console.log(&#8220;Hey, &#8220;+a+&#8221; is 3!&#8221;);&#8217; and a bunch of other expressions. Those single-quoted double-quotes do stand out, though, especially since there are two of them. Since we&#8217;ve already got a rule, let&#8217;s create a new rule just to hold those, and give it a name.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my rule String { '&quot;' &lt;-[ &quot; ]&gt; '&quot;' };
+
+say 'var a = 3; console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; );' ~~
+rule { var a '=' 3 ';'
+          console '.' log '(' '&quot;' .+ '&quot;' '+' a '+' '&quot;' .+ '&quot;' ')' ';' }
+
+</pre>
+
+
+<p>Of course, we&#8217;ve still got the original text below, so we&#8217;ll take a cue from the character groups that we touched on briefly, and put the name in &#8216;&lt;&#8216;&#8230;&#8217;&gt;&#8217; as well.&nbsp;</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my rule String { '&quot;' &lt;-[ &quot; ]&gt; '&quot;' };
+
+say 'var a = 3; console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; );' ~~
+rule { var a '=' 3 ';'
+          console '.' log '(' &lt;String&gt; '+' a '+' &lt;String&gt; ')' ';' }
+
+</pre>
+
+
+<p>We&#8217;ve just refactored the &#8216;console.log&#8230;.&#8217; expression into something that humans can readily understand, and in fact expand upon as well. Building on the principle of not repeating yourself, we can notice that the variable is repeated in the string, so let&#8217;s factor that out as well.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my rule Variable { \w+ };
+my rule String { '&quot;' &lt;-[ &quot; ]&gt; '&quot;' };
+
+say 'var a = 3; console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; );' ~~
+rule { var &lt;Variable&gt; '=' 3 ';'
+          console '.' log '(' &lt;String&gt; '+' &lt;Variable&gt; '+' &lt;String&gt; ')' ';' }
+
+</pre>
+
+
+<p>We may as well factor out the number as well&#8230;</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my rule Number { \d+ };
+my rule Variable { \w+ };
+my rule String { '&quot;' &lt;-[ &quot; ]&gt; '&quot;' };
+
+say 'var a = 3; console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; );' ~~
+rule { var &lt;Variable&gt; '=' &lt;Number&gt; ';'
+          console '.' log '(' &lt;String&gt; '+' &lt;Variable&gt; '+' &lt;String&gt; ')' ';' }
+
+</pre>
+
+
+<h2>Mere Semantics</h2>
+
+
+
+<p>You may have noticed that I used &#8216;\w+&#8217; to match Variables, rather than &#8216;a&#8217;. While this allows users of the eventual compiler to write &#8216;var Lennier = 5;&#8217; rather than the more prosaic &#8216;var a = 23;&#8217;, it also allows users to write semantically invalid code. To wit, &#8216;var Prisoner = 6; console.log(&#8220;I am not &#8221; + a + &#8221; a number&#8221;);&#8217; where&nbsp;<em>a</em>&nbsp;is not defined.<br>In principle, we could change the rule so that the second instance of &lt;Variable&gt; must have the same value as the first instance. That way our previous Prisoner example would fail, because &#8216;a&#8217; would not be the same as &#8216;Prisoner&#8217;, and it only allows syntactically and semantically correct code to pass the test.<br>That&#8217;s wonderful in principle, and keeps the changes localized to the final rule. Great, and your test suite might even pass, and you release your module out into the real world.<br>Then someone comes along and writes &#8216;var test = 1; var a = 2; console.log(&#8220;Hi, test = &#8221; + test + &#8220;.&#8221;);&#8217;. Which is perfectly valid JavaScript code, and will compile everywhere&#8230; except in your compiler. So you say &#8220;fine, I&#8217;ll check for any assignment statements after the function definition. And then someone writes a closure with a &#8216;console.log( .. + variable_outside_the_function + &#8230;)&#8217; and breaks your code again.<br>In summation, let your rules catch syntax errors only, anything else can and should be handled outside. In the fourth and final installment of this series, we&#8217;ll build a compiler out of this. But let&#8217;s do one final burst of refactoring in order to clarify the statements.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my rule Number { \d+ };
+my rule Variable { \w+ };
+my rule String { '&quot;' &lt;-[ &quot; ]&gt;+ '&quot;' };
+my rule Assignment-Expression { var &lt;Variable&gt; '=' &lt;Number&gt; };
+my rule Function-Call { console '.' log '(' &lt;String&gt; '+' &lt;Variable&gt; '+' &lt;String&gt; ')' };
+
+say 'var a = 3; console.log( &quot;Hey, did you know a = &quot; + a + &quot;?&quot; );' ~~
+rule { &lt;Assignment-Expression&gt; ';' &lt;Function-Call&gt; ';' }
+
+</pre>
+
+
+<p>You&#8217;ve seen the individual pieces before, but probably not put together quite like this. The &lt;Assignment-Expression&gt; rule matches the entirety of &#8216;var foo = 27&#8217;, and the &lt;Function-Call&gt; part matches &#8216;console.log(&#8220;Take &#8221; + foo + &#8221; down, pass them around&#8221;)&#8217; Our final rule puts the pieces together, matching an assignment statement followed by a function call. I&#8217;ve left the &#8216;;&#8217; separators outside the &lt;Assignment-Expression&gt; and &lt;Function-Call&gt; because they separate expressions, they&#8217;re not&nbsp;<strong>part</strong>&nbsp;of them.</p>
+
+
+
+<h2>Winding Down</h2>
+
+
+
+<p>The technique applied here isn&#8217;t specific to JavaScript, of course. Generally, if you can put whitespace around something without changing its semantics, you&#8217;ve found a token like &lt;Number&gt; or &lt;String&gt;. Figure out where those breaks are, and you&#8217;re already halfway to decoding the language in question. Figuring out the higher-level rules is much more fun, and along the way you&#8217;ll find yourself making notes &#8220;Okay, lists act like this, wait, can I put a &lt;List&gt;&nbsp;<strong>inside</strong>&nbsp;a list? Yes? Hey&#8230;&#8221;<br>Starting from a string, we&#8217;ve split it into chunks, then factored out some of those chunks into their own rules. Once we could abstract out the 32 into a number, foo_bar into a variable and figure out the String type, it&#8217;s a question of putting them together in combinations, like &#8216;&lt;Variable&gt; = &lt;Number&gt;&#8217;. If you want, you can even take what we&#8217;ve done above and refactor it down more.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+
+my rule Variable-Declaration { var &lt;Assignment-Expression&gt; }
+my rule Assignment-Expression { &lt;Variable&gt; '=' ( &lt;Number&gt; | &lt;String&gt; | &lt;Variable&gt; ) }
+
+</pre>
+
+
+<p>Hopefully you can see where this is going, because this handles &#8216;var a = 32; var b = c; var d = &#8220;hi&#8221;&#8216; along with so much more. But this will have to wait for Part 4.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2016/02/20/from-regular-expressions-to-grammars-pt-3/" rel="bookmark"><time class="entry-date published" datetime="2016-02-20T13:24:52+01:00">February 20, 2016</time><time class="updated" datetime="2020-06-30T13:25:22+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2016/02/20/from-regular-expressions-to-grammars-pt-3/#respond">Leave a comment<span class="screen-reader-text"> on From Regular Expressions to Grammars, Pt.&nbsp;3</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-112" class="post-112 post type-post status-publish format-standard hentry category-raku-programming entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2016/02/06/from-regular-expressions-to-grammars-pt-1/" rel="bookmark">From Regular Expressions to Grammars: Pt.&nbsp;1</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<h2>Old-School Text Matching</h2>
+
+
+
+<p>This tutorial is based around&nbsp;<a href="http://web.archive.org/web/20170811041043/https://github.com/drforr/talk-Perl6-Regex-To-Javascript" target="_blank" rel="noreferrer noopener">Perl6-Regex-To-Javascript</a>, a talk I gave at&nbsp;<a href="http://web.archive.org/web/20170811041043/https://fosdem.org/2016/" target="_blank" rel="noreferrer noopener">FOSDEM 2016</a>. We&#8217;ll start out writing simple regular expressions, and slowly build the expressions out into a full-blown compiler. Our starting point will be the humble ISO-8601 timestamp, used worldwide in all sorts of logging programs. There are a few minor variants, but this is the one we&#8217;re most concerned with:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+2016-02-06T14:36+02:00
+
+</pre>
+
+
+<p>Regular expressions, for those of you that don&#8217;t know, are a way to find partial matches in a potentially very large document. For the moment, you can consider it the equivalent of the &#8216;Find&#8217; dialog in your favorite text editor.</p>
+
+
+
+<p>Suppose you want to find this particular timestamp in&#8230; say, a blog posting, much like this one. Most languages have a function like Perl 6&#8217;s&nbsp;<a href="http://web.archive.org/web/20170811041043/http://doc.perl6.org/routine/index" target="_blank" rel="noreferrer noopener">index</a>&nbsp;method, which searches for a substring inside a larger string, and returns either the offset if the string matches, or -1 if it can&#8217;t find a match. In Perl 6, using that would look like this:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say index( $logfile, '2016-02-06T14:36+02:00 );
+
+</pre>
+
+
+<p>And it would print out either -1 for no match, or a positive number telling us where to look in the logfile for our match. This is efficient and fast, and works with any string, even something your user has given as input. If you were searching for timestamps on a given day, you could even cut down your search string to just &#8216;2016-02-06T&#8217; to find all timestamps on a given day.</p>
+
+
+
+<p>We&#8217;ve added the trailing &#8216;T&#8217; to the timestamp because it&#8217;s entirely possible that somewhere in your logfile there may be a REST query that looks like &#8216;/post/2016-02-06/&#8217; that you wouldn&#8217;t want to match. That&#8217;s just a user request for a posting from a given day, which could be a user in March requesting a post from last month.</p>
+
+
+
+<p>You could even use the same technique to search for all timestamps in a given timezone, just looking for &#8216;+02:00&#8217;. You&#8217;d likely get even more false positives, because &#8216;+02:00&#8217; could easily appear in other places in our web logfile. One way to cut down on the number of false positives is to do 10 searches, one for &#8216;0+02:00&#8217;, one for &#8216;1+02:00&#8217; and so on up to &#8216;9+02:00&#8217;.</p>
+
+
+
+<h2>Into the Breach</h2>
+
+
+
+<p>Another way is to use a regular expression, that will search for&nbsp;<strong>exactly</strong>&nbsp;the timestamp format you&#8217;re looking for with no false positives. For this, instead of the&nbsp;<em>index</em>&nbsp;function, we&#8217;ll ask Perl 6 to perform smart matching on our string, like so:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say $logfile ~~ /2016-02-06T14:36+02:00/;
+
+</pre>
+
+
+<p>This will do exactly what the <em>index</em> function did above, but uses Perl 6&#8217;s smartmatch operator.  Well, not quite. While it should return whether we&#8217;ve found a match in our logfile, what we actually get is this:</p>
+
+
+
+<pre class="wp-block-preformatted">===SORRY!===<br>Unrecognized regex metacharacter - (must be quoted to match literally)<br>at /home/jgoff/Talks/Javascript/slide03.pl6:12<br>------&gt; /2016⏏-01-29T13:25+01:00/;<br>Unable to parse regex; couldn't find final '/' at /home/jgoff/Talks/Javascript/slide03.pl6:12<br>------&gt; /2016-⏏01-29T13:25+01:00/;</pre>
+
+
+
+<p>If you&#8217;re used to languages like C where you get a terse one-line syntax error, or Java where you can get page-long stacktraces, this may seem like a mystery. &nbsp;For the moment let&#8217;s ignore the &#8220;Unrecognized&#8230;&#8221; and &#8220;Unable&#8230;&#8221; bits and look at &#8220;(must be quoted to match literally)&#8221;.</p>
+
+
+
+<p>This is telling us that we need to quote the dashes in our expression. In fact, this is an instance of a general rule in Perl 6 regular expressions. Anything that&#8217;s not an alphanumeric character (&#8216;a&#8217;..&#8217;z&#8217;, &#8216;A&#8217;..&#8217;Z&#8217;, &#8216;0&#8217;..&#8217;9&#8242;) has to be quoted. So, let&#8217;s do just that:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say $logfile ~~ /2016 '-' 02 '-' 06T14 ':' 36 '+' 02 ':' 00/;
+
+</pre>
+
+
+<p>And now we get back this equally strange expression:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+ ｢2016-01-29T13:25+01:00｣
+
+</pre>
+
+
+<p>This is just telling us that the ~~ operator matched some text, and here&#8217;s the text that it matched. The ｢｣ are Japanese quotation marks, deliberately designed to stand out from the rest of the text. When you&#8217;re experimenting with regular expressions, what used to be common in Perl 5 was printing out the matched string surrounded by &#8221; so you could see&nbsp;<strong>exactly</strong>&nbsp;where the match boundaries lie. This isn&#8217;t always obvious, and whitespace and return characters could cause a problem.</p>
+
+
+
+<p>So now, Perl 6 defaults to printing the matched object with unambiguous markers that tell you exactly where the start and end of a match lie, without making you go back and add debugging statements to your code.</p>
+
+
+
+<h2>Generalizing</h2>
+
+
+
+<p>Earlier I promised that we would make our timestamp matching more general, so it&#8217;s time to make good on that promise. This logfile might have been written last year, so one thing we might want to do is match on a timestamp from either 2015 or 2016. Luckily, regular expressions like what we&#8217;re using have a built-in &#8216;or&#8217; operator, called &#8216;|&#8217;.<br>At first blush, you might think that:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say $logfile ~~ /2015 | 2016 '-' 02 '-' 06T14 ':' 36 '+' 02 ':' 00/;
+
+</pre>
+
+
+<p>would do the trick. And it will, for timestamps in 2016. It will also match anything in 2015, and by &#8216;anything&#8217; I mean any string that happens to have &#8216;2015&#8217; in it. The &#8216;|&#8217; operator says &#8220;Match anything on the left of me or anything on my right&#8221;, so while it still matches &#8216;2016-02-06T14:36+02:00&#8217; (what&#8217;s on the right of the &#8216;|&#8217;, it will also match anything to its left, which includes &#8216;2015&#8217;, &#8216;/post/2015/02&#8217; or even &#8216;/number/120153&#8217;.</p>
+
+
+
+<p>So, basically we need to stop the operator from running amok, and tell it to just apply the &#8216;or&#8217; bit to the &#8216;2015&#8217; and &#8216;2016&#8217; portion of the string, and not the entire expression. We can do that by bracketing the extent of the match, quite literally:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say $logfile ~~ / [ 2015 | 2016 ] '-' 02 '-' 06T14 ':' 36 '+' 02 ':' 00/;
+
+</pre>
+
+
+<p>This now will match both &#8216;2015-02-06T14&#8230;&#8217; and &#8216;2016-02-06T14&#8230;&#8217;. Which is fine if you want to match a timestamp from 2015 or 2016, but this logfile goes all the way back to 1997, and who wants to type &#8216;[ 1997 | 1998 | 1999 | 2000&#8230; 2015 ]&#8217; out in full? You could apply what we&#8217;ve learned above and try to be sneaky, like so:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say $logfile ~~ / [1|2] [9|0] [9|0|1] [0|1|2|3|4|5|6|7|8|9].../;
+
+</pre>
+
+
+<p>But thankfully there&#8217;s a shortcut.</p>
+
+
+
+<h3>Learning Shorthnd</h3>
+
+
+
+<p>The [0|..|9] expression there is so commonly used that there&#8217;s a convenient shortcut. Instead of writing out the range of &#8216;0&#8217;..&#8217;9&#8242; in full, we&#8217;ll just tell Perl 6 that we want to match digits. While we&#8217;re at it, we don&#8217;t know how far back in time this logfile goes, so let&#8217;s just match 4 digits instead of worrying about whether it&#8217;s between 1997 and now:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say $logfile ~~ / \d \d \d \d '-' 02 '-' 06T14.../;
+
+</pre>
+
+
+<p>Of course, this works for *any* of the digits in our string, so we can take what we have and rewrite it using this shorthand like so:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say $logfile ~~ / \d\d\d\d '-' \d\d - \d\d T \d\d ':' \d\d '+' \d\d ':' \d\d/;
+
+</pre>
+
+
+<p>Which now matches any timestamp that looks like &lt;digits&gt; &#8211; &lt;digits&gt; &#8211; &lt;digits&gt; etcetera. Almost any timestamp. The &#8216;+&#8217; &lt;digits&gt; : &lt;digits&gt; will only match timezones between +01 and +12, the other timezones are between -11 and -01, so we&#8217;ll use the &#8216;or&#8217; trick we learned above to match either a &#8216;+&#8217; or &#8216;-&#8216; sign, like so:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say $logfile ~~ / \d\d\d\d '-' \d\d - \d\d T \d\d ':' \d\d [ '+' | '-' ] \d\d ':' \d\d/; 
+
+</pre>
+
+
+<p>&nbsp;There, negative and positive timezone offsets accounted for. Well, not quite. Negative and positive timezone offsets are specified relative to Greenwich, but it has its own timezone that&#8217;s not even a number, it&#8217;s just called &#8216;Z&#8217;, for historical reasons. (Timezones used to be assigned letters, and Z was the end of the alphabet.)</p>
+
+
+
+<p>So, one more change, and nesting timezone statements:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say $logfile ~~ / \d\d\d\d '-' \d\d - \d\d T \d\d ':' \d\d [ [ '+' | '-' ] \d\d ':' \d\d | Z ] /;
+
+</pre>
+
+
+<h3>Refactoring</h3>
+
+
+
+<p>But that &#8216;[ &#8216;+&#8217; &#8230; Z ]&#8217; expression is getting pretty long in the tooth, it&#8217;d be nice to be able to factor that out somehow. The&nbsp;<em>regex</em>&nbsp;object comes to the rescue, and helps us clean up the code. It&#8217;s basically a way to treat our regular expression as a separate object we can use later on, so if we ever find a timestamp that has a &#8216;+01:00&#8217;, &#8216;Z&#8217; and &#8216;-01:00&#8217; offset format we&#8217;ll be ready for it.</p>
+
+
+
+<p>The&nbsp;<em>regex</em>&nbsp;object looks almost like the matching expression, except that it uses braces to say when to start and stop:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my regex Timezone { Z | [ '+' | '-' ] \d\d ':' \d\d };
+
+say $logfile ~~ / \d\d\d\d '-' \d\d '-' \d\d T \d\d ':' \d\d &lt;Timezone&gt;/;
+
+</pre>
+
+
+<p>The &lt;..&gt; visually sets off the refactored expression from the main text, and having the expression for the Timezone separated out means that we can use this elsewhere in the code, or even put it into our own library of expressions if we wanted to. In fact, let&#8217;s do that for all of the separate bits here, like so:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my regex Date { \d\d\d\d '-' \d\d '-' \d\d };
+my regex Time { \d\d ':' \d\d };
+my regex Timezone { Z | [ '+' | '-' ] \d\d ':' \d\d };
+
+say $logfile ~~ / &lt;Date&gt; T &lt;Time&gt; &lt;Timezone&gt; /;
+
+</pre>
+
+
+<p>Having all of those \d\d sitting in a row is really a bit visually disturbing, so let&#8217;s factor that out:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my regex Integer { \d+ };
+my regex Date { &lt;Integer&gt; '-' &lt;Integer&gt; '-' &lt;Integer&gt; };
+my regex Time { &lt;Integer&gt; ':' &lt;Integer&gt; };
+my regex Timezone { Z | [ '+' | '-' ] &lt;Integer&gt; ':' &lt;Integer&gt; };
+
+say $logfile ~~ / &lt;Date&gt; T &lt;Time&gt; &lt;Timezone&gt; /;
+
+</pre>
+
+
+<p>The &#8216;+&#8217; character in the Integer regular expression is new. It&#8217;s not surrounded by quotes, so it has a special meaning. It just means &#8220;Match whatever is before me at least once.&#8221; In this case &#8220;Whatever is before me&#8221; is &#8216;\d&#8217;, which is shorthand for &#8220;a digit from 0 to 9&#8221; (This applies to digits in other languages as well, like ٤ in Arabic.)</p>
+
+
+
+<h2>Review Time</h2>
+
+
+
+<ul><li>Regular expressions match portions of a string containing arbitrary text.</li><li>They can match literal text, such as /Jane Bloggs/.</li><li>They can also match more complicated expressions, like /\d+ Main Street/.</li><li>You can take pieces out of an expression, like /&lt;Integer&gt; Main Street/.</li><li>These pieces are named, and can be put into their own libraries.</li></ul>
+
+
+
+<p>We&#8217;ve only talked here about the shortcut for digits, of course there are many others, and for those you&#8217;ll want to read&nbsp;<a href="http://web.archive.org/web/20170811041043/http://doc.perl6.org/language/regexes" target="_blank" rel="noreferrer noopener">Regexes</a>&nbsp;at docs.perl6.org, or your local manpages. The most common shorthand expressions are \d (which we&#8217;ve used above), \w which is any &#8220;word&#8221; character like &#8216;a&#8217;..&#8217;z&#8217;, &#8216;A&#8217;..&#8217;Z&#8217; and &#8216;0&#8217;..&#8217;9&#8242;, and \s which is any whitespace such as &#8216; &#8216;, &lt;tab&gt; or &lt;carriage returm&gt;. These all work with the &#8216;+&#8217; special character, along with a few others we haven&#8217;t mentioned.</p>
+
+
+
+<p>If you want to make something optional, add &#8216;?&#8217; after it. For instance, if you were looking for someone&#8217;s name, you might want to check for a leading honorific, like this: / &#8216;Dr. &#8216;? John Fredericks/ which would match &#8216;Dr. John Fredericks&#8217; or just &#8216;John Fredericks&#8217;.</p>
+
+
+
+<p>Floating-point numbers can sometimes get you into interesting circumstances. In most languages, &#8216;123.456&#8217; is a legitimate floating-point number, which you can match with the tools you&#8217;ve learned with /\d+ &#8216;.&#8217; \d+/. This is to say &#8220;One or more digits, followed by a decimal, followed by one or more digits.&#8221;</p>
+
+
+
+<p>The catch is that some languages require there to be digits after the decimal point, in other languages they&#8217;re optional, like &#8216;123.&#8217;. Given what we&#8217;ve talked about above, you might think that one solution would be / \d+ &#8216;.&#8217; [ \d+ | ] /, and just leaving the &#8220;after&#8221; part of the &#8216;|&#8217; blank. This leaves behind a null (empty) regular expression, which is illegal in Perl 6. Does this mean we can&#8217;t match it?</p>
+
+
+
+<p>Of course we can. The trick is to use the other special character, &#8216;*&#8217;. This can be read as &#8220;Match nothing, or whatever is before me at least once.&#8221; So instead of /\d+/, we use /\d*/, which we can read as &#8220;Zero or more digits.&#8221;</p>
+
+
+
+<h3>Confusion abounds</h3>
+
+
+
+<p>Using this special character can seem counterintuitive or ever confusing. Writing our full regular expression to match a floating-point number now looks like / \d+ &#8216;.&#8217; \d* /, which can be thought of as &#8220;Match at least one digit, a decimal point, and any number of digits, or even no digits.&#8221; This matches &#8216;123.&#8217;, &#8216;1.23&#8217;, &#8216;0.001&#8217; and of course &#8216;1.1&#8217;, all of which have zero or more digits on the right side of the decimal.<br>It&#8217;s pretty clear when matching digits, but when matching strings, the water gets muddier. For instance, suppose you&#8217;re a biochemist searching for a sequence &#8216;ATTT&#8230;&#8217; in a gene. Matching against /AT+/ lets you match &#8216;AT&#8217;, &#8216;ATT&#8217;, &#8216;ATTTTTT&#8217; etcetera. All seems fine, but in reality the &#8216;TTTTT&#8217; part is optional, so you change your expression to /AT*/. &#8216;A&#8217; matches, &#8216;AT&#8217;, &#8216;ATTTTT&#8217; all match, as they should. But &#8216;AGT&#8217; matches. So does &#8216;AGTTTTT&#8217; and &#8216;AGGTA&#8217;. How did that &#8216;G&#8217; get in the middle?<br>The simple answer is that it didn&#8217;t. When you asked it to look for &#8220;A followed by zero or more Ts&#8221;, that doesn&#8217;t mean the same as &#8220;A followed by nothing or a string of T&#8217;s.&#8221; It searched for &#8220;A&#8221;, found no &#8220;T&#8221; after it, so it stopped the search and reported a match found. The special characters &#8216;?&#8217;, &#8216;+&#8217; and &#8216;*&#8217; don&#8217;t &#8220;look ahead&#8221; any more than they have to.<br>This is one reason why expressions like /'&#8221;&#8216; .+ &#8216;&#8221;&#8216;/ should be viewed with a bit of caution, especially if you&#8217;re dealing with strings that could have nested strings inside them. We&#8217;ll talk about those expressions and more in part II of this tutorial series on expressions and grammars.</p>
+
+
+
+<h2>Stay Tuned for Part II</h2>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2016/02/06/from-regular-expressions-to-grammars-pt-1/" rel="bookmark"><time class="entry-date published" datetime="2016-02-06T13:28:51+01:00">February 6, 2016</time><time class="updated" datetime="2020-06-30T13:30:38+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2016/02/06/from-regular-expressions-to-grammars-pt-1/#respond">Leave a comment<span class="screen-reader-text"> on From Regular Expressions to Grammars: Pt.&nbsp;1</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-109" class="post-109 post type-post status-publish format-standard hentry category-raku-programming entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2016/02/02/from-regular-expressions-to-grammars-pt-2/" rel="bookmark">From Regular Expressions to Grammars: Pt.&nbsp;2</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p>If you&#8217;re not already familiar with regular expressions, please read&nbsp;<a href="http://web.archive.org/web/20170811041043/http://theperlfisher.blogspot.ro/2016/02/from-regular-expressions-to-grammars-pt.html" target="_blank" rel="noreferrer noopener">Part 1</a>&nbsp;of this tutorial first, to get caught up on the basic idea of what regular expressions are, and why you would want to use them in the first place.</p>
+
+
+
+<h2>Recap</h2>
+
+
+
+<p>When we last left our heroes [sorry, the Game of Thrones soundtrack is on in the background] they were learning about how to refactor Perl 6 regular expressions into easy-to-digest bits. We started off with the task of searching for &#8216;2016-02-06T14:36+02:00&#8217; in a sample logfile. This slowly evolved into searching for any ISO-8601 timestamp in our sample file, by replacing the explicit digits (0 .. 9) with a generic placeholder &#8216;\d&#8217; meaning any digit.</p>
+
+
+
+<p>This fixes the problem of only being able to match a single timestamp but leaves behind an ugly string of &#8216;\d\d\d\d&#8217; when matching the year (I.E. four digits in a row.) We solved this by replacing &#8216;\d\d\d\d&#8217; with &#8216;\d+&#8217;, which simply means &#8220;Any number of digits in a row.&#8221;</p>
+
+
+
+<p>This declutters our regular expression, but at a slight cost. Our expression matches &#8216;2016-02-13T13:10+02:00&#8217;, but it also matches &#8216;19116-02-13T13:10+02:00&#8217; because &#8216;\d+&#8217; doesn&#8217;t tell the regular expression engine how&nbsp;<strong>many</strong>&nbsp;digits to match, it just says &#8220;Match as many as you can.&#8221; This may be what you want in some situations, but not here.</p>
+
+
+
+<h3>A person has got to know their limitations.</h3>
+
+
+
+<p>Luckily, Perl 6 has just the expression we need. A quick scan through&nbsp;<a href="http://web.archive.org/web/20170811041043/http://doc.perl6.org/language/regexes#General_quantifier%3A_**_min..max" target="_blank" rel="noreferrer noopener">Regexes</a>&nbsp;on&nbsp;<a href="http://web.archive.org/web/20170811041043/http://docs.perl6.org/" target="_blank" rel="noreferrer noopener">docs.perl6.org</a>&nbsp;leads us to the quantifier section, and near the end of the list we find &#8220;min .. max&#8221; which tells the regular expression engine to match what&#8217;s before it at least min times, and at&nbsp;<strong>most</strong>&nbsp;max times. There&#8217;s even a shortcut which tells us the regex engine to match what&#8217;s before it exactly&nbsp;<strong>N</strong>&nbsp;times.</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+my regex Date { \d ** 4 '-' \d ** 2 '-' \d ** 2 }
+
+</pre>
+
+
+<p>This also stops the regular expression from matching &#8216;19116-02-100&#8217;, which, while the sort of thing you worry about if you work at the&nbsp;<a href="http://web.archive.org/web/20170811041043/http://longnow.org/" target="_blank" rel="noreferrer noopener">Long Now foundation</a>, isn&#8217;t the sort of time problem that comes up in general.</p>
+
+
+
+<p>By way of recapping, /literal string here/ matches a sequence of alphanumerics. Anything that&#8217;s not alphanumeric (by the way, alphanumeric here isn&#8217;t restricted to US ASCII, any character with the &#8216;Letter&#8217; or &#8216;Number&#8217; Unicode property qualifies) has to be quoted or escaped in some fashion, lest it be confused with a current or future metacharacter.</p>
+
+
+
+<p>If you want to make something optional, follow it with &#8216;?&#8217;, like in:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+"Skyfall" ~~ /Sky 'fall'?/;
+
+</pre>
+
+
+<p>This matches both &#8216;Sky&#8217; and &#8216;Skyfall&#8217;, thus treating &#8216;fall&#8217; as an option when matching &#8216;Sky&#8217;. If you&#8217;re being particularly diligent in writing tests, you might notice that &#8216;Skyfalling&#8217; also matches this expression, as does &#8216;Skyfail&#8217;.</p>
+
+
+
+<p>Perl 6 regular expressions, like most RE engines, stop when they&#8217;ve found a match. Going from left to right, in the case of &#8216;Skyfalling&#8217;, the process looks like this, roughly:</p>
+
+
+
+<ul><li>&#8220;Skyfalling&#8221; ~~ /Sky &#8216;fall&#8217;?/ # Try &#8216;Sky&#8217;, succeed</li><li>&#8220;Skyfalling&#8221; ~~ /Sky &#8216;fall&#8217;?/ # Try &#8216;fall&#8217;, succeed, report success</li></ul>
+
+
+
+<p>The RE engine has matched all of the terms in the regular expression, so after matching &#8216;Skyfall&#8217;, it&#8217;s done, so even though there&#8217;s more of the string left over, the match succeeds. If only there were a way to tell it the match isn&#8217;t quite done&nbsp;<strong>yet</strong>.<br>Lucky for us, there is. In fact, true to Perl&#8217;s nature, there are several ways, each appropriate for different situations. The most common case is that &#8216;Skyfall&#8217; appears in a sentence, and you want to look for it in &#8220;Come to Skyfall, Mr. Bond&#8221;, &#8220;Mr. Bond, come to Skyfall.&#8221; or &#8220;The Sky is Falling, Mr. Bond.&#8221;<br>As you can see, the term &#8216;Skyfall&#8217; (or just &#8216;Sky&#8217;, remember the optional clause) is followed by either a &#8216;,&#8217;, &#8216; &#8216; or &#8216;.&#8217;. You could try to match all of those combinations, and possibly miss many more because of the wealth of Unicode punctuation, or you could use the built-in &#8216;&gt;&gt;&#8217; shortcut. This stops the match at the end of the word, so this expression will now fail as you expect:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+&quot;Skyfalling&quot; ~~ /Sky 'fall'? &gt;&gt;/
+
+</pre>
+
+
+<p>For this to match, &#8216;Skyfall&#8217; or &#8216;Sky&#8217; have to be followed by either the end of a string, or something that&#8217;s&nbsp;<strong>not</strong>&nbsp;an alphanumeric character, like &#8216;.&#8217; or &#8216;;&#8217; (which we left out in the example above, to prove a point.) So now, this regular expression matches &#8220;Sky diving today!&#8221; or &#8220;Skyfall, as it crumbles&#8230;&#8221; but not &#8220;Skyfail&#8221; or &#8220;Isle of Skye&#8221;.</p>
+
+
+
+<h2>I want my M(atch)TV</h2>
+
+
+
+<p>Regular expressions are pretty powerful on their own, there are entire UNIX tools dedicated to nothing but regular expressions (I.E.&nbsp;<em>grep.</em>) But sometimes it&#8217;s helpful to be able to do more than just tell whether you&#8217;ve found a match in your input.<br>Suppose, for instance, that you&#8217;re doing some DBA work, and you&#8217;ve been given 2 different SQL files that both have to be merged into the same database table. One looks like this:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+INSERT INTO tag VALUES( 1, 'Perl 6' );
+INSERT INTO tag VALUES( 2, 'Moose' );
+
+</pre>
+
+
+<p>And the other set looks&nbsp;<strong>almost</strong>&nbsp;the same:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+INSERT INTO tag VALUES( 1, 'Pearlbee' );
+INSERT INTO tag VALUES( 2, 'Dancer' );
+
+</pre>
+
+
+<p>All of this data has to get into your tag table somehow, and the tag IDs have to be unique to boot. This sort of thing happens in real life when trying to reconstruct tables from sharded data, so it&#8217;s not a theoretical problem. The solution is simple once you stumble across it &#8211; modify the first file to insert at IDs 1, 3, 5, 7, 9&#8230; and modify the other file to insert at IDs 2, 4, 6, 8 and so on.</p>
+
+
+
+<p>So, let&#8217;s dig in. We already have most of the tools we need, so let&#8217;s try to match our first statement:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+say "INSERT INTO tag VALUES( 1, 'Perl 6' );" ~~
+/'( ' \d+ ','/
+
+</pre>
+
+
+<p>Previously we&#8217;ve matched the entire statement, but here we&#8217;ll just match the &#8220;( 1,&#8221; portion. Regular expressions don&#8217;t have to match the&nbsp;<strong>entire</strong>&nbsp;string in order to find a hit, they just have to find enough to be a unique match.</p>
+
+
+
+<p>It&#8217;s looking for &#8216;(&#8216; followed by an integer followed by a comma, which is exactly what &#8216;( 1,&#8217; is in our input. So we&#8217;ve found a match, wonderful. We can even do this in a loop like so:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+for @lines -&gt; $line {
+  say $line ~~ /'( ' \d+ ','/
+}
+
+</pre>
+
+
+<p>which is wonderful, and tells us that we&#8217;ve matched all of our input, confirming that we can read our SQL file. Great. Now what?</p>
+
+
+
+<p>It&#8217;s time to&nbsp;<strong>capture</strong>&nbsp;our data so we can do something with it. Let&#8217;s introduce the capturing group, &#8216;( .. )&#8217;. This captures what the regular expression engine matches, and puts it into a variable that we can access later, like so:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+for @lines -&gt; $line {
+  if $line ~~ /'( ' ( \d+ ) ','/ {
+    say &quot;Found ID $0&quot;
+  }
+}
+
+</pre>
+
+
+<p>We can even capture both the ID and the tag name like so, modify the ID and write the file back out, like this:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+for @lines -&gt; $line {
+  if $line ~~ /'( ' ( \d+ ) ',' ( \' .+ \' )/ {
+    say &quot;INSERT INTO tag VALUES( {2 * $0 - 1}, $1 );&quot;
+  }
+}
+
+</pre>
+
+
+<p>This recreates the old file with &#8220;INSERT INTO tag VALUES( &nbsp;1, &#8216;foo&#8217; ); INSERT INTO tag VALUES( 3, &#8216;bar&#8217; );&#8221; and so on, skipping every other ID. Change the formula from {2 * $0 &#8211; 1} to just {2 * $0}, and you now have two new files, one with odd IDs:&nbsp;</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+INSERT INTO tag VALUES( 1, 'Perl 6' ); -- 1 -&gt; (2 * 1 - 1) == 1
+INSERT INTO tag VALUES( 3, 'Moose' ); -- 2 -&gt; (2 * 2 - 1) == 3
+
+</pre>
+
+
+<p>And the other file with even IDs:</p>
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+INSERT INTO tag VALUES( 2, 'Pearlbee' ); -- 1 -&gt; (2 * 1) == 2
+INSERT INTO tag VALUES( 4, 'Dancer' ); -- 2 -&gt; (2 * 2) == 4&lt;
+
+</pre>
+
+
+<p>So now you can load the two files in any old order, and since one has the odd-numbered IDs and the other has even-numbered IDs, at the end you&#8217;ll have both sets of data inserted into the database, collision-free. Incidentally, just change the constant 2 to 3 or more, and this trick generalizes to any number of files &#8211; rewrite 1,2,3 to 1, 4, 7, the next file to 2, 5, 8, and the last file to 3, 6, 9. Again, the IDs won&#8217;t collide because each file&#8217;s IDs goes exactly in the space left by the other two files.</p>
+
+
+
+<p>You might be wondering to yourself, though, what that &#8216;.+&#8217; is doing there. We&#8217;ve used the &#8216;+&#8217; above, when dealing with dates, so you remember that means &#8220;One or more of what&#8217;s before it.&#8221; In this case, what&#8217;s &#8220;before it&#8221; is just a bare &#8216;.&#8217;, which we haven&#8217;t seen before. This is another placeholder, and it stands for &#8220;any character&#8221;, so the entire expression &#8220;( \&#8217; .+ \&#8217; )&#8221; can be read as &#8216;Capture (&#8230;) everything that starts with a single quote, has one or more characters (we don&#8217;t care what) inside, and ends with another single quote.&#8221;</p>
+
+
+
+<h3>&nbsp;Coverage</h3>
+
+
+
+<p>We&#8217;ve now covered the basic regular expression metacharacters: +, *, ? and &#8216;.&#8217;. At the end we also talked about how to actually&nbsp;<strong>use</strong>&nbsp;the captured text in Perl 6 code, and combined what we&#8217;ve learned along the way into a final expression that uses grouping, metacharacters and actually&nbsp;<strong>processing</strong>&nbsp;the data using a real-world example of munging a database table together from independent shards.<br>Stay tuned for the next installment in this series, where we pull what we&#8217;ve learned together into a Perl 6 grammar that reads and interprets JavaSrcript code in a JIT compiler.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2016/02/02/from-regular-expressions-to-grammars-pt-2/" rel="bookmark"><time class="entry-date published" datetime="2016-02-02T13:28:10+01:00">February 2, 2016</time><time class="updated" datetime="2020-06-30T13:28:34+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2016/02/02/from-regular-expressions-to-grammars-pt-2/#respond">Leave a comment<span class="screen-reader-text"> on From Regular Expressions to Grammars: Pt.&nbsp;2</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+	<nav class="navigation pagination" role="navigation" aria-label="Posts">
+		<h2 class="screen-reader-text">Posts navigation</h2>
+		<div class="nav-links"><a class="prev page-numbers" href="https://perlfisher.wordpress.com/"><svg class="svg-icon" width="22" height="22" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg> <span class="nav-prev-text">Newer posts</span></a>
+<a class="page-numbers" href="https://perlfisher.wordpress.com/">1</a>
+<span aria-current="page" class="page-numbers current">2</span>
+<a class="page-numbers" href="https://perlfisher.wordpress.com/page/3/">3</a>
+<a class="next page-numbers" href="https://perlfisher.wordpress.com/page/3/"><span class="nav-next-text">Older posts</span> <svg class="svg-icon" width="22" height="22" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></a></div>
+	</nav>
+		</main><!-- .site-main -->
+	</section><!-- .content-area -->
+
+
+	</div><!-- #content -->
+
+		<footer id="colophon" class="site-footer responsive-max-width">
+	
+		<div class="site-info">
+										<a class="site-name" href="https://perlfisher.wordpress.com/" rel="home">The Perl Fisher</a><span class="comma">,</span>
+						<a href="https://wordpress.com/?ref=footer_website" rel="nofollow">Create a free website or blog at WordPress.com.</a>					</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+
+</div><!-- #page -->
+
+<!--  -->
+<div id="wpadminbar" class="marketing-bar"><div class="marketing-bar-text">Create your website at WordPress.com</div><a class="marketing-bar-button" href="https://wordpress.com/?ref=marketing_bar">Get started</a></div><script src='//0.gravatar.com/js/gprofiles.js?ver=202027y'></script>
+<script>
+var WPGroHo = {"my_hash":""};
+</script>
+<script type='text/javascript' src='https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	</div>
+<script>
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/perlfisher.wordpress.com\/public.api\/connect\/?action=request","logoutURL":"https:\/\/perlfisher.wordpress.com\/wp-login.php?action=logout&_wpnonce=d116cd9af7","homeURL":"https:\/\/perlfisher.wordpress.com\/","postID":"84","gravDefault":"identicon","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"0","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1573483029j'></script>
+<div class="widget widget_eu_cookie_law_widget"><div
+	class="hide-on-button ads-active"
+	data-hide-timeout="30"
+	data-consent-expiration="180"
+	id="eu-cookie-law"
+>
+	<form method="post">
+		<input type="submit" value="Close and accept" class="accept" />
+
+		Privacy &amp; Cookies: This site uses cookies. By continuing to use this website, you agree to their use. <br />
+To find out more, including how to control cookies, see here:
+		<a href="https://automattic.com/cookies" >
+			Cookie Policy		</a>
+ </form>
+</div>
+</div><script type='text/javascript' src='https://s1.wp.com/_static/??-eJzTLy/QTc7PK0nNK9EvyClNz8wr1i+uzCtJrMjITM/IAeKS1CJMEWP94uSizIISoOIM5/yiVL2sYh19yo1yKiotzgjISczMAxpon2traGpuYGRgYmlhmgUAFLxAeg=='></script>
+<script type='text/javascript'>
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "https://s1.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.9b";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.head.appendChild( corecss );
+		var themecssurl = "https://s2.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeDefault.css?m=1363304414h&amp;ver=3.0.9b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		document.head.appendChild( themecss );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+
+	// Infinite scroll support
+	if ( typeof( jQuery ) !== 'undefined' ) {
+		jQuery( function( $ ) {
+			$( document.body ).on( 'post-load', function() {
+				SyntaxHighlighter.highlight();
+			} );
+		} );
+	}
+</script>
+<script>
+var actionbardata = {"siteID":"179562945","siteName":"The Perl Fisher","siteURL":"http:\/\/perlfisher.wordpress.com","icon":"<img alt='' src='https:\/\/s2.wp.com\/i\/logo\/wpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/hever","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fperlfisher.wordpress.com%2F2019%2F04%2F12%2Fspacing-out%2F&signup_flow=account","themeURL":"https:\/\/wordpress.com\/theme\/hever\/","xhrURL":"https:\/\/perlfisher.wordpress.com\/wp-admin\/admin-ajax.php","nonce":"76a041671f","isSingular":"","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"0385734db6\" \/>","referer":"https:\/\/perlfisher.wordpress.com\/page\/2\/","canFollow":"1","feedID":"107157609","statusMessage":"","customizeLink":"https:\/\/perlfisher.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fperlfisher.wordpress.com%2Fpage%2F2%2F","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Hever","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fperlfisher.wordpress.com%2F2019%2F04%2F12%2Fspacing-out%2F&signup_flow=account\">Log in now.<\/a>","stats":"Stats"}};
+</script>
+<script type='text/javascript' src='https://s2.wp.com/_static/??-eJyVjM0KwjAQhF/IuAiG2oP4LGuylE3zR7JpfHzjpYiHgrfhm5kPelYmRaEo4CpY2thQfp1dPcFXFZrKvi0cK3S2C0kFaqNNK5Py2EEoZI9CP/zAgzZwVE8sELAKlZFU2qgUtsOysz8NUtCs9ehkhFP8nPY01o9wv+jpOk83rWf3BrS6ZwM='></script>
+	<script>
+	/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
+	</script>
+	<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script><script src="//stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'179562945','blog_tz':'2','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'179562945','v':'wpcom','tz':'2','user_id':'0','subd':'perlfisher'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE0/bU8yQkx3RTR3RmZTSndoTltKYUswZWZFZmRxfG9BJixbMnFRZUJFVlYldWhGJUt6SXVuT3dFdWZPLV9pSlE2XUk3YWVtbmdUeElCdnA5ZlVwZkhadkQ1ZThVeXJJcEpKMy1iUGRFRFBRSGRnY3p+elo3V0M2Uz0sUUhwSTUublVYS2dfampLd3lJaHM3ZyY9RWUtMGdDJVtrZ0puelYlemxsMUNfbmFyW2k3OGx1UWpvL2w9Tk5LeXBtUWpfU2F3WTBLd0lMaG16YU1VNGMlUVk5M2IsdnRHWUQ1a1d8aWMrTXg9ZFlsV2tPcDdGUEIwQzhxSD1MYi9oYmpnUFJsQk1za1h5PWk3ZF0='}]);
+_stq.push([ 'clickTrackerInit', '179562945', '0' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+		<script defer src="data:text/javascript,%21function%28%29%7B%22use%20strict%22%3Bvar%20e%3D%5B%5D%2Ct%3D%22wpcom.simple.ttfb.batcache.%22%3Btry%7Bfor%28var%20n%3Dperformance.getEntriesByType%28%22navigation%22%29%5B0%5D%7C%7C%7B%7D%2Co%3D0%2Cs%3Ddocument.body.childNodes%2Cc%3Ds.length-1%3Bc%3E%3D0%3Bc--%29s%5Bc%5D.nodeType%3D%3D%3DNode.COMMENT_NODE%26%26s%5Bc%5D.textContent.indexOf%28%22served%20from%20batcache%22%29%3E0%26%26%28o%3D1%29%3Bvar%20r%3DMath.round%28n.responseStart%7C%7C0%29%3Bif%28r%3E0%26%26%28o%3Fe.push%28t%2B%22hit%3A%22%2Br%2B%22%7Cms%22%29%3Ae.push%28t%2B%22miss%3A%22%2Br%2B%22%7Cms%22%29%29%2Ce.length%29document.createElement%28%22img%22%29.src%3D%22https%3A%2F%2Fpixel.wp.com%2Fboom.gif%3Fjson%3D%22%2BencodeURIComponent%28JSON.stringify%28%7Bbeacons%3Ae%7D%29%29%7Dcatch%28e%29%7B%7D%7D%28%29%3B"></script>
+		<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>

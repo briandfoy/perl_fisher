@@ -1,0 +1,1098 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="profile" href="https://gmpg.org/xfn/11" />
+	<title>The Perl Fisher &#8211; Page 3</title>
+<link rel='dns-prefetch' href='//s2.wp.com' />
+<link rel='dns-prefetch' href='//s1.wp.com' />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel="alternate" type="application/rss+xml" title="The Perl Fisher &raquo; Feed" href="https://perlfisher.wordpress.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="The Perl Fisher &raquo; Comments Feed" href="https://perlfisher.wordpress.com/comments/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s2.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.2"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s1.wp.com/_static/??-eJylktluwyAQRX+oeExSq/VD1W8BPKUkDEYMKPLfB5zGShellfo4y7m6s8ApCjOHjCEDFRF9sS4wnKKZSTA5j8uXqDPMD3CDaT/bDSSVjphdsEKrBLX1c+YbfOVsqaHGZGslITx3+64HXZyfmr45Cu90UmkBzovH/8vkd6S/yKwUwwFzVBVPqk3Cv7h4K94LdhkFTm4d/VIB+dj3gxzHAWJCcoU29L6gmT98yG7XJpoc5y0pfmZvrtl2UfMUVW4dVF0p9HUBId/DLmfXunplFlfH6+bWL3ilFzmMu6Efn+T+cAbpTNjH?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<style id='global-styles-inline-css'>
+:root {
+	--wp--preset--color--primary: #1279BE;
+	--wp--preset--color--secondary: #FFB302;
+	--wp--preset--color--foreground-dark: #101010;
+	--wp--preset--color--foreground: #303030;
+	--wp--preset--color--foreground-light: #757575;
+	--wp--preset--color--background-dark: #C5C5C5;
+	--wp--preset--color--background-light: #F8F8F8;
+	--wp--preset--color--background: #FFFFFF;
+	--wp--preset--font-size--small: 17.3914;
+	--wp--preset--font-size--normal: 23;
+	--wp--preset--font-size--large: 26.45;
+	--wp--preset--font-size--huge: 30.4174;
+	--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);
+	--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);
+	--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);
+	--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);
+	--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);
+	--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);
+	--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);
+	--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);
+	--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);
+	--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);
+	--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);
+	--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);
+}
+
+</style>
+<link rel='stylesheet' id='print-css-3-1' href='https://s1.wp.com/wp-content/themes/pub/varia/print.css?m=1571655471h&cssminify=yes' type='text/css' media='print' />
+<link rel='stylesheet' id='all-css-4-1' href='https://s1.wp.com/_static/??-eJx9jdEOwiAMRX9IrDOZmQ/Gb2GssipQAmXEvxfjy4yLb72559xCjcpwEAwCMqPHDLGMMOOCCbI8He5NzjvYxhadSAMF80FVjYb9j+CLiq5YChkqTRYlA5bW8oNQOV1B0EenpY1uf1wNWGTl2GghDl9B3Zym9E9NODq27bTQqFV8S1d/6frzoTv1x2G4vwBBPGeN?cssminify=yes' type='text/css' media='all' />
+<link crossorigin="anonymous" rel='stylesheet' id='hever-fonts-css'  href='https://fonts.googleapis.com/css?family=PT+Sans%3A400%2C400i%2C700%2C700i&#038;subset=latin%2Clatin-ext' media='all' />
+<link rel='stylesheet' id='all-css-6-1' href='https://s1.wp.com/_static/??/wp-content/themes/pub/hever/style.css,/wp-content/mu-plugins/actionbar/actionbar.css?m=1587159585j&cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-8-1' href='https://s0.wp.com/wp-content/themes/h4/global.css?m=1420737423h&cssminify=yes' type='text/css' media='all' />
+<script type='text/javascript' src='https://s1.wp.com/_static/??-eJx9zd0KwjAMBeAXsuuqFumF+Cxzy0pG09Ymdfj2Vvy5EBECuTjfSfSaFcYx1AlYL20uFcrttbqFN/ofUIS+DAIdYXzjMUWBKA+bEwsB8+DhR0rpjAFUZSgNRGlv5vTtcqgeI+u5hqAYBRRMKBi9eiba7PveGueszgUIK32qV4S1nTvR0Vi3tb07mN1yB22JV38='></script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s2.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://perlfisher.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress.com" />
+<link rel='shortlink' href='https://wp.me/c9qwx' />
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="The Perl Fisher" />
+<meta property="og:url" content="https://perlfisher.wordpress.com/" />
+<meta property="og:site_name" content="The Perl Fisher" />
+<meta property="og:image" content="https://s0.wp.com/i/blank.jpg" />
+<meta property="og:locale" content="en_US" />
+<meta property="fb:app_id" content="249643311490" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://s1.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="icon" type="image/x-icon" href="https://s1.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="apple-touch-icon" href="https://s2.wp.com/i/webclip.png" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://perlfisher.wordpress.com/osd.xml" title="The Perl Fisher" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+		<script type="text/javascript">
+		function __ATA_CC() {var v = document.cookie.match('(^|;) ?personalized-ads-consent=([^;]*)(;|$)');return v ? 1 : 0;}
+		var __ATA_PP = { pt: 0, ht: 0, tn: 'hever', amp: false, siteid: 8982, blogid: 179562945, consent: __ATA_CC(), flag: 2 };
+		</script>
+		<script type="text/javascript">
+		!function(t){var n={};function e(r){if(n[r])return n[r].exports;var o=n[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,e),o.l=!0,o.exports}e.m=t,e.c=n,e.d=function(t,n,r){e.o(t,n)||Object.defineProperty(t,n,{enumerable:!0,get:r})},e.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},e.t=function(t,n){if(1&n&&(t=e(t)),8&n)return t;if(4&n&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(e.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&n&&"string"!=typeof t)for(var o in t)e.d(r,o,function(n){return t[n]}.bind(null,o));return r},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,n){return Object.prototype.hasOwnProperty.call(t,n)},e.p="https://c0.pubmine.com/2.6.01584004761084/",e(e.s=184)}({0:function(t,n){t.exports=function(t,n,e){return n in t?Object.defineProperty(t,n,{value:e,enumerable:!0,configurable:!0,writable:!0}):t[n]=e,t}},1:function(t,n){t.exports=function(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}},10:function(t,n,e){"use strict";var r=e(50),o=e(17),i=e(23);t.exports=function(t,n,e){if(!r(t))return e;if(!o(n))return e;try{var u=n.split(".").reduce((function(t,n){return t[n]}),t);return i(u)?e:u}catch(t){return e}}},12:function(t,n){function e(n){return"function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?t.exports=e=function(t){return typeof t}:t.exports=e=function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},e(n)}t.exports=e},14:function(t,n,e){"use strict";t.exports=function(t){return"function"==typeof t}},15:function(t,n,e){"use strict";t.exports=function(){}},17:function(t,n,e){"use strict";t.exports=function(t){return"string"==typeof t}},184:function(t,n,e){"use strict";e.r(n);var r=e(0),o=e.n(r),i=e(12),u=e.n(i),c=e(32),f=e.n(c),s=e(15),a=e.n(s),p=e(37),l=e.n(p),d=e(52),v=e(53),m=e(28);function y(t,n){var e=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);n&&(r=r.filter((function(n){return Object.getOwnPropertyDescriptor(t,n).enumerable}))),e.push.apply(e,r)}return e}function b(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},n={};"object"===u()(window.__ATA_PP)&&null!==window.__ATA_PP&&(n=window.__ATA_PP);var e=function(t){for(var n=1;n<arguments.length;n++){var e=null!=arguments[n]?arguments[n]:{};n%2?y(Object(e),!0).forEach((function(n){o()(t,n,e[n])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(e)):y(Object(e)).forEach((function(n){Object.defineProperty(t,n,Object.getOwnPropertyDescriptor(e,n))}))}return t}({r:(new Date).getTime()},n,{},Object(d.a)(t),{ref:window.top!==window?document.referrer:window.location.href,us_privacy:Object(v.a)()}),r=l()("//s.pubmine.com/mhead.js",e);f()(r,a.a)}Object(m.b)()?Object(m.a)().then(b,b):b()},2:function(t,n){function e(t,n){for(var e=0;e<n.length;e++){var r=n[e];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}t.exports=function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}},21:function(t,n,e){"use strict";t.exports=function(t){return"string"==typeof t&&t.length>0}},23:function(t,n,e){"use strict";t.exports=function(t){return void 0===t}},24:function(t,n,e){"use strict";t.exports=function(t,n){return t.indexOf(n)>-1}},28:function(t,n,e){"use strict";e.d(n,"a",(function(){return p})),e.d(n,"b",(function(){return l}));var r=e(38),o=e.n(r),i=e(10),u=e.n(i),c=e(14),f=e.n(c),s=e(4);function a(t){var n=Date.now();return function(t){return new o.a((function(n,e){var r;window.setTimeout((function(){clearTimeout(r),e&&e("cmp ping timeout")}),t),function t(){window.__cmp?window.__cmp("ping",null,(function(o,i){i&&o.cmpLoaded?n():i?r=window.setTimeout(t,50):e&&e("cmp ping returned error with data: ".concat(JSON.stringify(o)))})):e&&e("CMP is not defined")}()}))}(t).then((function(){var e=Date.now()-n,r=t-e;return new o.a((function(t,n){window.__cmp?(window.__cmp("getConsentData",null,(function(e,r){r?t(e):n&&n("cmp getConsentData returned error with data: ".concat(JSON.stringify(e)))})),setTimeout((function(){n&&n("cmp getConsentData timeout")}),r)):n&&n("CMP is not defined")}))}))}function p(){return a(arguments.length>0&&void 0!==arguments[0]?arguments[0]:500).catch((function(t){return s.a.error(t),"boolean"==typeof(n=u()(window,"__ATA_PP.gdpr_applies"))?{gdprApplies:n}:{};var n}))}function l(){return f()(window.__cmp)}},29:function(t,n,e){"use strict";t.exports=function(t,n){for(var e=0,r=t.length;e<r;e++){var o=t[e];if(n(o,e))return o}return null}},30:function(t,n,e){"use strict";var r=e(29),o=e(24);t.exports=function(t,n){void 0===n&&(n=document.cookie);var e=n.split("; "),i=r(e,(function(n){return o(n,t+"=")}));return i?i.split("=")[1]:""}},32:function(t,n,e){"use strict";var r=e(15),o=e(14);t.exports=function(t,n,e){var i,u,c=document.createElement("script"),f=n instanceof HTMLElement&&n;if(i=o(n)?n:o(e)?e:r,c.src=t,c.onload=function(){i(void 0)},c.onerror=function(){i("error")},f)u=f;else{var s=document.getElementsByTagName("head");u=s&&0!==s.length?s[0]:document.documentElement}u.appendChild(c)}},37:function(t,n,e){"use strict";var r=e(24),o=e(89);t.exports=function(t,n){var e=o(n);return 0===e.length?t:t+(r(t,"?")?"&":"?")+e}},38:function(t,n,e){"use strict";var r,o=e(51),i=e(14);!function(t){t.REJECTED="rejected",t.RESOLVED="resolved",t.PENDING="pending"}(r||(r={}));var u=function(){function t(t,n){var e=this;this.status=r.PENDING,this.emitter=new o,this.onFulfilled=function(t){e.status===r.PENDING&&(e.status=r.RESOLVED,e.emitter.emit(r.RESOLVED,[t]))},this.onRejected=function(t){e.status===r.PENDING&&(e.status=r.REJECTED,e.emitter.emit(r.REJECTED,[t]))};var i=function(){return t(e.onFulfilled,e.onRejected)};n?i():setTimeout(i,0)}return t.resolve=function(n){return new t((function(t){t(n)}))},t.reject=function(n){return new t((function(t,e){e(n)}))},t.prototype.then=function(n,e){var o=this;return new t((function(u,c){o.emitter.on(r.RESOLVED,(function(e){if(i(n)){var r=n(e);r instanceof t?r.then(u,c):u(r)}else u(e)})),o.emitter.on(r.REJECTED,(function(n){if(i(e)){var r=e(n);r instanceof t?r.then(u,c):u(r)}else c(n)}))}),!0)},t.prototype.catch=function(n){var e=this;return new t((function(o){i(n)&&e.emitter.on(r.REJECTED,(function(e){var r=n(e);r instanceof t?r.then(o):o(r)})),e.emitter.on(r.RESOLVED,o)}),!0)},t}();t.exports=u},4:function(t,n,e){"use strict";var r=e(1),o=e.n(r),i=e(2),u=e.n(i),c=e(0),f=e.n(c),s=function(){function t(){o()(this,t)}return u()(t,null,[{key:"configure",value:function(n){t.config=n}},{key:"error",value:function(t){function n(n,e){return t.apply(this,arguments)}return n.toString=function(){return t.toString()},n}((function(t,n){this.config&&this.config.onError?this.config.onError(t,n):window.console&&console.log(t,n)}))}]),t}();f()(s,"config",void 0),n.a=s},50:function(t,n,e){"use strict";t.exports=function(t){var n=typeof t;return"object"===n&&null!=t||"function"===n}},51:function(t,n,e){"use strict";var r=function(){function t(){this.events={}}return t.prototype.on=function(t,n){if(this.events[t]){if(-1!==(e=this.events[t]).indexOf(n))throw new Error('This handler has already been subcribed for "'+t+'" event');e.push(n)}else{var e;(e=[]).push(n),this.events[t]=e}},t.prototype.off=function(t,n){var e=this.events[t],r=e.indexOf(n);-1!==r&&e.splice(r,1)},t.prototype.emit=function(t,n){void 0===n&&(n=[]);var e=this.events[t];e&&e.map((function(t){n?t.apply(void 0,n):t()}))},t}();t.exports=r},52:function(t,n,e){"use strict";e.d(n,"a",(function(){return i}));var r=e(17),o=e.n(r);function i(t){var n=t.gdprApplies,e=t.consentData;return{gdpr:"boolean"==typeof n?Number(n):void 0,gdpr_consent:o()(e)?e:void 0}}},53:function(t,n,e){"use strict";e.d(n,"a",(function(){return f}));var r=e(30),o=e.n(r),i=e(21),u=e.n(i),c="usprivacy";function f(){var t=o()(c);return u()(t)?t:null}},62:function(t,n,e){"use strict";t.exports=function(t){return null===t}},89:function(t,n,e){"use strict";var r=e(62),o=e(23);t.exports=function(t){var n=Object.keys(t),e=[];return n.forEach((function(n){var i=t[n];r(i)||o(i)||e.push(n+"="+encodeURIComponent(t[n]))})),e.join("&")}}});
+		</script><meta name="application-name" content="The Perl Fisher" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://perlfisher.wordpress.com/feed/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /></head>
+
+<body class="home blog paged wp-embed-responsive paged-3 customizer-styles-applied hfeed image-filters-enabled hide-homepage-title admin-bar highlander-enabled highlander-light">
+
+	
+<div id="page" class="site">
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+	
+		<header id="masthead" class="site-header responsive-max-width">
+
+			
+
+			<h1 class="site-title"><a href="https://perlfisher.wordpress.com/" rel="home">The Perl Fisher</a></h1>
+	
+
+							<nav id="site-navigation" class="main-navigation" aria-label="Main Navigation">
+					<input type="checkbox" role="button" aria-haspopup="true" id="toggle" class="hide-visually">
+					<label for="toggle" id="toggle-menu" class="button">
+						Menu						<span class="dropdown-icon open">+</span>
+						<span class="dropdown-icon close">&times;</span>
+						<span class="hide-visually expanded-text">expanded</span>
+						<span class="hide-visually collapsed-text">collapsed</span>
+					</label>
+					<div class="menu-primary-container"><ul id="menu-primary" class="main-menu" aria-label="submenu"><li id="menu-item-40" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-40"><a href="https://perlfisher.wordpress.com/blog-3/">Home</a></li>
+<li id="menu-item-19" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-19"><a href="https://perlfisher.wordpress.com/blog/">Home</a></li>
+<li id="menu-item-41" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-41"><a href="https://perlfisher.wordpress.com/blog-2-2/">Blog</a></li>
+<li id="menu-item-20" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20"><a href="https://perlfisher.wordpress.com/blog-2/">Blog</a></li>
+<li id="menu-item-42" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-42"><a href="https://perlfisher.wordpress.com/about-2/">About</a></li>
+<li id="menu-item-21" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-21"><a href="https://perlfisher.wordpress.com/about/">About</a></li>
+<li id="menu-item-43" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-43"><a href="https://perlfisher.wordpress.com/contact-2/">Contact</a></li>
+<li id="menu-item-22" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-22"><a href="https://perlfisher.wordpress.com/contact/">Contact</a></li>
+</ul></div>				</nav><!-- #site-navigation -->
+			
+			
+		</header><!-- #masthead -->
+
+	
+	<div id="content" class="site-content">
+
+	<section id="primary" class="content-area">
+		<main id="main" class="site-main">
+
+		
+<article id="post-115" class="post-115 post type-post status-publish format-standard hentry category-raku-programming entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2016/01/07/bottoms-up/" rel="bookmark">Bottoms Up</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p>After an evening of playing with bottom-up parsing, I can now explain some more of the decision-making process that goes into a grammar. Yesterday was a bit long-winded, so I&#8217;m going to gloss over a few steps. Today&#8217;s PHP selection is this:</p>
+
+
+
+<pre class="wp-block-preformatted">function simple() {
+  $a = 0;
+  for ($i = 0; $i &lt; 1000000; $i++)
+    $a++;
+
+  $thisisanotherlongname = 0;
+  for ($thisisalongname = 0; $thisisalongname &lt; 1000000; $thisisalongname++) {
+    $thisisanotherlongname++;
+  } 
+}</pre>
+
+
+
+<p>This very quickly tokenizes to:</p>
+
+
+
+<pre class="wp-block-preformatted">&lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '(' ')' '{'<br>  &lt;SCALAR&gt; '=' &lt;DIGITS&gt; ';'<br>  &lt;FOR&gt; '(' &lt;SCALAR&gt; '=' &lt;DIGITS&gt; ';' &lt;SCALAR&gt; '&lt;' &lt;DIGITS&gt; ';' &lt;SCALAR&gt; '++' ')'<br>    &lt;SCALAR&gt; '++' ';'</pre>
+
+
+
+<pre class="wp-block-preformatted">&lt;SCALAR&gt; '=' &lt;DIGITS&gt; ';'<br>&lt;FOR&gt; '(' &lt;SCALAR&gt; '=' &lt;DIGITS&gt; ';' &lt;SCALAR&gt; '&lt;' &lt;DIGITS&gt; ';' &lt;SCALAR&gt; '++' ')' '{'<br>  &lt;SCALAR&gt; '++' ';'<br>  '}'<br>'}'</pre>
+
+
+
+<p>The first thing I&#8217;d like to point out is that I&#8217;ve left structural details such as braces, parens and semicolons as text strings. In a more traditional lex/yacc (or flex/bison, if you prefer GNU) file we&#8217;d have to give all of these characters unwieldy names, so you&#8217;d end up with &lt;SCALAR&gt; &lt;POSTINCREMENT&gt; &lt;SEMICOLON&gt; or some equivalent nonsense. It&#8217;s much easier to just keep the characters as they are, plus we&#8217;re going to lose most of those characters as we go along.</p>
+
+
+
+<p>I&#8217;m going to assume a test-driven development style, so the first test (and only test, for a while) will be to see that our grammar matches our sole test file:</p>
+
+
+
+<pre class="wp-block-preformatted">use Test; my $g = PHP.new; ok $g.parsefile( "benchmark.php" )</pre>
+
+
+
+<p>This assumes that the PHP code at the start is in a file called &#8220;benchmark.php&#8221; somewhere that your test code can run it. And of course that you&#8217;re running Perl 6.</p>
+
+
+
+<p>This test should pass at all times, and you should be able to regularly commit your changes without having to undo&nbsp;<em>too</em>&nbsp;far down the path. In order to make sure that the test passes at all times, it&#8217;s critical that we aren&#8217;t too greedy. So we wouldn&#8217;t start off creating a `rule function { .. }`, as you might in a more top-down design.</p>
+
+
+
+<p>This is also a psychological measure to keep frustration levels to a minimum. By taking small bites, we can commit small deltas at a time, and even document each rule as we go along.</p>
+
+
+
+<h2>Taking a bite out of crime</h2>
+
+
+
+<p>Rarely has the advice &#8220;Do the least that could possibly work&#8221; been more apt. We&#8217;ll start by creating a tiny, tiny rule that just factors out the &#8216;$a++&#8217;, &#8216;$i++&#8217; and &#8216;$thisisalongname++&#8217; in our code. It&#8217;ll look like:</p>
+
+
+
+<pre class="wp-block-preformatted">rule postincrement-expression { &lt;SCALAR&gt; '++' }</pre>
+
+
+
+<p>and our first change to our grammar will look like:</p>
+
+
+
+<pre class="wp-block-preformatted"> grammar PHP {<br>        rule postincrement-expression { &lt;SCALAR&gt; '++' }<br>        rule TOP {<br>    &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '(' ')' '{'<br>      &lt;SCALAR&gt; '=' &lt;DIGITS&gt; ';'<br>      &lt;FOR&gt; '(' &lt;SCALAR&gt; '=' &lt;DIGITS&gt; ';' &lt;SCALAR&gt; '&lt;' &lt;DIGITS&gt; ';' &lt;postincrement-expression&gt; ')'<br>        &lt;postincrement-expression&gt; ';'</pre>
+
+
+
+<pre class="wp-block-preformatted">    &lt;SCALAR&gt; '=' &lt;DIGITS&gt; ';'<br>    &lt;FOR&gt; '(' &lt;SCALAR&gt; '=' &lt;DIGITS&gt; ';' &lt;SCALAR&gt; '&lt;' &lt;DIGITS&gt; ';' &lt;postincrement-expression&gt;')' '{'<br>      &lt;postincrement-expression&gt; ';'<br>      '}'<br>    '}'<br>        }<br>}</pre>
+
+
+
+<p>You might have noticed that we&#8217;ve ignored the trailing semicolon entirely, even though we could have made it optional. We could have chosen to do just that, and the rule would have looked like:</p>
+
+
+
+<pre class="wp-block-preformatted">rule postincrement-expression { &lt;SCALAR&gt; '++' ':'? }</pre>
+
+
+
+<p>Consider this in a larger context, for the moment. We&#8217;re going to want to have some way to match entire statements, eventually. Our `postincrement-expression` could just as well be part of a much larger rule, where it could look like:</p>
+
+
+
+<pre class="wp-block-preformatted">rule postincrement-operator { &lt;SCALAR&gt; '++' ';'? }<br>rule postdecrement-operator { &lt;SCALAR&gt; '--' ';'? }<br>rule statement<br>        { &lt;postincrement-operator&gt;<br>        | &lt;preincrement-operator&gt;<br>        }<br>rule statements<br>        { &lt;statement&gt;+ }</pre>
+
+
+
+<p>This will work, and `statements` will correctly parse &#8216;$a++;$b&#8211;;&#8217; &#8211; &#8216;$a++;&#8217; is a valid postincrement-operator, and &#8216;$b&#8211;;&#8217; is a valid postdecrement-operator. It will also correctly parse &#8216;$a++$b&#8211;;&#8217; which is&nbsp;<em>not</em>&nbsp;legal.</p>
+
+
+
+<p>Also, if we keep the &#8216;;&#8217; out of the expression we can reuse this all over the place. So, the two things to take away from this short lesson are to keep your grammar rules short, and keep the structural elements like &#8216;;&#8217; out of play for as long as possible.</p>
+
+
+
+<h2>Assignments</h2>
+
+
+
+<p>Keeping to our rule, we&#8217;ll turn our attention to &#8216;$i = 0&#8217;, &#8216;$a = 0&#8217; and &#8216;$isalongname = 0&#8217;. This gives us a new rule, and replacing every instance of `&lt;SCALAR&gt; &#8216;=&#8217; &lt;DIGITS&gt;` gives us:</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP {<br>        rule assignment-expression { &lt;SCALAR&gt; '=' &lt;DIGITS&gt; }<br>        rule TOP {<br>    &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '(' ')' '{'<br>      &lt;assignment-expression&gt; ';'<br>      &lt;FOR&gt; '(' &lt;assignment-expression&gt; ';' &lt;SCALAR&gt; '&lt;' &lt;DIGITS&gt; ';' &lt;postincrement-expression&gt; ')'<br>        &lt;postincrement-expression&gt; ';'<br> <br>    &lt;assignment-expression&gt; ';'<br>    &lt;FOR&gt; '(' &lt;assignment-expression&gt; ';' &lt;SCALAR&gt; '&lt;' &lt;DIGITS&gt; ';' &lt;postincrement-expression&gt;')' '{'<br>      &lt;postincrement-expression&gt; ';'<br> <br>      '}'<br>    '}'<br>        }<br>}        </pre>
+
+
+
+<h2>&nbsp;The Virtues of the Approach</h2>
+
+
+
+<p>Perl 6 is still a Perl, so the normal &#8216;laziness&#8217; virtue still applies here. If you miss an instance of `&lt;SCALAR&gt; &#8216;=&#8217; &lt;DIGITS&gt;` somewhere in your test file, the test will still pass. You can replace just enough to make sure your test passes, and it&#8217;s still completely valid.</p>
+
+
+
+<p>This way, too, there&#8217;s no &#8220;flag day&#8221; where you have to change every test because you found some tiny detail and have to backtrack changes in the grammar. If we were designing the grammar top-down, changing the top-level `function-declaration` would cascade throughout the entire test suite.</p>
+
+
+
+<h2>Comparisons</h2>
+
+
+
+<p>Similar reasoning applies to `&lt;SCALAR&gt; &#8216;&lt;&#8216; &lt;DIGITS&gt;`, because this fragment too can be used elsewhere, say in an &#8216;if ( $a &lt; 3 )&#8217; comparison. I&#8217;ll just show the modified grammar, because the rule is fairly trivial:</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP {<br>        rule comparison-expression { &lt;SCALAR&gt; '&lt;' &lt;DIGITS&gt; }<br>        rule TOP {<br>    &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '(' ')' '{'<br>      &lt;assignment-expression&gt; ';'<br>      &lt;FOR&gt; '(' &lt;assignment-expression&gt; ';' &lt;comparison-expression&gt; ';' &lt;postincrement-expression&gt; ')'<br>        &lt;postincrement-expression&gt; ';'<br> <br>    &lt;assignment-expression&gt; ';'<br>    &lt;FOR&gt; '(' &lt;assignment-expression&gt; ';' &lt;comparison-expression&gt; ';' &lt;postincrement-expression&gt;')' '{'<br>      &lt;postincrement-expression&gt; ';'<br> <br>      '}'<br>    '}'<br>        }<br>}    </pre>
+
+
+
+<h2>Naked Blocks</h2>
+
+
+
+<p>We&#8217;ve got two styles of for loop here, one with a block and one with just a single statement after it. The usual &#8220;shortest string&#8221; principle applies here, so we&#8217;re going to create a `for-expression` rule that we can use before a statement&nbsp;<em>or</em>&nbsp;the start of a block, like so:</p>
+
+
+
+<pre class="wp-block-preformatted">rule for-expression { &lt;FOR&gt; '(' &lt;assignment-expression&gt; ';' &lt;comparison-expression&gt; ';' &lt;postincrement-expression&gt; ')' }</pre>
+
+
+
+<p>And the resultant grammar looks like:</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP {<br>        rule for-expression<br>                { &lt;FOR&gt; '(' &lt;assignment-expression&gt; ';' &lt;comparison-expression&gt; ';' &lt;postincrement-expression&gt; ')'<br>                }<br>        rule TOP { <br>    &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '(' ')' '{'<br>      &lt;assignment-expression&gt; ';'<br>      &lt;for-expression&gt;<br>        &lt;postincrement-expression&gt; ';'<br> <br>    &lt;assignment-expression&gt; ';'<br>      &lt;for-expression&gt; '{'<br>        &lt;postincrement-expression&gt; ';'</pre>
+
+
+
+<pre class="wp-block-preformatted">      '}'<br>    '}'<br>        }<br>}  </pre>
+
+
+
+<p>The TOP rule looks much simpler now, and we can almost see our goal. Let&#8217;s consolidate the expressions into one place:</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP {<br>        rule expression<br>                { &lt;assignment-expression&gt; <br>                | &lt;postincrement-expression&gt; <br>                }<br>        rule TOP {<br>    &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '(' ')' '{'<br>      &lt;expression&gt; ';'<br>      &lt;for-expression&gt;<br>        &lt;expression&gt; ';'<br> <br>      &lt;expression&gt; ';'<br>      &lt;for-expression&gt; '{'<br>        &lt;expression&gt; ';'<br>      '}'<br>    '}'<br>        }<br>}    </pre>
+
+
+
+<p>Since &#8216;$a++&#8217; and &#8216;$a = 0&#8217; can occur in regular statements, we&#8217;re going to group them into one `expression` rule for later use. Now, iterating on the &#8220;Don&#8217;t repeat yourself&#8221; principle, we&#8217;ll create one last trivial rule and make a `statement` rule.</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP {<br>        rule statement { &lt;expression&gt; ';' }<br>        rule TOP {<br>    &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '(' ')' '{'<br>      &lt;statement&gt;<br>      &lt;for-expression&gt;<br>        &lt;statement&gt;<br> <br>      &lt;statement&gt; <br>      &lt;for-expression&gt; '{'<br>        &lt;statement&gt; <br>      '}'<br>    '}' <br>        }<br>}</pre>
+
+
+
+<h2>Grand Unification</h2>
+
+
+
+<p>Let&#8217;s create a `for-statement` rule that collapses both kinds of &#8216;for expressions, the ones with and without blocks:</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP {<br>        rule for-statement<br>                { &lt;for-expression &lt;statement&gt;<br>                | &lt;for-expression&gt; '{' &lt;statement&gt; '}'<br>                }<br>        rule TOP {<br>    &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '(' ')' '{'<br>      &lt;statement&gt;<br>      &lt;for-statement&gt;<br> <br>      &lt;statement&gt;<br>      &lt;for-statement&gt;<br>    '}'<br>        }<br>}    </pre>
+
+
+
+<p>And finally, we&#8217;ll create a `line` rule that unifies `statement` and `for-statement`:</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP {<br>        rule line<br>                { &lt;statement&gt;<br>                | &lt;for-expression&gt;<br>                }<br>        rule TOP {<br>    &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '(' ')' '{'<br>      &lt;line&gt;<br>      &lt;line&gt;</pre>
+
+
+
+<pre class="wp-block-preformatted">      &lt;line&gt;<br>      &lt;line&gt;<br>    '}'<br>        }<br>}     </pre>
+
+
+
+<p>Lo and behold, we&#8217;ve unified all of our code into a single rule, so we can trivially replace the four instances of `&lt;line&gt;` with just one, and account for the possibility that there can be no lines in a function:</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP {<br>        rule TOP {<br>    &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '(' ')' '{'<br>      &lt;line&gt;*<br>    '}'<br>        }<br>}  </pre>
+
+
+
+<p>And there you have it. Rename &#8216;TOP&#8217; to &#8216;function&#8217;, and we have a complete grammar:</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP<br>        {<br>        rule assignment-expression { &lt;SCALAR&gt; '=' &lt;DIGITS&gt; }<br>        rule comparison-expression { &lt;SCALAR&gt; '&lt;' &lt;DIGITS&gt; }<br>        rule for-expression <br> <br>                { &lt;FOR&gt; '(' &lt;assignment-expression&gt; ';' &lt;comparison-expression&gt; ';' &lt;postincrement-expression&gt; ')'<br> <br>                }<br>        rule expression<br>                { &lt;assignment-expression&gt;<br>                | &lt;postincrement-expression&gt;<br>                }<br>        rule statement { &lt;expression&gt; ';' }<br>        rule for-statement<br>                { &lt;for-expression &lt;statement&gt;<br>                | &lt;for-expression&gt; '{' &lt;statement&gt; '}'<br>                }<br>        rule line<br>                { &lt;statement&gt;<br>                | &lt;for-expression&gt;<br>                } <br>        rule function<br>                {<br>                &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '(' ')' '{'<br>                &lt;line&gt;*<br>                '}'<br>                }<br>        rule TOP { &lt;function&gt; }<br>        }     </pre>
+
+
+
+<p>This will parse our original benchmark.php and so much more. If you want to explore this, there are some obvious starting points, for instance you could add different comparison types like this:</p>
+
+
+
+<pre class="wp-block-preformatted">        rule comparison-expression<br>                { &lt;SCALAR&gt; '&lt;' &lt;DIGITS&gt;<br>                | &lt;SCALAR&gt; '&gt;=' &lt;DIGITS&gt;<br>                }</pre>
+
+
+
+<p>Or instead of assignment, add bitshifts with `&lt;SCALAR&gt; &#8216;&lt;&lt;&#8216; &lt;DIGITS&gt;`. Be well, and write good code.&nbsp;</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2016/01/07/bottoms-up/" rel="bookmark"><time class="entry-date published" datetime="2016-01-07T13:30:47+01:00">January 7, 2016</time><time class="updated" datetime="2020-06-30T13:36:46+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2016/01/07/bottoms-up/#respond">Leave a comment<span class="screen-reader-text"> on Bottoms Up</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-125" class="post-125 post type-post status-publish format-standard hentry category-raku-programming entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2016/01/05/parsing-the-easy-way/" rel="bookmark">Parsing the easy&nbsp;way</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<h2>Caveat Emptor&nbsp;</h2>
+
+
+
+<p>There are many Perl 6 tutorials out there, this is not one of them. It assumes some familiarity with the language and some familiarity with regular expressions, the mini-language that Perl 6 grammars derived from. You should probably also have an idea of why someone would want to write one.</p>
+
+
+
+<p>I&#8217;m going to simply talk about being able to take a file in a given language (PHP is my chosen victim, as being able to interpret PHP code in Perl 6 seems like a useful goal) and create a grammar (giant regular expression) that turns your PHP code into a Perl 6 match object which you can then walk.</p>
+
+
+
+<p>If this doesn&#8217;t sound useful to you, well, it isn&#8217;t without a bit of additional work. In Perl 6 you can combine this matching object with a set of actions that trigger when a match is made, and&nbsp;<em>those</em>&nbsp;can do many wondrous things. For instance, an action could be made that triggers when &#8216;$a = 5;&#8217; is matched, and that could set the Perl 6 variable $a to 5, thus setting a Perl 6 variable from inside PHP 5 code.</p>
+
+
+
+<h2>Inspiration&nbsp;</h2>
+
+
+
+<p>I&#8217;m working on some talks for upcoming conferences&nbsp; (FOSDEM, OSCON to name a few), and was stuck on how to explain a clean way to write and debug a parser. I&#8217;d rather not go the CS 401 generic route of creating the usual expression grammar thing that everyone uses to prove what a pain left-recursion can be, so I figured that PHP would be worthwhile, and if I can get a full PHP grammar out of a talk, so be it.</p>
+
+
+
+<p>Now, PHP being a Perl derivative means that the grammar is a bit &#8230; dodgy. If you&#8217;ve ever seen the Perl lexer, you know the challenges we face. There&#8217;s also the additional challenge of Perl 6 being relatively new, so it&#8217;s even more important that we work in a stepwise fashion.</p>
+
+
+
+<p>When I created&nbsp;<a href="http://web.archive.org/web/20160105123320/https://github.com/drforr/perl6-ANTLR4" target="_blank" rel="noreferrer noopener">perl6-ANTLR4</a>&nbsp;I had the benefit of a grammar to work from, and a reasonable idea of how I was going to convert it. With PHP I really had no such guarantee, so through trial-and-error I came across the following approach. It might not scale to the full language, but it&#8217;s one way of approaching the problem.</p>
+
+
+
+<p>I&#8217;ll put the full PHP source up on GitHub once I&#8217;m convinced this is a workable approach, but the basic idea I&#8217;ve come up with is as follows:</p>
+
+
+
+<ol><li>Collect the sample source into a corpus/ directory.</li><li>Write a test file that parses each file in the corpus.</li><li>Write a stub grammar whose TOP rule consists of each file in the corpus separated by an &#8216;|&#8217; alternation symbol.</li><li>Run the test file over the corpus.</li><li>For each token you find, create a &#8216;token FOO { &#8230; }&#8217; rule. Most of these should be formulaic, and if you&#8217;re creative with an edge-case test case the rest should fall out.</li><li>Search/replace each occurrence of the token with &#8216;&lt;FOO&gt;&#8217; (and the appropriate quotes, this does get tedious.)</li><li>Repeat steps 5 and 6 until the grammar is tokenized.</li><li>For each common sequence of tokens you find, create a &#8216;rule bar { &#8230; }&#8217; rule that matches them.</li><li>Replace the common sequence of tokens with &#8216;&lt;bar&gt;&#8217; as need be.</li><li>Repeat steps 8 and 9 until the language is parsed, or you&#8217;re out of patience.&nbsp;</li></ol>
+
+
+
+<p>This won&#8217;t make much sense without some examples, so I&#8217;ll draw on my current tackling of PHP for inspiration. Incidentally I&#8217;m impressed that the existing Perl 6 grammar construct can handle this approach, which I&#8217;ve already applied to sequences of upwards of several thousand tokens in a row.</p>
+
+
+
+<p>Here&#8217;s a sample (suitably truncated) Perl 6 test file:</p>
+
+
+
+<pre class="wp-block-preformatted">use v6;<br>use PHP::Grammar;<br>use Test;       </pre>
+
+
+
+<pre class="wp-block-preformatted">plan 1;</pre>
+
+
+
+<pre class="wp-block-preformatted">my $g = PHP::Grammar.new; </pre>
+
+
+
+<pre class="wp-block-preformatted">ok $g.parsefile('corpus-5/addglob.php');<br>ok $g.parsefile('corpus-5/addpattern.php';</pre>
+
+
+
+<p>In a nutshell, this simply tests that our PHP grammar matches the content of addglob.php and addpattern.php in our corpus-5/ directory. It should do so trivially, because the grammar file consists of almost nothing but these two files verbatim.</p>
+
+
+
+<p>The starting grammar file should look like this:</p>
+
+
+
+<pre class="wp-block-preformatted">use v6;<br>grammar PHP::Grammar<br>        {<br>        rule TOP<br>                {<br># corpus-5/addglob.php below, just stick it in quotes.                <br>'&lt;?php </pre>
+
+
+
+<pre class="wp-block-preformatted">class a {<br>        public function test($arg = c::TESTCONSTANT) {<br>                echo __METHOD__ . "($arg)\n";<br>        }       <br> <br>        static public function staticTest() {<br>        }<br>}'      </pre>
+
+
+
+<pre class="wp-block-preformatted">|<br># corpus-5/addpattern.php below, remember to escape "'&lt;'.'?php';?&gt;"<br>'#!/usr/bin/php<br>&lt;?php<br>echo \'&lt;\'.\'?php\';?&gt;</pre>
+
+
+
+<pre class="wp-block-preformatted">foreach(array("SPL", "Reflection", "Phar") as $ext) {<br>        if (!extension_loaded($ext)) {<br>                echo "$argv[0] requires PHP extension $ext.\n";<br>                exit(1);<br>        }       <br>} ?&gt;'<br>                }</pre>
+
+
+
+<pre class="wp-block-preformatted">        }<br> </pre>
+
+
+
+<p>This is, of course, a&nbsp;<strong>horrible</strong>&nbsp;abuse of the Perl 6 grammar system, but it&#8217;s a testament to the fact that the system works, and you can incrementally develop your grammar from this baseline. This &#8220;parser&#8221; just checks its input string to see if it matches the content of addglob.php or addpattern.php, and if so, returns True. You can also ask it for the match contents, and lo and behold, it will return one or the other of the match strings.</p>
+
+
+
+<p>Of course, this is only useful if you want your grammar to match the contents of these two files. We&#8217;re aspiring to something a little greater than this, so bear with me. Incidentally, if you&#8217;re copy/pasting the source code from this posting, please make sure the &#8220;} ?&gt;'&#8221; is flush-left in your editor.</p>
+
+
+
+<p>Enclosing the entire string in quotes means that the match is open to the vagaries of whitespace, so if you&#8217;re going to follow me on this journey I&#8217;d recommend copying and pasting the files yourself rather than relying on the browser to keep whitespace intact.&nbsp;</p>
+
+
+
+<h2>Bottoms Up!</h2>
+
+
+
+<p>We&#8217;re going to start by giving each term (like &#8216;3&#8217;, &#8216;foreach&#8217; or &#8216;&#8221;Hello world!&#8221;&#8216;) in our program a name. This is backwards from the usual process, because ordinarily we&#8217;d have a grammar description in another language to guide us. The problem is that, well, most grammars like yacc, bison and ANTLR simply aren&#8217;t Perl, and don&#8217;t quite map onto the tools we have at our disposal.</p>
+
+
+
+<p>Basically, you can think of this process as refactoring a regular expression, but an RE that&#8217;s far more powerful than what you&#8217;ve had at your disposal with Perl 5 or its brethren and sistren.</p>
+
+
+
+<p>Let&#8217;s start this process by looking at &#8216;!extension_loaded($ext)&#8217; in the source. We&#8217;ll say that everything that corresponds to a&nbsp;<strong>single</strong>&nbsp;string in the source gets labeled in all UPPER CASE. Later on this will keep us from confusing things.</p>
+
+
+
+<p>So, in this context, `!` is the negation operator, so we&#8217;ll name it NEGATION-OP. `extension_loaded` is a function name, so we&#8217;ll call it FUNCTION-NAME. Likewise `$ext` is a scalar variable, so we&#8217;ll just call it SCALAR.</p>
+
+
+
+<p>In the grammar, we can replace `!` with `&lt;NEGATION-OP&gt;`, `extension_loaded` with `&lt;FUNCTION-NAME&gt;` and `$ext` gets replaced with `&lt;SCALAR&gt;`. You&#8217;ll notice that `(` and `)` didn&#8217;t get names. They&#8217;re really more placeholders than anything, so we&#8217;ll keep `(`, `)&#8217;, `{`, `}` and so on just as raw text.&nbsp;</p>
+
+
+
+<h2>Break it Down</h2>
+
+
+
+<p>For the moment, though, we&#8217;ll just give the simple things in the program names, like `static`, `function` and `class`. You can already start to see how things might group though, just looking at this new version:&nbsp;</p>
+
+
+
+<pre class="wp-block-preformatted">use v6;<br>grammar PHP::Grammar<br>        {<br>        token STATIC { 'static' }<br>        token CLASS { 'class' } <br>        token PUBLIC { 'public' }<br>        token FUNCTION { 'function' }<br>        token FOREACH { 'foreach' }<br>        token AS { 'as' }<br>        token IF { 'if' }<br>        token ECHO { 'echo' }<br>        token EXIT { 'exit' }<br>        rule TOP<br>                {<br> <br>'&lt;?php'<br>&lt;CLASS&gt; 'a {'<br>        &lt;PUBLIC&gt; &lt;FUNCTION&gt; 'test($arg = c::TESTCONSTANT) {'<br>                &lt;ECHO&gt; '__METHOD__ . "($arg)\n";<br>        }'      </pre>
+
+
+
+<p>        &lt;STATIC&gt; &lt;PUBLIC&gt; &lt;FUNCTION&gt; &#8216;staticTest() {<br>        }<br>}&#8217;      </p>
+
+
+
+<p>|</p>
+
+
+
+<pre class="wp-block-preformatted">'#!/usr/bin/php<br>&lt;?php'<br>&lt;ECHO&gt; '\'&lt;\'.\'?php\';?&gt;'</pre>
+
+
+
+<pre class="wp-block-preformatted">&lt;FOREACH&gt; '(array("SPL", "Reflection", "Phar")' &lt;AS&gt; '$ext) {'<br>        &lt;IF&gt; '(!extension_loaded($ext)) {'<br>                &lt;ECHO&gt; '"$argv[0] requires PHP extension $ext.\n";'<br>                &lt;EXIT&gt; '(1);<br>        }       <br>} ?&gt;'   </pre>
+
+
+
+<pre class="wp-block-preformatted">                }<br>        }</pre>
+
+
+
+<p>The `token ECHO {&#8230;}` is how you assign the string &#8216;echo&#8217; its own name, and instead of the raw text &#8216;echo&#8217; in the program, you replace it with `&lt;ECHO&gt;`. Don&#8217;t forget to replace the quotes, because you&#8217;re effectively interpolating `&lt;ECHO&gt;` into the string.</p>
+
+
+
+<p>We&#8217;ve only replaced the static text here, so it&#8217;s it&#8217;s still only going to be able to match the original file contents, but that will change soon enough. You can start to see a bit of how we might be able to refactor some of this at a later date.</p>
+
+
+
+<p>Keeping in mind that Perl 6 grammars are essentially your old regular expressions on steroids, look at `&lt;STATIC&gt; &lt;PUBLIC&gt; &lt;FUNCTION&gt;`. PHP doesn&#8217;t require that all functions be statically declared, so we could change that to `&lt;STATIC&gt;?` to make both &#8216;static public function foo(&#8230;)&#8217; and &#8216;public function foo(&#8230;)&#8217; legal.</p>
+
+
+
+<p>Careful about how far you take this though. If you make both &#8216;static&#8217; and &#8216;public&#8217; optional like so, `&lt;STATIC&gt;? &lt;PUBLIC&gt;? &lt;FUNCTION&gt;`, this makes &#8216;static function foo(&#8230;)&#8217; a legal expression. Luckily it is legal in PHP, but other languages might not allow that.</p>
+
+
+
+<h2>Functionality</h2>
+
+
+
+<p>The goal is to give every term here a label, so let&#8217;s pick on something else. `test(&#8230;)` and `selfTest()` seem like the next obvious candidates. Now, our ultimate goal is not to just match these two files, but any PHP program text, and my years of programming experience has led me to deduce that people are going to want to name functions something other than `test` and `selfTest`, so we need to accommodate those people.</p>
+
+
+
+<p>We need a way to match a whole range of identifier characters, and lucky for us, this looks just like it did in Perl 5, using the `\w` character class.&nbsp;</p>
+
+
+
+<pre class="wp-block-preformatted">&nbsp;grammar PHP::Grammar<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; token FUNCTION-NAME { \w+ }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rule TOP<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br><br>'&lt;?php'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&lt;CLASS&gt; 'a {'&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;PUBLIC&gt; &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '($arg = c::TESTCONSTANT) {'<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ECHO&gt; '__METHOD__ . "($arg)\n";<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;STATIC&gt; &lt;PUBLIC&gt; &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '() {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>}'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+
+
+
+<pre class="wp-block-preformatted">|</pre>
+
+
+
+<pre class="wp-block-preformatted">'#!/usr/bin/php<br>&lt;?php'<br>&lt;ECHO&gt; '\'&lt;\'.\'?php\';?&gt;'</pre>
+
+
+
+<pre class="wp-block-preformatted">&lt;FOREACH&gt; '(' &lt;FUNCTION-NAME&gt; '("SPL", "Reflection", "Phar")' &lt;AS&gt; '$ext) {'<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;IF&gt; '(!' &lt;FUNCTION-NAME&gt; '($ext)) {'<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ECHO&gt; '"$argv[0] requires PHP extension $ext.\n";'<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;EXIT&gt; '(1);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>} ?&gt;'<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</pre>
+
+
+
+<h2>A brief aside</h2>
+
+
+
+<p>You might be thinking &#8220;Whoa there, if we&#8217;re just going to match any old string of letters, haven&#8217;t we lost something here? Where does this go?&#8221; Well, it&#8217;s really a named capture in a slightly different guise. Back in Perl 5 you were used to doing:</p>
+
+
+
+<pre class="wp-block-preformatted">"2+3" =~ /(\d+) \+ (\d+)/x</pre>
+
+
+
+<p>&nbsp;in order to capture the values `2` and `3` in $1 and $2 respectively, and may even have used the named capture feature. In Perl 6, these get renumbered to $0 and $1 respectively, and even better, you get a hash that you can play with, so a statement like:</p>
+
+
+
+<pre class="wp-block-preformatted">"doStuff()" ~~ /&lt;FUNCTION-NAME&gt; '(' ')'/</pre>
+
+
+
+<p>&nbsp;will capture &#8216;doStuff&#8217; in $/{&#8216;FUNCTION-NAME&#8217;}. Not only do you have a hash to play with, but later on we&#8217;ll exploit the fact that this $/ object is actually a multi-tiered data structure, so you can put named captures&nbsp;<strong>inside</strong>&nbsp;named captures to create a hash of hashes for you, and this all happens automatically.</p>
+
+
+
+<h2>Syntax and Semantics</h2>
+
+
+
+<p>There&#8217;s one other thing that got swept under the rug here. Since `test` and `staticTest` both got abstracted away under `&lt;FUNCTION-NAME&gt;`, it&#8217;s entirely possible that once the parser is fully complete, `function dup(){} function dup(){}` will<strong>&nbsp;</strong>actually match, even though it might not be legal PHP code.</p>
+
+
+
+<p>What we&#8217;re building doesn&#8217;t distinguish between&nbsp;<em>legal</em>&nbsp;code and&nbsp;<em>syntactically correct</em>&nbsp;code. Generally speaking, if the compiler immediately returns a syntax error, then your parser should be able to catch it. Otherwise don&#8217;t worry about it.</p>
+
+
+
+<p>For testing purposes it is a good idea to add some corner cases like these, but in general the parser should be very laid-back about what it accepts. `my $x; my $x;` may throw a &#8220;redefined value&#8221; warning, but the parser should just see two variable declarations in a row, put them into a syntax tree, and go on about its business.</p>
+
+
+
+<h2>And back to our story.</h2>
+
+
+
+<p>Now, let&#8217;s factor out the strings. For our purposes, strings are nothing but a `&#8221;`, some stuff that&#8217;s&nbsp;<strong>not</strong>&nbsp;a `&#8221;`, then a final `&#8221;` to cap it all off. In Perl 6 regex terms, that looks like this (with single-quoted strings thrown in as well):</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP::Grammar<br>        {<br>        token DQ-STRING { '"' &lt;-[ " ]&gt; '"' }<br>        token SQ-STRING { '\'' &lt;-[ ' ]&gt; '\'' }<br>        rule TOP<br>                {</pre>
+
+
+
+<pre class="wp-block-preformatted">'&lt;?php' <br>&lt;CLASS&gt; 'a {'<br>        &lt;PUBLIC&gt; &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '($arg = c::TESTCONSTANT) {'<br>                &lt;ECHO&gt; '__METHOD__ .' &lt;DQ-STRING&gt; ';<br>        }'</pre>
+
+
+
+<pre class="wp-block-preformatted">        &lt;STATIC&gt; &lt;PUBLIC&gt; &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '() {<br>        }<br>}'</pre>
+
+
+
+<pre class="wp-block-preformatted">|</pre>
+
+
+
+<pre class="wp-block-preformatted">'#!/usr/bin/php<br>&lt;?php'<br>&lt;ECHO&gt; &lt;SQ-STRING&gt; ';?&gt;'</pre>
+
+
+
+<pre class="wp-block-preformatted">&lt;FOREACH&gt; '(' &lt;FUNCTION-NAME&gt; '(' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ')' &lt;AS&gt; '$ext) {'<br>        &lt;IF&gt; '(!' &lt;FUNCTION-NAME&gt; '($ext)) {'<br>                &lt;ECHO&gt; &lt;DQ-STRING&gt; ';'<br>                &lt;EXIT&gt; '(1);<br>        }<br>} ?&gt;'<br>                }<br>        }</pre>
+
+
+
+<p>Let&#8217;s now do the big one, scalars. They&#8217;re just like function names, but with a leading `$`.</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP::Grammar<br>        {<br>        token SCALAR { '$' \w+ }<br>        rule TOP<br>                {               <br>'&lt;?php'         <br>&lt;CLASS&gt; 'a {'<br>        &lt;PUBLIC&gt; &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '(' &lt;SCALAR&gt; '= c::TESTCONSTANT) {'<br>                &lt;ECHO&gt; '__METHOD__ .' &lt;DQ-STRING&gt; '; <br>        }'      <br> <br>        &lt;STATIC&gt; &lt;PUBLIC&gt; &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; '() {<br>        }<br>}'      </pre>
+
+
+
+<pre class="wp-block-preformatted">|</pre>
+
+
+
+<pre class="wp-block-preformatted">'#!/usr/bin/php<br>&lt;?php'<br>&lt;ECHO&gt; &lt;SQ-STRING&gt; ';&gt;?'</pre>
+
+
+
+<pre class="wp-block-preformatted">&lt;FOREACH&gt; '(' &lt;FUNCTION-NAME&gt; '(' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ')' &lt;AS&gt; &lt;SCALAR&gt; ') {'<br>        &lt;IF&gt; '(!' &lt;FUNCTION-NAME&gt; '(' &lt;SCALAR&gt; ')) {'<br>                &lt;ECHO&gt; &lt;DQ-STRING&gt; ';'<br>                &lt;EXIT&gt; '(1);<br>        }<br>} ?&gt;'</pre>
+
+
+
+<p>I&#8217;d like to point out that if you&#8217;ve been following along in your own Perl 6 terminal window, that the test cases we&#8217;ve been running haven&#8217;t failed, or had to be rewritten, yet we&#8217;ve been refactoring the grammar like mad. We may be able to continue this way until the end, running more test files through our corpus of parsing until it handles PHP in all its glory. We may not. At each stage, though, the diffs between files make it clear what we&#8217;ve factored out, and what might have gone wrong.</p>
+
+
+
+<h2>New Rules</h2>
+
+
+
+<p>Now that a lot of the underlying confusion has been stripped away, let&#8217;s think a little bigger. A lot of dealing with grammars is repeating the mantra &#8220;Don&#8217;t repeat yourself.&#8221; See how `&lt;PUBLIC&gt; &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt;` repeats? Let&#8217;s refactor that out by creating a new rule. We&#8217;ll also create another convention that when we clump UPPER-CASE names together, we&#8217;ll give the clump a lower-case name.</p>
+
+
+
+<p>Since it&#8217;s almost a function declaration, let&#8217;s call it that, like so:</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP::Grammar<br>        {<br>        rule function-declaration { &lt;PUBLIC&gt; &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; }<br>        rule TOP<br>                {<br>'&lt;?php'<br>&lt;CLASS&gt; 'a {'<br>        &lt;function-declaration&gt; '(' &lt;SCALAR&gt; '= c::TESTCONSTANT) {'<br>                &lt;ECHO&gt; '__METHOD__ .' &lt;DQ-STRING&gt; ';<br>        }'</pre>
+
+
+
+<pre class="wp-block-preformatted">        &lt;STATIC&gt; &lt;function-declaration&gt; '() {<br>        }<br>}'</pre>
+
+
+
+<pre class="wp-block-preformatted">|</pre>
+
+
+
+<pre class="wp-block-preformatted">'#!/usr/bin/php<br>&lt;?php'<br>&lt;ECHO&gt; &lt;SQ-STRING&gt; ';?&gt;'</pre>
+
+
+
+<pre class="wp-block-preformatted">&lt;FOREACH&gt; '(' &lt;FUNCTION-NAME&gt; '(' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ')' &lt;AS&gt; &lt;SCALAR&gt; ') {'<br>        &lt;IF&gt; '(!' &lt;FUNCTION-NAME&gt; '(' &lt;SCALAR&gt; ')) {'<br>                &lt;ECHO&gt; &lt;DQ-STRING&gt; ';'<br>                &lt;EXIT&gt; '(1);<br>        }<br>} ?&gt;'<br>                }<br>        }</pre>
+
+
+
+<p>And that&#8217;s how you create your own rules. Nothing to it, really. You&#8217;ll notice that we&#8217;ve sort of left `&lt;STATIC&gt;` behind, though. When you&#8217;re just starting out, it&#8217;s best to keep your new rules simple, which means they should be just common sequences of terms.</p>
+
+
+
+<p>But again, you can remember too that these rules are just regular expressions in disguise, so you can use your old friend `?` to declare something optional:</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP::Grammar<br>        {<br>        rule function-declaration { &lt;STATIC&gt;? &lt;PUBLIC&gt; &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; }<br>        rule TOP<br>                {</pre>
+
+
+
+<pre class="wp-block-preformatted">'&lt;?php'<br>&lt;CLASS&gt; 'a {'<br>        &lt;function-declaration&gt; '(' &lt;SCALAR&gt; '= c::TESTCONSTANT) {'<br>                &lt;ECHO&gt; '__METHOD__ .' &lt;DQ-STRING&gt; ';<br>        }'</pre>
+
+
+
+<pre class="wp-block-preformatted">        &lt;function-declaration&gt; '() {<br>        }<br>}'</pre>
+
+
+
+<pre class="wp-block-preformatted">|</pre>
+
+
+
+<pre class="wp-block-preformatted">'#!/usr/bin/php<br>&lt;?php'<br>&lt;ECHO&gt; &lt;SQ-STRING&gt; ';?&gt;'</pre>
+
+
+
+<pre class="wp-block-preformatted">&lt;FOREACH&gt; '(' &lt;FUNCTION-NAME&gt; '(' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ')' &lt;AS&gt; &lt;SCALAR&gt; ') {'<br>        &lt;IF&gt; '(!' &lt;FUNCTION-NAME&gt; '(' &lt;SCALAR&gt; ')) {'<br>                &lt;ECHO&gt; &lt;DQ-STRING&gt; ';'<br>                &lt;EXIT&gt; '(1);<br>        }<br>} ?&gt;'<br>                }<br>        }</pre>
+
+
+
+<p>Just like in regular expressions, `?` makes a name optional. You could make `&lt;PUBLIC&gt;` optional as well, since having a `function foo()` with no `static` or `public` declaration is probably legal, but it might be better to verify that with another corpus file.</p>
+
+
+
+<h2>Expressionless</h2>
+
+
+
+<p>Now we&#8217;re going to focus our attention on the `&lt;ECHO&gt; &lt;DQ-STRING&gt;` and `&lt;ECHO&gt; &lt;SQ-STRING&gt;` elements. Since most of the syntax we&#8217;re using has much in common with regular expressions, you might guess that we can say &#8220;either &lt;DQ-STRING&gt; or &lt;SQ-STRING&gt;&#8221; with `( &lt;DQ-STRING&gt; | &lt;SQ-STRING&gt; )`, and you&#8217;d be right:</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP::Grammar<br>        {<br>        rule echo-expression { &lt;ECHO&gt; ( &lt;SQ-STRING&gt; | &lt;DQ-STRING&gt; ) }<br>        rule TOP<br>                {</pre>
+
+
+
+<pre class="wp-block-preformatted">'&lt;?php'<br>&lt;CLASS&gt; 'a {'<br>        &lt;function-declaration&gt; '(' &lt;SCALAR&gt; '= c::TESTCONSTANT) {'<br>                &lt;ECHO&gt; '__METHOD__ .' &lt;DQ-STRING&gt; ';<br>        }'</pre>
+
+
+
+<pre class="wp-block-preformatted">        &lt;function-declaration&gt; '() {<br>        }<br>}'</pre>
+
+
+
+<pre class="wp-block-preformatted">|</pre>
+
+
+
+<pre class="wp-block-preformatted">'#!/usr/bin/php<br>&lt;?php'<br>&lt;echo-expression&gt; ';?&gt;'</pre>
+
+
+
+<pre class="wp-block-preformatted">&lt;FOREACH&gt; '(' &lt;FUNCTION-NAME&gt; '(' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ')' &lt;AS&gt; &lt;SCALAR&gt; ') {'<br>        &lt;IF&gt; '(!' &lt;FUNCTION-NAME&gt; '(' &lt;SCALAR&gt; ')) {'<br>                &lt;echo-expression&gt; ';'<br>                &lt;EXIT&gt; '(1);<br>        }       <br>} ?&gt;'<br>                }<br>        }</pre>
+
+
+
+<p>There can be a little trap hiding here, though. This alternation works because the two string types differ in their first character, so the parser doesn&#8217;t have to look ahead to choose which term to follow. If they differ further down, especially if there are `+` or `*` involved, there could be issues.</p>
+
+
+
+<p>Generally you can get rid of these issues by reordering the alternatives, but sometimes it can be something of a waterbed problem. Let&#8217;s slightly refactor the text after the `&lt;function-declaration&gt;` so we can see another DRY hiding:</p>
+
+
+
+<pre class="wp-block-preformatted"> grammar PHP::Grammar<br>        {<br>        rule echo-expression { &lt;ECHO&gt; ( &lt;SQ-STRING&gt; | &lt;DQ-STRING&gt; ) }<br>        rule TOP<br>                {</pre>
+
+
+
+<pre class="wp-block-preformatted">'&lt;?php'<br>&lt;CLASS&gt; 'a {'<br>        &lt;function-declaration&gt; '(' &lt;SCALAR&gt; '= c::TESTCONSTANT' ')' {'<br>                &lt;ECHO&gt; '__METHOD__ .' &lt;DQ-STRING&gt; ';<br>        }'</pre>
+
+
+
+<pre class="wp-block-preformatted">        &lt;function-declaration&gt; '(' ')' {<br>        }<br>}'</pre>
+
+
+
+<pre class="wp-block-preformatted">|</pre>
+
+
+
+<pre class="wp-block-preformatted">'#!/usr/bin/php<br>&lt;?php'<br>&lt;echo-expression&gt; ';?&gt;'</pre>
+
+
+
+<pre class="wp-block-preformatted">&lt;FOREACH&gt; '(' &lt;FUNCTION-NAME&gt; '(' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ')' &lt;AS&gt; &lt;SCALAR&gt; ') {'<br>        &lt;IF&gt; '(!' &lt;FUNCTION-NAME&gt; '(' &lt;SCALAR&gt; ')) {'<br>                &lt;echo-expression&gt; ';'<br>                &lt;EXIT&gt; '(1);<br>        }<br>} ?&gt;'<br>                }<br>        }</pre>
+
+
+
+<h2>Getting argumentative</h2>
+
+
+
+<p>Separating the `(` `)` makes it a little clearer that we have `&lt;function-declaration&gt; &#8216;(&#8216; {stuff} &#8216;)&#8217;` and `&lt;function-declaration&gt; &#8216;(&#8216; &#8216;)&#8217;`, which kind of makes {stuff} an option, doesn&#8217;t it?</p>
+
+
+
+<pre class="wp-block-preformatted">grammar PHP::Grammar<br>        {<br>        rule function-declaration<br>                {<br>                &lt;STATIC&gt;? &lt;PUBLIC&gt; &lt;FUNCTION&gt; &lt;FUNCTION-NAME&gt; <br>                '('<br>                ( &lt;SCALAR&gt; '= c::TESTCONSTANT' )?<br>                ')'<br>                }<br>        rule TOP<br>                {<br> <br>'&lt;?php'<br>&lt;CLASS&gt; 'a {'<br>        &lt;function-declaration&gt; '{'<br>                &lt;ECHO&gt; '__METHOD__ .' &lt;DQ-STRING&gt; ';<br>        }'      </pre>
+
+
+
+<pre class="wp-block-preformatted">        &lt;function-declaration&gt; '{'<br>        '}<br>}'</pre>
+
+
+
+<pre class="wp-block-preformatted">|</pre>
+
+
+
+<pre class="wp-block-preformatted">'#!/usr/bin/php<br>&lt;?php'<br>&lt;echo-expression&gt; ';?&gt;'</pre>
+
+
+
+<pre class="wp-block-preformatted">&lt;FOREACH&gt; '(' &lt;FUNCTION-NAME&gt; '(' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ',' &lt;DQ-STRING&gt; ')' &lt;AS&gt; &lt;SCALAR&gt; ') {'<br>        &lt;IF&gt; '(!' &lt;FUNCTION-NAME&gt; '(' &lt;SCALAR&gt; ')) {'<br>                &lt;echo-expression&gt; ';' <br>                &lt;EXIT&gt; '(1);<br>        }<br>} ?&gt;'<br>                }<br>        }</pre>
+
+
+
+<p>So, by treating the `&lt;SCALAR&gt; &#8216;=&#8230;&#8217;` as an option, we&#8217;ve factored even more code out, and I hope that by now you can see where to take this. Basically, from here the idea is to take a file, add it to your test suite, boil it down as far as you can, then repeat with a new test file. After two or three iterations of this process, you don&#8217;t really even need to add the new test file, you&#8217;ll just be able to add a new test case (please, please don&#8217;t forget the test case and corner cases) and plug in the new bit of grammar.</p>
+
+
+
+<p>And of course most of this really isn&#8217;t necessary if you have a grammar to work from, but I&#8217;ve found that even when you do have a grammar to work from, sometimes it helps to tear it down and rebuild it from scratch.&nbsp;</p>
+
+
+
+<h2>Denoument</h2>
+
+
+
+<p>I&#8217;ll be the first to admit that going through an entire corpus of PHP files this way is impractical. But I&#8217;ve also tried going at this problem from the other end, namely taking a large grammar and beating on it until it managed to process the files I wanted it to read. (At least until the GLR, that is, but that&#8217;s a separate issue.)</p>
+
+
+
+<p>Now, even for a fairly large language, you don&#8217;t have to take each file and tokenize them by hand, it soon becomes apparent what are tokens and what aren&#8217;t, and Perl 6 has convenient whitespace rules to help the boundaries fall where they may.</p>
+
+
+
+<p>I think the issue is the grammar debugger/tracer isn&#8217;t&nbsp;<em>quite</em>&nbsp;tooled up to where I&#8217;d like it to be, and I&#8217;m going to take a crack at it after or maybe during FOSDEM.</p>
+
+
+
+<p>The last time I checked, the tracer spit out the entire AST in raw .perl format, albeit with some indentation. What I really need to get out of that is simply the text with an &lt;eject&gt; character where the parser bailed, and a traceback of what rules it was running at the time it failed. That would help me more than the raw .perl format, and again I can probably do it, and want to take some time to straighten out the issue. I think the tools give me enough access to do what I want, and at that point I&#8217;d love to be able to throw a live debugger into a tmux session, and be able to tweak/rerun the debugging, say &#8220;Oh, it was in the expression-core rule at &#8216;a := foo&#8217; and that binding expression hasn&#8217;t been written yet.&#8221;</p>
+
+
+
+<p>In my copious free time, I guess. In any case, I hope I&#8217;ve laid bare some of the mysteries awaiting you in the depths of the Perl 6 grammars.</p>
+
+
+
+<p>Thanks and until next time,</p>
+
+
+
+<p>Happy coding!</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2016/01/05/parsing-the-easy-way/" rel="bookmark"><time class="entry-date published" datetime="2016-01-05T13:38:25+01:00">January 5, 2016</time><time class="updated" datetime="2020-06-30T13:42:49+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/raku-programming/" rel="category tag">Raku programming</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2016/01/05/parsing-the-easy-way/#respond">Leave a comment<span class="screen-reader-text"> on Parsing the easy&nbsp;way</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-119" class="post-119 post type-post status-publish format-standard hentry category-uncategorized entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2015/07/11/rough-and-tumble-on-irc/" rel="bookmark">Rough-and-tumble on IRC</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p>I just put this up on Facebook, but thought it might be more interesting in general, as something of an insight as to how tempests can start in teapots on IRC.</p>
+
+
+
+<p>I&#8217;ve been on IRC for&#8230; well, I&#8217;d be embarrassed to tell how long. A lot of that time has been trying to help people with problems, but increasingly I find myself running into situations which are simply sheer functional fixation.</p>
+
+
+
+<p>Put yourself in a novice programmer&#8217;s shoes, starting out with a new module. You download the module, or yum install it, or local::lib, or whatever. You&#8217;re in a hurry, so you grab a few lines from the SYNOPSIS section, throw it in your code, add another call that you saw later on, and are surprised&nbsp;when it doesn&#8217;t work.</p>
+
+
+
+<p>Perl has reported an error whose *very first line* is in the module you&#8217;re using. You&#8217;ve got some background in C, so your instinct is to fixate on the very last error, which is in this new module&#8217;s code. So of course this module is at fault. It&#8217;s written by someone you don&#8217;t know from Eve, and is probably broken in some weird way, because it&#8217;s breaking in some place you didn&#8217;t even *call*.Google doesn&#8217;t find you any helpful hints (of course, it never does, but that doesn&#8217;t stop you from trying), so your final lifeline is IRC. And so the conversation begins (OP in &#8220;&#8221;, others in various margins):<br>&#8220;Hi, where do I get a new version of module Lemur?&#8221;<br>&gt; CPAN, what version are you running?<br>&#8220;Dunno, how do I find out?&#8221; &#8230; &#8220;Okay, 1.30.&#8221;<br>] Please nopaste your code, there&#8217;s a pastebin in the topic<br>&gt; That&#8217;s the latest, what&#8217;s wrong?<br>] Please, please nopaste your code. Wherever.<br>&#8220;Dunno, it broke.&#8221;<br>} Could you show us the error log?<br>) You probably need to call -&gt;new() with &#8216;frink&#8217;, &#8216;frink&#8217;, &#8216;frink&#8217;<br>&gt; That&#8217;s the latest version, so it&#8217;s probably not broken, what are you doing?<br>&#8220;Stuff.&#8221;<br>&gt; Show us your error log, if you&#8217;re using Apache it&#8217;s probably in /var/www/logs<br>] PLEASE PASTE YOUR SOURCE CODE<br>&gt; Fine, show us your code.<br>&#8230;15 minutes have passed, and by this time the guy is so frustrated by people not &#8220;fixing the module for him&#8221; that he simply gives up and logs out.<br>&#8220;&gt;&#8221; is taking the user at face value, and walking through what&#8217;s a normal debugging sequence for a broken module. Prosaic and rather slow, but it does keep the OP engaged, and would probably hold enough interest to get him to the end.<br>&#8220;]&#8221; realizes that the odds are that the OP has a problem in their code, and seeing what they&#8217;ve tried is a quick way to debug the problem. This starts to create resistance, however because the OP may not know much perl, but he knows an error when he sees it, and it ain&#8217;t in his code. So showing their *own* code is irrelevant, and the requests start to get annoying.<br>&#8220;}&#8221; also knows the problem is likely in the OP&#8217;s code, and is trying a different approach to the problem. It also probably feels a bit irrelevant, but might meet with less resistance.<br>&#8220;)&#8221; knows that the most likely newbie mistake is to not call the constructor correctly, and manages to intuit a fix. His voice gets lost in the sea of requests on the channel, and slowly sinks into the waves.<br>Now of course, the OP&nbsp;<strong>really</strong>&nbsp;should have used Catalyst::REST::Plugin instead of the first cgi-lib.pl based module that Google found, and saved 2000 lines of code, but they&#8217;ve already written off IRC as a whole because they just kept hammering him with irrelevant questions and insulting his intelligence because he knows what&#8217;s wrong, just not how to fix it.<br>In a realtime conversation, the problems I intimated above are amplified tenfold and more, simply because of the interaction between IRC newbie and oldtimer. I&#8217;ve tried a bunch of different conversational styles in the past in order to help get people to interact, but ultimately I&#8217;ve been stymied by the lack of physical proximity. Maybe what we need isn&#8217;t facial interaction but pheromone recognition.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2015/07/11/rough-and-tumble-on-irc/" rel="bookmark"><time class="entry-date published" datetime="2015-07-11T13:36:55+02:00">July 11, 2015</time><time class="updated" datetime="2020-06-30T13:37:20+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/uncategorized/" rel="category tag">Uncategorized</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2015/07/11/rough-and-tumble-on-irc/#respond">Leave a comment<span class="screen-reader-text"> on Rough-and-tumble on IRC</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+<article id="post-122" class="post-122 post type-post status-publish format-standard hentry category-uncategorized entry">
+	<header class="entry-header responsive-max-width">
+		<h2 class="entry-title"><a href="https://perlfisher.wordpress.com/2015/05/10/a-beginning-is-a-very-delicate-time/" rel="bookmark">A Beginning&#8230; is a Very Delicate&nbsp;Time.</a></h2>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		
+<p>Well, they say the first post is the hardest, so let&#8217;s get this out of the way.&nbsp;</p>
+
+
+
+<p>Yes, the title is a play on the opera&nbsp;<a href="http://web.archive.org/web/20160105123320/http://en.wikipedia.org/wiki/Les_p%C3%AAcheurs_de_perles" rel="noreferrer noopener" target="_blank">&#8216;The Pearl Fishers&#8217;</a>&nbsp;by Georges Bizet, by way of Iain Banks, mentioned in his book&nbsp;<a href="http://web.archive.org/web/20160105123320/http://en.wikipedia.org/wiki/Surface_Detail_(novel)" rel="noreferrer noopener" target="_blank">&#8216;Surface Detail&#8217;.</a>&nbsp; If you haven&#8217;t read his works, hie thee unto your favorite bookstore and search for&nbsp;<a href="http://web.archive.org/web/20160105123320/http://en.wikipedia.org/wiki/Consider_Phlebas" rel="noreferrer noopener" target="_blank">&#8216;Consider Phlebas&#8217;,</a><a href="http://web.archive.org/web/20160105123320/http://en.wikipedia.org/wiki/Excession" rel="noreferrer noopener" target="_blank">&#8216;Excession&#8217;</a>&nbsp;or&nbsp;<a href="http://web.archive.org/web/20160105123320/http://en.wikipedia.org/wiki/Use_of_Weapons" rel="noreferrer noopener" target="_blank">&#8216;Use of Weapons&#8217;</a>. When I&#8217;m not online or hacking offline I have a large collection of twisty puzzles, Sudoku-like puzzles and an electric concert `ukulele to keep me entertained. Or, now that the near-Russian winter has subsided I can get out and explore rural Romania.</p>
+
+
+
+<p>During the workday I do some&nbsp;<a href="http://web.archive.org/web/20160105123320/http://www.perl.org/" rel="noreferrer noopener" target="_blank">perl5</a>&nbsp;hacking, systems architecture, application profiling and performance/scaling improvements. At night I explore the undiscovered country of&nbsp;<a href="http://web.archive.org/web/20160105123320/http://www.perl6.org/" rel="noreferrer noopener" target="_blank">perl6</a>development, especially getting lost in a forest of&nbsp;<a href="http://web.archive.org/web/20160105123320/https://github.com/drforr/perl6-ANTLR4" rel="noreferrer noopener" target="_blank">abstract syntax trees</a>&nbsp;and stalking the wild hyperoperators. I also hang about on the seedy underbelly of IRC (and of course, FB) helping people with their problems, often when they least expect it.</p>
+
+
+
+<p>A typical topic will likely be &#8220;What&#8217;s in its current tmux(1) session, preciousss?&#8221; or &#8220;What bug made me curse the most vehememtly today?&#8221; when I&#8217;m talking programming. Things will get philosophical on occasion, as time and again I see new programmers making the same mistakes as their predecessors. If they&#8217;re going to make mistakes (and if you don&#8217;t, you&#8217;re not learning) I&#8217;d at least like them to be new ones.</p>
+
+
+
+<p>And on that proverbial bombshell, it&#8217;s time to start.</p>
+	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://perlfisher.wordpress.com/author/theperlfisherdaaea6189e/">Perl Fisher</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://perlfisher.wordpress.com/2015/05/10/a-beginning-is-a-very-delicate-time/" rel="bookmark"><time class="entry-date published" datetime="2015-05-10T13:37:30+02:00">May 10, 2015</time><time class="updated" datetime="2020-06-30T13:38:02+02:00">June 30, 2020</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://perlfisher.wordpress.com/category/uncategorized/" rel="category tag">Uncategorized</a></span><span class="comments-link"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><a href="https://perlfisher.wordpress.com/2015/05/10/a-beginning-is-a-very-delicate-time/#respond">Leave a comment<span class="screen-reader-text"> on A Beginning&#8230; is a Very Delicate&nbsp;Time.</span></a></span>	</footer><!-- .entry-footer -->
+</article><!-- #post-${ID} -->
+
+	<nav class="navigation pagination" role="navigation" aria-label="Posts">
+		<h2 class="screen-reader-text">Posts navigation</h2>
+		<div class="nav-links"><a class="prev page-numbers" href="https://perlfisher.wordpress.com/page/2/"><svg class="svg-icon" width="22" height="22" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg> <span class="nav-prev-text">Newer posts</span></a>
+<a class="page-numbers" href="https://perlfisher.wordpress.com/">1</a>
+<a class="page-numbers" href="https://perlfisher.wordpress.com/page/2/">2</a>
+<span aria-current="page" class="page-numbers current">3</span></div>
+	</nav>
+		</main><!-- .site-main -->
+	</section><!-- .content-area -->
+
+
+	</div><!-- #content -->
+
+		<footer id="colophon" class="site-footer responsive-max-width">
+	
+		<div class="site-info">
+										<a class="site-name" href="https://perlfisher.wordpress.com/" rel="home">The Perl Fisher</a><span class="comma">,</span>
+						<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Blog at WordPress.com.</a>					</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+
+</div><!-- #page -->
+
+<!--  -->
+<div id="wpadminbar" class="marketing-bar"><div class="marketing-bar-text">Create your website at WordPress.com</div><a class="marketing-bar-button" href="https://wordpress.com/?ref=marketing_bar">Get started</a></div><script src='//0.gravatar.com/js/gprofiles.js?ver=202027y'></script>
+<script>
+var WPGroHo = {"my_hash":""};
+</script>
+<script type='text/javascript' src='https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	</div>
+<script>
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/perlfisher.wordpress.com\/public.api\/connect\/?action=request","logoutURL":"https:\/\/perlfisher.wordpress.com\/wp-login.php?action=logout&_wpnonce=d116cd9af7","homeURL":"https:\/\/perlfisher.wordpress.com\/","postID":"115","gravDefault":"identicon","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"0","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1573483029j'></script>
+<div class="widget widget_eu_cookie_law_widget"><div
+	class="hide-on-button ads-active"
+	data-hide-timeout="30"
+	data-consent-expiration="180"
+	id="eu-cookie-law"
+>
+	<form method="post">
+		<input type="submit" value="Close and accept" class="accept" />
+
+		Privacy &amp; Cookies: This site uses cookies. By continuing to use this website, you agree to their use. <br />
+To find out more, including how to control cookies, see here:
+		<a href="https://automattic.com/cookies" >
+			Cookie Policy		</a>
+ </form>
+</div>
+</div><script>
+var actionbardata = {"siteID":"179562945","siteName":"The Perl Fisher","siteURL":"http:\/\/perlfisher.wordpress.com","icon":"<img alt='' src='https:\/\/s2.wp.com\/i\/logo\/wpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/hever","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fperlfisher.wordpress.com%2F2016%2F01%2F07%2Fbottoms-up%2F&signup_flow=account","themeURL":"https:\/\/wordpress.com\/theme\/hever\/","xhrURL":"https:\/\/perlfisher.wordpress.com\/wp-admin\/admin-ajax.php","nonce":"76a041671f","isSingular":"","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"0385734db6\" \/>","referer":"https:\/\/perlfisher.wordpress.com\/page\/3\/","canFollow":"1","feedID":"107157609","statusMessage":"","customizeLink":"https:\/\/perlfisher.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fperlfisher.wordpress.com%2Fpage%2F3%2F","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Hever","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fperlfisher.wordpress.com%2F2016%2F01%2F07%2Fbottoms-up%2F&signup_flow=account\">Log in now.<\/a>","stats":"Stats"}};
+</script>
+<script type='text/javascript' src='https://s2.wp.com/_static/??-eJyVjM0KwjAQhF/IuAiG2oP4LGuylE3zR7JpfHzjpYiHgrfhm5kPelYmRaEo4CpY2thQfp1dPcFXFZrKvi0cK3S2C0kFaqNNK5Py2EEoZI9CP/zAgzZwVE8sELAKlZFU2qgUtsOysz8NUtCs9ehkhFP8nPY01o9wv+jpOk83rWf3BrS6ZwM='></script>
+	<script>
+	/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
+	</script>
+	<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script><script src="//stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'179562945','blog_tz':'2','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'179562945','v':'wpcom','tz':'2','user_id':'0','subd':'perlfisher'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE0/bU8yQkx3RTR3RmZTSndoTltKYUswZWZFZmRxfG9BJixbMnFRZUJFVlYldWhGJUt6SXVuT3dFdWZPLV9pSlE2XUk3YWVtbmdUeElCdnA5ZlVwZkhadkQ1ZThVeXJJcEpKMy1iUGRFRFBRSGRnY3p+elo3V0M2Uz0sUUhwSTVCS3ppdGFxT2dfNj9LdzkvTzE0UGFda2ExcjgycDVQSytMVUNxbEt8Z3Qwd1Qta2QuTTVtREM0UmJJUldvc2dHTWUyVz0mW18zfi1sakJONllraXVaQUs9b3Bfam9PLE95Wlk5OXclWFBHNTRIZ1ZqVy00P3hsdTY2ei0sX0pKNUNib0IxViVBN2RmclY='}]);
+_stq.push([ 'clickTrackerInit', '179562945', '0' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+		<script defer src="data:text/javascript,%21function%28%29%7B%22use%20strict%22%3Bvar%20e%3D%5B%5D%2Ct%3D%22wpcom.simple.ttfb.batcache.%22%3Btry%7Bfor%28var%20n%3Dperformance.getEntriesByType%28%22navigation%22%29%5B0%5D%7C%7C%7B%7D%2Co%3D0%2Cs%3Ddocument.body.childNodes%2Cc%3Ds.length-1%3Bc%3E%3D0%3Bc--%29s%5Bc%5D.nodeType%3D%3D%3DNode.COMMENT_NODE%26%26s%5Bc%5D.textContent.indexOf%28%22served%20from%20batcache%22%29%3E0%26%26%28o%3D1%29%3Bvar%20r%3DMath.round%28n.responseStart%7C%7C0%29%3Bif%28r%3E0%26%26%28o%3Fe.push%28t%2B%22hit%3A%22%2Br%2B%22%7Cms%22%29%3Ae.push%28t%2B%22miss%3A%22%2Br%2B%22%7Cms%22%29%29%2Ce.length%29document.createElement%28%22img%22%29.src%3D%22https%3A%2F%2Fpixel.wp.com%2Fboom.gif%3Fjson%3D%22%2BencodeURIComponent%28JSON.stringify%28%7Bbeacons%3Ae%7D%29%29%7Dcatch%28e%29%7B%7D%7D%28%29%3B"></script>
+		<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>
