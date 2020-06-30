@@ -12,4 +12,4 @@
 
 At the moment, we need to collect the content. That could be a bit messy. Find a post, perhaps at [Archive.org](https://www.archive.org) and add it to this repo. Name the file for the date published (YYYYMMDD.html) and we can figure out the rest later.
 
-If you have an idea on how to do this, go for it. If you want to be a collaborator on the repo, just ask.
+If you have an idea on how to do this, go for it. If you want to be a collaborator on the repo, just file an issue asking for it.
