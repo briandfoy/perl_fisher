@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html class='v2' dir='ltr' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+<meta content='width=1100' name='viewport'/>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+<meta content='blogger' name='generator'/>
+<link href='http://theperlfisher.blogspot.ro/favicon.ico' rel='icon' type='image/x-icon'/>
+<link href='http://theperlfisher.blogspot.com/2016/02/from-regular-expressions-to-grammars-pt_20.html' rel='canonical'/>
+<link rel="alternate" type="application/atom+xml" title="The Perl Fisher - Atom" href="http://theperlfisher.blogspot.com/feeds/posts/default" />
+<link rel="alternate" type="application/rss+xml" title="The Perl Fisher - RSS" href="http://theperlfisher.blogspot.com/feeds/posts/default?alt=rss" />
+<link rel="service.post" type="application/atom+xml" title="The Perl Fisher - Atom" href="https://www.blogger.com/feeds/5431247843063773408/posts/default" />
+
+<link rel="alternate" type="application/atom+xml" title="The Perl Fisher - Atom" href="http://theperlfisher.blogspot.com/feeds/7054899775203295696/comments/default" />
+<!--[if IE]><script type="text/javascript" src="https://www.blogger.com/static/v1/jsbin/1575677651-ieretrofit.js"></script>
+<![endif]-->
+<meta content='http://theperlfisher.blogspot.com/2016/02/from-regular-expressions-to-grammars-pt_20.html' property='og:url'/>
+<meta content='From Regular Expressions to Grammars, Pt. 3' property='og:title'/>
+<meta content='If you haven&#39;t been following this series, please check out Part 1  of this series before continuing to read.    Movin&#39; on up  After an admi...' property='og:description'/>
+<!--[if IE]> <script> (function() { var html5 = ("abbr,article,aside,audio,canvas,datalist,details," + "figure,footer,header,hgroup,mark,menu,meter,nav,output," + "progress,section,time,video").split(','); for (var i = 0; i < html5.length; i++) { document.createElement(html5[i]); } try { document.execCommand('BackgroundImageCache', false, true); } catch(e) {} })(); </script> <![endif]-->
+<title>The Perl Fisher: From Regular Expressions to Grammars, Pt. 3</title>
+<link href="https://fonts.googleapis.com/css?kit=KGBfwabt0ZRLA5W1ywjowSwDhbeAHj2kWwu8g6_PFwA" rel="stylesheet" type="text/css"><link type='text/css' rel='stylesheet' href='https://www.blogger.com/static/v1/widgets/1691512649-css_bundle_v2.css' />
+<style id='page-skin-1' type='text/css'><!--
+/*
+-----------------------------------------------
+Blogger Template Style
+Name:     Simple
+Designer: Blogger
+URL:      www.blogger.com
+----------------------------------------------- */
+
+/* Content
+----------------------------------------------- */
+body {
+font: normal normal 12px 'Trebuchet MS', Trebuchet, Verdana, sans-serif;
+color: #666666;
+background: #ffffff none repeat scroll top left;
+padding: 0 0 0 0;
+}
+html body .region-inner {
+min-width: 0;
+max-width: 100%;
+width: auto;
+}
+h2 {
+font-size: 22px;
+}
+a:link {
+text-decoration:none;
+color: #2288bb;
+}
+a:visited {
+text-decoration:none;
+color: #888888;
+}
+a:hover {
+text-decoration:underline;
+color: #33aaff;
+}
+.body-fauxcolumn-outer .fauxcolumn-inner {
+background: transparent none repeat scroll top left;
+_background-image: none;
+}
+.body-fauxcolumn-outer .cap-top {
+position: absolute;
+z-index: 1;
+height: 400px;
+width: 100%;
+}
+.body-fauxcolumn-outer .cap-top .cap-left {
+width: 100%;
+background: transparent none repeat-x scroll top left;
+_background-image: none;
+}
+.content-outer {
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, .15);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, .15);
+-goog-ms-box-shadow: 0 0 0 #333333;
+box-shadow: 0 0 0 rgba(0, 0, 0, .15);
+margin-bottom: 1px;
+}
+.content-inner {
+padding: 10px 40px;
+}
+.content-inner {
+background-color: #ffffff;
+}
+/* Header
+----------------------------------------------- */
+.header-outer {
+background: transparent none repeat-x scroll 0 -400px;
+_background-image: none;
+}
+.Header h1 {
+font: normal bold 50px Dancing Script;
+color: #000000;
+text-shadow: 0 0 0 rgba(0, 0, 0, .2);
+}
+.Header h1 a {
+color: #000000;
+}
+.Header .description {
+font-size: 18px;
+color: #000000;
+}
+.header-inner .Header .titlewrapper {
+padding: 22px 0;
+}
+.header-inner .Header .descriptionwrapper {
+padding: 0 0;
+}
+/* Tabs
+----------------------------------------------- */
+.tabs-inner .section:first-child {
+border-top: 0 solid #dddddd;
+}
+.tabs-inner .section:first-child ul {
+margin-top: -1px;
+border-top: 1px solid #dddddd;
+border-left: 1px solid #dddddd;
+border-right: 1px solid #dddddd;
+}
+.tabs-inner .widget ul {
+background: transparent none repeat-x scroll 0 -800px;
+_background-image: none;
+border-bottom: 1px solid #dddddd;
+margin-top: 0;
+margin-left: -30px;
+margin-right: -30px;
+}
+.tabs-inner .widget li a {
+display: inline-block;
+padding: .6em 1em;
+font: normal normal 12px 'Trebuchet MS', Trebuchet, Verdana, sans-serif;
+color: #000000;
+border-left: 1px solid #ffffff;
+border-right: 1px solid #dddddd;
+}
+.tabs-inner .widget li:first-child a {
+border-left: none;
+}
+.tabs-inner .widget li.selected a, .tabs-inner .widget li a:hover {
+color: #000000;
+background-color: #eeeeee;
+text-decoration: none;
+}
+/* Columns
+----------------------------------------------- */
+.main-outer {
+border-top: 0 solid transparent;
+}
+.fauxcolumn-left-outer .fauxcolumn-inner {
+border-right: 1px solid transparent;
+}
+.fauxcolumn-right-outer .fauxcolumn-inner {
+border-left: 1px solid transparent;
+}
+/* Headings
+----------------------------------------------- */
+div.widget > h2,
+div.widget h2.title {
+margin: 0 0 1em 0;
+font: normal bold 12px 'Courier New', Courier, FreeMono, monospace;
+color: #000000;
+}
+/* Widgets
+----------------------------------------------- */
+.widget .zippy {
+color: #999999;
+text-shadow: 2px 2px 1px rgba(0, 0, 0, .1);
+}
+.widget .popular-posts ul {
+list-style: none;
+}
+/* Posts
+----------------------------------------------- */
+h2.date-header {
+font: normal bold 11px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+}
+.date-header span {
+background-color: #bbbbbb;
+color: #ffffff;
+padding: 0.4em;
+letter-spacing: 3px;
+margin: inherit;
+}
+.main-inner {
+padding-top: 35px;
+padding-bottom: 65px;
+}
+.main-inner .column-center-inner {
+padding: 0 0;
+}
+.main-inner .column-center-inner .section {
+margin: 0 1em;
+}
+.post {
+margin: 0 0 45px 0;
+}
+h3.post-title, .comments h4 {
+font: normal normal 22px 'Trebuchet MS',Trebuchet,Verdana,sans-serif;
+margin: .75em 0 0;
+}
+.post-body {
+font-size: 110%;
+line-height: 1.4;
+position: relative;
+}
+.post-body img, .post-body .tr-caption-container, .Profile img, .Image img,
+.BlogList .item-thumbnail img {
+padding: 2px;
+background: #ffffff;
+border: 1px solid #eeeeee;
+-moz-box-shadow: 1px 1px 5px rgba(0, 0, 0, .1);
+-webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, .1);
+box-shadow: 1px 1px 5px rgba(0, 0, 0, .1);
+}
+.post-body img, .post-body .tr-caption-container {
+padding: 5px;
+}
+.post-body .tr-caption-container {
+color: #666666;
+}
+.post-body .tr-caption-container img {
+padding: 0;
+background: transparent;
+border: none;
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, .1);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, .1);
+box-shadow: 0 0 0 rgba(0, 0, 0, .1);
+}
+.post-header {
+margin: 0 0 1.5em;
+line-height: 1.6;
+font-size: 90%;
+}
+.post-footer {
+margin: 20px -2px 0;
+padding: 5px 10px;
+color: #666666;
+background-color: #eeeeee;
+border-bottom: 1px solid #eeeeee;
+line-height: 1.6;
+font-size: 90%;
+}
+#comments .comment-author {
+padding-top: 1.5em;
+border-top: 1px solid transparent;
+background-position: 0 1.5em;
+}
+#comments .comment-author:first-child {
+padding-top: 0;
+border-top: none;
+}
+.avatar-image-container {
+margin: .2em 0 0;
+}
+#comments .avatar-image-container img {
+border: 1px solid #eeeeee;
+}
+/* Comments
+----------------------------------------------- */
+.comments .comments-content .icon.blog-author {
+background-repeat: no-repeat;
+background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAd0SU1FB9sLFwMeCjjhcOMAAAD+SURBVDjLtZSvTgNBEIe/WRRnm3U8RC1neQdsm1zSBIU9VVF1FkUguQQsD9ITmD7ECZIJSE4OZo9stoVjC/zc7ky+zH9hXwVwDpTAWWLrgS3QAe8AZgaAJI5zYAmc8r0G4AHYHQKVwII8PZrZFsBFkeRCABYiMh9BRUhnSkPTNCtVXYXURi1FpBDgArj8QU1eVXUzfnjv7yP7kwu1mYrkWlU33vs1QNu2qU8pwN0UpKoqokjWwCztrMuBhEhmh8bD5UDqur75asbcX0BGUB9/HAMB+r32hznJgXy2v0sGLBcyAJ1EK3LFcbo1s91JeLwAbwGYu7TP/3ZGfnXYPgAVNngtqatUNgAAAABJRU5ErkJggg==);
+}
+.comments .comments-content .loadmore a {
+border-top: 1px solid #999999;
+border-bottom: 1px solid #999999;
+}
+.comments .comment-thread.inline-thread {
+background-color: #eeeeee;
+}
+.comments .continue {
+border-top: 2px solid #999999;
+}
+/* Accents
+---------------------------------------------- */
+.section-columns td.columns-cell {
+border-left: 1px solid transparent;
+}
+.blog-pager {
+background: transparent url(//www.blogblog.com/1kt/simple/paging_dot.png) repeat-x scroll top center;
+}
+.blog-pager-older-link, .home-link,
+.blog-pager-newer-link {
+background-color: #ffffff;
+padding: 5px;
+}
+.footer-outer {
+border-top: 1px dashed #bbbbbb;
+}
+/* Mobile
+----------------------------------------------- */
+body.mobile  {
+background-size: auto;
+}
+.mobile .body-fauxcolumn-outer {
+background: transparent none repeat scroll top left;
+}
+.mobile .body-fauxcolumn-outer .cap-top {
+background-size: 100% auto;
+}
+.mobile .content-outer {
+-webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .15);
+box-shadow: 0 0 3px rgba(0, 0, 0, .15);
+}
+.mobile .tabs-inner .widget ul {
+margin-left: 0;
+margin-right: 0;
+}
+.mobile .post {
+margin: 0;
+}
+.mobile .main-inner .column-center-inner .section {
+margin: 0;
+}
+.mobile .date-header span {
+padding: 0.1em 10px;
+margin: 0 -10px;
+}
+.mobile h3.post-title {
+margin: 0;
+}
+.mobile .blog-pager {
+background: transparent none no-repeat scroll top center;
+}
+.mobile .footer-outer {
+border-top: none;
+}
+.mobile .main-inner, .mobile .footer-inner {
+background-color: #ffffff;
+}
+.mobile-index-contents {
+color: #666666;
+}
+.mobile-link-button {
+background-color: #2288bb;
+}
+.mobile-link-button a:link, .mobile-link-button a:visited {
+color: #ffffff;
+}
+.mobile .tabs-inner .section:first-child {
+border-top: none;
+}
+.mobile .tabs-inner .PageList .widget-content {
+background-color: #eeeeee;
+color: #000000;
+border-top: 1px solid #dddddd;
+border-bottom: 1px solid #dddddd;
+}
+.mobile .tabs-inner .PageList .widget-content .pagelist-arrow {
+border-left: 1px solid #dddddd;
+}
+
+--></style>
+<style id='template-skin-1' type='text/css'><!--
+body {
+min-width: 960px;
+}
+.content-outer, .content-fauxcolumn-outer, .region-inner {
+min-width: 960px;
+max-width: 960px;
+_width: 960px;
+}
+.main-inner .columns {
+padding-left: 0;
+padding-right: 310px;
+}
+.main-inner .fauxcolumn-center-outer {
+left: 0;
+right: 310px;
+/* IE6 does not respect left and right together */
+_width: expression(this.parentNode.offsetWidth -
+parseInt("0") -
+parseInt("310px") + 'px');
+}
+.main-inner .fauxcolumn-left-outer {
+width: 0;
+}
+.main-inner .fauxcolumn-right-outer {
+width: 310px;
+}
+.main-inner .column-left-outer {
+width: 0;
+right: 100%;
+margin-left: -0;
+}
+.main-inner .column-right-outer {
+width: 310px;
+margin-right: -310px;
+}
+#layout {
+min-width: 0;
+}
+#layout .content-outer {
+min-width: 0;
+width: 800px;
+}
+#layout .region-inner {
+min-width: 0;
+width: auto;
+}
+--></style>
+<link type='text/css' rel='stylesheet' href='https://www.blogger.com/dyn-css/authorization.css?targetBlogID=5431247843063773408&amp;zx=b1f2994f-9051-4d8d-958a-9b9c0ef152a5' />
+</head>
+<body class='loading variant-simplysimple'>
+<div class='navbar section' id='navbar' name='Navbar'><div class='widget Navbar' data-version='1' id='Navbar1'><script type="text/javascript">
+    function setAttributeOnload(object, attribute, val) {
+      if(window.addEventListener) {
+        window.addEventListener('load',
+          function(){ object[attribute] = val; }, false);
+      } else {
+        window.attachEvent('onload', function(){ object[attribute] = val; });
+      }
+    }
+  </script>
+<div id="navbar-iframe-container"></div>
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<script type="text/javascript">
+      gapi.load("gapi.iframes:gapi.iframes.style.bubble", function() {
+        if (gapi.iframes && gapi.iframes.getContext) {
+          gapi.iframes.getContext().openChild({
+              url: 'https://www.blogger.com/navbar.g?targetBlogID\x3d5431247843063773408\x26blogName\x3dThe+Perl+Fisher\x26publishMode\x3dPUBLISH_MODE_BLOGSPOT\x26navbarType\x3dLIGHT\x26layoutType\x3dLAYOUTS\x26searchRoot\x3dhttp://theperlfisher.blogspot.com/search\x26blogLocale\x3den\x26v\x3d2\x26homepageUrl\x3dhttp://theperlfisher.blogspot.com/\x26targetPostID\x3d7054899775203295696\x26blogPostOrPageUrl\x3dhttp://theperlfisher.blogspot.com/2016/02/from-regular-expressions-to-grammars-pt_20.html\x26vt\x3d8597983360578977916',
+              where: document.getElementById("navbar-iframe-container"),
+              id: "navbar-iframe"
+          });
+        }
+      });
+    </script><script type="text/javascript">
+(function() {
+var script = document.createElement('script');
+script.type = 'text/javascript';
+script.src = '//pagead2.googlesyndication.com/pagead/js/google_top_exp.js';
+var head = document.getElementsByTagName('head')[0];
+if (head) {
+head.appendChild(script);
+}})();
+</script>
+</div></div>
+<div class='body-fauxcolumns'>
+<div class='fauxcolumn-outer body-fauxcolumn-outer'>
+<div class='cap-top'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+<div class='fauxborder-left'>
+<div class='fauxborder-right'></div>
+<div class='fauxcolumn-inner'>
+</div>
+</div>
+<div class='cap-bottom'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+</div>
+</div>
+<div class='content'>
+<div class='content-fauxcolumns'>
+<div class='fauxcolumn-outer content-fauxcolumn-outer'>
+<div class='cap-top'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+<div class='fauxborder-left'>
+<div class='fauxborder-right'></div>
+<div class='fauxcolumn-inner'>
+</div>
+</div>
+<div class='cap-bottom'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+</div>
+</div>
+<div class='content-outer'>
+<div class='content-cap-top cap-top'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+<div class='fauxborder-left content-fauxborder-left'>
+<div class='fauxborder-right content-fauxborder-right'></div>
+<div class='content-inner'>
+<header>
+<div class='header-outer'>
+<div class='header-cap-top cap-top'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+<div class='fauxborder-left header-fauxborder-left'>
+<div class='fauxborder-right header-fauxborder-right'></div>
+<div class='region-inner header-inner'>
+<div class='header section' id='header' name='Header'><div class='widget Header' data-version='1' id='Header1'>
+<div id='header-inner'>
+<div class='titlewrapper'>
+<h1 class='title'>
+<a href='http://theperlfisher.blogspot.ro/'>The Perl Fisher</a>
+</h1>
+</div>
+<div class='descriptionwrapper'>
+<p class='description'><span>
+</span></p>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+<div class='header-cap-bottom cap-bottom'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+</div>
+</header>
+<div class='tabs-outer'>
+<div class='tabs-cap-top cap-top'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+<div class='fauxborder-left tabs-fauxborder-left'>
+<div class='fauxborder-right tabs-fauxborder-right'></div>
+<div class='region-inner tabs-inner'>
+<div class='tabs no-items section' id='crosscol' name='Cross-Column'></div>
+<div class='tabs no-items section' id='crosscol-overflow' name='Cross-Column 2'></div>
+</div>
+</div>
+<div class='tabs-cap-bottom cap-bottom'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+</div>
+<div class='main-outer'>
+<div class='main-cap-top cap-top'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+<div class='fauxborder-left main-fauxborder-left'>
+<div class='fauxborder-right main-fauxborder-right'></div>
+<div class='region-inner main-inner'>
+<div class='columns fauxcolumns'>
+<div class='fauxcolumn-outer fauxcolumn-center-outer'>
+<div class='cap-top'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+<div class='fauxborder-left'>
+<div class='fauxborder-right'></div>
+<div class='fauxcolumn-inner'>
+</div>
+</div>
+<div class='cap-bottom'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+</div>
+<div class='fauxcolumn-outer fauxcolumn-left-outer'>
+<div class='cap-top'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+<div class='fauxborder-left'>
+<div class='fauxborder-right'></div>
+<div class='fauxcolumn-inner'>
+</div>
+</div>
+<div class='cap-bottom'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+</div>
+<div class='fauxcolumn-outer fauxcolumn-right-outer'>
+<div class='cap-top'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+<div class='fauxborder-left'>
+<div class='fauxborder-right'></div>
+<div class='fauxcolumn-inner'>
+</div>
+</div>
+<div class='cap-bottom'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+</div>
+<!-- corrects IE6 width calculation -->
+<div class='columns-inner'>
+<div class='column-center-outer'>
+<div class='column-center-inner'>
+<div class='main section' id='main' name='Main'><div class='widget Blog' data-version='1' id='Blog1'>
+<div class='blog-posts hfeed'>
+
+          <div class="date-outer">
+        
+<h2 class='date-header'><span>20 February 2016</span></h2>
+
+          <div class="date-posts">
+        
+<div class='post-outer'>
+<div class='post hentry uncustomized-post-template' itemprop='blogPost' itemscope='itemscope' itemtype='http://schema.org/BlogPosting'>
+<meta content='5431247843063773408' itemprop='blogId'/>
+<meta content='7054899775203295696' itemprop='postId'/>
+<a name='7054899775203295696'></a>
+<h3 class='post-title entry-title' itemprop='name'>
+From Regular Expressions to Grammars, Pt. 3
+</h3>
+<div class='post-header'>
+<div class='post-header-line-1'></div>
+</div>
+<div class='post-body entry-content' id='post-body-7054899775203295696' itemprop='description articleBody'>
+If you haven't been following this series, please check out <a href="http://theperlfisher.blogspot.ro/2016/02/from-regular-expressions-to-grammars-pt.html" target="_blank">Part 1</a>&nbsp;of this series&nbsp;before continuing to read.<br />
+<br />
+<h2>
+Movin' on up</h2>
+After an admittedly whirlwind tour of the basic set of regular expressions, it's time to enter the big league. We'll take it slow, and just for variety, we'll tackle a bit of JavaScript. I've developed this technique over a few prior posts, so if you've been reading past entries this may seem a bit of a refresher.<br />
+<br />
+At the end of the series, we'll have created a small JIT interpreter for a small bit of JavaScript, to wit, this line:<br />
+<pre style="background: #f0f0f0; border: 1px dashed #cccccc; color: black; font-family: &quot;arial&quot;; font-size: 12px; height: auto; line-height: 20px; overflow: auto; padding: 0px; text-align: left; width: 99%;"><code style="color: black; word-wrap: normal;">var a = 3; console.log( "Hey, did you know a = " + a + "?" );
+</code></pre>
+We'll take this one step at a time. I generally like to put this into source code control so I can easily checkpoint and revert source when an approach doesn't work out. Like many people these days, I use git, but feel free to use mercurial, darcs, SVN or whatever works best for you.<br />
+<br />
+The best compiler in the world won't help if it can't read your input, so let's start with a simple test.<br />
+<pre style="background: #f0f0f0; border: 1px dashed #cccccc; color: black; font-family: &quot;arial&quot;; font-size: 12px; height: auto; line-height: 20px; overflow: auto; padding: 0px; text-align: left; width: 99%;"><code style="color: black; word-wrap: normal;">say 'var a = 3; console.log( "Hey, did you know a = " + a + "?" );' ~~
+/'var a = 3; console.log( "Hey, did you know a = " + a + "?" );'/
+</code></pre>
+The 'say' is included so that we can see the output from the match. Right now, we expect that since we're attempting to match a quoted string against an exact copy of itself, the match should trivially succeed. It's roughly the same as<br />
+<pre style="background: #f0f0f0; border: 1px dashed #cccccc; color: black; font-family: &quot;arial&quot;; font-size: 12px; height: auto; line-height: 20px; overflow: auto; padding: 0px; text-align: left; width: 99%;"><code style="color: black; word-wrap: normal;">say 'Hello, world!' ~~ /'Hello, world!'/</code></pre>
+The entire expression is enclosed within single quotes, so we don't have to concern ourselves with what gets quoted and what doesn't.<br />
+<br />
+Anyway, copy the "say 'a = 3...." statement into a file somewhere and run 'perl6 test.pl6', assuming your file is called 'test.pl6'. &nbsp;It should print out precisely what it matched, which is the string itself:<br />
+<br />
+<pre style="background: #f0f0f0; border: 1px dashed #cccccc; color: black; font-family: &quot;arial&quot;; font-size: 12px; height: auto; line-height: 20px; overflow: auto; padding: 0px; text-align: left; width: 99%;"><code style="color: black; word-wrap: normal;">jgoff@Demeisen:~$ perl6 test.pl6
+
+&#65378;var a = 3; console.log( "Hey, did you know a = " + a + "?" );&#65379;
+</code></pre>
+This result lets us know that the match succeeded, and tells us that it matched the entire expression. So, go ahead and checkpoint this in your git (or whatever, I'll assume git from here on out) repository and let's dive in to refactor things just a bit.<br />
+<br />
+<h2>
+Use Cases</h2>
+<div>
+If we were at this point to go ahead and write the compiler code, it'd end up being pretty boring. It would be able to compile that exact string to Perl 6 and generate 'my $a = 3; say "Hey, did you know a = " ~ $a ~ "?";', but it couldn't do anything else. See for yourself by changing the "say '...'" part of the expression to test your own variations.<br />
+<br />
+JavaScript commonly gets "minified" before being sent to the browser, with no unnecessary whitespace in the string. So, go ahead and remove the whitespace from the "say '...'" part of your expression, and rerun the test. I'll wait here.<br />
+<br />
+Did it match? I thought not. Do a 'git reset --hard' to get back to the last known-working point, and let's continue. While regular expressions are terribly powerful, they can also be very finicky, as we're about to learn. Let's focus for a few moments on just one of the statements in our compiler, the "a = 3;" statement.<br />
+<br />
+Programmers will come up with lots of creative ways to express this simple statement, from the terse 'a=3;' to tabbing out the '= 3' portion to line up with something else, to the extreme of even putting the semicolon on the next line so that they don't have to add it all the time when copying text around. (Yes, I've seen that style in the wild.)<br />
+<br />
+Remembering the rule that alphanumerics don't need to be escaped, we can combine what we've just learned and match all possible variants like so -<br />
+<pre style="background: #f0f0f0; border: 1px dashed #cccccc; color: black; font-family: &quot;arial&quot;; font-size: 12px; height: auto; line-height: 20px; overflow: auto; padding: 0px; text-align: left; width: 99%;"><code style="color: black; word-wrap: normal;">say 'a=3;' ~~ / \s* a \s* '=' \s* 3 \s* ';' \s*/
+</code></pre>
+Which matches any whitespace variant you can dream up, anything from "a=3;" to "\n &nbsp; &nbsp;a &nbsp; &nbsp; = 3;" and beyond. There are two lessons to be learned here. The first is that by breaking up our string wherever a programmer might want to insert whitespace, we've taken our first step towards "tokenizing" the expression. We'll go into more depth about that later.<br />
+<br />
+The second is that while it's more flexible, the expression now has these \s* scattered throughout it, making it a little harder to read. Also, inserting "\s*" between every word seems like something a computer should be able to do. And in fact, it can. And there's already a shorthand in Perl 6 for this.<br />
+<pre style="background: #f0f0f0; border: 1px dashed #cccccc; color: black; font-family: &quot;arial&quot;; font-size: 12px; height: auto; line-height: 20px; overflow: auto; padding: 0px; text-align: left; width: 99%;"><code style="color: black; word-wrap: normal;">say 'a=3;' ~~ rule { a '=' 3 ';' }
+</code></pre>
+No more \s* interrupting us between every place we might want to put whitespace. Let's get back to our original expression and apply what we've learned here.<br />
+<pre style="background: #f0f0f0; border: 1px dashed #cccccc; color: black; font-family: &quot;arial&quot;; font-size: 12px; height: auto; line-height: 20px; overflow: auto; padding: 0px; text-align: left; width: 99%;"><code style="color: black; word-wrap: normal;">say 'var a = 3; console.log( "Hey, did you know a = " + a + "?" );' ~~
+rule { var a '=' 3 ';'
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; console '.' log '(' '"Hey, did you know a = "' '+' a '+' '"?"' ')' ';' }
+</code></pre>
+<br />
+<h2>
+Structure and Form</h2>
+</div>
+<div>
+You might notice that "Hey, did you know a = " and "?" didn't receive the same quoting treatment as the other parts of the rule. While there are some deep reasons here, the main one is practicality. Eventually this compiler we're writing should be able to accept "!" instead of "?", "Hello world!" instead of "Hey...", and we want to make sure all of these input strings are acceptable.</div>
+<div>
+<br /></div>
+<div>
+So, it's time for a bit of refactoring. Let's take a fairly short expression, "Hello, world!" to work with. You might remember from the last section that the \w shorthand matches alphanumerics, so a first cut at refactoring "Hello, world!" might look like this:</div>
+<pre style="background: #f0f0f0; border: 1px dashed #cccccc; color: black; font-family: &quot;arial&quot;; font-size: 12px; height: auto; line-height: 20px; overflow: auto; padding: 0px; text-align: left; width: 99%;"><code style="color: black; word-wrap: normal;">say '"Hello, world!"' ~~ rule { '"' \w+ ',' \w+ '!' '"' }
+</code></pre>
+And indeed, that will match. It'll match "Goodbye, world!", "Frankly, dear!" and a host of other expressions. It'd be nice, though, if there were a way to combine the \w, ',' and '!' into one thing that we could then match on, because that would let us match "hello!", "Whats up, doc" and a <b>lot</b>&nbsp;more. Again, yes, there is a shortcut for that.<br />
+<pre style="background: #f0f0f0; border: 1px dashed #cccccc; color: black; font-family: &quot;arial&quot;; font-size: 12px; height: auto; line-height: 20px; overflow: auto; padding: 0px; text-align: left; width: 99%;"><code style="color: black; word-wrap: normal;">say '"Hello, world!"' ~~ rule { '"' &lt;[ \s \w , ! ]&gt;+ '"' }
+</code></pre>
+lets you match a group of characters and/or shortcuts, so &lt;[ a b c ]&gt; on its own would match 'a', 'b' or 'c' but not '3' or '32'. We're still not quite there, because there's a lot more to add in to that expression, you'd have to add '?', '+', '.', ';' for starters, like &lt;[ \s \w , ! ? + . ; ]&gt; and so on. And when you bring Unicode into the mix, you'll have to add another million-plus characters for the CJKV region alone.<br />
+<br />
+By now you won't be surprised at all to learn that yes, there's a shortcut for this too. The shortest of all shortcuts, it's simply '.'. So our expression now looks like<br />
+<pre style="background: #f0f0f0; border: 1px dashed #cccccc; color: black; font-family: &quot;arial&quot;; font-size: 12px; height: auto; line-height: 20px; overflow: auto; padding: 0px; text-align: left; width: 99%;"><code style="color: black; word-wrap: normal;">say '"Hello, world!"' ~~ rule { '"' .+ '"' }
+</code></pre>
+Which says "Match a quotation mark, then anything, then another quotation mark." And if you spell it out like that, you can probably spot the problem as fast as I did. Simply put, the '.' shortcut matches <b>any</b>&nbsp;character, and yes, this includes the&nbsp;&#65378;"&#65379; (using Japanese quotation marks to make the problem a little clearer.) So what we really want to do is "Match a quotation mark, then anything but the quotation mark, then another quotation mark."<br />
+<br />
+You say "Anything but" in regex-speak like &lt;-[..]&gt;, where the [..] is whatever you <b>don't</b>&nbsp;want to match. We want "anything but a quotation mark", so in to the [] the quotation mark goes, like so:<br />
+<pre style="background: #f0f0f0; border: 1px dashed #cccccc; color: black; font-family: &quot;arial&quot;; font-size: 12px; height: auto; line-height: 20px; overflow: auto; padding: 0px; text-align: left; width: 99%;"><code style="color: black; word-wrap: normal;">say 'var a = 3; console.log( "Hey, did you know a = " + a + "?" );' ~~
+rule { var a '=' 3 ';'
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; console '.' log '(' '"' &lt;-[ " ]&gt; '"' '+' a '+' '"' &lt;-[ " ]&gt; '"' ')' ';' }
+</code></pre>
+In real-world code people like to put quotation marks inside quoted strings, but we won't worry about those for the moment.<br />
+<br />
+<h2>
+Nest Eggs</h2>
+<div>
+Checkpoint here, and go ahead and play with the strings and whitespace. It can now match 'a=3;console.log("Hey, "+a+" is 3!");' and a bunch of other expressions. Those single-quoted double-quotes do stand out, though, especially since there are two of them. Since we've already got a rule, let's create a new rule just to hold those, and give it a name.</div>
+<pre style="background: #f0f0f0; border: 1px dashed #cccccc; color: black; font-family: &quot;arial&quot;; font-size: 12px; height: auto; line-height: 20px; overflow: auto; padding: 0px; text-align: left; width: 99%;"><code style="color: black; word-wrap: normal;">my rule String { '"' &lt;-[ " ]&gt; '"' };
+
+say 'var a = 3; console.log( "Hey, did you know a = " + a + "?" );' ~~
+rule { var a '=' 3 ';'
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; console '.' log '(' '"' .+ '"' '+' a '+' '"' .+ '"' ')' ';' }
+</code></pre>
+Of course, we've still got the original text below, so we'll take a cue from the character groups that we touched on briefly, and put the name in '&lt;'...'&gt;' as well.
+<br />
+<pre style="background: #f0f0f0; border: 1px dashed #cccccc; color: black; font-family: &quot;arial&quot;; font-size: 12px; height: auto; line-height: 20px; overflow: auto; padding: 0px; text-align: left; width: 99%;"><code style="color: black; word-wrap: normal;">my rule String { '"' &lt;-[ " ]&gt; '"' };
+
+say 'var a = 3; console.log( "Hey, did you know a = " + a + "?" );' ~~
+rule { var a '=' 3 ';'
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; console '.' log '(' &lt;String&gt; '+' a '+' &lt;String&gt; ')' ';' }
+</code></pre>
+We've just refactored the 'console.log....' expression into something that humans can readily understand, and in fact expand upon as well. Building on the principle of not repeating yourself, we can notice that the variable is repeated in the string, so let's factor that out as well.<br />
+<pre style="background: #f0f0f0; border: 1px dashed #cccccc; color: black; font-family: &quot;arial&quot;; font-size: 12px; height: auto; line-height: 20px; overflow: auto; padding: 0px; text-align: left; width: 99%;"><code style="color: black; word-wrap: normal;">my rule Variable { \w+ };
+my rule String { '"' &lt;-[ " ]&gt; '"' };
+
+say 'var a = 3; console.log( "Hey, did you know a = " + a + "?" );' ~~
+rule { var &lt;Variable&gt; '=' 3 ';'
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; console '.' log '(' &lt;String&gt; '+' &lt;Variable&gt; '+' &lt;String&gt; ')' ';' }
+</code></pre>
+We may as well factor out the number as well...<br />
+<pre style="background: #f0f0f0; border: 1px dashed #cccccc; color: black; font-family: &quot;arial&quot;; font-size: 12px; height: auto; line-height: 20px; overflow: auto; padding: 0px; text-align: left; width: 99%;"><code style="color: black; word-wrap: normal;">my rule Number { \d+ };
+my rule Variable { \w+ };
+my rule String { '"' &lt;-[ " ]&gt; '"' };
+
+say 'var a = 3; console.log( "Hey, did you know a = " + a + "?" );' ~~
+rule { var &lt;Variable&gt; '=' &lt;Number&gt; ';'
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; console '.' log '(' &lt;String&gt; '+' &lt;Variable&gt; '+' &lt;String&gt; ')' ';' }
+</code></pre>
+<br />
+<h2>
+Mere Semantics</h2>
+<div>
+You may have noticed that I used '\w+' to match Variables, rather than 'a'. While this allows users of the eventual compiler to write 'var Lennier = 5;' rather than the more prosaic 'var a = 23;', it also allows users to write semantically invalid code. To wit, 'var Prisoner = 6; console.log("I am not " + a + " a number");' where <i>a</i>&nbsp;is not defined.</div>
+<div>
+<br /></div>
+<div>
+In principle, we could change the rule so that the second instance of &lt;Variable&gt; must have the same value as the first instance. That way our previous Prisoner example would fail, because 'a' would not be the same as 'Prisoner', and it only allows syntactically and semantically correct code to pass the test.</div>
+<div>
+<br /></div>
+<div>
+That's wonderful in principle, and keeps the changes localized to the final rule. Great, and your test suite might even pass, and you release your module out into the real world.</div>
+<div>
+<br /></div>
+<div>
+Then someone comes along and writes 'var test = 1; var a = 2; console.log("Hi, test = " + test + ".");'. Which is perfectly valid JavaScript code, and will compile everywhere... except in your compiler. So you say "fine, I'll check for any assignment statements after the function definition. And then someone writes a closure with a 'console.log( .. + variable_outside_the_function + ...)' and breaks your code again.</div>
+<div>
+<br /></div>
+<div>
+In summation, let your rules catch syntax errors only, anything else can and should be handled outside. In the fourth and final installment of this series, we'll build a compiler out of this. But let's do one final burst of refactoring in order to clarify the statements.</div>
+<pre style="background: #f0f0f0; border: 1px dashed #cccccc; color: black; font-family: &quot;arial&quot;; font-size: 12px; height: auto; line-height: 20px; overflow: auto; padding: 0px; text-align: left; width: 99%;"><code style="color: black; word-wrap: normal;">my rule Number { \d+ };
+my rule Variable { \w+ };
+my rule String { '"' &lt;-[ " ]&gt;+ '"' };
+my rule Assignment-Expression { var &lt;Variable&gt; '=' &lt;Number&gt; };
+my rule Function-Call { console '.' log '(' &lt;String&gt; '+' &lt;Variable&gt; '+' &lt;String&gt; ')' };
+
+say 'var a = 3; console.log( "Hey, did you know a = " + a + "?" );' ~~
+rule { &lt;Assignment-Expression&gt; ';' &lt;Function-Call&gt; ';' }
+</code></pre>
+You've seen the individual pieces before, but probably not put together quite like this. The &lt;Assignment-Expression&gt; rule matches the entirety of 'var foo = 27', and the &lt;Function-Call&gt; part matches 'console.log("Take " + foo + " down, pass them around")' Our final rule puts the pieces together, matching an assignment statement followed by a function call. I've left the ';' separators outside the &lt;Assignment-Expression&gt; and &lt;Function-Call&gt; because they separate expressions, they're not <b>part</b>&nbsp;of them.<br />
+<br />
+<h2>
+Winding Down</h2>
+<div>
+The technique applied here isn't specific to JavaScript, of course. Generally, if you can put whitespace around something without changing its semantics, you've found a token like &lt;Number&gt; or &lt;String&gt;. Figure out where those breaks are, and you're already halfway to decoding the language in question. Figuring out the higher-level rules is much more fun, and along the way you'll find yourself making notes "Okay, lists act like this, wait, can I put a &lt;List&gt; <b>inside</b>&nbsp;a list? Yes? Hey..."</div>
+<div>
+<br /></div>
+<div>
+Starting from a string, we've split it into chunks, then factored out some of those chunks into their own rules. Once we could abstract out the 32 into a number, foo_bar into a variable and figure out the String type, it's a question of putting them together in combinations, like '&lt;Variable&gt; = &lt;Number&gt;'. If you want, you can even take what we've done above and refactor it down more.</div>
+<div>
+<br /></div>
+<pre style="background: #f0f0f0; border: 1px dashed #cccccc; color: black; font-family: &quot;arial&quot;; font-size: 12px; height: auto; line-height: 20px; overflow: auto; padding: 0px; text-align: left; width: 99%;"><code style="color: black; word-wrap: normal;">
+my rule Variable-Declaration { var &lt;Assignment-Expression&gt; }
+my rule Assignment-Expression { &lt;Variable&gt; '=' ( &lt;Number&gt; | &lt;String&gt; | &lt;Variable&gt; ) }
+</code></pre>
+Hopefully you can see where this is going, because this handles 'var a = 32; var b = c; var d = "hi"' along with so much more. But this will have to wait for Part 4.
+<div style='clear: both;'></div>
+</div>
+<div class='post-footer'>
+<div class='post-footer-line post-footer-line-1'>
+<span class='post-author vcard'>
+Posted by
+<span class='fn' itemprop='author' itemscope='itemscope' itemtype='http://schema.org/Person'>
+<meta content='https://www.blogger.com/profile/18252182597447689159' itemprop='url'/>
+<a class='g-profile' href='https://www.blogger.com/profile/18252182597447689159' rel='author' title='author profile'>
+<span itemprop='name'>DrForr</span>
+</a>
+</span>
+</span>
+<span class='post-timestamp'>
+at
+<meta content='http://theperlfisher.blogspot.com/2016/02/from-regular-expressions-to-grammars-pt_20.html' itemprop='url'/>
+<a class='timestamp-link' href='http://theperlfisher.blogspot.ro/2016/02/from-regular-expressions-to-grammars-pt_20.html' rel='bookmark' title='permanent link'><abbr class='published' itemprop='datePublished' title='2016-02-20T17:11:00+02:00'>17:11</abbr></a>
+</span>
+<span class='reaction-buttons'>
+</span>
+<span class='post-comment-link'>
+</span>
+<span class='post-backlinks post-comment-link'>
+</span>
+<span class='post-icons'>
+<span class='item-control blog-admin pid-492201844'>
+<a href='https://www.blogger.com/post-edit.g?blogID=5431247843063773408&postID=7054899775203295696&from=pencil' title='Edit Post'>
+<img alt='' class='icon-action' height='18' src='https://resources.blogblog.com/img/icon18_edit_allbkg.gif' width='18'/>
+</a>
+</span>
+</span>
+<div class='post-share-buttons goog-inline-block'>
+<a class='goog-inline-block share-button sb-email' href='https://www.blogger.com/share-post.g?blogID=5431247843063773408&postID=7054899775203295696&target=email' target='_blank' title='Email This'><span class='share-button-link-text'>Email This</span></a><a class='goog-inline-block share-button sb-blog' href='https://www.blogger.com/share-post.g?blogID=5431247843063773408&postID=7054899775203295696&target=blog' onclick='window.open(this.href, "_blank", "height=270,width=475"); return false;' target='_blank' title='BlogThis!'><span class='share-button-link-text'>BlogThis!</span></a><a class='goog-inline-block share-button sb-twitter' href='https://www.blogger.com/share-post.g?blogID=5431247843063773408&postID=7054899775203295696&target=twitter' target='_blank' title='Share to Twitter'><span class='share-button-link-text'>Share to Twitter</span></a><a class='goog-inline-block share-button sb-facebook' href='https://www.blogger.com/share-post.g?blogID=5431247843063773408&postID=7054899775203295696&target=facebook' onclick='window.open(this.href, "_blank", "height=430,width=640"); return false;' target='_blank' title='Share to Facebook'><span class='share-button-link-text'>Share to Facebook</span></a><a class='goog-inline-block share-button sb-pinterest' href='https://www.blogger.com/share-post.g?blogID=5431247843063773408&postID=7054899775203295696&target=pinterest' target='_blank' title='Share to Pinterest'><span class='share-button-link-text'>Share to Pinterest</span></a><div class='goog-inline-block google-plus-share-container'><g:plusone source='blogger:blog:plusone' href='http://theperlfisher.blogspot.com/2016/02/from-regular-expressions-to-grammars-pt_20.html' size='medium' width='300' annotation='inline'/></div>
+</div>
+</div>
+<div class='post-footer-line post-footer-line-2'>
+<span class='post-labels'>
+</span>
+</div>
+<div class='post-footer-line post-footer-line-3'>
+<span class='post-location'>
+</span>
+</div>
+</div>
+</div>
+<div class='comments' id='comments'>
+<a name='comments'></a>
+<h4>2 comments:</h4>
+<div class='comments-content'>
+<script async='async' src='//www.blogblog.com/dynamicviews/4224c15c4e7c9321/js/comments.js' type='text/javascript'></script>
+<script type='text/javascript'>
+    (function() {
+      var items = [{'id': '7854670551691381739', 'body': 'In the last code block there is a closing paren missing in line 2, I think. The opening paren is right before the Number token.', 'timestamp': '1456768665796', 'permalink': 'http://theperlfisher.blogspot.com/2016/02/from-regular-expressions-to-grammars-pt_20.html?showComment\x3d1456768665796#c7854670551691381739', 'author': {'name': 'Daniel Böhmer', 'avatarUrl': '//lh3.googleusercontent.com/Rw_wdkZHfDXh8tDEBFF1Q3aSS_nDE-gMVWNfOHb7a2nIp2XuWAmJyGISHv9akZE\x3ds35', 'profileUrl': 'https://openid.stackexchange.com/user/069691e1-123c-4b59-8af2-974aa6400b4b'}, 'displayTime': '29 February, 2016 19:57', 'deleteclass': 'item-control blog-admin pid-2005914429'}, {'id': '2162509074023961064', 'parentId': '7854670551691381739', 'body': 'Thanks for the attention to detail. I try to make sure the samples run, but in between copy/pasting I occasionally lose some things.', 'timestamp': '1456849007951', 'permalink': 'http://theperlfisher.blogspot.com/2016/02/from-regular-expressions-to-grammars-pt_20.html?showComment\x3d1456849007951#c2162509074023961064', 'author': {'name': 'DrForr', 'avatarUrl': '//lh3.googleusercontent.com/zFdxGE77vvD2w5xHy6jkVuElKv-U9_9qLkRYK8OnbDeJPtjSZ82UPq5w6hJ-SA\x3ds35', 'profileUrl': 'https://www.blogger.com/profile/18252182597447689159'}, 'displayTime': '01 March, 2016 18:16', 'deleteclass': 'item-control blog-admin pid-492201844'}];
+      var msgs = {'loadMore': 'Load more...', 'loading': 'Loading...', 'loaded': 'No more!', 'addComment': 'Add comment', 'reply': 'Reply', 'delete': 'Delete'};
+      var config = {'blogId': '5431247843063773408', 'postId': '7054899775203295696', 'feed': 'http://theperlfisher.blogspot.com/feeds/7054899775203295696/comments/default', 'authorName': 'DrForr', 'authorUrl': 'https://www.blogger.com/profile/18252182597447689159', 'baseUri': 'https://www.blogger.com', 'maxThreadDepth': 2};
+
+// <![CDATA[
+      var cursor = null;
+      if (items && items.length > 0) {
+        cursor = parseInt(items[items.length - 1].timestamp) + 1;
+      }
+
+      var bodyFromEntry = function(entry) {
+        if (entry.gd$extendedProperty) {
+          for (var k in entry.gd$extendedProperty) {
+            if (entry.gd$extendedProperty[k].name == 'blogger.contentRemoved') {
+              return '<span class="deleted-comment">' + entry.content.$t + '</span>';
+            }
+          }
+        }
+        return entry.content.$t;
+      }
+
+      var parse = function(data) {
+        cursor = null;
+        var comments = [];
+        if (data && data.feed && data.feed.entry) {
+          for (var i = 0, entry; entry = data.feed.entry[i]; i++) {
+            var comment = {};
+            // comment ID, parsed out of the original id format
+            var id = /blog-(\d+).post-(\d+)/.exec(entry.id.$t);
+            comment.id = id ? id[2] : null;
+            comment.body = bodyFromEntry(entry);
+            comment.timestamp = Date.parse(entry.published.$t) + '';
+            if (entry.author && entry.author.constructor === Array) {
+              var auth = entry.author[0];
+              if (auth) {
+                comment.author = {
+                  name: (auth.name ? auth.name.$t : undefined),
+                  profileUrl: (auth.uri ? auth.uri.$t : undefined),
+                  avatarUrl: (auth.gd$image ? auth.gd$image.src : undefined)
+                };
+              }
+            }
+            if (entry.link) {
+              if (entry.link[2]) {
+                comment.link = comment.permalink = entry.link[2].href;
+              }
+              if (entry.link[3]) {
+                var pid = /.*comments\/default\/(\d+)\?.*/.exec(entry.link[3].href);
+                if (pid && pid[1]) {
+                  comment.parentId = pid[1];
+                }
+              }
+            }
+            comment.deleteclass = 'item-control blog-admin';
+            if (entry.gd$extendedProperty) {
+              for (var k in entry.gd$extendedProperty) {
+                if (entry.gd$extendedProperty[k].name == 'blogger.itemClass') {
+                  comment.deleteclass += ' ' + entry.gd$extendedProperty[k].value;
+                } else if (entry.gd$extendedProperty[k].name == 'blogger.displayTime') {
+                  comment.displayTime = entry.gd$extendedProperty[k].value;
+                }
+              }
+            }
+            comments.push(comment);
+          }
+        }
+        return comments;
+      };
+
+      var paginator = function(callback) {
+        if (hasMore()) {
+          var url = config.feed + '?alt=json&v=2&orderby=published&reverse=false&max-results=50';
+          if (cursor) {
+            url += '&published-min=' + new Date(cursor).toISOString();
+          }
+          window.bloggercomments = function(data) {
+            var parsed = parse(data);
+            cursor = parsed.length < 50 ? null
+                : parseInt(parsed[parsed.length - 1].timestamp) + 1
+            callback(parsed);
+            window.bloggercomments = null;
+          }
+          url += '&callback=bloggercomments';
+          var script = document.createElement('script');
+          script.type = 'text/javascript';
+          script.src = url;
+          document.getElementsByTagName('head')[0].appendChild(script);
+        }
+      };
+      var hasMore = function() {
+        return !!cursor;
+      };
+      var getMeta = function(key, comment) {
+        if ('iswriter' == key) {
+          var matches = !!comment.author
+              && comment.author.name == config.authorName
+              && comment.author.profileUrl == config.authorUrl;
+          return matches ? 'true' : '';
+        } else if ('deletelink' == key) {
+          return config.baseUri + '/delete-comment.g?blogID='
+               + config.blogId + '&postID=' + comment.id;
+        } else if ('deleteclass' == key) {
+          return comment.deleteclass;
+        }
+        return '';
+      };
+
+      var replybox = null;
+      var replyUrlParts = null;
+      var replyParent = undefined;
+
+      var onReply = function(commentId, domId) {
+        if (replybox == null) {
+          // lazily cache replybox, and adjust to suit this style:
+          replybox = document.getElementById('comment-editor');
+          if (replybox != null) {
+            replybox.height = '250px';
+            replybox.style.display = 'block';
+            replyUrlParts = replybox.src.split('#');
+          }
+        }
+        if (replybox && (commentId !== replyParent)) {
+          replybox.src = '';
+          document.getElementById(domId).insertBefore(replybox, null);
+          replybox.src = replyUrlParts[0]
+              + (commentId ? '&parentID=' + commentId : '')
+              + '#' + replyUrlParts[1];
+          replyParent = commentId;
+        }
+      };
+
+      var hash = (window.location.hash || '#').substring(1);
+      var startThread, targetComment;
+      if (/^comment-form_/.test(hash)) {
+        startThread = hash.substring('comment-form_'.length);
+      } else if (/^c[0-9]+$/.test(hash)) {
+        targetComment = hash.substring(1);
+      }
+
+      // Configure commenting API:
+      var configJso = {
+        'maxDepth': config.maxThreadDepth
+      };
+      var provider = {
+        'id': config.postId,
+        'data': items,
+        'loadNext': paginator,
+        'hasMore': hasMore,
+        'getMeta': getMeta,
+        'onReply': onReply,
+        'rendered': true,
+        'initComment': targetComment,
+        'initReplyThread': startThread,
+        'config': configJso,
+        'messages': msgs
+      };
+
+      var render = function() {
+        if (window.goog && window.goog.comments) {
+          var holder = document.getElementById('comment-holder');
+          window.goog.comments.render(holder, provider);
+        }
+      };
+
+      // render now, or queue to render when library loads:
+      if (window.goog && window.goog.comments) {
+        render();
+      } else {
+        window.goog = window.goog || {};
+        window.goog.comments = window.goog.comments || {};
+        window.goog.comments.loadQueue = window.goog.comments.loadQueue || [];
+        window.goog.comments.loadQueue.push(render);
+      }
+    })();
+// ]]>
+  </script>
+<div id='comment-holder'>
+<div id='bc_0_3C' kind='c'><div id='bc_0_3CT'><div id='bc_0_2T' class='comment-thread' kind='r'  t='0' u='0'><ol id='bc_0_2TB'><li id='bc_0_1B' class='comment' kind='b'><div class='avatar-image-container'><img src='//lh3.googleusercontent.com/Rw_wdkZHfDXh8tDEBFF1Q3aSS_nDE-gMVWNfOHb7a2nIp2XuWAmJyGISHv9akZE=s35'></img></div><div id='c7854670551691381739' class='comment-block'><div id='bc_0_1M' class='comment-header' kind='m'><cite class='user'><a rel='nofollow' href='https://openid.stackexchange.com/user/069691e1-123c-4b59-8af2-974aa6400b4b'>Daniel Böhmer</a></cite><span class='icon user'></span><span class='datetime secondary-text'><a rel='nofollow' href='http://theperlfisher.blogspot.com/2016/02/from-regular-expressions-to-grammars-pt_20.html?showComment=1456768665796#c7854670551691381739'>29 February, 2016 19:57</a></span></div><p id='bc_0_1MC' class='comment-content'>In the last code block there is a closing paren missing in line 2, I think. The opening paren is right before the Number token.</p><span id='bc_0_1MN' class='comment-actions secondary-text' kind='m'><a kind='i' href='javascript:;' target='_self' o='r'>Reply</a><span class='item-control blog-admin pid-2005914429'><a o='d' target='_self' href='https://www.blogger.com/delete-comment.g?blogID=5431247843063773408&amp;postID=7854670551691381739'>Delete</a></span></span></div><div id='bc_0_1BR' class='comment-replies'><span id='bc_0_1b+seedCFrJD' kind='d'><div id='bc_0_0T' class='comment-thread inline-thread' kind='t'   t='0' u='0'><span id='bc_0_0TT' class='thread-toggle thread-expanded' kind='g'><span id='bc_0_0TA' class='thread-arrow'></span><span id='bc_0_0TN' class='thread-count'><span id='bc_0_0TNT' style='display: none;'></span><span id='bc_0_0TNU' style='display: none;'></span><a href='javascript:;' target='_self'>Replies</a><div id='bc_0_0TD' class='thread-dropContainer thread-expanded'><span class='thread-drop'></span></div></span></span><ol id='bc_0_0TC' class='thread-chrome thread-expanded'><div><li id='bc_0_0B' class='comment' kind='b'><div class='avatar-image-container'><img src='//lh3.googleusercontent.com/zFdxGE77vvD2w5xHy6jkVuElKv-U9_9qLkRYK8OnbDeJPtjSZ82UPq5w6hJ-SA=s35'></img></div><div id='c2162509074023961064' class='comment-block'><div id='bc_0_0M' class='comment-header' kind='m'><cite class='user blog-author'><a rel='nofollow' href='https://www.blogger.com/profile/18252182597447689159'>DrForr</a></cite><span class='icon user blog-author'></span><span class='datetime secondary-text'><a rel='nofollow' href='http://theperlfisher.blogspot.com/2016/02/from-regular-expressions-to-grammars-pt_20.html?showComment=1456849007951#c2162509074023961064'>01 March, 2016 18:16</a></span></div><p id='bc_0_0MC' class='comment-content'>Thanks for the attention to detail. I try to make sure the samples run, but in between copy/pasting I occasionally lose some things.</p><span id='bc_0_0MN' class='comment-actions secondary-text' kind='m'><span class='item-control blog-admin pid-492201844'><a o='d' target='_self' href='https://www.blogger.com/delete-comment.g?blogID=5431247843063773408&amp;postID=2162509074023961064'>Delete</a></span></span></div><div id='bc_0_0BR' class='comment-replies'></div><div id='bc_0_0B_box' class='comment-replybox-single'></div></li></div><div id='bc_0_0I' class='continue' kind='ci'><a href='javascript:;' target='_self'>Reply</a></div></ol><div id='bc_0_0T_box' class='comment-replybox-thread'></div></div></span></div><div id='bc_0_1B_box' class='comment-replybox-single'></div></li></ol><div id='bc_0_2I' class='continue' kind='ci'><a href='javascript:;' target='_self'>Add comment</a></div><div id='bc_0_2T_box' class='comment-replybox-thread'></div><div id='bc_0_2L' class='loadmore loaded' kind='rb'><a href='javascript:;' target='_self'>Load more...</a></div></div></div></div>
+</div>
+</div>
+<p class='comment-footer'>
+<div class='comment-form'>
+<a name='comment-form'></a>
+<p>
+</p>
+<a href='https://www.blogger.com/comment-iframe.g?blogID=5431247843063773408&postID=7054899775203295696' id='comment-editor-src'></a>
+<iframe allowtransparency='true' class='blogger-iframe-colorize blogger-comment-from-post' frameborder='0' height='410px' id='comment-editor' name='comment-editor' src='' width='100%'></iframe>
+<script type="text/javascript" src="https://www.blogger.com/static/v1/jsbin/2926213482-comment_from_post_iframe.js"></script>
+<script type='text/javascript'>
+      BLOG_CMT_createIframe('https://www.blogger.com/rpc_relay.html');
+    </script>
+</div>
+</p>
+<div id='backlinks-container'>
+<div id='Blog1_backlinks-container'>
+</div>
+</div>
+</div>
+</div>
+
+        </div></div>
+      
+</div>
+<div class='blog-pager' id='blog-pager'>
+<span id='blog-pager-newer-link'>
+<a class='blog-pager-newer-link' href='http://theperlfisher.blogspot.ro/2016/02/from-regular-expressions-to-grammars-pt_28.html' id='Blog1_blog-pager-newer-link' title='Newer Post'>Newer Post</a>
+</span>
+<span id='blog-pager-older-link'>
+<a class='blog-pager-older-link' href='http://theperlfisher.blogspot.ro/2016/02/from-regular-expressions-to-grammars-pt_13.html' id='Blog1_blog-pager-older-link' title='Older Post'>Older Post</a>
+</span>
+<a class='home-link' href='http://theperlfisher.blogspot.ro/'>Home</a>
+</div>
+<div class='clear'></div>
+<div class='post-feeds'>
+<div class='feed-links'>
+Subscribe to:
+<a class='feed-link' href='http://theperlfisher.blogspot.com/feeds/7054899775203295696/comments/default' target='_blank' type='application/atom+xml'>Post Comments (Atom)</a>
+</div>
+</div>
+<script type='text/javascript'>
+    window.___gcfg = { 'lang': 'en' };
+  </script>
+</div></div>
+</div>
+</div>
+<div class='column-left-outer'>
+<div class='column-left-inner'>
+<aside>
+</aside>
+</div>
+</div>
+<div class='column-right-outer'>
+<div class='column-right-inner'>
+<aside>
+<div class='sidebar section' id='sidebar-right-1'><div class='widget Profile' data-version='1' id='Profile1'>
+<h2>About Me</h2>
+<div class='widget-content'>
+<dl class='profile-datablock'>
+<dt class='profile-data'>
+<a class='profile-name-link g-profile' href='https://www.blogger.com/profile/18252182597447689159' rel='author' style='background-image: url(//www.blogger.com/img/logo-16.png);'>
+DrForr
+</a>
+</dt>
+</dl>
+<a class='profile-link' href='https://www.blogger.com/profile/18252182597447689159' rel='author'>View my complete profile</a>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=5431247843063773408&widgetType=Profile&widgetId=Profile1&action=editWidget&sectionId=sidebar-right-1' onclick='return _WidgetManager._PopupConfig(document.getElementById("Profile1"));' target='configProfile1' title='Edit'>
+<img alt='' height='18' src='https://resources.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget BlogArchive' data-version='1' id='BlogArchive1'>
+<h2>Blog Archive</h2>
+<div class='widget-content'>
+<div id='ArchiveList'>
+<div id='BlogArchive1_ArchiveList'>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://theperlfisher.blogspot.ro/2017/'>
+2017
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://theperlfisher.blogspot.ro/2017/04/'>
+April
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>
+
+        &#9660;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://theperlfisher.blogspot.ro/2016/'>
+2016
+</a>
+<span class='post-count' dir='ltr'>(6)</span>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>
+
+        &#9660;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://theperlfisher.blogspot.ro/2016/02/'>
+February
+</a>
+<span class='post-count' dir='ltr'>(4)</span>
+<ul class='posts'>
+<li><a href='http://theperlfisher.blogspot.ro/2016/02/from-regular-expressions-to-grammars-pt_28.html'>From Regular Expressions to Grammars, Pt. 4</a></li>
+<li><a href='http://theperlfisher.blogspot.ro/2016/02/from-regular-expressions-to-grammars-pt_20.html'>From Regular Expressions to Grammars, Pt. 3</a></li>
+<li><a href='http://theperlfisher.blogspot.ro/2016/02/from-regular-expressions-to-grammars-pt_13.html'>From Regular Expressions to Grammars: Pt. 2</a></li>
+<li><a href='http://theperlfisher.blogspot.ro/2016/02/from-regular-expressions-to-grammars-pt.html'>From Regular Expressions to Grammars: Pt. 1</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://theperlfisher.blogspot.ro/2016/01/'>
+January
+</a>
+<span class='post-count' dir='ltr'>(2)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://theperlfisher.blogspot.ro/2015/'>
+2015
+</a>
+<span class='post-count' dir='ltr'>(2)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://theperlfisher.blogspot.ro/2015/07/'>
+July
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://theperlfisher.blogspot.ro/2015/05/'>
+May
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=5431247843063773408&widgetType=BlogArchive&widgetId=BlogArchive1&action=editWidget&sectionId=sidebar-right-1' onclick='return _WidgetManager._PopupConfig(document.getElementById("BlogArchive1"));' target='configBlogArchive1' title='Edit'>
+<img alt='' height='18' src='https://resources.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div></div>
+</aside>
+</div>
+</div>
+</div>
+<div style='clear: both'></div>
+<!-- columns -->
+</div>
+<!-- main -->
+</div>
+</div>
+<div class='main-cap-bottom cap-bottom'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+</div>
+<footer>
+<div class='footer-outer'>
+<div class='footer-cap-top cap-top'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+<div class='fauxborder-left footer-fauxborder-left'>
+<div class='fauxborder-right footer-fauxborder-right'></div>
+<div class='region-inner footer-inner'>
+<div class='foot no-items section' id='footer-1'></div>
+<!-- outside of the include in order to lock Attribution widget -->
+<div class='foot section' id='footer-3' name='Footer'><div class='widget Attribution' data-version='1' id='Attribution1'>
+<div class='widget-content' style='text-align: center;'>
+Simple theme. Powered by <a href='https://www.blogger.com' target='_blank'>Blogger</a>.
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=5431247843063773408&widgetType=Attribution&widgetId=Attribution1&action=editWidget&sectionId=footer-3' onclick='return _WidgetManager._PopupConfig(document.getElementById("Attribution1"));' target='configAttribution1' title='Edit'>
+<img alt='' height='18' src='https://resources.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div></div>
+</div>
+</div>
+<div class='footer-cap-bottom cap-bottom'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+</div>
+</footer>
+<!-- content -->
+</div>
+</div>
+<div class='content-cap-bottom cap-bottom'>
+<div class='cap-left'></div>
+<div class='cap-right'></div>
+</div>
+</div>
+</div>
+<script type='text/javascript'>
+    window.setTimeout(function() {
+        document.body.className = document.body.className.replace('loading', '');
+      }, 10);
+  </script>
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+
+
+<!-- 'It is your responsibility to notify your visitors about cookies used on your blog. See http://www.blogger.com/go/cookiechoices for more details.' -->
+<script src="/js/cookiechoices.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function(event) {
+    window.cookieChoices && cookieChoices.showCookieConsentBar && cookieChoices.showCookieConsentBar(
+        (window.cookieOptions && cookieOptions.msg) || 'This site uses cookies from Google to deliver its services, to personalize ads and to analyze traffic. Information about your use of this site is shared with Google. By using this site, you agree to its use of cookies.',
+        (window.cookieOptions && cookieOptions.close) || 'Got it',
+        (window.cookieOptions && cookieOptions.learn) || 'Learn More',
+        (window.cookieOptions && cookieOptions.link) || 'https://www.blogger.com/go/blogspot-cookies');
+  });
+</script>
+
+
+<script type="text/javascript" src="https://www.blogger.com/static/v1/widgets/2472851610-widgets.js"></script>
+<script type='text/javascript'>
+window['__wavt'] = 'AOuZoY6PnqUD5fcTpZgTRvSbbGcf4U7TnQ:1493069193881';_WidgetManager._Init('//www.blogger.com/rearrange?blogID\x3d5431247843063773408','//theperlfisher.blogspot.ro/2016/02/from-regular-expressions-to-grammars-pt_20.html','5431247843063773408');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'blogId': '5431247843063773408', 'title': 'The Perl Fisher', 'url': 'http://theperlfisher.blogspot.ro/2016/02/from-regular-expressions-to-grammars-pt_20.html', 'canonicalUrl': 'http://theperlfisher.blogspot.com/2016/02/from-regular-expressions-to-grammars-pt_20.html', 'homepageUrl': 'http://theperlfisher.blogspot.ro/', 'searchUrl': 'http://theperlfisher.blogspot.ro/search', 'canonicalHomepageUrl': 'http://theperlfisher.blogspot.com/', 'blogspotFaviconUrl': 'http://theperlfisher.blogspot.ro/favicon.ico', 'bloggerUrl': 'https://www.blogger.com', 'hasCustomDomain': false, 'httpsEnabled': true, 'enabledCommentProfileImages': true, 'gPlusViewType': 'FILTERED_POSTMOD', 'adultContent': false, 'analyticsAccountNumber': '', 'useUniversalAnalytics': false, 'encoding': 'UTF-8', 'locale': 'en', 'localeUnderscoreDelimited': 'en', 'languageDirection': 'ltr', 'isPrivate': false, 'isMobile': false, 'isMobileRequest': false, 'mobileClass': '', 'isPrivateBlog': false, 'feedLinks': '\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22The Perl Fisher - Atom\x22 href\x3d\x22http://theperlfisher.blogspot.com/feeds/posts/default\x22 /\x3e\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/rss+xml\x22 title\x3d\x22The Perl Fisher - RSS\x22 href\x3d\x22http://theperlfisher.blogspot.com/feeds/posts/default?alt\x3drss\x22 /\x3e\n\x3clink rel\x3d\x22service.post\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22The Perl Fisher - Atom\x22 href\x3d\x22https://www.blogger.com/feeds/5431247843063773408/posts/default\x22 /\x3e\n\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22The Perl Fisher - Atom\x22 href\x3d\x22http://theperlfisher.blogspot.com/feeds/7054899775203295696/comments/default\x22 /\x3e\n', 'meTag': '', 'openIdOpTag': '', 'mobileHeadScript': '', 'adsenseHostId': 'ca-host-pub-1556223355139109', 'ieCssRetrofitLinks': '\x3c!--[if IE]\x3e\x3cscript type\x3d\x22text/javascript\x22 src\x3d\x22https://www.blogger.com/static/v1/jsbin/1575677651-ieretrofit.js\x22\x3e\x3c/script\x3e\n\x3c![endif]--\x3e', 'view': '', 'dynamicViewsCommentsSrc': '//www.blogblog.com/dynamicviews/4224c15c4e7c9321/js/comments.js', 'dynamicViewsScriptSrc': '//www.blogblog.com/dynamicviews/de09d9f734448eb1', 'plusOneApiSrc': 'https://apis.google.com/js/plusone.js', 'sharing': {'platforms': [{'name': 'Get link', 'key': 'link', 'shareMessage': 'Get link', 'target': ''}, {'name': 'Facebook', 'key': 'facebook', 'shareMessage': 'Share to Facebook', 'target': 'facebook'}, {'name': 'BlogThis!', 'key': 'blogThis', 'shareMessage': 'BlogThis!', 'target': 'blog'}, {'name': 'Twitter', 'key': 'twitter', 'shareMessage': 'Share to Twitter', 'target': 'twitter'}, {'name': 'Pinterest', 'key': 'pinterest', 'shareMessage': 'Share to Pinterest', 'target': 'pinterest'}, {'name': 'Google+', 'key': 'googlePlus', 'shareMessage': 'Share to Google+', 'target': 'googleplus'}, {'name': 'Email', 'key': 'email', 'shareMessage': 'Email', 'target': 'email'}], 'googlePlusShareButtonWidth': 300, 'googlePlusBootstrap': '\x3cscript type\x3d\x22text/javascript\x22\x3ewindow.___gcfg \x3d {\x27lang\x27: \x27en\x27};\x3c/script\x3e'}, 'jumpLinkMessage': 'Read more &#187;', 'pageType': 'item', 'postId': '7054899775203295696', 'pageName': 'From Regular Expressions to Grammars, Pt. 3', 'pageTitle': 'The Perl Fisher: From Regular Expressions to Grammars, Pt. 3'}}, {'name': 'features', 'data': {'enhancedSourcesets': 'true', 'unsupported_browser_message': 'false'}}, {'name': 'messages', 'data': {'linkCopiedToClipboard': 'Link copied to clipboard!', 'postLink': 'Post Link'}}, {'name': 'template', 'data': {'name': 'custom', 'localizedName': 'Custom', 'isResponsive': false, 'isAlternateRendering': false, 'isCustom': true, 'variant': 'simplysimple', 'variantId': 'simplysimple', 'variantName': 'Simply Simple', 'localizedVariantName': 'Simply Simple'}}, {'name': 'view', 'data': {'classic': {'name': 'classic', 'url': '?view\x3dclassic'}, 'flipcard': {'name': 'flipcard', 'url': '?view\x3dflipcard'}, 'magazine': {'name': 'magazine', 'url': '?view\x3dmagazine'}, 'mosaic': {'name': 'mosaic', 'url': '?view\x3dmosaic'}, 'sidebar': {'name': 'sidebar', 'url': '?view\x3dsidebar'}, 'snapshot': {'name': 'snapshot', 'url': '?view\x3dsnapshot'}, 'timeslide': {'name': 'timeslide', 'url': '?view\x3dtimeslide'}, 'isMobile': false, 'title': 'From Regular Expressions to Grammars, Pt. 3', 'description': 'If you haven\x27t been following this series, please check out Part 1 &#160;of this series&#160;before continuing to read.    Movin\x27 on up  After an admi...', 'url': 'http://theperlfisher.blogspot.ro/2016/02/from-regular-expressions-to-grammars-pt_20.html', 'type': 'item', 'isSingleItem': true, 'isMultipleItems': false, 'isError': false, 'isPage': false, 'isPost': true, 'isHomepage': false, 'isArchive': false, 'isLabelSearch': false, 'postId': 7054899775203295696}}]);
+_WidgetManager._RegisterWidget('_NavbarView', new _WidgetInfo('Navbar1', 'navbar', null, document.getElementById('Navbar1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HeaderView', new _WidgetInfo('Header1', 'header', null, document.getElementById('Header1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'main', null, document.getElementById('Blog1'), {'cmtInteractionsEnabled': false, 'lightboxEnabled': true, 'lightboxModuleUrl': 'https://www.blogger.com/static/v1/jsbin/1863206390-lbx.js', 'lightboxCssUrl': 'https://www.blogger.com/static/v1/v-css/368954415-lightbox_bundle.css'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_ProfileView', new _WidgetInfo('Profile1', 'sidebar-right-1', null, document.getElementById('Profile1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebar-right-1', null, document.getElementById('BlogArchive1'), {'languageDirection': 'ltr', 'loadingMessage': 'Loading\x26hellip;'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_AttributionView', new _WidgetInfo('Attribution1', 'footer-3', null, document.getElementById('Attribution1'), {}, 'displayModeFull'));
+</script>
+</body>
+</html>
