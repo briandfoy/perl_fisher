@@ -6,6 +6,7 @@
 
 * We need to control the domains somehow.
 * Find his blog articles and what not and add them to the repo. We need the raw content.
+* Go through the back issues of Perl 6 Weekly and find all the links to his blogs.
 * Probably a lot of other stuff.
 
 ## Instructions
